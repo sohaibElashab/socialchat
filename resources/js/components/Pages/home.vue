@@ -1,6 +1,5 @@
 <template>
     <div>
-       <!-- ayoub zaml -->
         <!-- loader Start -->
         <loader />
         <!-- loader END -->
