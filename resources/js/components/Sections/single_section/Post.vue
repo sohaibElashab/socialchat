@@ -2,16 +2,16 @@
     <div>
         <div class="col-sm-12">
            <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
-              <div class="iq-card-body">
+              <div class="iq-card-body" v-for="post in posts" :key="post.id">
                  <div class="user-post-data">
                     <div class="d-flex flex-wrap">
                        <div class="media-support-user-img mr-3">
-                          <img class="rounded-circle img-fluid" src="images/user/01.jpg" alt="">
+                          <img class="rounded-circle img-fluid" :src="post.userImg" alt="">
                        </div>
                        <div class="media-support-info mt-2">
-                          <h5 class="mb-0 d-inline-block"><a href="#" class="">Anna Sthesia</a></h5>
-                          <p class="mb-0 d-inline-block">Add New Post</p>
-                          <p class="mb-0 text-primary">Just Now</p>
+                          <h5 class="mb-0 d-inline-block"><a href="#" class="">{{post.userName}}</a></h5>
+                          <p class="mb-0 d-inline-block">{{post.statu}}</p>
+                          <p class="mb-0 text-primary">{{post.time}}</p>
                        </div>
                        <div class="iq-card-post-toolbar">
                           <div class="dropdown">
@@ -60,23 +60,36 @@
                        </div>
                     </div>
                  </div>
-                 <div class="mt-3">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus</p>
+                 <div class="mt-3" v-if="post.text">
+                    <p>{{post.text}}</p>
                  </div>
-                 <div class="user-post">
-                    <div class="d-flex">
-                       <div class="col-md-6">
-                          <a href="javascript:void();"><img src="images/page-img/p2.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                       </div>
-                       <div class="col-md-6 row m-0 p-0">
-                          <div class="col-sm-12">
-                             <a href="javascript:void();"><img src="images/page-img/p1.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                          </div>
-                          <div class="col-sm-12 mt-3">
-                             <a href="javascript:void();"><img src="images/page-img/p3.jpg" alt="post-image" class="img-fluid rounded w-100"></a>
-                          </div>
-                       </div>
+
+                  <div class="user-post" v-if="post.postImgs" style="text-align: -webkit-center;">
+                     <div v-if="Object.keys(post.postImgs).length > 1" >
+                        <splide :options="options">
+                           <splide-slide v-for="imgs in post.postImgs" :key="imgs.img" style="border-radius: 5px;">
+                              <img :src="imgs.img">
+                           </splide-slide>
+                        </splide>
+                     </div>
+                     <div v-else class="user-post text-center">
+                        <a href="javascript:void();" v-for="imgs in post.postImgs" :key="imgs.img" ><img :src="imgs.img" alt="post-image" class="img-fluid rounded w-100"></a>
+                     </div>
+                  </div>
+                 <div class="user-post" v-if="post.postVds">
+                    <div class="embed-responsive embed-responsive-16by9">
+                       <iframe class="embed-responsive-item" v-for="(vd,i) in post.postVds" :key="i" :src="vd" allowfullscreen></iframe>
                     </div>
+                     <div v-if="Object.keys(post.postImgs).length > 1" >
+                        <splide :options="options">
+                           <splide-slide v-for="vds in post.postVds" :key="vds.vd" style="border-radius: 5px;">
+                              <iframe class="embed-responsive-item" :src="vds.vd" allowfullscreen></iframe>
+                           </splide-slide>
+                        </splide>
+                     </div>
+                     <div v-else>
+                       <iframe class="embed-responsive-item" v-for="vds in post.postVds" :key="vds.vd" :src="vds.vd" allowfullscreen></iframe>
+                     </div>
                  </div>
                  <div class="comment-area mt-3">
                     <div class="d-flex justify-content-between align-items-center">
@@ -186,7 +199,7 @@
               </div>
            </div>
         </div>
-        <div class="col-sm-12">
+        <!-- <div class="col-sm-12">
               <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
                  <div class="iq-card-body">
                     <div class="user-post-data">
@@ -877,11 +890,97 @@
                     </div>
                  </div>
               </div>
-        </div>
+        </div> -->
     </div>
 </template>
+
 <script>
+
+import '@splidejs/splide/dist/css/themes/splide-skyblue.min.css';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+
 export default {
-    
+   
+   components: {
+      Splide,
+      SplideSlide,
+   },
+   data() {
+      return {
+            options: {
+               rewind : true,
+               width  : 650,
+               height  : 400,
+	            cover  : true,
+               perPage : 1,
+               gap : 0,
+               padding : 0,
+               type : 'fade',
+	            focus  : 2,
+            },
+            posts: {
+               "1": {
+                  id: 1,
+                  userImg:"images/user/01.jpg",
+                  userName:"Anna Sthesia",
+                  statu:"Add New Post",
+                  time:"Just Now",
+                  text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
+                  postImgs: [
+                     {img : "images/page-img/p1.jpg"},
+                     {img : "images/page-img/p2.jpg"},
+                     {img : "images/page-img/p3.jpg"},
+                  ],
+                  PostVds: [ ]
+               },
+               "2": {
+                  id: 2,
+                  userImg:"images/user/03.jpg",
+                  userName:"Barb Ackue",
+                  statu:"Added New Image in a Post",
+                  time:"1 hour ago",
+                  text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
+                  postImgs: [
+                     {img : "images/page-img/p4.jpg"},
+                  ],
+                  PostVds: [ ]
+               },
+               "3": {
+                  id: 3,
+                  userImg:"images/user/04.jpg",
+                  userName:"Ira Membrit",
+                  statu:"Update her Status",
+                  time:"6 hour ago",
+                  text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
+                  postImgs: { },
+                  PostVds: [ ]
+               },
+               "4": {
+                  id: 4,
+                  userImg:"images/user/01.jpg",
+                  userName:"Bni Cyst",
+                  statu:"Changed Profile Picture",
+                  time:"3 day ago",
+                  text:"",
+                  postImgs: [
+                     {img : "images/page-img/p5.jpg"},
+                  ],
+                  PostVds: [ ]
+               },
+               "5": {
+                  id: 5,
+                  userImg:"images/user/02.jpg",
+                  userName:"Paige Turner",
+                  statu:"Added New Video in his Timeline",
+                  time:"1 day ago",
+                  text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
+                  postImgs: { },
+                  PostVds: [
+                     { "vd" : "https://www.youtube.com/embed/j_GsIanLxZk?rel=0"}
+                  ],
+               },
+            },
+         }
+      }
 }
 </script>

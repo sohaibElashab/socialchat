@@ -12,7 +12,7 @@
         <link href="{{asset('css/style.css')}}" rel="stylesheet" >
         <link href="{{asset('css/responsive.css')}}" rel="stylesheet" >
     </head>
-    <body>
+    <body class="sidebar-main-active right-column-fixed">
         <div id="app">
             <router-view></router-view>
         </div>
