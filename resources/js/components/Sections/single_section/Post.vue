@@ -40,7 +40,7 @@
                   <!-- <iframe class="embed-responsive-item" v-for="vds in post.postVds" :key="vds.vd" :src="vds.vd" allowfullscreen></iframe> -->
                </div>
             </div>
-            <comment/>
+            <Comment/>
          </div>
       </div>
    </div>
@@ -50,14 +50,14 @@
 
 import '@splidejs/splide/dist/css/themes/splide-skyblue.min.css';
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
-import comment from './comment.vue'
+import Comment from './Comment'
 
 export default {
    
    components: {
       Splide,
       SplideSlide,
-      comment
+      Comment
    },
    props: {
       post: {

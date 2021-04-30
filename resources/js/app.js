@@ -21,17 +21,30 @@ Vue.component('bottombar',bottombar)
 Vue.component('loader',loader)
 
 import Home from './components/Pages/home.vue'
+import signIn from './components/Pages/signIn.vue'
+import signUp from './components/Pages/signUp.vue'
+import confirmmail from './components/Pages/confirmmail.vue'
 
-const router = new VueRouter({
-    mode: 'history',
-    routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: Home
-        }
-    ],
-});
+const routes= [
+    {
+        path: '/',
+        component: Home
+    },
+    {
+        path: '/signIn',
+        component: signIn
+    },
+    {
+        path: '/signUp',
+        component: signUp
+    },
+    {
+        path: '/confirmmail',
+        component: confirmmail
+    }
+]
+
+const router = new VueRouter({routes});
 
 const app = new Vue({
     router,
