@@ -25,7 +25,7 @@
                 </div>
                 <div class="sign-info">
                     <span class="dark-color d-inline-block line-height-2">Already Have Account ? 
-                        <router-link to="/SingIn" tag="a">Log In</router-link>
+                        <router-link to="/signIn" tag="a">Log In</router-link>
                     </span>
                 </div>
             </form>

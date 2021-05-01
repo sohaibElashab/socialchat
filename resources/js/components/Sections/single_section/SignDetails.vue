@@ -1,12 +1,12 @@
 <template>
     <div class="col-md-6 text-center pt-5">
         <div class="sign-in-detail text-white">
-            <a class="sign-in-logo mb-5" href="#"
+            <div class="sign-in-logo mb-5"
                 ><img
                     src="images/logo-full.png"
                     class="img-fluid"
                     alt="logo"
-            /></a>
+            /></div>
             <div
                 class="owl-carousel"
                 data-autoplay="true"
@@ -40,28 +40,10 @@
 
 <script>
 export default {
-    data() {
-        return {
-            items : {
-                "1" : {
-                    id: 1,
-                    imgItem: "images/login/1.png",
-                    titleItem : "Find new friends",
-                    textItem: "Forge new friendships with people that share your interests"
-                },
-                "2" : {
-                    id: 2,
-                    imgItem: "images/login/2.png",
-                    titleItem : "Connect with the world",
-                    textItem: "Share your life with others from all around the world with only one click"
-                },
-                "3" : {
-                    id: 3,
-                    imgItem: "images/login/3.png",
-                    titleItem : "Create new posts",
-                    textItem: "Express your opinions and hobbies with your friends from the comfort of your home"
-                },
-            }
+    props: {
+        items: {
+            type: Object,
+            require: true
         }
     }
 }

@@ -1,7 +1,6 @@
 <template>
 
-<div class="col-sm-12">
-    <div id="post-modal-data" class="iq-card iq-card-block iq-card-stretch iq-card-height">
+    <div id="post-modal-data" class="iq-card iq-card-block iq-card-stretch">
        <div class="iq-card-header d-flex justify-content-between">
           <div class="iq-header-title">
              <h4 class="card-title">Create Post</h4>
@@ -144,7 +143,6 @@
           </div>
        </div>
     </div>
-</div>
 </template>
 
 <script>

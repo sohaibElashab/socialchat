@@ -3,8 +3,12 @@
       <div class="container">
          <div class="row">
             <div class="col-lg-8 row m-0 p-0">
-               <CreatePost/>
-               <Post v-for="post in posts" :key="post.id" :post="post"/>
+               <div class="col-sm-12">
+                  <CreatePost/>
+               </div>
+               <div class="col-sm-12">
+                  <Post v-for="post in posts" :key="post.id" :post="post"/>
+               </div>
             </div>
             <div class="col-lg-4">
                <story/>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- loader Start -->
-        <loader/>
+        <!-- <loader/> -->
         <!-- loader END -->
         <!-- Sign in Start -->
         <section class="sign-in-page">

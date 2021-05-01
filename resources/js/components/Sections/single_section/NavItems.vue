@@ -2,12 +2,12 @@
    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto navbar-list">
          <li>
-            <a href="profile.html" class="iq-waves-effect d-flex align-items-center">
+            <router-link to="/profile" tag="a" class="iq-waves-effect d-flex align-items-center">
                <img src="images/user/1.jpg" class="img-fluid rounded-circle mr-3" alt="user">
                <div class="caption">
                   <h6 class="mb-0 line-height">Bni Cyst</h6>
                </div>
-            </a>
+            </router-link>
          </li>
          <li>
             <a href="index-2.html" class="iq-waves-effect d-flex align-items-center">

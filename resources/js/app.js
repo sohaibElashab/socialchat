@@ -21,6 +21,7 @@ Vue.component('bottombar',bottombar)
 Vue.component('loader',loader)
 
 import Home from './components/Pages/home.vue'
+import Profile from './components/Pages/profile.vue'
 import signIn from './components/Pages/signIn.vue'
 import signUp from './components/Pages/signUp.vue'
 import confirmmail from './components/Pages/confirmmail.vue'
@@ -29,6 +30,10 @@ const routes= [
     {
         path: '/',
         component: Home
+    },
+    {
+        path: '/profile',
+        component: Profile
     },
     {
         path: '/signIn',

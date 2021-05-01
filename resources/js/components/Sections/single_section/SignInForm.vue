@@ -58,7 +58,7 @@
                     <span
                         class="dark-color d-inline-block line-height-2"
                         >Don't have an account?
-                        <router-link to="/SingUp" tag="a">Sign up</router-link></span
+                        <router-link to="/signUp" tag="a">Sign up</router-link></span
                     >
                 </div>
             </form>
