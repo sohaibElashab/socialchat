@@ -1,8 +1,5 @@
 <template>
    <div>
-      <!-- loader Start -->
-      <!-- <loader /> -->
-      <!-- loader END -->
       <!-- Wrapper Start -->
       <div class="wrapper">
             <!-- Sidebar  -->

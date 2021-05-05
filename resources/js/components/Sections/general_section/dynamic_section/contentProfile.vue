@@ -47,16 +47,12 @@
                                  <div class="social-info">
                                     <ul class="social-data-block d-flex align-items-center justify-content-between list-inline p-0 m-0">
                                        <li class="text-center pl-3">
-                                          <h6>Posts</h6>
-                                          <p class="mb-0">690</p>
-                                       </li>
-                                       <li class="text-center pl-3">
-                                          <h6>Followers</h6>
+                                          <h6>Friends</h6>
                                           <p class="mb-0">206</p>
                                        </li>
                                        <li class="text-center pl-3">
-                                          <h6>Following</h6>
-                                          <p class="mb-0">100</p>
+                                          <h6>Posts</h6>
+                                          <p class="mb-0">6</p>
                                        </li>
                                     </ul>
                                  </div>
@@ -92,43 +88,27 @@
                               <div class="row">
                                  <div class="col-lg-4">
                                     <div class="iq-card">
-                                       <div class="iq-card-body">
-                                          <a href="#"><span class="badge badge-pill badge-primary font-weight-normal ml-auto mr-1"><i class="ri-star-line"></i></span> 27 Items for yoou</a>
-                                       </div>
-                                    </div>
-                                    <div class="iq-card">
                                        <div class="iq-card-header d-flex justify-content-between">
                                           <div class="iq-header-title">
-                                             <h4 class="card-title">Life Event</h4>
-                                          </div>
-                                          <div class="iq-card-header-toolbar d-flex align-items-center">
-                                             <p class="m-0"><a href="javacsript:void();"> Create </a></p>
+                                             <h4 class="card-title">Intro</h4>
                                           </div>
                                        </div>
                                        <div class="iq-card-body">
                                           <div class="row">
                                              <div class="col-sm-12">
                                                 <div class="event-post position-relative">
-                                                   <a href="javascript:void();"><img src="images/page-img/07.jpg" alt="gallary-image" class="img-fluid rounded"></a>
-                                                   <div class="job-icon-position">
-                                                      <div class="job-icon bg-primary p-2 d-inline-block rounded-circle"><i class="ri-briefcase-line"></i></div>
-                                                   </div>
-                                                   <div class="iq-card-body text-center p-2">
-                                                      <h5>Started New Job at Apple</h5>
-                                                      <p>January 24, 2019</p>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <div class="col-sm-12">
-                                                <div class="event-post position-relative">
-                                                   <a href="javascript:void();"><img src="images/page-img/06.jpg" alt="gallary-image" class="img-fluid rounded"></a>
-                                                   <div class="job-icon-position">
-                                                      <div class="job-icon bg-primary p-2 d-inline-block rounded-circle"><i class="ri-briefcase-line"></i></div>
-                                                   </div>
-                                                   <div class="iq-card-body text-center p-2">
-                                                      <h5>Freelance Photographer</h5>
-                                                      <p>January 24, 2019</p>
-                                                   </div>
+                                                   <p>
+                                                      <i class="las la-home"></i>
+                                                      <strong> Lives in </strong> Marrakech
+                                                   </p>
+                                                   <p>
+                                                      <i class="las la-birthday-cake"></i>
+                                                      <strong> Birthday is on </strong> July 2016
+                                                   </p>
+                                                   <p>
+                                                      <i class="las la-phone"></i>
+                                                      <strong> Your number is </strong> 0697851121
+                                                   </p>
                                                 </div>
                                              </div>
                                           </div>
@@ -139,21 +119,14 @@
                                           <div class="iq-header-title">
                                              <h4 class="card-title">Photos</h4>
                                           </div>
-                                          <div class="iq-card-header-toolbar d-flex align-items-center">
-                                             <p class="m-0"><a href="javacsript:void();">Add Photo </a></p>
-                                          </div>
                                        </div>
                                        <div class="iq-card-body">
                                           <ul class="profile-img-gallary d-flex flex-wrap p-0 m-0">
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3"><a href="javascript:void();"><img src="images/page-img/g1.jpg" alt="gallary-image" class="img-fluid" /></a></li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3"><a href="javascript:void();"><img src="images/page-img/g2.jpg" alt="gallary-image" class="img-fluid" /></a></li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3"><a href="javascript:void();"><img src="images/page-img/g3.jpg" alt="gallary-image" class="img-fluid" /></a></li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3"><a href="javascript:void();"><img src="images/page-img/g4.jpg" alt="gallary-image" class="img-fluid" /></a></li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3"><a href="javascript:void();"><img src="images/page-img/g5.jpg" alt="gallary-image" class="img-fluid" /></a></li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3"><a href="javascript:void();"><img src="images/page-img/g6.jpg" alt="gallary-image" class="img-fluid" /></a></li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-0"><a href="javascript:void();"><img src="images/page-img/g7.jpg" alt="gallary-image" class="img-fluid" /></a></li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-0"><a href="javascript:void();"><img src="images/page-img/g8.jpg" alt="gallary-image" class="img-fluid" /></a></li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-0"><a href="javascript:void();"><img src="images/page-img/g9.jpg" alt="gallary-image" class="img-fluid" /></a></li>
+                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3" v-for="ProfileImage in ProfileImages" :key="ProfileImage.id">
+                                                <a href="javascript:void();">
+                                                   <img :src="ProfileImage.PrfImg" alt="gallary-image" class="img-fluid" />
+                                                </a>
+                                             </li>
                                           </ul>
                                        </div>
                                     </div>
@@ -168,42 +141,10 @@
                                        </div>
                                        <div class="iq-card-body">
                                           <ul class="profile-img-gallary d-flex flex-wrap p-0 m-0">
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
+                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3" v-for="FriendList in FriendLists" :key="FriendList.id">
                                                 <a href="javascript:void();">
-                                                <img src="images/user/05.jpg" alt="gallary-image" class="img-fluid" /></a>
-                                                <h6 class="mt-2">Anna Rexia</h6>
-                                             </li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                <a href="javascript:void();"><img src="images/user/06.jpg" alt="gallary-image" class="img-fluid" /></a>
-                                                <h6 class="mt-2">Tara Zona</h6>
-                                             </li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                <a href="javascript:void();"><img src="images/user/07.jpg" alt="gallary-image" class="img-fluid" /></a>
-                                                <h6 class="mt-2">Polly Tech</h6>
-                                             </li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                <a href="javascript:void();"><img src="images/user/08.jpg" alt="gallary-image" class="img-fluid" /></a>
-                                                <h6 class="mt-2">Bill Emia</h6>
-                                             </li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                <a href="javascript:void();"><img src="images/user/09.jpg" alt="gallary-image" class="img-fluid" /></a>
-                                                <h6 class="mt-2">Moe Fugga</h6>
-                                             </li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                <a href="javascript:void();"><img src="images/user/10.jpg" alt="gallary-image" class="img-fluid" /></a>
-                                                <h6 class="mt-2">Hal Appeno </h6>
-                                             </li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-0">
-                                                <a href="javascript:void();"><img src="images/user/07.jpg" alt="gallary-image" class="img-fluid" /></a>
-                                                <h6 class="mt-2">Zack Lee</h6>
-                                             </li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-0">
-                                                <a href="javascript:void();"><img src="images/user/06.jpg" alt="gallary-image" class="img-fluid" /></a>
-                                                <h6 class="mt-2">Terry Aki</h6>
-                                             </li>
-                                             <li class="col-md-4 col-6 pl-2 pr-0 pb-0">
-                                                <a href="javascript:void();"><img src="images/user/05.jpg" alt="gallary-image" class="img-fluid" /></a>
-                                                <h6 class="mt-2">Greta Life</h6>
+                                                <img :src="FriendList.FrdImg" alt="gallary-image" class="img-fluid" /></a>
+                                                <h6 class="mt-2 text-center">{{FriendList.FrdName}}</h6>
                                              </li>
                                           </ul>
                                        </div>
@@ -224,19 +165,19 @@
                                     <div class="col-md-3">
                                        <ul class="nav nav-pills basic-info-items list-inline d-block p-0 m-0">
                                           <li>
-                                             <a class="nav-link active" data-toggle="pill" href="#basicinfo">Contact and Basic Info</a>
+                                             <a class="nav-link active" data-toggle="pill" href="#basicinfo">Contact Information</a>
                                           </li>
                                           <li>
-                                             <a class="nav-link" data-toggle="pill" href="#family">Family and Relationship</a>
+                                             <a class="nav-link" data-toggle="pill" href="#family">Websites and Social Links</a>
                                           </li>
                                           <li>
-                                             <a class="nav-link" data-toggle="pill" href="#work">Work and Education</a>
+                                             <a class="nav-link" data-toggle="pill" href="#work">Basic Information</a>
                                           </li>
                                           <li>
-                                             <a class="nav-link" data-toggle="pill" href="#lived">Places You've Lived</a>
+                                             <a class="nav-link" data-toggle="pill" href="#lived"> About You</a>
                                           </li>
                                           <li>
-                                             <a class="nav-link" data-toggle="pill" href="#details">Details About You</a>
+                                             <a class="nav-link" data-toggle="pill" href="#details">Favorite Quotes</a>
                                           </li>
                                        </ul>
                                     </div>
@@ -265,6 +206,8 @@
                                                    <p class="mb-0">United States of America</p>
                                                 </div>
                                              </div>
+                                          </div>
+                                          <div class="tab-pane fade" id="family" role="tabpanel">
                                              <h4 class="mt-3">Websites and Social Links</h4>
                                              <hr>
                                              <div class="row">
@@ -281,6 +224,8 @@
                                                    <p class="mb-0">www.bootstrap.com</p>
                                                 </div>
                                              </div>
+                                          </div>
+                                          <div class="tab-pane fade" id="work" role="tabpanel">
                                              <h4 class="mt-3">Basic Information</h4>
                                              <hr>
                                              <div class="row">
@@ -316,146 +261,11 @@
                                                 </div>
                                              </div>
                                           </div>
-                                          <div class="tab-pane fade" id="family" role="tabpanel">
-                                             <h4 class="mb-3">Relationship</h4>
-                                             <ul class="suggestions-lists m-0 p-0">
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><i class="ri-add-fill"></i></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Add Your Relationship Status</h6>
-                                                   </div>
-                                                </li>
-                                             </ul>
-                                             <h4 class="mt-3 mb-3">Family Members</h4>
-                                             <ul class="suggestions-lists m-0 p-0">
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><i class="ri-add-fill"></i></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Add Family Members</h6>
-                                                   </div>
-                                                </li>
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><img src="images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Paul Molive</h6>
-                                                      <p class="mb-0">Brothe</p>
-                                                   </div>
-                                                   <div class="edit-relation"><a href="javascript:void();"><i class="ri-edit-line mr-2"></i>Edit</a></div>
-                                                </li>
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><img src="images/user/02.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Anna Mull</h6>
-                                                      <p class="mb-0">Sister</p>
-                                                   </div>
-                                                   <div class="edit-relation"><a href="javascript:void();"><i class="ri-edit-line mr-2"></i>Edit</a></div>
-                                                </li>
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><img src="images/user/03.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Paige Turner</h6>
-                                                      <p class="mb-0">Cousin</p>
-                                                   </div>
-                                                   <div class="edit-relation"><a href="javascript:void();"><i class="ri-edit-line mr-2"></i>Edit</a></div>
-                                                </li>
-                                             </ul>
-                                          </div>
-                                          <div class="tab-pane fade" id="work" role="tabpanel">
-                                             <h4 class="mb-3">Work</h4>
-                                             <ul class="suggestions-lists m-0 p-0">
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><i class="ri-add-fill"></i></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Add Work Place</h6>
-                                                   </div>
-                                                </li>
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><img src="images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Themeforest</h6>
-                                                      <p class="mb-0">Web Designer</p>
-                                                   </div>
-                                                   <div class="edit-relation"><a href="javascript:void();"><i class="ri-edit-line mr-2"></i>Edit</a></div>
-                                                </li>
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><img src="images/user/02.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>iqonicdesign</h6>
-                                                      <p class="mb-0">Web Developer</p>
-                                                   </div>
-                                                   <div class="edit-relation"><a href="javascript:void();"><i class="ri-edit-line mr-2"></i>Edit</a></div>
-                                                </li>
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><img src="images/user/03.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>W3school</h6>
-                                                      <p class="mb-0">Designer</p>
-                                                   </div>
-                                                   <div class="edit-relation"><a href="javascript:void();"><i class="ri-edit-line mr-2"></i>Edit</a></div>
-                                                </li>
-                                             </ul>
-                                             <h4 class="mb-3">Professional Skills</h4>
-                                             <ul class="suggestions-lists m-0 p-0">
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><i class="ri-add-fill"></i></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Add Professional Skills</h6>
-                                                   </div>
-                                                </li>
-                                             </ul>
-                                             <h4 class="mt-3 mb-3">College</h4>
-                                             <ul class="suggestions-lists m-0 p-0">
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><i class="ri-add-fill"></i></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Add College</h6>
-                                                   </div>
-                                                </li>
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><img src="images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Lorem ipsum</h6>
-                                                      <p class="mb-0">USA</p>
-                                                   </div>
-                                                   <div class="edit-relation"><a href="javascript:void();"><i class="ri-edit-line mr-2"></i>Edit</a></div>
-                                                </li>
-                                             </ul>
-                                          </div>
                                           <div class="tab-pane fade" id="lived" role="tabpanel">
-                                             <h4 class="mb-3">Current City and Hometown</h4>
-                                             <ul class="suggestions-lists m-0 p-0">
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><img src="images/user/01.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Georgia</h6>
-                                                      <p class="mb-0">Georgia State</p>
-                                                   </div>
-                                                   <div class="edit-relation"><a href="javascript:void();"><i class="ri-edit-line mr-2"></i>Edit</a></div>
-                                                </li>
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><img src="images/user/02.jpg" alt="story-img" class="rounded-circle avatar-40"></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Atlanta</h6>
-                                                      <p class="mb-0">Atlanta City</p>
-                                                   </div>
-                                                   <div class="edit-relation"><a href="javascript:void();"><i class="ri-edit-line mr-2"></i>Edit</a></div>
-                                                </li>
-                                             </ul>
-                                             <h4 class="mt-3 mb-3">Other Places Lived</h4>
-                                             <ul class="suggestions-lists m-0 p-0">
-                                                <li class="d-flex mb-4 align-items-center">
-                                                   <div class="user-img img-fluid"><i class="ri-add-fill"></i></div>
-                                                   <div class="media-support-info ml-3">
-                                                      <h6>Add Place</h6>
-                                                   </div>
-                                                </li>
-                                             </ul>
-                                          </div>
-                                          <div class="tab-pane fade" id="details" role="tabpanel">
                                              <h4 class="mb-3">About You</h4>
                                              <p>Hi, I’m Bni, I’m 26 and I work as a Web Designer for the iqonicdesign.</p>
-                                             <h4 class="mt-3 mb-3">Other Name</h4>
-                                             <p>Bini Rock</p>
+                                          </div>
+                                          <div class="tab-pane fade" id="details" role="tabpanel">
                                              <h4 class="mt-3 mb-3">Favorite Quotes</h4>
                                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
                                           </div>

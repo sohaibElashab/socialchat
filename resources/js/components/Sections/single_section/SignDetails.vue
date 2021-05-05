@@ -7,7 +7,17 @@
                     class="img-fluid"
                     alt="logo"
             /></div>
-            <div
+            <div>
+                
+                <splide :options="options">
+                    <splide-slide v-for="item in items" :key="item.id">
+                        <img
+                            :src="item.imgItem"
+                        />
+                    </splide-slide>
+                </splide>
+            </div>
+            <!-- <div
                 class="owl-carousel"
                 data-autoplay="true"
                 data-loop="true"
@@ -33,17 +43,38 @@
                         {{item.textItem}}
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
 
 <script>
+
+import '@splidejs/splide/dist/css/themes/splide-skyblue.min.css';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
 export default {
+    components: {
+        Splide, SplideSlide
+    },
     props: {
         items: {
             type: Object,
             require: true
+        }
+    },
+    data() {
+        return{
+            options: {
+               rewind : true,
+               width  : 650,
+               height  : 400,
+	            cover  : true,
+               perPage : 1,
+               gap : 0,
+               padding : 0,
+               type : 'fade',
+	            focus  : 2,
+            }
         }
     }
 }

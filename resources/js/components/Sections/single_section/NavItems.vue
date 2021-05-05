@@ -10,9 +10,9 @@
             </router-link>
          </li>
          <li>
-            <a href="index-2.html" class="iq-waves-effect d-flex align-items-center">
+            <router-link to="/" tag="a" class="iq-waves-effect d-flex align-items-center">
             <i class="ri-home-line"></i>
-            </a>
+            </router-link>
          </li>
          <li class="nav-item">
             <a class="search-toggle iq-waves-effect" href="#"><i class="ri-group-line"></i></a>
@@ -48,8 +48,7 @@
          </li>
          <li class="nav-item">
             <a href="#" class="search-toggle iq-waves-effect">
-               <div id="lottie-beil"></div>
-               <span class="bg-danger dots"></span>
+               <i class="las la-bell"></i>
             </a>
             <div class="iq-sub-dropdown">
                <div class="iq-card shadow-none m-0">
@@ -75,8 +74,7 @@
          </li>
          <li class="nav-item dropdown">
             <a href="#" class="search-toggle iq-waves-effect">
-               <div id="lottie-mail"></div>
-               <span class="bg-primary count-mail"></span>
+               <i class="las la-inbox"></i>
             </a>
             <div class="iq-sub-dropdown">
                <div class="iq-card shadow-none m-0">
@@ -100,42 +98,11 @@
             </div>
          </li>
       </ul>
-
-      <ul class="navbar-list">
-            <li>
-               <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-               <i class="ri-arrow-down-s-fill"></i>
-               </a>
-               <div class="iq-sub-dropdown iq-user-dropdown">
-                  <div class="iq-card shadow-none m-0">
-                     <div class="iq-card-body p-0 ">
-                        <div class="bg-primary p-3 line-height">
-                           <h5 class="mb-0 text-white line-height">Hello Bni Cyst</h5>
-                           <span class="text-white font-size-12">Available</span>
-                        </div>
-                           <router-link tag="a" :to="item.href" class="iq-sub-card" :class="item.aClass" v-for="item in items" :key="item.id">
-                              <div class="media align-items-center">
-                                    <div class="rounded iq-card-icon " :class="item.IconDiv">
-                                       <i :class="item.iconClass"></i>
-                                    </div>
-                                    <div class="media-body ml-3">
-                                       <h6 class="mb-0 ">{{item.H6}}</h6>
-                                       <p class="mb-0 font-size-12">{{item.p}}</p>
-                                    </div>
-                              </div>
-                           </router-link>
-                           <div class="d-inline-block w-100 text-center p-3">
-                              <a class="bg-primary iq-sign-btn" href="sign-in.html" role="button">Sign out<i class="ri-login-box-line ml-2"></i></a>
-                           </div>
-                        </div>
-                  </div>
-               </div>
-            </li>
-      </ul>
    </div>
 </template>
 
 <script>
+
 export default {
    data() {
       return {

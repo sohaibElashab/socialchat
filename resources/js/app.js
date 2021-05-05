@@ -9,7 +9,6 @@ import sidebar from './components/Sections/general_section/static_section/sideba
 import topbar from './components/Sections/general_section/static_section/topbar.vue'
 import rightbar from './components/Sections/general_section/static_section/rightbar.vue'
 import bottombar from './components/Sections/general_section/static_section/bottombar.vue'
-import loader from './components/Sections/general_section/static_section/loader.vue'
 
 
 Vue.use(VueRouter)
@@ -18,13 +17,12 @@ Vue.component('sidebar',sidebar)
 Vue.component('topbar',topbar)
 Vue.component('rightbar',rightbar)
 Vue.component('bottombar',bottombar)
-Vue.component('loader',loader)
 
 import Home from './components/Pages/home.vue'
 import Profile from './components/Pages/profile.vue'
 import signIn from './components/Pages/signIn.vue'
 import signUp from './components/Pages/signUp.vue'
-import confirmmail from './components/Pages/confirmmail.vue'
+// import confirmmail from './components/Pages/confirmmail.vue'
 
 const routes= [
     {
@@ -43,10 +41,10 @@ const routes= [
         path: '/signUp',
         component: signUp
     },
-    {
-        path: '/confirmmail',
-        component: confirmmail
-    }
+    // {
+    //     path: '/confirmmail',
+    //     component: confirmmail
+    // }
 ]
 
 const router = new VueRouter({routes});
