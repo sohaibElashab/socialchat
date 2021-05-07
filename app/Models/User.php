@@ -30,6 +30,9 @@ class User extends Authenticatable
         'instagram',
         'youtube',
         'about',
+        'quote',
+        'interested',
+        'language',
     ];
 
     /**
