@@ -15,18 +15,21 @@
                                     <ul
                                         class="header-nav d-flex flex-wrap justify-end p-0 m-0"
                                     >
-                                        <li>
-                                            <a href="javascript:void();"
+                                        <li style="z-index:100">
+                                            <!-- <a href="javascript:void();"><i class="ri-pencil-line"></i></a> -->
+                                            <router-link
+                                                to="/profileEdit"
+                                                tag="a"
                                                 ><i class="ri-pencil-line"></i
-                                            ></a>
+                                            ></router-link>
                                         </li>
-                                        <li>
+                                        <!-- <li>
                                             <a href="javascript:void();"
                                                 ><i
                                                     class="ri-settings-4-line"
                                                 ></i
                                             ></a>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </div>
                                 <div class="user-detail text-center mb-3">

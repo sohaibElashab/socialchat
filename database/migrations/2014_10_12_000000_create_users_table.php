@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('mobile')->nullable();
             $table->string('adress')->nullable();
             $table->string('website')->nullable();
-            $table->date('birth_date')->nullable();
+            $table->date('birth_date')->nullable(); 
             $table->string('gender')->nullable();
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();
