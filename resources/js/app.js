@@ -21,6 +21,7 @@ import Home from "./components/Pages/home.vue";
 import Profile from "./components/Pages/profile.vue";
 import signIn from "./components/Pages/signIn.vue";
 import signUp from "./components/Pages/signUp.vue";
+import profileEdit from "./components/Pages/profileEdit.vue";
 // import confirmmail from './components/Pages/confirmmail.vue'
 
 const routes = [
@@ -40,6 +41,10 @@ const routes = [
     {
         path: "/signUp",
         component: signUp
+    },
+    {
+        path: "/profileEdit",
+        component: profileEdit
     }
     // {
     //     path: '/confirmmail',

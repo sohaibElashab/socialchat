@@ -15,7 +15,7 @@
             <!-- Right Sidebar Panel End-->
 
             <!-- Page Content  -->
-            <contentProfile :user="user" />
+            <contentProfileEdit />
             <!-- Page Content End -->
         </div>
         <!-- Wrapper END -->
@@ -25,21 +25,10 @@
 </template>
 
 <script>
-import contentProfile from "./../Sections/general_section/dynamic_section/contentProfile.vue";
+import contentProfileEdit from "./../Sections/general_section/dynamic_section/contentProfileEdit.vue";
 export default {
     components: {
-        contentProfile
-    },
-    data() {
-        return {
-            user: null
-        };
-    },
-    mounted() {
-        axios.get("/profile").then(res => {
-            //console.log(res.data);
-            this.user = res.data;
-        });
+        contentProfileEdit
     }
 };
 </script>
