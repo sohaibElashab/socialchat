@@ -22,7 +22,7 @@ import Profile from "./components/Pages/profile.vue";
 import signIn from "./components/Pages/signIn.vue";
 import signUp from "./components/Pages/signUp.vue";
 import profileEdit from "./components/Pages/profileEdit.vue";
-// import confirmmail from './components/Pages/confirmmail.vue'
+import chat from './components/Pages/chat.vue'
 
 const routes = [
     {
@@ -45,11 +45,11 @@ const routes = [
     {
         path: "/profileEdit",
         component: profileEdit
+    },
+    {
+        path: '/chat',
+        component: chat
     }
-    // {
-    //     path: '/confirmmail',
-    //     component: confirmmail
-    // }
 ];
 
 const router = new VueRouter({ routes });
