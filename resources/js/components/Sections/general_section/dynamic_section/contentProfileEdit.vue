@@ -61,38 +61,53 @@
                                                     >
                                                         <img
                                                             class="profile-pic"
-                                                            src="images/user/11.png"
+                                                            :src="profile"
                                                             alt="profile-pic"
+                                                            style="height:100%;width:100%"
                                                         />
                                                         <div class="p-image">
                                                             <i
                                                                 class="ri-pencil-line upload-button"
-                                                            ></i>
+                                                                @click="prof"
+                                                            ></i
+                                                            ><!--  class="file-upload"-->
                                                             <input
-                                                                class="file-upload"
+                                                                ref="prof"
+                                                                style="display:none;"
                                                                 type="file"
                                                                 accept="image/*"
+                                                                @change="
+                                                                    onProfileChange
+                                                                "
                                                             />
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-md-6">
                                                     <div
                                                         class="profile-img-edit"
                                                     >
                                                         <img
                                                             class="profile-pic"
-                                                            src="images/user/11.png"
-                                                            alt="profile-pic"
+                                                            :src="cover"
+                                                            alt="cover-pic"
+                                                            style="height:100%;width:100%"
                                                         />
                                                         <div class="p-image">
                                                             <i
                                                                 class="ri-pencil-line upload-button"
-                                                            ></i>
+                                                                @click="cov"
+                                                            ></i
+                                                            ><!--class="file-upload"  -->
                                                             <input
-                                                                class="file-upload"
+                                                                ref="cov"
+                                                                style="display:none;"
                                                                 type="file"
                                                                 accept="image/*"
+                                                                @change="
+                                                                    onCoverChange
+                                                                "
                                                             />
                                                         </div>
                                                     </div>
@@ -599,7 +614,11 @@ export default {
             twitter_err: "",
             instagram_err: "",
             youtube_err: "",
-            linkedin_err: ""
+            linkedin_err: "",
+            profile: "",
+            cover: "",
+            profile_img: null,
+            cover_img: null
         };
     },
     mounted() {
@@ -622,6 +641,8 @@ export default {
             this.instagram = this.user.instagram;
             this.youtube = this.user.youtube;
             this.linkedin = this.user.linkedin;
+            this.profile = `images/user/${this.user.profileimg.name}`;
+            this.cover = `images/user/${this.user.coverimg.name}`;
         });
     },
     methods: {
@@ -643,7 +664,9 @@ export default {
                     twitter: this.twitter,
                     instagram: this.instagram,
                     youtube: this.youtube,
-                    linkedin: this.linkedin
+                    linkedin: this.linkedin,
+                    profile: this.profile_img,
+                    cover: this.cover_img
                 })
                 .then(res => {
                     //console.log(res);
@@ -700,6 +723,26 @@ export default {
                         ? error.errors.linkedin[0]
                         : "";
                 });
+        },
+        prof() {
+            var p = this.$refs.prof;
+            p.click();
+        },
+        cov() {
+            var p = this.$refs.cov;
+            p.click();
+        },
+        onProfileChange(e) {
+            const file = e.target.files[0];
+            this.profile = URL.createObjectURL(file);
+            this.profile_img = file;
+            console.log(this.profile_img);
+        },
+        onCoverChange(e) {
+            const file = e.target.files[0];
+            this.cover = URL.createObjectURL(file);
+            this.cover_img = file;
+            console.log(this.cover_img);
         }
     }
 };

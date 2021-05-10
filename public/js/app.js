@@ -7972,7 +7972,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/profile").then(function (res) {
-      //console.log(res.data);
+      console.log(res.data);
       _this.user = res.data;
     });
   }
@@ -8498,6 +8498,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _single_section_ProfileImages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../single_section/ProfileImages */ "./resources/js/components/Sections/single_section/ProfileImages.vue");
 /* harmony import */ var _single_section_CreatePost__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../single_section/CreatePost */ "./resources/js/components/Sections/single_section/CreatePost.vue");
 /* harmony import */ var _single_section_Post__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../single_section/Post */ "./resources/js/components/Sections/single_section/Post.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -9867,6 +9872,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -9903,7 +9923,11 @@ __webpack_require__.r(__webpack_exports__);
       twitter_err: "",
       instagram_err: "",
       youtube_err: "",
-      linkedin_err: ""
+      linkedin_err: "",
+      profile: "",
+      cover: "",
+      profile_img: null,
+      cover_img: null
     };
   },
   mounted: function mounted() {
@@ -9928,6 +9952,8 @@ __webpack_require__.r(__webpack_exports__);
       _this.instagram = _this.user.instagram;
       _this.youtube = _this.user.youtube;
       _this.linkedin = _this.user.linkedin;
+      _this.profile = "images/user/".concat(_this.user.profileimg.name);
+      _this.cover = "images/user/".concat(_this.user.coverimg.name);
     });
   },
   methods: {
@@ -9950,7 +9976,9 @@ __webpack_require__.r(__webpack_exports__);
         twitter: this.twitter,
         instagram: this.instagram,
         youtube: this.youtube,
-        linkedin: this.linkedin
+        linkedin: this.linkedin,
+        profile: this.profile_img,
+        cover: this.cover_img
       }).then(function (res) {
         //console.log(res);
         _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$emit("user-update", res.data);
@@ -9973,6 +10001,26 @@ __webpack_require__.r(__webpack_exports__);
         _this2.youtube_err = error.errors.youtube ? error.errors.youtube[0] : "";
         _this2.linkedin_err = error.errors.linkedin ? error.errors.linkedin[0] : "";
       });
+    },
+    prof: function prof() {
+      var p = this.$refs.prof;
+      p.click();
+    },
+    cov: function cov() {
+      var p = this.$refs.cov;
+      p.click();
+    },
+    onProfileChange: function onProfileChange(e) {
+      var file = e.target.files[0];
+      this.profile = URL.createObjectURL(file);
+      this.profile_img = file;
+      console.log(this.profile_img);
+    },
+    onCoverChange: function onCoverChange(e) {
+      var file = e.target.files[0];
+      this.cover = URL.createObjectURL(file);
+      this.cover_img = file;
+      console.log(this.cover_img);
     }
   }
 });
@@ -10981,6 +11029,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateUser: function updateUser(data) {
+      console.log("data");
+      console.log(data);
+      console.log("data");
       this.user = data;
     }
   }
@@ -11566,15 +11617,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       name: "",
       email: "",
       password: "",
+      birthdate: "",
+      gender: "",
       name_err: "",
       email_err: "",
-      password_err: ""
+      password_err: "",
+      birthdate_err: "",
+      gender_err: ""
     };
   },
   methods: {
@@ -11585,16 +11676,21 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/register", {
         name: this.name,
         email: this.email,
-        password: this.password
+        password: this.password,
+        birthdate: this.birthdate,
+        gender: this.gender
       }).then(function (response) {
         console.log(response.status + " " + response.statusText);
 
         _this.$router.push("profile");
       })["catch"](function (err) {
         var error = JSON.parse(err.request.response);
+        console.log(err);
         _this.name_err = error.errors.name ? error.errors.name[0] : "";
         _this.email_err = error.errors.email ? error.errors.email[0] : "";
-        _this.password_err = error.errors.password ? error.errors.password[0] : ""; //console.log(error.errors);
+        _this.password_err = error.errors.password ? error.errors.password[0] : "";
+        _this.birthdate_err = error.errors.birthdate ? error.errors.birthdate[0] : "";
+        _this.gender_err = error.errors.gender ? error.errors.gender[0] : ""; //console.log(error.errors);
       });
     },
     logout: function logout() {
@@ -50638,7 +50734,7 @@ var render = function() {
                         _c("img", {
                           staticClass: "rounded img-fluid",
                           attrs: {
-                            src: "images/page-img/profile-bg1.jpg",
+                            src: "images/user/" + _vm.user.coverimg.name,
                             alt: "profile-bg"
                           }
                         }),
@@ -50670,7 +50766,15 @@ var render = function() {
                         "div",
                         { staticClass: "user-detail text-center mb-3" },
                         [
-                          _vm._m(0),
+                          _c("div", { staticClass: "profile-img" }, [
+                            _c("img", {
+                              staticClass: "avatar-130 img-fluid",
+                              attrs: {
+                                src: "images/user/" + _vm.user.profileimg.name,
+                                alt: "profile-img"
+                              }
+                            })
+                          ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "profile-detail" }, [
                             _c("h3", {}, [
@@ -50782,14 +50886,14 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _vm._m(1)
+                          _vm._m(0)
                         ]
                       )
                     ])
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(1)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-12" }, [
@@ -50805,7 +50909,7 @@ var render = function() {
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-lg-4" }, [
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(3),
+                              _vm._m(2),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c("div", { staticClass: "row" }, [
@@ -50887,7 +50991,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(4),
+                              _vm._m(3),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c(
@@ -50933,7 +51037,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(5),
+                              _vm._m(4),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c(
@@ -51019,7 +51123,7 @@ var render = function() {
                       _c("div", { staticClass: "iq-card" }, [
                         _c("div", { staticClass: "iq-card-body" }, [
                           _c("div", { staticClass: "row" }, [
-                            _vm._m(6),
+                            _vm._m(5),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9 pl-4" }, [
                               _c("div", { staticClass: "tab-content" }, [
@@ -51035,7 +51139,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(7),
+                                      _vm._m(6),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -51047,7 +51151,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(8),
+                                      _vm._m(7),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -51059,7 +51163,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(9),
+                                      _vm._m(8),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -51090,7 +51194,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(10),
+                                      _vm._m(9),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -51102,7 +51206,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(11),
+                                      _vm._m(10),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -51133,7 +51237,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(12),
+                                      _vm._m(11),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -51157,7 +51261,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(13),
+                                      _vm._m(12),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -51173,7 +51277,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(14),
+                                      _vm._m(13),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -51185,7 +51289,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(15),
+                                      _vm._m(14),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -51197,7 +51301,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(16),
+                                      _vm._m(15),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -51353,17 +51457,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "profile-img" }, [
-      _c("img", {
-        staticClass: "avatar-130 img-fluid",
-        attrs: { src: "images/user/11.png", alt: "profile-img" }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -51718,7 +51811,78 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "iq-card-body" }, [
                         _c("form", [
-                          _vm._m(2),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "form-group row align-items-center"
+                            },
+                            [
+                              _c("div", { staticClass: "col-md-6" }, [
+                                _c("div", { staticClass: "profile-img-edit" }, [
+                                  _c("img", {
+                                    staticClass: "profile-pic",
+                                    staticStyle: {
+                                      height: "100%",
+                                      width: "100%"
+                                    },
+                                    attrs: {
+                                      src: _vm.profile,
+                                      alt: "profile-pic"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "p-image" }, [
+                                    _c("i", {
+                                      staticClass:
+                                        "ri-pencil-line upload-button",
+                                      on: { click: _vm.prof }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      ref: "prof",
+                                      staticStyle: { display: "none" },
+                                      attrs: {
+                                        type: "file",
+                                        accept: "image/*"
+                                      },
+                                      on: { change: _vm.onProfileChange }
+                                    })
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-6" }, [
+                                _c("div", { staticClass: "profile-img-edit" }, [
+                                  _c("img", {
+                                    staticClass: "profile-pic",
+                                    staticStyle: {
+                                      height: "100%",
+                                      width: "100%"
+                                    },
+                                    attrs: { src: _vm.cover, alt: "cover-pic" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "p-image" }, [
+                                    _c("i", {
+                                      staticClass:
+                                        "ri-pencil-line upload-button",
+                                      on: { click: _vm.cov }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      ref: "cov",
+                                      staticStyle: { display: "none" },
+                                      attrs: {
+                                        type: "file",
+                                        accept: "image/*"
+                                      },
+                                      on: { change: _vm.onCoverChange }
+                                    })
+                                  ])
+                                ])
+                              ])
+                            ]
+                          ),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -52646,7 +52810,7 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(3)
+                _vm._m(2)
               ])
             ])
           ])
@@ -52720,48 +52884,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row align-items-center" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "profile-img-edit" }, [
-          _c("img", {
-            staticClass: "profile-pic",
-            attrs: { src: "images/user/11.png", alt: "profile-pic" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-image" }, [
-            _c("i", { staticClass: "ri-pencil-line upload-button" }),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "file-upload",
-              attrs: { type: "file", accept: "image/*" }
-            })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "profile-img-edit" }, [
-          _c("img", {
-            staticClass: "profile-pic",
-            attrs: { src: "images/user/11.png", alt: "profile-pic" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-image" }, [
-            _c("i", { staticClass: "ri-pencil-line upload-button" }),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "file-upload",
-              attrs: { type: "file", accept: "image/*" }
-            })
-          ])
-        ])
-      ])
-    ])
   },
   function() {
     var _vm = this
@@ -54351,37 +54473,40 @@ var render = function() {
     },
     [
       _c("ul", { staticClass: "navbar-nav ml-auto navbar-list" }, [
-        _c(
-          "li",
-          [
-            _c(
-              "router-link",
-              {
-                staticClass: "iq-waves-effect d-flex align-items-center",
-                attrs: { to: "/profile", tag: "a" }
-              },
+        this.user
+          ? _c(
+              "li",
               [
-                _c("img", {
-                  staticClass: "img-fluid rounded-circle mr-3",
-                  attrs: { src: "images/user/1.jpg", alt: "user" }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "caption" }, [
-                  this.user
-                    ? _c("h6", { staticClass: "mb-0 line-height" }, [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "iq-waves-effect d-flex align-items-center",
+                    attrs: { to: "/profile", tag: "a" }
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "img-fluid rounded-circle mr-3",
+                      attrs: {
+                        src: "images/user/" + _vm.user.profileimg.name,
+                        alt: "user"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "caption" }, [
+                      _c("h6", { staticClass: "mb-0 line-height" }, [
                         _vm._v(
                           "\n                        " +
                             _vm._s(this.user.name) +
                             "\n                    "
                         )
                       ])
-                    : _vm._e()
-                ])
-              ]
+                    ])
+                  ]
+                )
+              ],
+              1
             )
-          ],
-          1
-        ),
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "li",
@@ -55519,7 +55644,149 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "exampleInputPassword1" } }, [
+            _vm._v("Birth date")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.birthdate,
+                expression: "birthdate"
+              }
+            ],
+            staticClass: "form-control mb-0",
+            attrs: {
+              type: "date",
+              id: "exampleInputPassword1",
+              placeholder: "Password"
+            },
+            domProps: { value: _vm.birthdate },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.birthdate = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-text text-danger" }, [
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.birthdate_err) +
+                "\n                "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "d-block" }, [_vm._v("Gender:")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "custom-control custom-radio custom-control-inline"
+            },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.gender,
+                    expression: "gender"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "radio", id: "customRadio6", value: "male" },
+                domProps: { checked: _vm._q(_vm.gender, "male") },
+                on: {
+                  change: function($event) {
+                    _vm.gender = "male"
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "customRadio6" }
+                },
+                [_vm._v("\n                        Male\n                    ")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "custom-control custom-radio custom-control-inline"
+            },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.gender,
+                    expression: "gender"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "radio", id: "customRadio7", value: "female" },
+                domProps: { checked: _vm._q(_vm.gender, "female") },
+                on: {
+                  change: function($event) {
+                    _vm.gender = "female"
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "customRadio7" }
+                },
+                [
+                  _vm._v(
+                    "\n                        Female\n                    "
+                  )
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-text text-danger" }, [
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.gender_err) +
+                "\n                "
+            )
+          ])
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "d-inline-block w-100" }, [
+          _c("div", { staticClass: " d-inline-block mt-2 pt-1" }, [
+            _c(
+              "span",
+              { staticClass: "dark-color d-inline-block line-height-2" },
+              [
+                _vm._v("Already Have Account ?\n                        "),
+                _c("router-link", { attrs: { to: "/signIn", tag: "a" } }, [
+                  _vm._v("Log In")
+                ])
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
           _c(
             "button",
             {
@@ -55536,20 +55803,6 @@ var render = function() {
               on: { click: _vm.logout }
             },
             [_vm._v("\n                    logout\n                ")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "sign-info" }, [
-          _c(
-            "span",
-            { staticClass: "dark-color d-inline-block line-height-2" },
-            [
-              _vm._v("Already Have Account ?\n                    "),
-              _c("router-link", { attrs: { to: "/signIn", tag: "a" } }, [
-                _vm._v("Log In")
-              ])
-            ],
-            1
           )
         ])
       ])

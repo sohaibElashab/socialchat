@@ -43,20 +43,62 @@
                         {{ password_err }}
                     </div>
                 </div>
-                <div class="d-inline-block w-100">
-                    <!--  <div
-                        class="custom-control custom-checkbox d-inline-block mt-2 pt-1"
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Birth date</label>
+                    <input
+                        type="date"
+                        class="form-control mb-0"
+                        id="exampleInputPassword1"
+                        placeholder="Password"
+                        v-model="birthdate"
+                    />
+                    <div class="form-text text-danger">
+                        {{ birthdate_err }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Gender:</label>
+                    <div
+                        class="custom-control custom-radio custom-control-inline"
                     >
                         <input
-                            type="checkbox"
+                            type="radio"
+                            id="customRadio6"
+                            value="male"
                             class="custom-control-input"
-                            id="customCheck1"
+                            v-model="gender"
                         />
-                        <label class="custom-control-label" for="customCheck1"
-                            >I accept
-                            <a href="#">Terms and Conditions</a></label
-                        >
-                    </div> -->
+                        <label class="custom-control-label" for="customRadio6">
+                            Male
+                        </label>
+                    </div>
+                    <div
+                        class="custom-control custom-radio custom-control-inline"
+                    >
+                        <input
+                            type="radio"
+                            id="customRadio7"
+                            value="female"
+                            class="custom-control-input"
+                            v-model="gender"
+                        />
+                        <label class="custom-control-label" for="customRadio7">
+                            Female
+                        </label>
+                    </div>
+                    <div class="form-text text-danger">
+                        {{ gender_err }}
+                    </div>
+                </div>
+                <div class="d-inline-block w-100">
+                    <div class=" d-inline-block mt-2 pt-1">
+                        <span class="dark-color d-inline-block line-height-2"
+                            >Already Have Account ?
+                            <router-link to="/signIn" tag="a"
+                                >Log In</router-link
+                            >
+                        </span>
+                    </div>
                     <button
                         class="btn btn-primary float-right"
                         @click="register"
@@ -66,12 +108,6 @@
                     <button class="btn btn-primary float-right" @click="logout">
                         logout
                     </button>
-                </div>
-                <div class="sign-info">
-                    <span class="dark-color d-inline-block line-height-2"
-                        >Already Have Account ?
-                        <router-link to="/signIn" tag="a">Log In</router-link>
-                    </span>
                 </div>
             </form>
         </div>
@@ -85,9 +121,13 @@ export default {
             name: "",
             email: "",
             password: "",
+            birthdate: "",
+            gender: "",
             name_err: "",
             email_err: "",
-            password_err: ""
+            password_err: "",
+            birthdate_err: "",
+            gender_err: ""
         };
     },
     methods: {
@@ -97,7 +137,9 @@ export default {
                 .post("/register", {
                     name: this.name,
                     email: this.email,
-                    password: this.password
+                    password: this.password,
+                    birthdate: this.birthdate,
+                    gender: this.gender
                 })
                 .then(response => {
                     console.log(response.status + " " + response.statusText);
@@ -105,6 +147,7 @@ export default {
                 })
                 .catch(err => {
                     var error = JSON.parse(err.request.response);
+                    console.log(err);
                     this.name_err = error.errors.name
                         ? error.errors.name[0]
                         : "";
@@ -113,6 +156,12 @@ export default {
                         : "";
                     this.password_err = error.errors.password
                         ? error.errors.password[0]
+                        : "";
+                    this.birthdate_err = error.errors.birthdate
+                        ? error.errors.birthdate[0]
+                        : "";
+                    this.gender_err = error.errors.gender
+                        ? error.errors.gender[0]
                         : "";
                     //console.log(error.errors);
                 });

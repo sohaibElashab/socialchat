@@ -37,7 +37,7 @@ export default {
     },
     mounted() {
         axios.get("/profile").then(res => {
-            //console.log(res.data);
+            console.log(res.data);
             this.user = res.data;
         });
     }
