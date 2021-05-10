@@ -65,7 +65,7 @@
                                              Conversation!</button>
                                           </div>
                                        </div>
-                                       <Conversation/>
+                                       <Conversation :ChatContents="ChatContents"/>
                                     </div>
                                  </div>
                               </div>
@@ -80,13 +80,13 @@
 
 <script>
 import SliderChat from '../../single_section/SliderChat.vue'
-import Conversation from '../../single_section/Conversation'
+import Conversation from '../../single_section/Conversation.vue'
 
 export default {
     components:{
         SliderChat,
         Conversation
-    }  ,  
+    } ,  
         data() {
         return {
             ChatLists : {
@@ -126,6 +126,36 @@ export default {
                     numberMsg : "20",
                     TimeSend : "14:02"
                 },
+            },
+            ChatContents : {
+               "1" : {
+                  id: 1,
+                  imgUserChat: "images/user/05.jpg",
+                  txtChat : "How can we help? We're here for you! 😄",
+                  TimeSend : "14:02",
+                  MsgFor : ""
+               },
+               "2" : {
+                  id: 2,
+                  imgUserChat: "images/user/05.jpg",
+                  txtChat : "How can we help? We're here for you! 😄",
+                  TimeSend : "14:02",
+                  MsgFor : "chat-left"
+               },
+               "3" : {
+                  id: 3,
+                  imgUserChat: "images/user/05.jpg",
+                  txtChat : "How can we help? We're here for you! 😄",
+                  TimeSend : "14:02",
+                  MsgFor : ""
+               },
+               "4" : {
+                  id: 4,
+                  imgUserChat: "images/user/05.jpg",
+                  txtChat : "How can we help? We're here for you! 😄",
+                  TimeSend : "14:02",
+                  MsgFor : "chat-left"
+               },
             }
         }
     }
