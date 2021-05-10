@@ -8,7 +8,9 @@
                             <div class="profile-header">
                                 <div class="cover-container">
                                     <img
-                                        src="images/page-img/profile-bg1.jpg"
+                                        :src="
+                                            `images/user/${user.coverimg.name}`
+                                        "
                                         alt="profile-bg"
                                         class="rounded img-fluid"
                                     />
@@ -34,8 +36,11 @@
                                 </div>
                                 <div class="user-detail text-center mb-3">
                                     <div class="profile-img">
+                                        <!-- 11.png // -->
                                         <img
-                                            src="images/user/11.png"
+                                            :src="
+                                                `images/user/${user.profileimg.name}`
+                                            "
                                             alt="profile-img"
                                             class="avatar-130 img-fluid"
                                         />

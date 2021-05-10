@@ -1,19 +1,19 @@
 <template>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto navbar-list">
-            <li>
+            <li v-if="this.user">
                 <router-link
                     to="/profile"
                     tag="a"
                     class="iq-waves-effect d-flex align-items-center"
                 >
                     <img
-                        src="images/user/1.jpg"
+                        :src="`images/user/${user.profileimg.name}`"
                         class="img-fluid rounded-circle mr-3"
                         alt="user"
                     />
                     <div class="caption">
-                        <h6 class="mb-0 line-height" v-if="this.user">
+                        <h6 class="mb-0 line-height">
                             {{ this.user.name }}
                         </h6>
                     </div>
@@ -281,6 +281,9 @@ export default {
     },
     methods: {
         updateUser(data) {
+            console.log("data");
+            console.log(data);
+            console.log("data");
             this.user = data;
         }
     }

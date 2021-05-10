@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Image;
 
 class ProfilController extends Controller
 {
@@ -15,6 +16,8 @@ class ProfilController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+        $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
         return response()->json($user);
     }
 
@@ -80,14 +83,15 @@ class ProfilController extends Controller
             'interested' => 'required',
             'adress' => 'required',
             'about' => 'required',
+        ]);
+        /* 
             'quote' => 'required',
             'website' => 'required',
             'facebook' => 'required',
             'twitter' => 'required',
             'instagram' => 'required',
             'youtube' => 'required',
-            'linkedin' => 'required',
-        ]);
+            'linkedin' => 'required', */
 
         $user = User::findOrFail(auth()->user()->id);
 

@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Image;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class RegisterController extends Controller
+class RegisterController extends Controller 
 {
     /*
     |--------------------------------------------------------------------------
@@ -54,6 +55,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
+            'birthdate' => ['required'],
+            'gender' => ['required'],
         ]);//, 'confirmed' 
     }
 
@@ -65,11 +68,38 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'], 
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'birth_date' => $data['birthdate'],
+            'gender' => $data['gender'],
         ]);
+        Image::create([
+            'post_id' => 0,
+            'user_id' => $user->id,
+            'name' => 'profile-bg1.jpg',
+            'type' => 'cover',
+        ]);
+
+       if ($data['gender'] == 'female') {
+           Image::create([
+               'post_id' => 0,
+               'user_id' => $user->id,
+               'name' => '04.jpg',
+               'type' => 'profile',
+           ]);
+       }
+       if ($data['gender'] == 'male') {
+           Image::create([
+               'post_id' => 0,
+               'user_id' => $user->id,
+               'name' => '12.jpg',
+               'type' => 'profile',
+           ]);
+       }
+
+        return $user;
     }
 }
  
