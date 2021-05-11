@@ -9889,6 +9889,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -9925,7 +9935,11 @@ __webpack_require__.r(__webpack_exports__);
       twitter_err: "",
       instagram_err: "",
       youtube_err: "",
-      linkedin_err: ""
+      linkedin_err: "",
+      profile: "",
+      cover: "",
+      profile_img: null,
+      cover_img: null
     };
   },
   mounted: function mounted() {
@@ -9950,31 +9964,41 @@ __webpack_require__.r(__webpack_exports__);
       _this.instagram = _this.user.instagram;
       _this.youtube = _this.user.youtube;
       _this.linkedin = _this.user.linkedin;
+      _this.profile = "images/user/".concat(_this.user.profileimg.name);
+      _this.cover = "images/user/".concat(_this.user.coverimg.name);
     });
   },
   methods: {
     send: function send() {
       var _this2 = this;
 
-      axios.post("/profile-update", {
-        name: this.name,
-        email: this.email,
-        gender: this.gender,
-        birthdate: this.birthdate,
-        mobile: this.mobile,
-        language: this.language,
-        interested: this.interested,
-        adress: this.adress,
-        about: this.about,
-        quote: this.quote,
-        website: this.website,
-        facebook: this.facebook,
-        twitter: this.twitter,
-        instagram: this.instagram,
-        youtube: this.youtube,
-        linkedin: this.linkedin
-      }).then(function (res) {
-        //console.log(res);
+      var config = {
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      };
+      var data = new FormData();
+      data.append("cover", this.cover_img);
+      data.append("profile", this.profile_img);
+      data.append("name", this.name);
+      data.append("email", this.email);
+      data.append("gender", this.gender);
+      data.append("about", this.about);
+      data.append("birthdate", this.birthdate);
+      data.append("mobile", this.mobile);
+      data.append("language", this.language);
+      data.append("interested", this.interested);
+      data.append("adress", this.adress);
+      data.append("quote", this.quote);
+      data.append("website", this.website);
+      data.append("facebook", this.facebook);
+      data.append("twitter", this.twitter);
+      data.append("instagram", this.instagram);
+      data.append("youtube", this.youtube);
+      data.append("linkedin", this.linkedin); //axios.post("/profile-update", data, config);
+
+      axios.post("/profile-update", data, config).then(function (res) {
+        console.log(res);
         _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$emit("user-update", res.data);
       })["catch"](function (err) {
         var error = JSON.parse(err.request.response);
@@ -9995,6 +10019,25 @@ __webpack_require__.r(__webpack_exports__);
         _this2.youtube_err = error.errors.youtube ? error.errors.youtube[0] : "";
         _this2.linkedin_err = error.errors.linkedin ? error.errors.linkedin[0] : "";
       });
+    },
+    prof: function prof() {
+      var p = this.$refs.prof;
+      p.click();
+    },
+    cov: function cov() {
+      var p = this.$refs.cov;
+      p.click();
+    },
+    onProfileChange: function onProfileChange(e) {
+      var file = e.target.files[0];
+      this.profile = URL.createObjectURL(file);
+      this.profile_img = file;
+      console.log(this.profile_img);
+    },
+    onCoverChange: function onCoverChange(e) {
+      var file = e.target.files[0];
+      this.cover = URL.createObjectURL(file);
+      this.cover_img = file; //console.log(this.cover_img);
     }
   }
 });
@@ -10908,6 +10951,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       user: null,
+      img: "",
       friendReqs: {
         "1": {
           id: 1,
@@ -10998,15 +11042,14 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/profile").then(function (res) {
       //console.log(res.data);
       _this.user = res.data;
+      _this.img = _this.user.profileimg.name;
     });
     _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$on("user-update", this.updateUser);
   },
   methods: {
     updateUser: function updateUser(data) {
-      console.log("data");
-      console.log(data);
-      console.log("data");
       this.user = data;
+      this.img = this.user.profile;
     }
   }
 });
@@ -51793,7 +51836,7 @@ var render = function() {
                             [
                               _c("div", { staticClass: "col-md-5" }, [
                                 _c("label", { attrs: { for: "fname" } }, [
-                                  _vm._v("Full Name:")
+                                  _vm._v("Profile image:")
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "div-img-edit" }, [
@@ -51804,7 +51847,7 @@ var render = function() {
                                       _c("img", {
                                         staticClass: "profile-pic",
                                         attrs: {
-                                          src: "images/user/03.jpg",
+                                          src: _vm.profile,
                                           alt: "profile-pic"
                                         }
                                       }),
@@ -51833,7 +51876,7 @@ var render = function() {
                               _vm._v(" "),
                               _c("div", { staticClass: "col-md-7" }, [
                                 _c("label", { attrs: { for: "fname" } }, [
-                                  _vm._v("Full Name:")
+                                  _vm._v("Cover image:")
                                 ]),
                                 _vm._v(" "),
                                 _c(
@@ -51843,7 +51886,7 @@ var render = function() {
                                     _c("img", {
                                       staticClass: "profile-cover-pic",
                                       attrs: {
-                                        src: "images/user/03.jpg",
+                                        src: _vm.cover,
                                         alt: "cover-pic"
                                       }
                                     }),
@@ -54477,10 +54520,7 @@ var render = function() {
                   [
                     _c("img", {
                       staticClass: "img-fluid rounded-circle mr-3",
-                      attrs: {
-                        src: "images/user/" + _vm.user.profileimg.name,
-                        alt: "user"
-                      }
+                      attrs: { src: "images/user/" + _vm.img, alt: "user" }
                     }),
                     _vm._v(" "),
                     _c("div", { staticClass: "caption" }, [

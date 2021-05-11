@@ -57,7 +57,7 @@
                                             >
                                                 <div class="col-md-5">
                                                     <label for="fname"
-                                                        >Full Name:</label
+                                                        >Profile image:</label
                                                     >
                                                     <div class="div-img-edit">
                                                         <div
@@ -65,13 +65,17 @@
                                                         >
                                                             <img
                                                                 class="profile-pic"
-                                                                src="images/user/03.jpg"
+                                                                :src="profile"
                                                                 alt="profile-pic"
                                                             />
-                                                            <div class="p-image">
+                                                            <div
+                                                                class="p-image"
+                                                            >
                                                                 <i
                                                                     class="ri-pencil-line upload-button"
-                                                                    @click="prof"
+                                                                    @click="
+                                                                        prof
+                                                                    "
                                                                 ></i
                                                                 ><!--  class="file-upload"-->
                                                                 <input
@@ -79,7 +83,9 @@
                                                                     style="display:none;"
                                                                     type="file"
                                                                     accept="image/*"
-                                                                    @change="onProfileChange"
+                                                                    @change="
+                                                                        onProfileChange
+                                                                    "
                                                                 />
                                                             </div>
                                                         </div>
@@ -88,17 +94,19 @@
 
                                                 <div class="col-md-7">
                                                     <label for="fname"
-                                                        >Full Name:</label
+                                                        >Cover image:</label
                                                     >
                                                     <div
                                                         class="profile-cover-img-edit"
                                                     >
                                                         <img
                                                             class="profile-cover-pic"
-                                                            src="images/user/03.jpg"
+                                                            :src="cover"
                                                             alt="cover-pic"
                                                         />
-                                                        <div class="p-image Ip-image">
+                                                        <div
+                                                            class="p-image Ip-image"
+                                                        >
                                                             <i
                                                                 class="ri-pencil-line upload-button"
                                                                 @click="cov"
@@ -109,7 +117,9 @@
                                                                 style="display:none;"
                                                                 type="file"
                                                                 accept="image/*"
-                                                                @change="onCoverChange"
+                                                                @change="
+                                                                    onCoverChange
+                                                                "
                                                             />
                                                         </div>
                                                     </div>
@@ -616,7 +626,11 @@ export default {
             twitter_err: "",
             instagram_err: "",
             youtube_err: "",
-            linkedin_err: ""
+            linkedin_err: "",
+            profile: "",
+            cover: "",
+            profile_img: null,
+            cover_img: null
         };
     },
     mounted() {
@@ -639,31 +653,42 @@ export default {
             this.instagram = this.user.instagram;
             this.youtube = this.user.youtube;
             this.linkedin = this.user.linkedin;
+            this.profile = `images/user/${this.user.profileimg.name}`;
+            this.cover = `images/user/${this.user.coverimg.name}`;
         });
     },
     methods: {
         send() {
+            const config = {
+                headers: {
+                    "content-type": "multipart/form-data"
+                }
+            };
+            let data = new FormData();
+            data.append("cover", this.cover_img);
+            data.append("profile", this.profile_img);
+            data.append("name", this.name);
+            data.append("email", this.email);
+            data.append("gender", this.gender);
+            data.append("about", this.about);
+            data.append("birthdate", this.birthdate);
+            data.append("mobile", this.mobile);
+            data.append("language", this.language);
+            data.append("interested", this.interested);
+            data.append("adress", this.adress);
+            data.append("quote", this.quote);
+            data.append("website", this.website);
+            data.append("facebook", this.facebook);
+            data.append("twitter", this.twitter);
+            data.append("instagram", this.instagram);
+            data.append("youtube", this.youtube);
+            data.append("linkedin", this.linkedin);
+
+            //axios.post("/profile-update", data, config);
             axios
-                .post("/profile-update", {
-                    name: this.name,
-                    email: this.email,
-                    gender: this.gender,
-                    birthdate: this.birthdate,
-                    mobile: this.mobile,
-                    language: this.language,
-                    interested: this.interested,
-                    adress: this.adress,
-                    about: this.about,
-                    quote: this.quote,
-                    website: this.website,
-                    facebook: this.facebook,
-                    twitter: this.twitter,
-                    instagram: this.instagram,
-                    youtube: this.youtube,
-                    linkedin: this.linkedin
-                })
+                .post("/profile-update", data, config)
                 .then(res => {
-                    //console.log(res);
+                    console.log(res);
                     EventBus.$emit("user-update", res.data);
                 })
                 .catch(err => {
@@ -717,6 +742,27 @@ export default {
                         ? error.errors.linkedin[0]
                         : "";
                 });
+        },
+        prof() {
+            var p = this.$refs.prof;
+            p.click();
+        },
+        cov() {
+            var p = this.$refs.cov;
+            p.click();
+        },
+        onProfileChange(e) {
+            const file = e.target.files[0];
+            this.profile = URL.createObjectURL(file);
+            this.profile_img = file;
+            console.log(this.profile_img);
+        },
+        onCoverChange(e) {
+            const file = e.target.files[0];
+            this.cover = URL.createObjectURL(file);
+
+            this.cover_img = file;
+            //console.log(this.cover_img);
         }
     }
 };
