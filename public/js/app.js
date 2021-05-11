@@ -11515,17 +11515,25 @@ __webpack_require__.r(__webpack_exports__);
       password_err: ""
     };
   },
+  mounted: function mounted() {
+    axios.post("/logout").then(function (res) {
+      console.log(res);
+    });
+  },
   methods: {
-    login: function login() {
+    login: function login(e) {
       var _this = this;
 
+      e.preventDefault();
       axios.post("/login", {
         email: this.email,
         password: this.password
       }).then(function (res) {
         console.log(res);
 
-        _this.$router.push("profile");
+        _this.$router.push({
+          name: "home"
+        });
       })["catch"](function (err) {
         var error = JSON.parse(err.request.response);
         console.log(error.errors);
@@ -11533,7 +11541,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.password_err = error.errors.password ? error.errors.password[0] : "";
       });
     },
-    logout: function logout() {
+    logout: function logout(e) {
+      e.preventDefault();
       axios.post("/logout").then(function (res) {
         console.log(res);
       });
@@ -11685,10 +11694,16 @@ __webpack_require__.r(__webpack_exports__);
       gender_err: ""
     };
   },
+  mounted: function mounted() {
+    axios.post("/logout").then(function (res) {
+      console.log(res);
+    });
+  },
   methods: {
-    register: function register() {
+    register: function register(e) {
       var _this = this;
 
+      e.preventDefault();
       console.log(this.name + "_" + this.email + "_" + this.password);
       axios.post("/register", {
         name: this.name,
@@ -11699,7 +11714,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response.status + " " + response.statusText);
 
-        _this.$router.push("profile");
+        _this.$router.push({
+          name: "home"
+        });
       })["catch"](function (err) {
         var error = JSON.parse(err.request.response);
         console.log(err);
@@ -11710,7 +11727,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.gender_err = error.errors.gender ? error.errors.gender[0] : ""; //console.log(error.errors);
       });
     },
-    logout: function logout() {
+    logout: function logout(e) {
+      e.preventDefault();
       axios.post("/logout").then(function (res) {
         console.log(res);
       });
@@ -11885,6 +11903,7 @@ vue__WEBPACK_IMPORTED_MODULE_5__.default.component("bottombar", _components_Sect
 
 var routes = [{
   path: "/",
+  name: "home",
   component: _components_Pages_home_vue__WEBPACK_IMPORTED_MODULE_7__.default
 }, {
   path: "/profile",
@@ -11900,7 +11919,7 @@ var routes = [{
   path: "/profileEdit",
   component: _components_Pages_profileEdit_vue__WEBPACK_IMPORTED_MODULE_11__.default
 }, {
-  path: '/chat',
+  path: "/chat",
   component: _components_Pages_chat_vue__WEBPACK_IMPORTED_MODULE_12__.default
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__.default({

@@ -22,11 +22,12 @@ import Profile from "./components/Pages/profile.vue";
 import signIn from "./components/Pages/signIn.vue";
 import signUp from "./components/Pages/signUp.vue";
 import profileEdit from "./components/Pages/profileEdit.vue";
-import chat from './components/Pages/chat.vue'
+import chat from "./components/Pages/chat.vue";
 
 const routes = [
     {
         path: "/",
+        name: "home",
         component: Home
     },
     {
@@ -47,7 +48,7 @@ const routes = [
         component: profileEdit
     },
     {
-        path: '/chat',
+        path: "/chat",
         component: chat
     }
 ];

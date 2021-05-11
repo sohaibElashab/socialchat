@@ -130,8 +130,14 @@ export default {
             gender_err: ""
         };
     },
+    mounted() {
+        axios.post("/logout").then(res => {
+            console.log(res);
+        });
+    },
     methods: {
-        register() {
+        register(e) {
+            e.preventDefault();
             console.log(this.name + "_" + this.email + "_" + this.password);
             axios
                 .post("/register", {
@@ -143,7 +149,7 @@ export default {
                 })
                 .then(response => {
                     console.log(response.status + " " + response.statusText);
-                    this.$router.push("profile");
+                    this.$router.push({ name: "home" });
                 })
                 .catch(err => {
                     var error = JSON.parse(err.request.response);
@@ -166,7 +172,8 @@ export default {
                     //console.log(error.errors);
                 });
         },
-        logout() {
+        logout(e) {
+            e.preventDefault();
             axios.post("/logout").then(res => {
                 console.log(res);
             });
