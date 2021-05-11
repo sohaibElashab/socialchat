@@ -214,7 +214,7 @@ color: var(--iq-dark-body-text); }
 .sign-in-detail { padding: 100px; height: 100vh; }
 .sign-in-logo { display: inline-block; width: 100%; }
 .sign-in-logo img { height: 50px; }
-.sign-in-from { padding: 0 60px; }
+.sign-in-from { padding: 0 60px; overflow: scroll; height: 600px; }
 .sign-info { border-top: 1px solid var(--iq-border-dark); margin-top: 30px; padding-top: 20px; }
 .iq-social-media { margin: 0; padding: 0; float: right; }
 .iq-social-media li { list-style: none; float: left; margin-right: 10px; }

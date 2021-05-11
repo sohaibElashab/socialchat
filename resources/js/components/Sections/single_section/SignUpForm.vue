@@ -3,7 +3,7 @@
         <div class="sign-in-from">
             <h1 class="mb-0">Sign Up</h1>
             <!--  <p>Enter your email address and password to access admin panel.</p> -->
-            <form class="mt-4">
+            <form class="mt-4 mb-4">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Your Full Name</label>
                     <input
@@ -41,6 +41,32 @@
                     />
                     <div class="form-text text-danger">
                         {{ password_err }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Confirme Password</label>
+                    <input
+                        type="password"
+                        class="form-control mb-0"
+                        id="exampleInputPassword1"
+                        placeholder="Confirme Password"
+                        v-model="Cpassword"
+                    />
+                    <div class="form-text text-danger">
+                        {{ password_err }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Mobile</label>
+                    <input
+                        type="text"
+                        class="form-control mb-0"
+                        id="exampleInputPassword1"
+                        placeholder="mobile"
+                        v-model="mobile"
+                    />
+                    <div class="form-text text-danger">
+                        {{ mobile_err }}
                     </div>
                 </div>
                 <div class="form-group">
@@ -121,10 +147,13 @@ export default {
             name: "",
             email: "",
             password: "",
+            Cpassword: "", 
+            mobile: "",
             birthdate: "",
             gender: "",
             name_err: "",
             email_err: "",
+            mobile_err: "",
             password_err: "",
             birthdate_err: "",
             gender_err: ""
@@ -144,6 +173,7 @@ export default {
                     name: this.name,
                     email: this.email,
                     password: this.password,
+                    mobile: this.mobile,
                     birthdate: this.birthdate,
                     gender: this.gender
                 })
@@ -162,6 +192,9 @@ export default {
                         : "";
                     this.password_err = error.errors.password
                         ? error.errors.password[0]
+                        : "";
+                    this.mobile_err = error.errors.mobile
+                        ? error.errors.mobile[0]
                         : "";
                     this.birthdate_err = error.errors.birthdate
                         ? error.errors.birthdate[0]

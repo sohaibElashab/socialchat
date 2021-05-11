@@ -22,6 +22,12 @@ import Profile from "./components/Pages/profile.vue";
 import signIn from "./components/Pages/signIn.vue";
 import signUp from "./components/Pages/signUp.vue";
 import profileEdit from "./components/Pages/profileEdit.vue";
+import profileImages from "./components/Pages/profileImages.vue";
+import profileVideos from "./components/Pages/profileVideos.vue";
+import notification from "./components/Pages/notification.vue";
+import friendRequest from "./components/Pages/friendRequest.vue";
+import friendProfile from "./components/Pages/friendProfile.vue";
+import friendList from "./components/Pages/friendList.vue";
 import chat from "./components/Pages/chat.vue";
 
 const routes = [
@@ -37,19 +43,53 @@ const routes = [
     },
     {
         path: "/signIn",
+        name: "signIn",
         component: signIn
     },
     {
         path: "/signUp",
+        name: "signUp",
         component: signUp
     },
     {
         path: "/profileEdit",
+        name: "profileEdit",
         component: profileEdit
     },
     {
         path: "/chat",
+        name: "chat",
         component: chat
+    },
+    {
+        path: "/profileImages",
+        name: "profileImages",
+        component: profileImages
+    },
+    {
+        path: "/profileVideos",
+        name: "profileVideos",
+        component: profileVideos
+    },
+    {
+        path: "/notification",
+        name: "notificatio",
+        component: notification
+    },
+    {
+        path: "/friendRequest",
+        name: "friendReque",
+        component: friendRequest
+    },
+    {
+        path: "/friendProfile",
+        name: "friendProfi",
+        component: friendProfile
+    },
+    {
+        path: "/friendList",
+        name: "friendList",
+        component: friendList
     }
 ];
 
