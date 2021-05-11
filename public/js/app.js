@@ -9887,6 +9887,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -9923,11 +9925,7 @@ __webpack_require__.r(__webpack_exports__);
       twitter_err: "",
       instagram_err: "",
       youtube_err: "",
-      linkedin_err: "",
-      profile: "",
-      cover: "",
-      profile_img: null,
-      cover_img: null
+      linkedin_err: ""
     };
   },
   mounted: function mounted() {
@@ -9952,8 +9950,6 @@ __webpack_require__.r(__webpack_exports__);
       _this.instagram = _this.user.instagram;
       _this.youtube = _this.user.youtube;
       _this.linkedin = _this.user.linkedin;
-      _this.profile = "images/user/".concat(_this.user.profileimg.name);
-      _this.cover = "images/user/".concat(_this.user.coverimg.name);
     });
   },
   methods: {
@@ -9976,9 +9972,7 @@ __webpack_require__.r(__webpack_exports__);
         twitter: this.twitter,
         instagram: this.instagram,
         youtube: this.youtube,
-        linkedin: this.linkedin,
-        profile: this.profile_img,
-        cover: this.cover_img
+        linkedin: this.linkedin
       }).then(function (res) {
         //console.log(res);
         _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$emit("user-update", res.data);
@@ -10001,26 +9995,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.youtube_err = error.errors.youtube ? error.errors.youtube[0] : "";
         _this2.linkedin_err = error.errors.linkedin ? error.errors.linkedin[0] : "";
       });
-    },
-    prof: function prof() {
-      var p = this.$refs.prof;
-      p.click();
-    },
-    cov: function cov() {
-      var p = this.$refs.cov;
-      p.click();
-    },
-    onProfileChange: function onProfileChange(e) {
-      var file = e.target.files[0];
-      this.profile = URL.createObjectURL(file);
-      this.profile_img = file;
-      console.log(this.profile_img);
-    },
-    onCoverChange: function onCoverChange(e) {
-      var file = e.target.files[0];
-      this.cover = URL.createObjectURL(file);
-      this.cover_img = file;
-      console.log(this.cover_img);
     }
   }
 });
@@ -51817,69 +51791,86 @@ var render = function() {
                               staticClass: "form-group row align-items-center"
                             },
                             [
-                              _c("div", { staticClass: "col-md-6" }, [
-                                _c("div", { staticClass: "profile-img-edit" }, [
-                                  _c("img", {
-                                    staticClass: "profile-pic",
-                                    staticStyle: {
-                                      height: "100%",
-                                      width: "100%"
-                                    },
-                                    attrs: {
-                                      src: _vm.profile,
-                                      alt: "profile-pic"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "p-image" }, [
-                                    _c("i", {
-                                      staticClass:
-                                        "ri-pencil-line upload-button",
-                                      on: { click: _vm.prof }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      ref: "prof",
-                                      staticStyle: { display: "none" },
-                                      attrs: {
-                                        type: "file",
-                                        accept: "image/*"
-                                      },
-                                      on: { change: _vm.onProfileChange }
-                                    })
-                                  ])
+                              _c("div", { staticClass: "col-md-5" }, [
+                                _c("label", { attrs: { for: "fname" } }, [
+                                  _vm._v("Full Name:")
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "div-img-edit" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "profile-img-edit" },
+                                    [
+                                      _c("img", {
+                                        staticClass: "profile-pic",
+                                        attrs: {
+                                          src: "images/user/03.jpg",
+                                          alt: "profile-pic"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "p-image" }, [
+                                        _c("i", {
+                                          staticClass:
+                                            "ri-pencil-line upload-button",
+                                          on: { click: _vm.prof }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          ref: "prof",
+                                          staticStyle: { display: "none" },
+                                          attrs: {
+                                            type: "file",
+                                            accept: "image/*"
+                                          },
+                                          on: { change: _vm.onProfileChange }
+                                        })
+                                      ])
+                                    ]
+                                  )
                                 ])
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-md-6" }, [
-                                _c("div", { staticClass: "profile-img-edit" }, [
-                                  _c("img", {
-                                    staticClass: "profile-pic",
-                                    staticStyle: {
-                                      height: "100%",
-                                      width: "100%"
-                                    },
-                                    attrs: { src: _vm.cover, alt: "cover-pic" }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "p-image" }, [
-                                    _c("i", {
-                                      staticClass:
-                                        "ri-pencil-line upload-button",
-                                      on: { click: _vm.cov }
+                              _c("div", { staticClass: "col-md-7" }, [
+                                _c("label", { attrs: { for: "fname" } }, [
+                                  _vm._v("Full Name:")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "profile-cover-img-edit" },
+                                  [
+                                    _c("img", {
+                                      staticClass: "profile-cover-pic",
+                                      attrs: {
+                                        src: "images/user/03.jpg",
+                                        alt: "cover-pic"
+                                      }
                                     }),
                                     _vm._v(" "),
-                                    _c("input", {
-                                      ref: "cov",
-                                      staticStyle: { display: "none" },
-                                      attrs: {
-                                        type: "file",
-                                        accept: "image/*"
-                                      },
-                                      on: { change: _vm.onCoverChange }
-                                    })
-                                  ])
-                                ])
+                                    _c(
+                                      "div",
+                                      { staticClass: "p-image Ip-image" },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "ri-pencil-line upload-button",
+                                          on: { click: _vm.cov }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          ref: "cov",
+                                          staticStyle: { display: "none" },
+                                          attrs: {
+                                            type: "file",
+                                            accept: "image/*"
+                                          },
+                                          on: { change: _vm.onCoverChange }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                )
                               ])
                             ]
                           ),

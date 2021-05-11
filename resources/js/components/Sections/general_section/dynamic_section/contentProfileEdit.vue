@@ -55,46 +55,50 @@
                                             <div
                                                 class="form-group row align-items-center"
                                             >
-                                                <div class="col-md-6">
-                                                    <div
-                                                        class="profile-img-edit"
+                                                <div class="col-md-5">
+                                                    <label for="fname"
+                                                        >Full Name:</label
                                                     >
-                                                        <img
-                                                            class="profile-pic"
-                                                            :src="profile"
-                                                            alt="profile-pic"
-                                                            style="height:100%;width:100%"
-                                                        />
-                                                        <div class="p-image">
-                                                            <i
-                                                                class="ri-pencil-line upload-button"
-                                                                @click="prof"
-                                                            ></i
-                                                            ><!--  class="file-upload"-->
-                                                            <input
-                                                                ref="prof"
-                                                                style="display:none;"
-                                                                type="file"
-                                                                accept="image/*"
-                                                                @change="
-                                                                    onProfileChange
-                                                                "
+                                                    <div class="div-img-edit">
+                                                        <div
+                                                            class="profile-img-edit"
+                                                        >
+                                                            <img
+                                                                class="profile-pic"
+                                                                src="images/user/03.jpg"
+                                                                alt="profile-pic"
                                                             />
+                                                            <div class="p-image">
+                                                                <i
+                                                                    class="ri-pencil-line upload-button"
+                                                                    @click="prof"
+                                                                ></i
+                                                                ><!--  class="file-upload"-->
+                                                                <input
+                                                                    ref="prof"
+                                                                    style="display:none;"
+                                                                    type="file"
+                                                                    accept="image/*"
+                                                                    @change="onProfileChange"
+                                                                />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-6">
+                                                <div class="col-md-7">
+                                                    <label for="fname"
+                                                        >Full Name:</label
+                                                    >
                                                     <div
-                                                        class="profile-img-edit"
+                                                        class="profile-cover-img-edit"
                                                     >
                                                         <img
-                                                            class="profile-pic"
-                                                            :src="cover"
+                                                            class="profile-cover-pic"
+                                                            src="images/user/03.jpg"
                                                             alt="cover-pic"
-                                                            style="height:100%;width:100%"
                                                         />
-                                                        <div class="p-image">
+                                                        <div class="p-image Ip-image">
                                                             <i
                                                                 class="ri-pencil-line upload-button"
                                                                 @click="cov"
@@ -105,9 +109,7 @@
                                                                 style="display:none;"
                                                                 type="file"
                                                                 accept="image/*"
-                                                                @change="
-                                                                    onCoverChange
-                                                                "
+                                                                @change="onCoverChange"
                                                             />
                                                         </div>
                                                     </div>
@@ -614,11 +616,7 @@ export default {
             twitter_err: "",
             instagram_err: "",
             youtube_err: "",
-            linkedin_err: "",
-            profile: "",
-            cover: "",
-            profile_img: null,
-            cover_img: null
+            linkedin_err: ""
         };
     },
     mounted() {
@@ -641,8 +639,6 @@ export default {
             this.instagram = this.user.instagram;
             this.youtube = this.user.youtube;
             this.linkedin = this.user.linkedin;
-            this.profile = `images/user/${this.user.profileimg.name}`;
-            this.cover = `images/user/${this.user.coverimg.name}`;
         });
     },
     methods: {
@@ -664,9 +660,7 @@ export default {
                     twitter: this.twitter,
                     instagram: this.instagram,
                     youtube: this.youtube,
-                    linkedin: this.linkedin,
-                    profile: this.profile_img,
-                    cover: this.cover_img
+                    linkedin: this.linkedin
                 })
                 .then(res => {
                     //console.log(res);
@@ -723,26 +717,6 @@ export default {
                         ? error.errors.linkedin[0]
                         : "";
                 });
-        },
-        prof() {
-            var p = this.$refs.prof;
-            p.click();
-        },
-        cov() {
-            var p = this.$refs.cov;
-            p.click();
-        },
-        onProfileChange(e) {
-            const file = e.target.files[0];
-            this.profile = URL.createObjectURL(file);
-            this.profile_img = file;
-            console.log(this.profile_img);
-        },
-        onCoverChange(e) {
-            const file = e.target.files[0];
-            this.cover = URL.createObjectURL(file);
-            this.cover_img = file;
-            console.log(this.cover_img);
         }
     }
 };

@@ -1020,7 +1020,7 @@ form.comment-text input { padding-right: 130px; }
 /*---------------------------------------------------------------------
 Profile Edit
 -----------------------------------------------------------------------*/
-.profile-pic { max-width: 100%; display: block; border-radius: 50%; -webkit-border-radius: 50%; }
+.profile-pic {  width: 150px; display: block; border-radius: 50%; -webkit-border-radius: 50%; }
 .profile-cover-pic { width: 70%; height: 150px; border-radius: 10px;}
 .div-img-edit { width: 100%; height: 100%; position: relative; text-align: center; }
 .profile-img-edit { position: relative; display: inline-block; height: 150px; width: 150px;  }
