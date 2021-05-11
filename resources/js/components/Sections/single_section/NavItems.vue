@@ -8,7 +8,7 @@
                     class="iq-waves-effect d-flex align-items-center"
                 >
                     <img
-                        :src="`images/user/${user.profileimg.name}`"
+                        :src="`images/user/${img}`"
                         class="img-fluid rounded-circle mr-3"
                         alt="user"
                     />
@@ -188,6 +188,7 @@ export default {
     data() {
         return {
             user: null,
+            img: "",
             friendReqs: {
                 "1": {
                     id: 1,
@@ -276,15 +277,14 @@ export default {
         axios.get("/profile").then(res => {
             //console.log(res.data);
             this.user = res.data;
+            this.img = this.user.profileimg.name;
         });
         EventBus.$on("user-update", this.updateUser);
     },
     methods: {
         updateUser(data) {
-            console.log("data");
-            console.log(data);
-            console.log("data");
             this.user = data;
+            this.img = this.user.profile;
         }
     }
 };

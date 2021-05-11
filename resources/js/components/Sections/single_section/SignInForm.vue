@@ -77,8 +77,14 @@ export default {
             password_err: ""
         };
     },
+    mounted() {
+        axios.post("/logout").then(res => {
+            console.log(res);
+        });
+    },
     methods: {
-        login() {
+        login(e) {
+            e.preventDefault();
             axios
                 .post("/login", {
                     email: this.email,
@@ -86,7 +92,7 @@ export default {
                 })
                 .then(res => {
                     console.log(res);
-                    this.$router.push("profile");
+                    this.$router.push({ name: "home" });
                 })
                 .catch(err => {
                     var error = JSON.parse(err.request.response);
@@ -99,7 +105,8 @@ export default {
                         : "";
                 });
         },
-        logout() {
+        logout(e) {
+            e.preventDefault();
             axios.post("/logout").then(res => {
                 console.log(res);
             });

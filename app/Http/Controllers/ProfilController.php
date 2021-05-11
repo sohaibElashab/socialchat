@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Image;
 
 class ProfilController extends Controller
-{
+{ 
     /**
      * Display a listing of the resource.
      *
@@ -73,7 +73,7 @@ class ProfilController extends Controller
      */
     public function update(Request $request)
     {
-        $request->validate([
+         $request->validate([
             'name'  => 'required',
             'email' => 'required|email',
             'gender' => 'required',
@@ -83,19 +83,11 @@ class ProfilController extends Controller
             'interested' => 'required',
             'adress' => 'required',
             'about' => 'required',
-        ]);
-        /* 
-            'quote' => 'required',
-            'website' => 'required',
-            'facebook' => 'required',
-            'twitter' => 'required',
-            'instagram' => 'required',
-            'youtube' => 'required',
-            'linkedin' => 'required', */
+        ]); 
 
         $user = User::findOrFail(auth()->user()->id);
 
-        $user->update([
+         $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'mobile' => $request->mobile,
@@ -114,7 +106,23 @@ class ProfilController extends Controller
             'language' => $request->language,
         ]);
 
-        return response()->json($user);
+        if($request->profile != "null"){
+            $profile = Image::where('user_id',$user->id)->where('type','profile')->first();
+            $image = $request->file('profile');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/user'),$new_name);
+            $profile->update(['name' => $new_name]);
+            $user->profile = $profile->name;
+        }
+        if($request->cover != "null"){
+            $cover = Image::where('user_id',$user->id)->where('type','cover')->first();
+            $image = $request->file('cover');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/user'),$new_name);
+            $cover->update(['name' => $new_name]);
+        }
+
+        return response()->json($user);   
     }
 
     /**
