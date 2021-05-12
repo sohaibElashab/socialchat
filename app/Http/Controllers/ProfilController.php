@@ -110,16 +110,16 @@ class ProfilController extends Controller
             $profile = Image::where('user_id',$user->id)->where('type','profile')->first();
             $image = $request->file('profile');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/user'),$new_name);
-            $profile->update(['name' => $new_name]);
+            $image->move(public_path('images/user/'.$user->id.'/profile'),$new_name);
+            $profile->update(['name' => $user->id.'/profile/'. $new_name]);
             $user->profile = $profile->name;
         }
         if($request->cover != "null"){
             $cover = Image::where('user_id',$user->id)->where('type','cover')->first();
             $image = $request->file('cover');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/user'),$new_name);
-            $cover->update(['name' => $new_name]);
+            $image->move(public_path('images/user/'.$user->id.'/cover'),$new_name);
+            $cover->update(['name' => $user->id.'/cover/'. $new_name]);
         }
 
         return response()->json($user);   

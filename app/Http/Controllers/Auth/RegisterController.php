@@ -77,26 +77,32 @@ class RegisterController extends Controller
             'birth_date' => $data['birthdate'],
             'gender' => $data['gender'],
         ]);
+        $BGpics = array("bg1.jpg","bg2.jpg","bg3.jpg","bg4.jpg","bg5.jpg","bg6.jpg","bg7.jpg","bg8.jpg","bg9.jpg");
+        $Bpic = array_rand($BGpics,1);
         Image::create([
             'post_id' => 0,
             'user_id' => $user->id,
-            'name' => 'profile-bg1.jpg',
+            'name' => 'BG/'.$BGpics[$Bpic],
             'type' => 'cover',
         ]);
 
        if ($data['gender'] == 'female') {
+           $femalePics = array("female1.jpg","female2.jpg","female3.jpg","female4.jpg","female5.jpg","female6.jpg","female7.jpg","female8.jpg");
+           $Fpic = array_rand($femalePics,1);
            Image::create([
                'post_id' => 0,
                'user_id' => $user->id,
-               'name' => '04.jpg',
+               'name' => 'FemalePic/'.$femalePics[$Fpic],
                'type' => 'profile',
            ]);
        }
        if ($data['gender'] == 'male') {
+            $malePics = array("male1.jpg","male2.jpg","male3.jpg","male4.jpg","male5.jpg","male6.jpg","male7.jpg","male8.jpg");
+            $Mpic = array_rand($malePics,1);
            Image::create([
                'post_id' => 0,
                'user_id' => $user->id,
-               'name' => '12.jpg',
+               'name' => 'MalePic/'.$malePics[$Mpic],
                'type' => 'profile',
            ]);
        }
