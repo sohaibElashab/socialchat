@@ -14613,6 +14613,7 @@ __webpack_require__.r(__webpack_exports__);
         name: this.name,
         email: this.email,
         password: this.password,
+        password_confirmation: this.Cpassword,
         mobile: this.mobile,
         birthdate: this.birthdate,
         gender: this.gender

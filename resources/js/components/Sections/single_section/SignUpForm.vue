@@ -147,7 +147,7 @@ export default {
             name: "",
             email: "",
             password: "",
-            Cpassword: "", 
+            Cpassword: "",
             mobile: "",
             birthdate: "",
             gender: "",
@@ -173,6 +173,7 @@ export default {
                     name: this.name,
                     email: this.email,
                     password: this.password,
+                    password_confirmation: this.Cpassword,
                     mobile: this.mobile,
                     birthdate: this.birthdate,
                     gender: this.gender
