@@ -50,9 +50,6 @@
                     <button class="btn btn-primary float-right" @click="login">
                         Sign in
                     </button>
-                    <button class="btn btn-primary float-right" @click="logout">
-                        logout
-                    </button>
                 </div>
                 <div class="sign-info">
                     <span class="dark-color d-inline-block line-height-2"
@@ -104,12 +101,6 @@ export default {
                         ? error.errors.password[0]
                         : "";
                 });
-        },
-        logout(e) {
-            e.preventDefault();
-            axios.post("/logout").then(res => {
-                console.log(res);
-            });
         }
     }
 };

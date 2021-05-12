@@ -131,9 +131,6 @@
                     >
                         Sign Up
                     </button>
-                    <button class="btn btn-primary float-right" @click="logout">
-                        logout
-                    </button>
                 </div>
             </form>
         </div>
@@ -205,12 +202,6 @@ export default {
                         : "";
                     //console.log(error.errors);
                 });
-        },
-        logout(e) {
-            e.preventDefault();
-            axios.post("/logout").then(res => {
-                console.log(res);
-            });
         }
     }
 };
