@@ -17,7 +17,7 @@
                                     <ul
                                         class="header-nav d-flex flex-wrap justify-end p-0 m-0"
                                     >
-                                        <li style="z-index:100">
+                                        <li style="z-index:1">
                                             <!-- <a href="javascript:void();"><i class="ri-pencil-line"></i></a> -->
                                             <router-link
                                                 to="/profileEdit"

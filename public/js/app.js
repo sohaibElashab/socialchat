@@ -13122,66 +13122,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      UrlHref: "",
       menus: {
         "1": {
           id: 1,
-          isActive: false,
           href: "/",
           iClass: "las la-newspaper",
           SpanName: "Newsfeed"
         },
         "2": {
           id: 2,
-          isActive: false,
           href: "/profile",
           iClass: "las la-user",
           SpanName: "Profile"
         },
         "3": {
           id: 3,
-          isActive: false,
           href: "/Chat",
           iClass: "lab la-rocketchat",
           SpanName: "Chat"
         },
         "4": {
           id: 4,
-          isActive: false,
           href: "/Notification",
           iClass: "las la-bell",
           SpanName: "Notification"
         },
         "5": {
           id: 5,
-          isActive: false,
           href: "/profileVideos",
           iClass: "las la-video",
           SpanName: "Profile Video"
         },
         "6": {
           id: 6,
-          isActive: false,
           href: "/profileImages",
           iClass: "las la-image",
           SpanName: "Profile Image"
         },
         "7": {
           id: 7,
-          isActive: false,
           href: "/firendRequest",
           iClass: "las la-anchor",
           SpanName: "Friend Request"
         },
         "8": {
           id: 8,
-          isActive: false,
           href: "/friendList",
           iClass: "las la-user-friends",
           SpanName: "Friend Lists"
         },
         "9": {
           id: 9,
-          isActive: false,
           href: "/Blog",
           iClass: "ri-grid-line",
           SpanName: "Blog"
@@ -13197,11 +13189,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: {
-    active: function active() {
-      var url = location.pathname.split('/')[2];
-      console.log(url);
-    }
+  created: function created() {
+    this.UrlHref = "/" + window.location.href.split('/')[4];
   }
 });
 
@@ -65818,7 +65807,7 @@ var render = function() {
                           [
                             _c(
                               "li",
-                              { staticStyle: { "z-index": "100" } },
+                              { staticStyle: { "z-index": "1" } },
                               [
                                 _c(
                                   "router-link",
@@ -68164,67 +68153,71 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "right-sidebar-mini" }, [
-    _c("div", { staticClass: "right-sidebar-panel p-0" }, [
-      _c("div", { staticClass: "iq-card shadow-none" }, [
-        _c("div", { staticClass: "iq-card-body p-0" }, [
-          _c(
-            "div",
-            { staticClass: "media-height p-3" },
-            _vm._l(_vm.friends, function(friend) {
-              return _c(
-                "div",
-                {
-                  key: friend.id,
-                  staticClass: "media align-items-center mb-4"
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "iq-profile-avatar", class: friend.statu },
-                    [
-                      _c("img", {
-                        staticClass: "rounded-circle avatar-50",
-                        attrs: { src: friend.img, alt: "" }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-body ml-3" }, [
+  return _c(
+    "div",
+    { staticClass: "right-sidebar-mini", staticStyle: { "z-index": "" } },
+    [
+      _c("div", { staticClass: "right-sidebar-panel p-0" }, [
+        _c("div", { staticClass: "iq-card shadow-none" }, [
+          _c("div", { staticClass: "iq-card-body p-0" }, [
+            _c(
+              "div",
+              { staticClass: "media-height p-3" },
+              _vm._l(_vm.friends, function(friend) {
+                return _c(
+                  "div",
+                  {
+                    key: friend.id,
+                    staticClass: "media align-items-center mb-4"
+                  },
+                  [
                     _c(
-                      "h6",
-                      { staticClass: "mb-0" },
+                      "div",
+                      { staticClass: "iq-profile-avatar", class: friend.statu },
                       [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: friend.href } },
-                          [
-                            _vm._v(
-                              "\n                           " +
-                                _vm._s(friend.name) +
-                                "\n                        "
-                            )
-                          ]
-                        )
-                      ],
-                      1
+                        _c("img", {
+                          staticClass: "rounded-circle avatar-50",
+                          attrs: { src: friend.img, alt: "" }
+                        })
+                      ]
                     ),
                     _vm._v(" "),
-                    _c("p", { staticClass: "mb-0" }, [
-                      _vm._v(_vm._s(friend.time))
+                    _c("div", { staticClass: "media-body ml-3" }, [
+                      _c(
+                        "h6",
+                        { staticClass: "mb-0" },
+                        [
+                          _c(
+                            "router-link",
+                            { attrs: { tag: "a", to: friend.href } },
+                            [
+                              _vm._v(
+                                "\n                           " +
+                                  _vm._s(friend.name) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "mb-0" }, [
+                        _vm._v(_vm._s(friend.time))
+                      ])
                     ])
-                  ])
-                ]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _vm._m(0)
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
         ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -68274,7 +68267,10 @@ var render = function() {
             _vm._l(_vm.menus, function(menu) {
               return _c(
                 "li",
-                { key: menu.id, class: { active: menu.isActive } },
+                {
+                  key: menu.id,
+                  class: _vm.UrlHref == menu.href ? "active" : ""
+                },
                 [
                   _c(
                     "router-link",

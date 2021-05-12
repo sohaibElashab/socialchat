@@ -1,5 +1,5 @@
 <template>
-         <div class="right-sidebar-mini">
+         <div class="right-sidebar-mini" style="z-index: ">
             <div class="right-sidebar-panel p-0">
                <div class="iq-card shadow-none">
                   <div class="iq-card-body p-0">
