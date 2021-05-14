@@ -21,3 +21,4 @@ Auth::routes();
 
 Route::get('/profile', [App\Http\Controllers\ProfilController::class, 'index']);
 Route::post('/profile-update', [App\Http\Controllers\ProfilController::class, 'update']);
+Route::post('/PasswordUpdate', [App\Http\Controllers\ProfilController::class, 'PasswordUpdate']);

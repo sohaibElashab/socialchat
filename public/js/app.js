@@ -7868,19 +7868,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     contentChat: _Sections_general_section_dynamic_section_contentChat_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next();
-    })["catch"](function (err) {
-      next({
-        name: "signIn"
-      });
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next();
+        })
+        .catch(err => {
+            next({
+                name: "signIn"
+            });
+        });
+  } */
+
 });
 
 /***/ }),
@@ -8868,19 +8873,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     contentHome: _Sections_general_section_dynamic_section_contentHome_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next();
-    })["catch"](function (err) {
-      next({
-        name: "signIn"
-      });
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next();
+        })
+        .catch(err => {
+            next({
+                name: "signIn"
+            });
+        });
+  } */
+
 });
 
 /***/ }),
@@ -11724,19 +11734,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     contentHome: _Sections_general_section_dynamic_section_contentHome_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next();
-    })["catch"](function (err) {
-      next({
-        name: "signIn"
-      });
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next();
+        })
+        .catch(err => {
+            next({
+                name: "signIn"
+            });
+        });
+  } */
+
 });
 
 /***/ }),
@@ -12501,19 +12516,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     contentHome: _Sections_general_section_dynamic_section_contentHome_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next();
-    })["catch"](function (err) {
-      next({
-        name: "signIn"
-      });
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next();
+        })
+        .catch(err => {
+            next({
+                name: "signIn"
+            });
+        });
+  } */
+
 });
 
 /***/ }),
@@ -12560,19 +12580,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     contentHome: _Sections_general_section_dynamic_section_contentHome_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next();
-    })["catch"](function (err) {
-      next({
-        name: "signIn"
-      });
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next();
+        })
+        .catch(err => {
+            next({
+                name: "signIn"
+            });
+        });
+  } */
+
 });
 
 /***/ }),
@@ -14026,19 +14051,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     contentHome: _Sections_general_section_dynamic_section_contentHome_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next();
-    })["catch"](function (err) {
-      next({
-        name: "signIn"
-      });
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next();
+        })
+        .catch(err => {
+            next({
+                name: "signIn"
+            });
+        });
+  } */
+
 });
 
 /***/ }),
@@ -14098,19 +14128,24 @@ __webpack_require__.r(__webpack_exports__);
       console.log(res.data);
       _this.user = res.data;
     });
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next();
-    })["catch"](function (err) {
-      next({
-        name: "signIn"
-      });
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next();
+        })
+        .catch(err => {
+            next({
+                name: "signIn"
+            });
+        });
+  } */
+
 });
 
 /***/ }),
@@ -14157,19 +14192,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     contentProfileEdit: _Sections_general_section_dynamic_section_contentProfileEdit_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next();
-    })["catch"](function (err) {
-      next({
-        name: "signIn"
-      });
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next();
+        })
+        .catch(err => {
+            next({
+                name: "signIn"
+            });
+        });
+  } */
+
 });
 
 /***/ }),
@@ -15180,19 +15220,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     contentHome: _Sections_general_section_dynamic_section_contentHome_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next();
-    })["catch"](function (err) {
-      next({
-        name: "signIn"
-      });
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next();
+        })
+        .catch(err => {
+            next({
+                name: "signIn"
+            });
+        });
+  } */
+
 });
 
 /***/ }),
@@ -16233,19 +16278,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     contentHome: _Sections_general_section_dynamic_section_contentHome_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next();
-    })["catch"](function (err) {
-      next({
-        name: "signIn"
-      });
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next();
+        })
+        .catch(err => {
+            next({
+                name: "signIn"
+            });
+        });
+  } */
+
 });
 
 /***/ }),
@@ -16279,19 +16329,24 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     containerSignin: _Sections_general_section_dynamic_section_containerSignin__WEBPACK_IMPORTED_MODULE_0__.default,
     CircleSign: _Sections_single_section_CircleSign__WEBPACK_IMPORTED_MODULE_1__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next({
-        name: "home"
-      });
-    })["catch"](function (err) {
-      next();
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next({
+                name: "home"
+            });
+        })
+        .catch(err => {
+            next();
+        });
+  } */
+
 });
 
 /***/ }),
@@ -16325,19 +16380,24 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     containerSignup: _Sections_general_section_dynamic_section_containerSignup_vue__WEBPACK_IMPORTED_MODULE_0__.default,
     CircleSign: _Sections_single_section_CircleSign__WEBPACK_IMPORTED_MODULE_1__.default
-  },
-  beforeRouteEnter: function beforeRouteEnter(to, from, next) {
+  }
+  /* ,
+  beforeRouteEnter(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    axios.get("/profile").then(function (res) {
-      next({
-        name: "home"
-      });
-    })["catch"](function (err) {
-      next();
-    });
-  }
+      axios
+        .get("/profile")
+        .then(res => {
+            next({
+                name: "home"
+            });
+        })
+        .catch(err => {
+            next();
+        });
+  } */
+
 });
 
 /***/ }),
@@ -18154,6 +18214,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -18194,7 +18267,12 @@ __webpack_require__.r(__webpack_exports__);
       profile: "",
       cover: "",
       profile_img: null,
-      cover_img: null
+      cover_img: null,
+      old_password: "",
+      password: "",
+      password_confirmation: "",
+      old_err: "",
+      password_err: ""
     };
   },
   mounted: function mounted() {
@@ -18293,6 +18371,29 @@ __webpack_require__.r(__webpack_exports__);
       var file = e.target.files[0];
       this.cover = URL.createObjectURL(file);
       this.cover_img = file; //console.log(this.cover_img);
+    },
+    reset: function reset() {
+      var _this3 = this;
+
+      axios.post("/PasswordUpdate", {
+        current_password: this.old_password,
+        password: this.password,
+        password_confirmation: this.password_confirmation
+      }).then(function (res) {
+        // console.log(res.data);
+        if (res.data == "wrong password") {
+          _this3.old_err = "Current password invalid";
+        } else {
+          //console.log("done");
+          _this3.$router.push({
+            name: "signIn"
+          });
+        }
+      })["catch"](function (err) {
+        var error = JSON.parse(err.request.response);
+        _this3.old_err = error.errors.current_password ? error.errors.current_password[0] : "";
+        _this3.password_err = error.errors.password ? error.errors.password[0] : "";
+      });
     }
   }
 });
@@ -20250,8 +20351,7 @@ var routes = [{
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__.default({
   routes: routes
-}); //router.beforeEach
-
+});
 var app = new vue__WEBPACK_IMPORTED_MODULE_5__.default({
   router: router
 }).$mount("#app");
@@ -73926,7 +74026,159 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(2)
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade",
+                    attrs: { id: "chang-pwd", role: "tabpanel" }
+                  },
+                  [
+                    _c("div", { staticClass: "iq-card" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "iq-card-body" }, [
+                        _c("form", [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "cpass" } }, [
+                              _vm._v("Current Password:")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.old_password,
+                                  expression: "old_password"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "Password", id: "cpass" },
+                              domProps: { value: _vm.old_password },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.old_password = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "form-text text-danger" },
+                              [
+                                _vm._v(
+                                  "\n                                                " +
+                                    _vm._s(_vm.old_err) +
+                                    "\n                                            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "npass" } }, [
+                              _vm._v("New Password:")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.password,
+                                  expression: "password"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "Password", id: "npass" },
+                              domProps: { value: _vm.password },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.password = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "form-text text-danger" },
+                              [
+                                _vm._v(
+                                  "\n                                                " +
+                                    _vm._s(_vm.password_err) +
+                                    "\n                                            "
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "vpass" } }, [
+                              _vm._v("Verify Password:")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.password_confirmation,
+                                  expression:
+                                    "\n                                                    password_confirmation\n                                                "
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "Password", id: "vpass" },
+                              domProps: { value: _vm.password_confirmation },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.password_confirmation =
+                                    $event.target.value
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary mr-2",
+                              attrs: { type: "button" },
+                              on: { click: _vm.reset }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                            Submit\n                                        "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn iq-bg-danger",
+                              attrs: { type: "reset" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                            Cancle\n                                        "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ])
+                  ]
+                )
               ])
             ])
           ])
@@ -74007,93 +74259,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      {
-        staticClass: "tab-pane fade",
-        attrs: { id: "chang-pwd", role: "tabpanel" }
-      },
+      { staticClass: "iq-card-header d-flex justify-content-between" },
       [
-        _c("div", { staticClass: "iq-card" }, [
-          _c(
-            "div",
-            { staticClass: "iq-card-header d-flex justify-content-between" },
-            [
-              _c("div", { staticClass: "iq-header-title" }, [
-                _c("h4", { staticClass: "card-title" }, [
-                  _vm._v(
-                    "\n                                            Change Password\n                                        "
-                  )
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "iq-card-body" }, [
-            _c("form", [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "cpass" } }, [
-                  _vm._v("Current Password:")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "float-right",
-                    attrs: { href: "javascripe:void();" }
-                  },
-                  [_vm._v("Forgot Password")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "Password", id: "cpass", value: "" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "npass" } }, [
-                  _vm._v("New Password:")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "Password", id: "npass", value: "" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "vpass" } }, [
-                  _vm._v("Verify Password:")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { type: "Password", id: "vpass", value: "" }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary mr-2",
-                  attrs: { type: "submit" }
-                },
-                [
-                  _vm._v(
-                    "\n                                            Submit\n                                        "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn iq-bg-danger", attrs: { type: "reset" } },
-                [
-                  _vm._v(
-                    "\n                                            Cancle\n                                        "
-                  )
-                ]
-              )
-            ])
+        _c("div", { staticClass: "iq-header-title" }, [
+          _c("h4", { staticClass: "card-title" }, [
+            _vm._v(
+              "\n                                            Change Password\n                                        "
+            )
           ])
         ])
       ]

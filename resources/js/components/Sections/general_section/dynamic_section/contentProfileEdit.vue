@@ -531,17 +531,22 @@
                                                 <label for="cpass"
                                                     >Current Password:</label
                                                 >
-                                                <a
+                                                <!--  <a
                                                     href="javascripe:void();"
                                                     class="float-right"
                                                     >Forgot Password</a
-                                                >
+                                                > -->
                                                 <input
                                                     type="Password"
                                                     class="form-control"
                                                     id="cpass"
-                                                    value=""
+                                                    v-model="old_password"
                                                 />
+                                                <div
+                                                    class="form-text text-danger"
+                                                >
+                                                    {{ old_err }}
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="npass"
@@ -551,8 +556,13 @@
                                                     type="Password"
                                                     class="form-control"
                                                     id="npass"
-                                                    value=""
+                                                    v-model="password"
                                                 />
+                                                <div
+                                                    class="form-text text-danger"
+                                                >
+                                                    {{ password_err }}
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="vpass"
@@ -562,12 +572,15 @@
                                                     type="Password"
                                                     class="form-control"
                                                     id="vpass"
-                                                    value=""
+                                                    v-model="
+                                                        password_confirmation
+                                                    "
                                                 />
                                             </div>
                                             <button
-                                                type="submit"
+                                                type="button"
                                                 class="btn btn-primary mr-2"
+                                                @click="reset"
                                             >
                                                 Submit
                                             </button>
@@ -630,7 +643,12 @@ export default {
             profile: "",
             cover: "",
             profile_img: null,
-            cover_img: null
+            cover_img: null,
+            old_password: "",
+            password: "",
+            password_confirmation: "",
+            old_err: "",
+            password_err: ""
         };
     },
     mounted() {
@@ -763,6 +781,32 @@ export default {
 
             this.cover_img = file;
             //console.log(this.cover_img);
+        },
+        reset() {
+            axios
+                .post("/PasswordUpdate", {
+                    current_password: this.old_password,
+                    password: this.password,
+                    password_confirmation: this.password_confirmation
+                })
+                .then(res => {
+                    // console.log(res.data);
+                    if (res.data == "wrong password") {
+                        this.old_err = "Current password invalid";
+                    } else {
+                        //console.log("done");
+                        this.$router.push({ name: "signIn" });
+                    }
+                })
+                .catch(err => {
+                    var error = JSON.parse(err.request.response);
+                    this.old_err = error.errors.current_password
+                        ? error.errors.current_password[0]
+                        : "";
+                    this.password_err = error.errors.password
+                        ? error.errors.password[0]
+                        : "";
+                });
         }
     }
 };

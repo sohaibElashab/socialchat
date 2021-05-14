@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Image;
+use Auth;
+use Hash;
 
 class ProfilController extends Controller
 { 
@@ -21,48 +23,6 @@ class ProfilController extends Controller
         return response()->json($user);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -122,7 +82,29 @@ class ProfilController extends Controller
             $cover->update(['name' => $user->id.'/cover/'. $new_name]);
         }
 
-        return response()->json($user);   
+        return response()->json($user);    
+    }
+
+
+    public function PasswordUpdate(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|min:8|confirmed'
+        ]);
+
+        if (Hash::check($request->current_password,Auth::user()->password)) {
+            $user = User::find(Auth::id());
+            $user->password = Hash::make($request->password);
+            $user->save();
+            Auth::logout();
+            $res = "changed";
+            return response()->json($res);
+        }else {
+            $res = "wrong password";
+            return response()->json($res);
+        }
+        
     }
 
     /**

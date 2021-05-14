@@ -970,7 +970,7 @@ import contentHome from "../Sections/general_section/dynamic_section/contentHome
 export default {
     components: {
         contentHome
-    },
+    } /* ,
     beforeRouteEnter(to, from, next) {
         // called before the route that renders this component is confirmed.
         // does NOT have access to `this` component instance,
@@ -986,6 +986,6 @@ export default {
                     name: "signIn"
                 });
             });
-    }
+    } */
 };
 </script>
