@@ -95,6 +95,8 @@ const routes = [
 
 const router = new VueRouter({ routes });
 
+//router.beforeEach
+
 const app = new Vue({
     router
 }).$mount("#app");

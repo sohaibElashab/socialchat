@@ -40,6 +40,22 @@ export default {
             console.log(res.data);
             this.user = res.data;
         });
+    },
+    beforeRouteEnter(to, from, next) {
+        // called before the route that renders this component is confirmed.
+        // does NOT have access to `this` component instance,
+        // because it has not been created yet when this guard is called!
+
+        axios
+            .get("/profile")
+            .then(res => {
+                next();
+            })
+            .catch(err => {
+                next({
+                    name: "signIn"
+                });
+            });
     }
 };
 </script>

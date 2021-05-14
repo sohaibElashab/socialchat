@@ -2,19 +2,35 @@
     <div>
         <!-- Sign in Start -->
         <section class="sign-in-page">
-            <CircleSign/>
-            <containerSignin/>
+            <CircleSign />
+            <containerSignin />
         </section>
     </div>
 </template>
 
 <script>
-import containerSignin from './../Sections/general_section/dynamic_section/containerSignin'
-import CircleSign from './../Sections/single_section/CircleSign'
+import containerSignin from "./../Sections/general_section/dynamic_section/containerSignin";
+import CircleSign from "./../Sections/single_section/CircleSign";
 export default {
     components: {
         containerSignin,
         CircleSign
+    },
+    beforeRouteEnter(to, from, next) {
+        // called before the route that renders this component is confirmed.
+        // does NOT have access to `this` component instance,
+        // because it has not been created yet when this guard is called!
+
+        axios
+            .get("/profile")
+            .then(res => {
+                next({
+                    name: "home"
+                });
+            })
+            .catch(err => {
+                next();
+            });
     }
-}
+};
 </script>
