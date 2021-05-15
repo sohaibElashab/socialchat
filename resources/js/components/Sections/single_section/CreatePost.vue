@@ -17,25 +17,9 @@
           </div>
           <hr>
           <ul class="post-opt-block d-flex align-items-center list-inline m-0 p-0">
-             <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/07.png" alt="icon" class="img-fluid"> Photo/Video</li>
-             <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/08.png" alt="icon" class="img-fluid"> Tag Friend</li>
+             <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/07.png" alt="icon" class="img-fluid"> Photo</li>
+             <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/08.png" alt="icon" class="img-fluid"> Video</li>
              <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/09.png" alt="icon" class="img-fluid"> Feeling/Activity</li>
-             <li class="iq-bg-primary rounded p-2 pointer">
-                <div class="iq-card-header-toolbar d-flex align-items-center">
-                   <div class="dropdown">
-                      <span class="dropdown-toggle" id="post-option" data-toggle="dropdown" >
-                      <i class="ri-more-fill"></i>
-                      </span>
-                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="post-option" style="">
-                         <a class="dropdown-item" href="#">Check in</a>
-                         <a class="dropdown-item" href="#">Live Video</a>
-                         <a class="dropdown-item" href="#">Gif</a>
-                         <a class="dropdown-item" href="#">Watch Party</a>
-                         <a class="dropdown-item" href="#">Play with Friend</a>
-                      </div>
-                   </div>
-                </div>
-             </li>
           </ul>
        </div>
        <div class="modal fade" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="post-modalLabel" aria-hidden="true" style="display: none;">
@@ -56,87 +40,16 @@
                    </div>
                    <hr>
                    <ul class="d-flex flex-wrap align-items-center list-inline m-0 p-0">
-                      <li class="col-md-6 mb-3">
-                         <div class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/07.png" alt="icon" class="img-fluid"> Photo/Video</div>
+                      <li class="col-md-12 mb-3">
+                         <div class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/07.png" alt="icon" class="img-fluid"> Photo</div>
                       </li>
-                      <li class="col-md-6 mb-3">
-                         <div class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/08.png" alt="icon" class="img-fluid"> Tag Friend</div>
+                      <li class="col-md-12 mb-3">
+                         <div class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/08.png" alt="icon" class="img-fluid"> Video</div>
                       </li>
-                      <li class="col-md-6 mb-3">
+                      <li class="col-md-12 mb-3">
                          <div class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/09.png" alt="icon" class="img-fluid"> Feeling/Activity</div>
                       </li>
-                      <li class="col-md-6 mb-3">
-                         <div class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/10.png" alt="icon" class="img-fluid"> Check in</div>
-                      </li>
-                      <li class="col-md-6 mb-3">
-                         <div class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/11.png" alt="icon" class="img-fluid"> Live Video</div>
-                      </li>
-                      <li class="col-md-6 mb-3">
-                         <div class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/12.png" alt="icon" class="img-fluid"> Gif</div>
-                      </li>
-                      <li class="col-md-6 mb-3">
-                         <div class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/13.png" alt="icon" class="img-fluid"> Watch Party</div>
-                      </li>
-                      <li class="col-md-6 mb-3">
-                         <div class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/14.png" alt="icon" class="img-fluid"> Play with Friends</div>
-                      </li>
                    </ul>
-                   <hr>
-                   <div class="other-option">
-                      <div class="d-flex align-items-center justify-content-between">
-                         <div class="d-flex align-items-center">
-                            <div class="user-img mr-3">
-                               <img src="images/user/1.jpg" alt="userimg" class="avatar-60 rounded-circle img-fluid">
-                            </div>
-                            <h6>Your Story</h6>
-                         </div>
-                         <div class="iq-card-post-toolbar">
-                            <div class="dropdown">
-                               <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                               <span class="btn btn-primary">Friend</span>
-                               </span>
-                               <div class="dropdown-menu m-0 p-0">
-                                  <a class="dropdown-item p-3" href="#">
-                                     <div class="d-flex align-items-top">
-                                        <div class="icon font-size-20"><i class="ri-save-line"></i></div>
-                                        <div class="data ml-2">
-                                           <h6>Public</h6>
-                                           <p class="mb-0">Anyone on or off Facebook</p>
-                                        </div>
-                                     </div>
-                                  </a>
-                                  <a class="dropdown-item p-3" href="#">
-                                     <div class="d-flex align-items-top">
-                                        <div class="icon font-size-20"><i class="ri-close-circle-line"></i></div>
-                                        <div class="data ml-2">
-                                           <h6>Friends</h6>
-                                           <p class="mb-0">Your Friend on facebook</p>
-                                        </div>
-                                     </div>
-                                  </a>
-                                  <a class="dropdown-item p-3" href="#">
-                                     <div class="d-flex align-items-top">
-                                        <div class="icon font-size-20"><i class="ri-user-unfollow-line"></i></div>
-                                        <div class="data ml-2">
-                                           <h6>Friends except</h6>
-                                           <p class="mb-0">Don't show to some friends</p>
-                                        </div>
-                                     </div>
-                                  </a>
-                                  <a class="dropdown-item p-3" href="#">
-                                     <div class="d-flex align-items-top">
-                                        <div class="icon font-size-20"><i class="ri-notification-line"></i></div>
-                                        <div class="data ml-2">
-                                           <h6>Only Me</h6>
-                                           <p class="mb-0">Only me</p>
-                                        </div>
-                                     </div>
-                                  </a>
-                               </div>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
                    <button type="submit" class="btn btn-primary d-block w-100 mt-3">Post</button>
                 </div>
              </div>

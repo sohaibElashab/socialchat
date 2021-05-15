@@ -73,7 +73,7 @@ export default {
                 },
                 "7": {
                     id: 7,
-                    href: "/firendRequest",
+                    href: "/friendRequest",
                     iClass: "las la-anchor",
                     SpanName: "Friend Request"
                 },
@@ -85,7 +85,7 @@ export default {
                 },
                 "9": {
                     id: 9,
-                    href: "/Blog",
+                    href: "/Saved",
                     iClass: "ri-grid-line",
                     SpanName: "Blog"
                 }
