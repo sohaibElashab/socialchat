@@ -83,9 +83,14 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <a href="#" class="mr-3 btn text-primary"
-                                    >View More Request</a
-                                >
+                                <router-link
+                                    class="mr-3 btn text-primary"
+                                    to="/friendRequest"
+                                    tag="a"
+                                    exact=""
+                                    >
+                                    View More Request
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -132,6 +137,16 @@
                                     </div>
                                 </div>
                             </a>
+                            <div class="text-center">
+                                <router-link
+                                    class="mr-3 btn text-primary"
+                                    to="/notification"
+                                    tag="a"
+                                    exact=""
+                                    >
+                                    View More Notification
+                                </router-link>
+                            </div>
                         </div>
                     </div>
                 </div>
