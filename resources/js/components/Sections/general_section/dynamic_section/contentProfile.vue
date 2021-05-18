@@ -337,7 +337,7 @@
                                         <CreatePost />
                                         <Post
                                             v-for="post in posts"
-                                            :key="post.id"
+                                            :key="post.id" 
                                             :post="post"
                                         />
                                     </div>
@@ -594,8 +594,7 @@
                                                 <div class="iq-card-body p-0">
                                                     <ProfileFriend
                                                         :FriendLists="
-                                                            FriendLists
-                                                        "
+                                                            FriendLists"
                                                     />
                                                 </div>
                                             </div>
@@ -619,8 +618,7 @@
                                                 <div class="iq-card-body p-0">
                                                     <ProfileImages
                                                         :ProfileImages="
-                                                            ProfileImages
-                                                        "
+                                                            ProfileImages"
                                                     />
                                                 </div>
                                             </div>
@@ -648,15 +646,10 @@ export default {
         CreatePost,
         Post
     },
-    props: {
-        user: {
-            type: Object,
-            default: null
-        }
-    },
     data() {
         return {
             date: null,
+            user: null,
             FriendLists: {
                 "1": {
                     id: 1,
@@ -788,6 +781,11 @@ export default {
             }
         };
     },
-    mounted() {}
+    mounted() {
+        axios.get("/profile").then(res => {
+            console.log(res.data);
+            this.user = res.data;
+        });
+    }
 };
 </script>

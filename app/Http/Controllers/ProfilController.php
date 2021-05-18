@@ -15,7 +15,7 @@ class ProfilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() 
     {
         $user = auth()->user();
         $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');

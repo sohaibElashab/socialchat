@@ -15,7 +15,7 @@
             <!-- Right Sidebar Panel End-->
 
             <!-- Page Content  -->
-            <contentProfile :user="user" />
+            <contentProfile />
             <!-- Page Content End -->
         </div>
         <!-- Wrapper END -->
@@ -29,18 +29,7 @@ import contentProfile from "./../Sections/general_section/dynamic_section/conten
 export default {
     components: {
         contentProfile
-    },
-    data() {
-        return {
-            user: null
-        };
-    },
-    mounted() {
-        axios.get("/profile").then(res => {
-            console.log(res.data);
-            this.user = res.data;
-        });
-    } /* ,
+    }, /* ,
     beforeRouteEnter(to, from, next) {
         // called before the route that renders this component is confirmed.
         // does NOT have access to `this` component instance,

@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                     <div class="iq-card-body">
-                                        <form>
+                                        <form enctype="multipart/form-data">
                                             <div
                                                 class="form-group row align-items-center"
                                             >
@@ -677,11 +677,11 @@ export default {
     },
     methods: {
         send() {
-            const config = {
-                headers: {
-                    "content-type": "multipart/form-data"
-                }
-            };
+            // const config = {
+            //     headers: {
+            //         "content-type": "multipart/form-data"
+            //     }
+            // };
             let data = new FormData();
             data.append("cover", this.cover_img);
             data.append("profile", this.profile_img);
@@ -704,7 +704,7 @@ export default {
 
             //axios.post("/profile-update", data, config);
             axios
-                .post("/profile-update", data, config)
+                .post("/profile-update", data)
                 .then(res => {
                     console.log(res);
                     EventBus.$emit("user-update", res.data);

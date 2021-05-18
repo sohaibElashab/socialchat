@@ -8231,35 +8231,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     contentProfile: _Sections_general_section_dynamic_section_contentProfile_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  data: function data() {
-    return {
-      user: null
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    axios.get("/profile").then(function (res) {
-      console.log(res.data);
-      _this.user = res.data;
-    });
   }
   /* ,
   beforeRouteEnter(to, from, next) {
-    // called before the route that renders this component is confirmed.
-    // does NOT have access to `this` component instance,
-    // because it has not been created yet when this guard is called!
-      axios
-        .get("/profile")
-        .then(res => {
-            next();
-        })
-        .catch(err => {
-            next({
-                name: "signIn"
-            });
-        });
+   // called before the route that renders this component is confirmed.
+   // does NOT have access to `this` component instance,
+   // because it has not been created yet when this guard is called!
+     axios
+       .get("/profile")
+       .then(res => {
+           next();
+       })
+       .catch(err => {
+           next({
+               name: "signIn"
+           });
+       });
   } */
 
 });
@@ -9893,8 +9880,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -9906,15 +9891,10 @@ __webpack_require__.r(__webpack_exports__);
     CreatePost: _single_section_CreatePost__WEBPACK_IMPORTED_MODULE_2__.default,
     Post: _single_section_Post__WEBPACK_IMPORTED_MODULE_3__.default
   },
-  props: {
-    user: {
-      type: Object,
-      "default": null
-    }
-  },
   data: function data() {
     return {
       date: null,
+      user: null,
       FriendLists: {
         "1": {
           id: 1,
@@ -10050,7 +10030,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/profile").then(function (res) {
+      console.log(res.data);
+      _this.user = res.data;
+    });
+  }
 });
 
 /***/ }),
@@ -10749,11 +10736,11 @@ __webpack_require__.r(__webpack_exports__);
     send: function send() {
       var _this2 = this;
 
-      var config = {
-        headers: {
-          "content-type": "multipart/form-data"
-        }
-      };
+      // const config = {
+      //     headers: {
+      //         "content-type": "multipart/form-data"
+      //     }
+      // };
       var data = new FormData();
       data.append("cover", this.cover_img);
       data.append("profile", this.profile_img);
@@ -10774,7 +10761,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append("youtube", this.youtube);
       data.append("linkedin", this.linkedin); //axios.post("/profile-update", data, config);
 
-      axios.post("/profile-update", data, config).then(function (res) {
+      axios.post("/profile-update", data).then(function (res) {
         console.log(res);
         _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$emit("user-update", res.data);
       })["catch"](function (err) {
@@ -54276,7 +54263,7 @@ var render = function() {
           _vm._v(" "),
           _c("rightbar"),
           _vm._v(" "),
-          _c("contentProfile", { attrs: { user: _vm.user } })
+          _c("contentProfile")
         ],
         1
       ),
@@ -56312,1018 +56299,1025 @@ var render = function() {
                       _vm._m(1),
                       _vm._v(" "),
                       _c("div", { staticClass: "iq-card-body" }, [
-                        _c("form", [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "form-group row align-items-center"
-                            },
-                            [
-                              _c("div", { staticClass: "col-md-5" }, [
-                                _c("label", { attrs: { for: "fname" } }, [
-                                  _vm._v("Profile image:")
+                        _c(
+                          "form",
+                          { attrs: { enctype: "multipart/form-data" } },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "form-group row align-items-center"
+                              },
+                              [
+                                _c("div", { staticClass: "col-md-5" }, [
+                                  _c("label", { attrs: { for: "fname" } }, [
+                                    _vm._v("Profile image:")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "div-img-edit" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "profile-img-edit" },
+                                      [
+                                        _c("img", {
+                                          staticClass: "profile-pic",
+                                          attrs: {
+                                            src: _vm.profile,
+                                            alt: "profile-pic"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("div", { staticClass: "p-image" }, [
+                                          _c("i", {
+                                            staticClass:
+                                              "ri-pencil-line upload-button",
+                                            on: { click: _vm.prof }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("input", {
+                                            ref: "prof",
+                                            staticStyle: { display: "none" },
+                                            attrs: {
+                                              type: "file",
+                                              accept: "image/*"
+                                            },
+                                            on: { change: _vm.onProfileChange }
+                                          })
+                                        ])
+                                      ]
+                                    )
+                                  ])
                                 ]),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "div-img-edit" }, [
+                                _c("div", { staticClass: "col-md-7" }, [
+                                  _c("label", { attrs: { for: "fname" } }, [
+                                    _vm._v("Cover image:")
+                                  ]),
+                                  _vm._v(" "),
                                   _c(
                                     "div",
-                                    { staticClass: "profile-img-edit" },
+                                    { staticClass: "profile-cover-img-edit" },
                                     [
                                       _c("img", {
-                                        staticClass: "profile-pic",
+                                        staticClass: "profile-cover-pic",
                                         attrs: {
-                                          src: _vm.profile,
-                                          alt: "profile-pic"
+                                          src: _vm.cover,
+                                          alt: "cover-pic"
                                         }
                                       }),
                                       _vm._v(" "),
-                                      _c("div", { staticClass: "p-image" }, [
-                                        _c("i", {
-                                          staticClass:
-                                            "ri-pencil-line upload-button",
-                                          on: { click: _vm.prof }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("input", {
-                                          ref: "prof",
-                                          staticStyle: { display: "none" },
-                                          attrs: {
-                                            type: "file",
-                                            accept: "image/*"
-                                          },
-                                          on: { change: _vm.onProfileChange }
-                                        })
-                                      ])
+                                      _c(
+                                        "div",
+                                        { staticClass: "p-image Ip-image" },
+                                        [
+                                          _c("i", {
+                                            staticClass:
+                                              "ri-pencil-line upload-button",
+                                            on: { click: _vm.cov }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("input", {
+                                            ref: "cov",
+                                            staticStyle: { display: "none" },
+                                            attrs: {
+                                              type: "file",
+                                              accept: "image/*"
+                                            },
+                                            on: { change: _vm.onCoverChange }
+                                          })
+                                        ]
+                                      )
                                     ]
                                   )
                                 ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-md-7" }, [
-                                _c("label", { attrs: { for: "fname" } }, [
-                                  _vm._v("Cover image:")
-                                ]),
-                                _vm._v(" "),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: " row align-items-center" },
+                              [
                                 _c(
                                   "div",
-                                  { staticClass: "profile-cover-img-edit" },
+                                  { staticClass: "form-group col-sm-6" },
                                   [
-                                    _c("img", {
-                                      staticClass: "profile-cover-pic",
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v("Full Name:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.name,
+                                          expression: "name"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
                                       attrs: {
-                                        src: _vm.cover,
-                                        alt: "cover-pic"
+                                        type: "text",
+                                        id: "fname",
+                                        placeholder: "Full name"
+                                      },
+                                      domProps: { value: _vm.name },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.name = $event.target.value
+                                        }
                                       }
                                     }),
                                     _vm._v(" "),
+                                    _vm.name_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.name_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v("Email:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.email,
+                                          expression: "email"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "email",
+                                        id: "fname",
+                                        placeholder: "email@example.com"
+                                      },
+                                      domProps: { value: _vm.email },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.email = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.email_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.email_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { staticClass: "d-block" }, [
+                                      _vm._v("Gender:")
+                                    ]),
+                                    _vm._v(" "),
                                     _c(
                                       "div",
-                                      { staticClass: "p-image Ip-image" },
+                                      {
+                                        staticClass:
+                                          "custom-control custom-radio custom-control-inline"
+                                      },
                                       [
-                                        _c("i", {
-                                          staticClass:
-                                            "ri-pencil-line upload-button",
-                                          on: { click: _vm.cov }
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.gender,
+                                              expression: "gender"
+                                            }
+                                          ],
+                                          staticClass: "custom-control-input",
+                                          attrs: {
+                                            type: "radio",
+                                            id: "customRadio6",
+                                            value: "male"
+                                          },
+                                          domProps: {
+                                            checked: _vm._q(_vm.gender, "male")
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.gender = "male"
+                                            }
+                                          }
                                         }),
                                         _vm._v(" "),
-                                        _c("input", {
-                                          ref: "cov",
-                                          staticStyle: { display: "none" },
-                                          attrs: {
-                                            type: "file",
-                                            accept: "image/*"
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "custom-control-label",
+                                            attrs: { for: "customRadio6" }
                                           },
-                                          on: { change: _vm.onCoverChange }
-                                        })
+                                          [
+                                            _vm._v(
+                                              "\n                                                        Male\n                                                    "
+                                            )
+                                          ]
+                                        )
                                       ]
-                                    )
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "custom-control custom-radio custom-control-inline"
+                                      },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.gender,
+                                              expression: "gender"
+                                            }
+                                          ],
+                                          staticClass: "custom-control-input",
+                                          attrs: {
+                                            type: "radio",
+                                            id: "customRadio7",
+                                            value: "female"
+                                          },
+                                          domProps: {
+                                            checked: _vm._q(
+                                              _vm.gender,
+                                              "female"
+                                            )
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.gender = "female"
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "label",
+                                          {
+                                            staticClass: "custom-control-label",
+                                            attrs: { for: "customRadio7" }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                        Female\n                                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm.gender_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.gender_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { attrs: { for: "dob" } }, [
+                                      _vm._v("Date Of Birth:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.birthdate,
+                                          expression: "birthdate"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "date", id: "dob" },
+                                      domProps: { value: _vm.birthdate },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.birthdate = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.birthdate_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.birthdate_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v("Phone number:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.mobile,
+                                          expression: "mobile"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "text", id: "fname" },
+                                      domProps: { value: _vm.mobile },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.mobile = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.mobile_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.mobile_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v("Languages:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.language,
+                                          expression: "language"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        id: "fname",
+                                        placeholder: "English,Spanish..."
+                                      },
+                                      domProps: { value: _vm.language },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.language = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.language_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.language_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-12" },
+                                  [
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v("Interests:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.interested,
+                                          expression: "interested"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        id: "fname",
+                                        placeholder: "Designing,Gaming..."
+                                      },
+                                      domProps: { value: _vm.interested },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.interested = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.interested_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.interested_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-12" },
+                                  [
+                                    _c("label", [_vm._v("Address:")]),
+                                    _vm._v(" "),
+                                    _c("textarea", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.adress,
+                                          expression: "adress"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        name: "address",
+                                        rows: "2",
+                                        placeholder: "Current adress"
+                                      },
+                                      domProps: { value: _vm.adress },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.adress = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.adress_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.adress_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-12" },
+                                  [
+                                    _c("label", [_vm._v("About:")]),
+                                    _vm._v(" "),
+                                    _c("textarea", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.about,
+                                          expression: "about"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        name: "address",
+                                        rows: "2",
+                                        placeholder: "About you"
+                                      },
+                                      domProps: { value: _vm.about },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.about = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.about_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.about_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-12" },
+                                  [
+                                    _c("label", [_vm._v("Favorite quote:")]),
+                                    _vm._v(" "),
+                                    _c("textarea", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.quote,
+                                          expression: "quote"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        name: "address",
+                                        rows: "2",
+                                        placeholder: "Favorite quote"
+                                      },
+                                      domProps: { value: _vm.quote },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.quote = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.quote_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.quote_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v(
+                                        "Personal\n                                                    website:"
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.website,
+                                          expression: "website"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        id: "fname",
+                                        placeholder: "Personal website"
+                                      },
+                                      domProps: { value: _vm.website },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.website = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.website_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.website_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v("Facebook:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.facebook,
+                                          expression: "facebook"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        id: "fname",
+                                        placeholder: "Facebook link"
+                                      },
+                                      domProps: { value: _vm.facebook },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.facebook = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.facebook_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.facebook_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v("Twitter:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.twitter,
+                                          expression: "twitter"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        id: "fname",
+                                        placeholder: "Twitter link"
+                                      },
+                                      domProps: { value: _vm.twitter },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.twitter = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.twitter_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.twitter_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v("Instagram:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.instagram,
+                                          expression: "instagram"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        id: "fname",
+                                        placeholder: "Instagram link"
+                                      },
+                                      domProps: { value: _vm.instagram },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.instagram = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.instagram_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.instagram_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v("Youtube:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.youtube,
+                                          expression: "youtube"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        id: "fname",
+                                        placeholder: "Youtube link"
+                                      },
+                                      domProps: { value: _vm.youtube },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.youtube = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.youtube_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.youtube_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-6" },
+                                  [
+                                    _c("label", { attrs: { for: "fname" } }, [
+                                      _vm._v("Linkedin:")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.linkedin,
+                                          expression: "linkedin"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        id: "fname",
+                                        placeholder: "Linkedin link"
+                                      },
+                                      domProps: { value: _vm.linkedin },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.linkedin = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.linkedin_err !== ""
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass: "form-text text-danger"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(_vm.linkedin_err) +
+                                                "\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      : _vm._e()
                                   ]
                                 )
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: " row align-items-center" },
-                            [
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v("Full Name:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.name,
-                                        expression: "name"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "fname",
-                                      placeholder: "Full name"
-                                    },
-                                    domProps: { value: _vm.name },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.name = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.name_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.name_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v("Email:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.email,
-                                        expression: "email"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "email",
-                                      id: "fname",
-                                      placeholder: "email@example.com"
-                                    },
-                                    domProps: { value: _vm.email },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.email = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.email_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.email_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { staticClass: "d-block" }, [
-                                    _vm._v("Gender:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "custom-control custom-radio custom-control-inline"
-                                    },
-                                    [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.gender,
-                                            expression: "gender"
-                                          }
-                                        ],
-                                        staticClass: "custom-control-input",
-                                        attrs: {
-                                          type: "radio",
-                                          id: "customRadio6",
-                                          value: "male"
-                                        },
-                                        domProps: {
-                                          checked: _vm._q(_vm.gender, "male")
-                                        },
-                                        on: {
-                                          change: function($event) {
-                                            _vm.gender = "male"
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "label",
-                                        {
-                                          staticClass: "custom-control-label",
-                                          attrs: { for: "customRadio6" }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                        Male\n                                                    "
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "custom-control custom-radio custom-control-inline"
-                                    },
-                                    [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.gender,
-                                            expression: "gender"
-                                          }
-                                        ],
-                                        staticClass: "custom-control-input",
-                                        attrs: {
-                                          type: "radio",
-                                          id: "customRadio7",
-                                          value: "female"
-                                        },
-                                        domProps: {
-                                          checked: _vm._q(_vm.gender, "female")
-                                        },
-                                        on: {
-                                          change: function($event) {
-                                            _vm.gender = "female"
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "label",
-                                        {
-                                          staticClass: "custom-control-label",
-                                          attrs: { for: "customRadio7" }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                        Female\n                                                    "
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _vm.gender_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.gender_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "dob" } }, [
-                                    _vm._v("Date Of Birth:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.birthdate,
-                                        expression: "birthdate"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: { type: "date", id: "dob" },
-                                    domProps: { value: _vm.birthdate },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.birthdate = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.birthdate_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.birthdate_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v("Phone number:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.mobile,
-                                        expression: "mobile"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: { type: "text", id: "fname" },
-                                    domProps: { value: _vm.mobile },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.mobile = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.mobile_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.mobile_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v("Languages:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.language,
-                                        expression: "language"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "fname",
-                                      placeholder: "English,Spanish..."
-                                    },
-                                    domProps: { value: _vm.language },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.language = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.language_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.language_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-12" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v("Interests:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.interested,
-                                        expression: "interested"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "fname",
-                                      placeholder: "Designing,Gaming..."
-                                    },
-                                    domProps: { value: _vm.interested },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.interested = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.interested_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.interested_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-12" },
-                                [
-                                  _c("label", [_vm._v("Address:")]),
-                                  _vm._v(" "),
-                                  _c("textarea", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.adress,
-                                        expression: "adress"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      name: "address",
-                                      rows: "2",
-                                      placeholder: "Current adress"
-                                    },
-                                    domProps: { value: _vm.adress },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.adress = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.adress_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.adress_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-12" },
-                                [
-                                  _c("label", [_vm._v("About:")]),
-                                  _vm._v(" "),
-                                  _c("textarea", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.about,
-                                        expression: "about"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      name: "address",
-                                      rows: "2",
-                                      placeholder: "About you"
-                                    },
-                                    domProps: { value: _vm.about },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.about = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.about_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.about_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-12" },
-                                [
-                                  _c("label", [_vm._v("Favorite quote:")]),
-                                  _vm._v(" "),
-                                  _c("textarea", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.quote,
-                                        expression: "quote"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      name: "address",
-                                      rows: "2",
-                                      placeholder: "Favorite quote"
-                                    },
-                                    domProps: { value: _vm.quote },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.quote = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.quote_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.quote_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v(
-                                      "Personal\n                                                    website:"
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.website,
-                                        expression: "website"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "fname",
-                                      placeholder: "Personal website"
-                                    },
-                                    domProps: { value: _vm.website },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.website = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.website_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.website_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v("Facebook:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.facebook,
-                                        expression: "facebook"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "fname",
-                                      placeholder: "Facebook link"
-                                    },
-                                    domProps: { value: _vm.facebook },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.facebook = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.facebook_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.facebook_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v("Twitter:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.twitter,
-                                        expression: "twitter"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "fname",
-                                      placeholder: "Twitter link"
-                                    },
-                                    domProps: { value: _vm.twitter },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.twitter = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.twitter_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.twitter_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v("Instagram:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.instagram,
-                                        expression: "instagram"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "fname",
-                                      placeholder: "Instagram link"
-                                    },
-                                    domProps: { value: _vm.instagram },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.instagram = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.instagram_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.instagram_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v("Youtube:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.youtube,
-                                        expression: "youtube"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "fname",
-                                      placeholder: "Youtube link"
-                                    },
-                                    domProps: { value: _vm.youtube },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.youtube = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.youtube_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.youtube_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group col-sm-6" },
-                                [
-                                  _c("label", { attrs: { for: "fname" } }, [
-                                    _vm._v("Linkedin:")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.linkedin,
-                                        expression: "linkedin"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "fname",
-                                      placeholder: "Linkedin link"
-                                    },
-                                    domProps: { value: _vm.linkedin },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.linkedin = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.linkedin_err !== ""
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "form-text text-danger"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    " +
-                                              _vm._s(_vm.linkedin_err) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
-                                ]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary mr-2",
-                              attrs: { type: "button" },
-                              on: { click: _vm.send }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                            Submit\n                                        "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn iq-bg-danger",
-                              attrs: { type: "reset" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                            Cancel\n                                        "
-                              )
-                            ]
-                          )
-                        ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary mr-2",
+                                attrs: { type: "button" },
+                                on: { click: _vm.send }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                            Submit\n                                        "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn iq-bg-danger",
+                                attrs: { type: "reset" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                            Cancel\n                                        "
+                                )
+                              ]
+                            )
+                          ]
+                        )
                       ])
                     ])
                   ]

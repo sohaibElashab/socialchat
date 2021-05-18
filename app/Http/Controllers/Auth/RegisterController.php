@@ -83,7 +83,7 @@ class RegisterController extends Controller
             'post_id' => 0,
             'user_id' => $user->id,
             'name' => 'BG/'.$BGpics[$Bpic],
-            'type' => 'cover',
+            'type' => 'cover', 
         ]);
 
        if ($data['gender'] == 'female') {

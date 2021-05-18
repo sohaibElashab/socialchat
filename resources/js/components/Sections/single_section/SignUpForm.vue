@@ -169,7 +169,7 @@ export default {
                 .post("/register", {
                     name: this.name,
                     email: this.email,
-                    password: this.password,
+                    password: this.password, 
                     password_confirmation: this.Cpassword,
                     mobile: this.mobile,
                     birthdate: this.birthdate,
