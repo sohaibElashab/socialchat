@@ -11,6 +11,7 @@
         <link href="{{asset('css/typography.css')}}" rel="stylesheet" >
         <link href="{{asset('css/style.css')}}" rel="stylesheet" >
         <link href="{{asset('css/responsive.css')}}" rel="stylesheet" >
+        
     </head>
     <body >
         <div id="app">

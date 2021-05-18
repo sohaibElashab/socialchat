@@ -20,5 +20,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/profile', [App\Http\Controllers\ProfilController::class, 'index']);
+Route::get('/GatHashed', [App\Http\Controllers\ProfilController::class, 'GatHashed']);
+Route::get('/verify', [App\Http\Controllers\ProfilController::class, 'verify']);
 Route::post('/profile-update', [App\Http\Controllers\ProfilController::class, 'update']);
 Route::post('/PasswordUpdate', [App\Http\Controllers\ProfilController::class, 'PasswordUpdate']);
+Route::post('/ForgotPass', [App\Http\Controllers\ProfilController::class, 'ForgotPass']);
+Route::post('/ResetPassword', [App\Http\Controllers\ProfilController::class, 'ResetPassword']);
+Route::post('/BeforeRegister', [App\Http\Controllers\ProfilController::class, 'BeforeRegister']);

@@ -59,7 +59,7 @@ class RegisterController extends Controller
             'birthdate' => ['required'],
             'gender' => ['required'],
         ]);//, 'confirmed' 
-    }
+    } 
 
     /**
      * Create a new user instance after a valid registration.
@@ -106,7 +106,9 @@ class RegisterController extends Controller
                'type' => 'profile',
            ]);
        }
-
+       $date = date('Y-m-d H:i:s');
+       $user->email_verified_at = $date;
+       $user->save();
         return $user;
     }
 }

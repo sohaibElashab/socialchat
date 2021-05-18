@@ -166,10 +166,10 @@ export default {
             e.preventDefault();
             console.log(this.name + "_" + this.email + "_" + this.password);
             axios
-                .post("/register", {
+                .post("/BeforeRegister", {
                     name: this.name,
                     email: this.email,
-                    password: this.password, 
+                    password: this.password,
                     password_confirmation: this.Cpassword,
                     mobile: this.mobile,
                     birthdate: this.birthdate,
@@ -177,7 +177,7 @@ export default {
                 })
                 .then(response => {
                     console.log(response.status + " " + response.statusText);
-                    this.$router.push({ name: "home" });
+                    this.$router.push({ name: "verifyEmail" });
                 })
                 .catch(err => {
                     var error = JSON.parse(err.request.response);
