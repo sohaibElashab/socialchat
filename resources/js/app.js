@@ -86,7 +86,8 @@ const routes = [
     {
         path: "/friendProfile",
         name: "friendProfile",
-        component: friendProfile
+        component: friendProfile,
+        props: true
     },
     {
         path: "/friendList",

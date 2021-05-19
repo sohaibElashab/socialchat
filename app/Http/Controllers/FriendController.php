@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Image;
+use App\Models\FriendRequest;
 
 class FriendController extends Controller
 {
@@ -18,6 +19,20 @@ class FriendController extends Controller
         $user = User::where('id',$request->id)->first();
         $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
         $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
+
+        $from = auth()->user()->id;
+        $to = $request->id;
+
+        $Frequest = FriendRequest::where('user_from',$from)->where('user_to',$to)->first();
+        if($Frequest){
+            $user->message = "cancel";
+        }
+
+        $Frequest = FriendRequest::where('user_from',$to)->where('user_to',$from)->first();
+        if($Frequest){
+            $user->message = "accept";
+        }
+
         return response()->json($user);
     }
 
@@ -28,6 +43,36 @@ class FriendController extends Controller
             $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
         }
         return response()->json($users);
+    }
+
+    public function SendRequest(Request $request)
+    {
+        $from = auth()->user()->id;
+        $to = $request->id;
+
+        $Frequest = FriendRequest::create([
+            'user_from' => $from,
+            'user_to' => $to,
+            'status' => 'sent',
+        ]); 
+
+        return response()->json($Frequest);
+    }
+
+
+
+    public function DeleteRequest(Request $request)
+    {
+        $from = auth()->user()->id;
+        $to = $request->id;
+        $Frequest = FriendRequest::where('user_from',$from)->where('user_to',$to)->delete();
+     
+        return response()->json(); 
+    }
+    
+    public function AcceptRequest(Request $request)
+    {
+        # code...
     }
 
     /**

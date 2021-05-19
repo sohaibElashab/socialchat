@@ -63,14 +63,6 @@
                                                         alt="Instagram"
                                                 /></a>
                                             </li>
-                                            <!-- <li class="text-center pr-3">
-                                                <a href="#"
-                                                    ><img
-                                                        src="images/icon/11.png"
-                                                        class="img-fluid rounded"
-                                                        alt="Google plus"
-                                                /></a>
-                                            </li> -->
                                             <li class="text-center pr-3">
                                                 <a :href="user.youtube"
                                                     ><img
@@ -100,6 +92,46 @@
                                             <li class="text-center pl-3">
                                                 <h6>Posts</h6>
                                                 <p class="mb-0">6</p>
+                                            </li>
+                                            <li
+                                                class="text-center pl-3"
+                                                @click="DeleteRequest"
+                                                v-if="user.message == 'cancel'"
+                                            >
+                                                <button
+                                                    class="mr-3 btn btn-danger rounded"
+                                                >
+                                                    <i
+                                                        class="ri-check-line mr-1 text-white font-size-16"
+                                                    ></i>
+                                                    Cancel request
+                                                </button>
+                                            </li>
+                                            <li
+                                                class="text-center pl-3"
+                                                v-else-if="
+                                                    user.message == 'accept'
+                                                "
+                                            >
+                                                <button
+                                                    class="mr-3 btn btn-primary rounded"
+                                                >
+                                                    <i
+                                                        class="ri-check-line mr-1 text-white font-size-16"
+                                                    ></i>
+                                                    Accept request
+                                                </button>
+                                            </li>
+                                            <li class="text-center pl-3" v-else>
+                                                <button
+                                                    class="mr-3 btn btn-primary rounded"
+                                                    @click="sendRequest"
+                                                >
+                                                    <i
+                                                        class="ri-user-add-line"
+                                                    ></i
+                                                    >Add Friend
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>
@@ -565,16 +597,32 @@
                                 <div class="iq-card-body">
                                     <h2>Friends</h2>
                                     <div class="friend-list-tab mt-2">
-                                        
-                                        <ul class="nav nav-pills d-flex align-items-center justify-content-left friend-list-items p-0 mb-2">
+                                        <ul
+                                            class="nav nav-pills d-flex align-items-center justify-content-left friend-list-items p-0 mb-2"
+                                        >
                                             <li>
-                                                <a class="nav-link active" data-toggle="pill" href="#all-friends">All Friends</a>
+                                                <a
+                                                    class="nav-link active"
+                                                    data-toggle="pill"
+                                                    href="#all-friends"
+                                                    >All Friends</a
+                                                >
                                             </li>
                                             <li>
-                                                <a class="nav-link" data-toggle="pill" href="#Mutual-Friends">Mutual Friends</a>
+                                                <a
+                                                    class="nav-link"
+                                                    data-toggle="pill"
+                                                    href="#Mutual-Friends"
+                                                    >Mutual Friends</a
+                                                >
                                             </li>
                                             <li>
-                                                <a class="nav-link" data-toggle="pill" href="#His-friend">His/Her friends</a>
+                                                <a
+                                                    class="nav-link"
+                                                    data-toggle="pill"
+                                                    href="#His-friend"
+                                                    >Other friends</a
+                                                >
                                             </li>
                                         </ul>
                                         <div class="tab-content">
@@ -586,7 +634,8 @@
                                                 <div class="iq-card-body p-0">
                                                     <ProfileFriend
                                                         :FriendLists="
-                                                            FriendLists"
+                                                            FriendLists
+                                                        "
                                                     />
                                                 </div>
                                             </div>
@@ -598,7 +647,8 @@
                                                 <div class="iq-card-body p-0">
                                                     <ProfileFriend
                                                         :FriendLists="
-                                                            FriendLists"
+                                                            FriendLists
+                                                        "
                                                     />
                                                 </div>
                                             </div>
@@ -610,7 +660,8 @@
                                                 <div class="iq-card-body p-0">
                                                     <ProfileFriend
                                                         :FriendLists="
-                                                            FriendLists"
+                                                            FriendLists
+                                                        "
                                                     />
                                                 </div>
                                             </div>
@@ -634,7 +685,8 @@
                                                 <div class="iq-card-body p-0">
                                                     <ProfileImages
                                                         :ProfileImages="
-                                                            ProfileImages"
+                                                            ProfileImages
+                                                        "
                                                     />
                                                 </div>
                                             </div>
@@ -660,15 +712,11 @@ export default {
         ProfileImages,
         Post
     },
-    props: {
-        user: {
-            type: Object,
-            default: null
-        }
-    },
+    props: ["UserId"],
     data() {
         return {
             date: null,
+            user: null,
             FriendLists: {
                 "1": {
                     id: 1,
@@ -800,6 +848,56 @@ export default {
             }
         };
     },
-    mounted() {}
+    mounted() {
+        if (this.UserId != null) {
+            sessionStorage.clear();
+            sessionStorage.setItem("id", this.UserId);
+            this.load();
+        }
+    },
+    methods: {
+        load() {
+            var id = sessionStorage.getItem("id");
+            console.log("profile content");
+            console.log(sessionStorage.getItem("id"));
+            axios
+                .post("/FriendProfile", {
+                    id: id
+                })
+                .then(res => {
+                    console.log(res.data);
+                    this.user = res.data;
+                });
+        },
+        sendRequest() {
+            axios
+                .post("/SendRequest", {
+                    id: this.user.id
+                })
+                .then(res => {
+                    console.log(res.data);
+                    this.user.message = "cancel";
+                });
+        },
+        DeleteRequest() {
+            axios
+                .post("/DeleteRequest", {
+                    id: this.user.id
+                })
+                .then(res => {
+                    console.log(res);
+                    this.user.message = "";
+                });
+        }
+    },
+    watch: {
+        UserId: function() {
+            if (this.UserId != null) {
+                sessionStorage.clear();
+                sessionStorage.setItem("id", this.UserId);
+                this.load();
+            }
+        }
+    }
 };
 </script>

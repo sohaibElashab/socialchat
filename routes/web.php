@@ -29,3 +29,5 @@ Route::post('/ResetPassword', [App\Http\Controllers\ProfilController::class, 'Re
 Route::post('/BeforeRegister', [App\Http\Controllers\ProfilController::class, 'BeforeRegister']);
 Route::post('/FriendProfile', [App\Http\Controllers\FriendController::class, 'index']);
 Route::post('/ProfileSearch', [App\Http\Controllers\FriendController::class, 'ProfileSearch']);
+Route::post('/SendRequest', [App\Http\Controllers\FriendController::class, 'SendRequest']);
+Route::post('/DeleteRequest', [App\Http\Controllers\FriendController::class, 'DeleteRequest']);

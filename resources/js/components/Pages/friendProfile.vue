@@ -15,7 +15,7 @@
             <!-- Right Sidebar Panel End-->
 
             <!-- Page Content  -->
-            <contentfriendProfile :user="user" />
+            <contentfriendProfile :UserId="id" v-if="isMounted" />
             <!-- Page Content End -->
         </div>
         <!-- Wrapper END -->
@@ -27,39 +27,31 @@
 <script>
 import contentfriendProfile from "../Sections/general_section/dynamic_section/contentfriendProfile.vue";
 export default {
+    props: ["id"],
     components: {
         contentfriendProfile
     },
     data() {
         return {
-            user: null
+            isMounted: false
         };
     },
-    created() {
-        axios
-            .post("/FriendProfile", {
-                id: this.$route.query.id
-            })
-            .then(res => {
-                console.log(res.data);
-                this.user = res.data;
-            });
-    },
-    watch: {
-        "$route.query.id": function() {
-            this.load();
+    mounted() {
+        /*  if (this.id != null) {
+            this.welcome = this.id;
+            console.log("profile");
+            console.log(this.id);
+        }
+         */
+        if (this.id != null) {
+            this.isMounted = true;
         }
     },
-    methods: {
-        load() {
-            axios
-                .post("/FriendProfile", {
-                    id: this.$route.query.id
-                })
-                .then(res => {
-                    console.log(res.data);
-                    this.user = res.data;
-                });
+    watch: {
+        id: function() {
+            if (this.id != null) {
+                this.isMounted = true;
+            }
         }
     }
 };

@@ -7994,39 +7994,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["id"],
   components: {
     contentfriendProfile: _Sections_general_section_dynamic_section_contentfriendProfile_vue__WEBPACK_IMPORTED_MODULE_0__.default
   },
   data: function data() {
     return {
-      user: null
+      isMounted: false
     };
   },
-  created: function created() {
-    var _this = this;
-
-    axios.post("/FriendProfile", {
-      id: this.$route.query.id
-    }).then(function (res) {
-      console.log(res.data);
-      _this.user = res.data;
-    });
-  },
-  watch: {
-    "$route.query.id": function $routeQueryId() {
-      this.load();
+  mounted: function mounted() {
+    /*  if (this.id != null) {
+        this.welcome = this.id;
+        console.log("profile");
+        console.log(this.id);
+    }
+     */
+    if (this.id != null) {
+      this.isMounted = true;
     }
   },
-  methods: {
-    load: function load() {
-      var _this2 = this;
-
-      axios.post("/FriendProfile", {
-        id: this.$route.query.id
-      }).then(function (res) {
-        console.log(res.data);
-        _this2.user = res.data;
-      });
+  watch: {
+    id: function id() {
+      if (this.id != null) {
+        this.isMounted = true;
+      }
     }
   }
 });
@@ -12835,6 +12827,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -12844,15 +12888,11 @@ __webpack_require__.r(__webpack_exports__);
     ProfileImages: _single_section_ProfileImages__WEBPACK_IMPORTED_MODULE_1__.default,
     Post: _single_section_Post__WEBPACK_IMPORTED_MODULE_2__.default
   },
-  props: {
-    user: {
-      type: Object,
-      "default": null
-    }
-  },
+  props: ["UserId"],
   data: function data() {
     return {
       date: null,
+      user: null,
       FriendLists: {
         "1": {
           id: 1,
@@ -12988,7 +13028,57 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    if (this.UserId != null) {
+      sessionStorage.clear();
+      sessionStorage.setItem("id", this.UserId);
+      this.load();
+    }
+  },
+  methods: {
+    load: function load() {
+      var _this = this;
+
+      var id = sessionStorage.getItem("id");
+      console.log("profile content");
+      console.log(sessionStorage.getItem("id"));
+      axios.post("/FriendProfile", {
+        id: id
+      }).then(function (res) {
+        console.log(res.data);
+        _this.user = res.data;
+      });
+    },
+    sendRequest: function sendRequest() {
+      var _this2 = this;
+
+      axios.post("/SendRequest", {
+        id: this.user.id
+      }).then(function (res) {
+        console.log(res.data);
+        _this2.user.message = "cancel";
+      });
+    },
+    DeleteRequest: function DeleteRequest() {
+      var _this3 = this;
+
+      axios.post("/DeleteRequest", {
+        id: this.user.id
+      }).then(function (res) {
+        console.log(res);
+        _this3.user.message = "";
+      });
+    }
+  },
+  watch: {
+    UserId: function UserId() {
+      if (this.UserId != null) {
+        sessionStorage.clear();
+        sessionStorage.setItem("id", this.UserId);
+        this.load();
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -14243,12 +14333,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       value: "",
       results: [],
-      user: null
+      user: null,
+      msg: "test"
     };
   },
   mounted: function mounted() {
@@ -15397,7 +15489,8 @@ var routes = [{
 }, {
   path: "/friendProfile",
   name: "friendProfile",
-  component: _components_Pages_friendProfile_vue__WEBPACK_IMPORTED_MODULE_16__.default
+  component: _components_Pages_friendProfile_vue__WEBPACK_IMPORTED_MODULE_16__.default,
+  props: true
 }, {
   path: "/friendList",
   name: "friendList",
@@ -55137,7 +55230,9 @@ var render = function() {
           _vm._v(" "),
           _c("rightbar"),
           _vm._v(" "),
-          _c("contentfriendProfile", { attrs: { user: _vm.user } })
+          _vm.isMounted
+            ? _c("contentfriendProfile", { attrs: { UserId: _vm.id } })
+            : _vm._e()
         ],
         1
       ),
@@ -60405,14 +60500,65 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _vm._m(0)
+                          _c("div", { staticClass: "social-info" }, [
+                            _c(
+                              "ul",
+                              {
+                                staticClass:
+                                  "social-data-block d-flex align-items-center justify-content-between list-inline p-0 m-0"
+                              },
+                              [
+                                _vm._m(0),
+                                _vm._v(" "),
+                                _vm._m(1),
+                                _vm._v(" "),
+                                _vm.user.message == "cancel"
+                                  ? _c(
+                                      "li",
+                                      {
+                                        staticClass: "text-center pl-3",
+                                        on: { click: _vm.DeleteRequest }
+                                      },
+                                      [_vm._m(2)]
+                                    )
+                                  : _vm.user.message == "accept"
+                                  ? _c(
+                                      "li",
+                                      { staticClass: "text-center pl-3" },
+                                      [_vm._m(3)]
+                                    )
+                                  : _c(
+                                      "li",
+                                      { staticClass: "text-center pl-3" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "mr-3 btn btn-primary rounded",
+                                            on: { click: _vm.sendRequest }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "ri-user-add-line"
+                                            }),
+                                            _vm._v(
+                                              "Add Friend\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                              ]
+                            )
+                          ])
                         ]
                       )
                     ])
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(1)
+                _vm._m(4)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-12" }, [
@@ -60428,7 +60574,7 @@ var render = function() {
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-lg-4" }, [
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(2),
+                              _vm._m(5),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c("div", { staticClass: "row" }, [
@@ -60510,7 +60656,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(3),
+                              _vm._m(6),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c(
@@ -60556,7 +60702,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(4),
+                              _vm._m(7),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c(
@@ -60638,7 +60784,7 @@ var render = function() {
                       _c("div", { staticClass: "iq-card" }, [
                         _c("div", { staticClass: "iq-card-body" }, [
                           _c("div", { staticClass: "row" }, [
-                            _vm._m(5),
+                            _vm._m(8),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9 pl-4" }, [
                               _c("div", { staticClass: "tab-content" }, [
@@ -60654,7 +60800,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(6),
+                                      _vm._m(9),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -60666,7 +60812,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(7),
+                                      _vm._m(10),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -60678,7 +60824,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(8),
+                                      _vm._m(11),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -60709,7 +60855,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(9),
+                                      _vm._m(12),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -60721,7 +60867,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(10),
+                                      _vm._m(13),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -60752,7 +60898,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(11),
+                                      _vm._m(14),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -60776,7 +60922,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(12),
+                                      _vm._m(15),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -60792,7 +60938,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(13),
+                                      _vm._m(16),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -60804,7 +60950,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(14),
+                                      _vm._m(17),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -60816,7 +60962,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(15),
+                                      _vm._m(18),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -60896,7 +61042,7 @@ var render = function() {
                           _c("h2", [_vm._v("Friends")]),
                           _vm._v(" "),
                           _c("div", { staticClass: "friend-list-tab mt-2" }, [
-                            _vm._m(16),
+                            _vm._m(19),
                             _vm._v(" "),
                             _c("div", { staticClass: "tab-content" }, [
                               _c(
@@ -61021,26 +61167,41 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "social-info" }, [
-      _c(
-        "ul",
-        {
-          staticClass:
-            "social-data-block d-flex align-items-center justify-content-between list-inline p-0 m-0"
-        },
-        [
-          _c("li", { staticClass: "text-center pl-3" }, [
-            _c("h6", [_vm._v("Friends")]),
-            _vm._v(" "),
-            _c("p", { staticClass: "mb-0" }, [_vm._v("206")])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "text-center pl-3" }, [
-            _c("h6", [_vm._v("Posts")]),
-            _vm._v(" "),
-            _c("p", { staticClass: "mb-0" }, [_vm._v("6")])
-          ])
-        ]
+    return _c("li", { staticClass: "text-center pl-3" }, [
+      _c("h6", [_vm._v("Friends")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "mb-0" }, [_vm._v("206")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "text-center pl-3" }, [
+      _c("h6", [_vm._v("Posts")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "mb-0" }, [_vm._v("6")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "mr-3 btn btn-danger rounded" }, [
+      _c("i", { staticClass: "ri-check-line mr-1 text-white font-size-16" }),
+      _vm._v(
+        "\n                                                Cancel request\n                                            "
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "mr-3 btn btn-primary rounded" }, [
+      _c("i", { staticClass: "ri-check-line mr-1 text-white font-size-16" }),
+      _vm._v(
+        "\n                                                Accept request\n                                            "
       )
     ])
   },
@@ -61365,7 +61526,7 @@ var staticRenderFns = [
               staticClass: "nav-link",
               attrs: { "data-toggle": "pill", href: "#His-friend" }
             },
-            [_vm._v("His/Her friends")]
+            [_vm._v("Other friends")]
           )
         ])
       ]
@@ -63162,8 +63323,9 @@ var render = function() {
                           {
                             attrs: {
                               to: {
-                                path: "/friendProfile",
-                                query: { id: result.id }
+                                name: "friendProfile",
+                                params: { id: result.id },
+                                query: { user: result.name }
                               },
                               tag: "a",
                               id: "pp"
