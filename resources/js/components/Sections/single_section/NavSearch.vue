@@ -25,7 +25,7 @@
                             tag="a"
                             id="pp"
                             v-if="user.id != result.id"
-                            ><!--  params matat khdemch fach ta tbdel luser fsearchbar ila 7iedt query -->
+                            ><!--params matat khdemch fach ta tbdel luser fsearchbar ila 7iedt query -->
                             <div class="">
                                 <img
                                     class="avatar-40 rounded"
