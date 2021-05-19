@@ -708,6 +708,7 @@ export default {
                 .then(res => {
                     console.log(res);
                     EventBus.$emit("user-update", res.data);
+                    this.$router.push({ name: "profile" });
                 })
                 .catch(err => {
                     var error = JSON.parse(err.request.response);

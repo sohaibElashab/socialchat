@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Image;
 
 class FriendController extends Controller
 {
@@ -11,9 +13,21 @@ class FriendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = User::where('id',$request->id)->first();
+        $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+        $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
+        return response()->json($user);
+    }
+
+    public function ProfileSearch(Request $request)
+    {
+        $users = User::where('name','like','%'.$request->value.'%')->get();
+        foreach ($users as  $user) {
+            $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+        }
+        return response()->json($users);
     }
 
     /**

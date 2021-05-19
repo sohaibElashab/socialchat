@@ -85,7 +85,7 @@ const routes = [
     },
     {
         path: "/friendProfile",
-        name: "friendProfi",
+        name: "friendProfile",
         component: friendProfile
     },
     {

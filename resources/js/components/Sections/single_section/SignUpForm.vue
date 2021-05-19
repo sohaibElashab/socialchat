@@ -120,6 +120,7 @@
                     <div class=" d-inline-block mt-2 pt-1">
                         <span class="dark-color d-inline-block line-height-2"
                             >Already Have Account ?
+
                             <router-link to="/signIn" tag="a"
                                 >Log In</router-link
                             >
@@ -153,7 +154,8 @@ export default {
             mobile_err: "",
             password_err: "",
             birthdate_err: "",
-            gender_err: ""
+            gender_err: "" /* 
+            test: 12 */
         };
     },
     mounted() {

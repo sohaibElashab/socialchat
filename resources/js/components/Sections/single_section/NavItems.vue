@@ -88,7 +88,7 @@
                                     to="/friendRequest"
                                     tag="a"
                                     exact=""
-                                    >
+                                >
                                     View More Request
                                 </router-link>
                             </div>
@@ -143,7 +143,7 @@
                                     to="/notification"
                                     tag="a"
                                     exact=""
-                                    >
+                                >
                                     View More Notification
                                 </router-link>
                             </div>
@@ -299,7 +299,10 @@ export default {
     methods: {
         updateUser(data) {
             this.user = data;
-            this.img = this.user.profile;
+            if (this.user.profile) {
+                this.img = this.user.profile;
+                console.log(this.user);
+            }
         }
     }
 };
