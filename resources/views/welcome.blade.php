@@ -10,7 +10,7 @@
         <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('css/typography.css')}}" rel="stylesheet" >
         <link href="{{asset('css/style.css')}}" rel="stylesheet" >
-        <link href="{{asset('css/responsive.css')}}" rel="stylesheet" >
+        <link href="{{asset('css/responsive.css')}}" rel="stylesheet" > 
         
     </head>
     <body >
