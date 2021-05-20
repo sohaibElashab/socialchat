@@ -10144,13 +10144,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -10167,6 +10160,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       date: null,
       user: null,
+      message: "",
       FriendLists: {
         "1": {
           id: 1,
@@ -10303,10 +10297,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    /*  axios.get("/profile").then(res => {
-        console.log(res.data);
-        this.user = res.data;
-    }); */
     if (this.UserId != null) {
       sessionStorage.clear();
       sessionStorage.setItem("id", this.UserId);
@@ -10326,6 +10316,12 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         console.log(res.data);
         _this.user = res.data;
+
+        if (_this.user.message != undefined) {
+          _this.message = _this.user.message;
+        } else {
+          _this.message = "";
+        }
       });
     },
     sendRequest: function sendRequest() {
@@ -10335,7 +10331,7 @@ __webpack_require__.r(__webpack_exports__);
         id: this.user.id
       }).then(function (res) {
         console.log(res.data);
-        _this2.user.message = "cancel";
+        _this2.message = "cancel"; //console.log(this.message);
       });
     },
     DeleteRequest: function DeleteRequest() {
@@ -10345,7 +10341,7 @@ __webpack_require__.r(__webpack_exports__);
         id: this.user.id
       }).then(function (res) {
         console.log(res);
-        _this3.user.message = "";
+        _this3.message = "";
       });
     },
     AcceptRequest: function AcceptRequest() {
@@ -10360,14 +10356,12 @@ __webpack_require__.r(__webpack_exports__);
     UserId: function UserId() {
       if (this.UserId != null) {
         sessionStorage.clear();
-        sessionStorage.setItem("id", this.UserId);
-        console.log("profile content watch");
+        sessionStorage.setItem("id", this.UserId); // console.log("profile content watch");
+
+        this.load();
       }
 
-      this.load();
-    },
-    user: function user() {
-      this.load();
+      console.log("z");
     }
   }
 });
@@ -56935,18 +56929,31 @@ var render = function() {
                                 _vm._v(" "),
                                 _vm._m(1),
                                 _vm._v(" "),
-                                _vm.user.status == "friend" &&
-                                _vm.user.message == "cancel"
+                                _vm.message == "cancel"
                                   ? _c(
                                       "li",
-                                      {
-                                        staticClass: "text-center pl-3",
-                                        on: { click: _vm.DeleteRequest }
-                                      },
-                                      [_vm._m(2)]
+                                      { staticClass: "text-center pl-3" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "mr-3 btn btn-danger rounded",
+                                            on: { click: _vm.DeleteRequest }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "ri-check-line mr-1 text-white font-size-16"
+                                            }),
+                                            _vm._v(
+                                              "\n                                                Cancel request\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
                                     )
-                                  : _vm.user.status == "friend" &&
-                                    _vm.user.message == "accept"
+                                  : _vm.message == "accept"
                                   ? _c(
                                       "li",
                                       { staticClass: "text-center pl-3" },
@@ -56970,7 +56977,7 @@ var render = function() {
                                         )
                                       ]
                                     )
-                                  : _vm.user.status == "friend"
+                                  : _vm.message == ""
                                   ? _c(
                                       "li",
                                       { staticClass: "text-center pl-3" },
@@ -56987,7 +56994,9 @@ var render = function() {
                                               staticClass: "ri-user-add-line"
                                             }),
                                             _vm._v(
-                                              "Add Friend\n                                            "
+                                              "Add Friend\n                                                " +
+                                                _vm._s(_vm.message) +
+                                                "\n                                            "
                                             )
                                           ]
                                         )
@@ -57003,7 +57012,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(3)
+                _vm._m(2)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-12" }, [
@@ -57019,7 +57028,7 @@ var render = function() {
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-lg-4" }, [
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(4),
+                              _vm._m(3),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c("div", { staticClass: "row" }, [
@@ -57101,7 +57110,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(5),
+                              _vm._m(4),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c(
@@ -57147,7 +57156,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(6),
+                              _vm._m(5),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c(
@@ -57233,7 +57242,7 @@ var render = function() {
                       _c("div", { staticClass: "iq-card" }, [
                         _c("div", { staticClass: "iq-card-body" }, [
                           _c("div", { staticClass: "row" }, [
-                            _vm._m(7),
+                            _vm._m(6),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9 pl-4" }, [
                               _c("div", { staticClass: "tab-content" }, [
@@ -57249,7 +57258,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(8),
+                                      _vm._m(7),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57261,7 +57270,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(9),
+                                      _vm._m(8),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57273,7 +57282,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(10),
+                                      _vm._m(9),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57304,7 +57313,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(11),
+                                      _vm._m(10),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57316,7 +57325,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(12),
+                                      _vm._m(11),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57347,7 +57356,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(13),
+                                      _vm._m(12),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57371,7 +57380,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(14),
+                                      _vm._m(13),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57387,7 +57396,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(15),
+                                      _vm._m(14),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57399,7 +57408,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(16),
+                                      _vm._m(15),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57411,7 +57420,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(17),
+                                      _vm._m(16),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57585,17 +57594,6 @@ var staticRenderFns = [
       _c("h6", [_vm._v("Posts")]),
       _vm._v(" "),
       _c("p", { staticClass: "mb-0" }, [_vm._v("6")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "mr-3 btn btn-danger rounded" }, [
-      _c("i", { staticClass: "ri-check-line mr-1 text-white font-size-16" }),
-      _vm._v(
-        "\n                                                Cancel request\n                                            "
-      )
     ])
   },
   function() {

@@ -109,14 +109,11 @@
                                             <!--  <div v-if="user.status == 'friend'"> -->
                                             <li
                                                 class="text-center pl-3"
-                                                @click="DeleteRequest"
-                                                v-if="
-                                                    user.status == 'friend' &&
-                                                        user.message == 'cancel'
-                                                "
+                                                v-if="message == 'cancel'"
                                             >
                                                 <button
                                                     class="mr-3 btn btn-danger rounded"
+                                                    @click="DeleteRequest"
                                                 >
                                                     <i
                                                         class="ri-check-line mr-1 text-white font-size-16"
@@ -126,10 +123,7 @@
                                             </li>
                                             <li
                                                 class="text-center pl-3"
-                                                v-else-if="
-                                                    user.status == 'friend' &&
-                                                        user.message == 'accept'
-                                                "
+                                                v-else-if="message == 'accept'"
                                             >
                                                 <button
                                                     class="mr-3 btn btn-primary rounded"
@@ -143,9 +137,7 @@
                                             </li>
                                             <li
                                                 class="text-center pl-3"
-                                                v-else-if="
-                                                    user.status == 'friend'
-                                                "
+                                                v-else-if="message == ''"
                                             >
                                                 <button
                                                     class="mr-3 btn btn-primary rounded"
@@ -155,6 +147,7 @@
                                                         class="ri-user-add-line"
                                                     ></i
                                                     >Add Friend
+                                                    {{ message }}
                                                 </button>
                                             </li>
                                             <!--  </div> -->
@@ -691,6 +684,7 @@ export default {
         return {
             date: null,
             user: null,
+            message: "",
             FriendLists: {
                 "1": {
                     id: 1,
@@ -823,10 +817,6 @@ export default {
         };
     },
     mounted() {
-        /*  axios.get("/profile").then(res => {
-            console.log(res.data);
-            this.user = res.data;
-        }); */
         if (this.UserId != null) {
             sessionStorage.clear();
             sessionStorage.setItem("id", this.UserId);
@@ -845,6 +835,11 @@ export default {
                 .then(res => {
                     console.log(res.data);
                     this.user = res.data;
+                    if (this.user.message != undefined) {
+                        this.message = this.user.message;
+                    } else {
+                        this.message = "";
+                    }
                 });
         },
         sendRequest() {
@@ -854,7 +849,8 @@ export default {
                 })
                 .then(res => {
                     console.log(res.data);
-                    this.user.message = "cancel";
+                    this.message = "cancel";
+                    //console.log(this.message);
                 });
         },
         DeleteRequest() {
@@ -864,7 +860,7 @@ export default {
                 })
                 .then(res => {
                     console.log(res);
-                    this.user.message = "";
+                    this.message = "";
                 });
         },
         AcceptRequest() {
@@ -882,12 +878,10 @@ export default {
             if (this.UserId != null) {
                 sessionStorage.clear();
                 sessionStorage.setItem("id", this.UserId);
-                console.log("profile content watch");
+                // console.log("profile content watch");
+                this.load();
             }
-            this.load();
-        },
-        user: function() {
-            this.load();
+            console.log("z");
         }
     }
 };
