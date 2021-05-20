@@ -11,8 +11,9 @@ use App\Mail\Forgot;
 use App\Mail\Verify;
 use Illuminate\Support\Facades\Mail;
 use App\Models\FriendRequest;
+use App\Models\Friend;
 
-
+ 
 class ProfilController extends Controller
 { 
     /**
@@ -35,6 +36,7 @@ class ProfilController extends Controller
             $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
             $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
             $user->status = "current";
+            $user->message = "";
             return response()->json($user);
         }else{
             $user = User::where('id',$request->id)->first();
@@ -52,6 +54,8 @@ class ProfilController extends Controller
             if($Frequest){
                 $user->message = "accept";
             }
+
+            //$friend = Friend::where()
 
             $user->status = "friend";
 
