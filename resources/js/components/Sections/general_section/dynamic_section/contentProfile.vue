@@ -18,7 +18,6 @@
                                         class="header-nav d-flex flex-wrap justify-end p-0 m-0"
                                     >
                                         <li style="z-index:1">
-                                            <!-- <a href="javascript:void();"><i class="ri-pencil-line"></i></a> -->
                                             <router-link
                                                 to="/profileEdit"
                                                 tag="a"
@@ -26,13 +25,6 @@
                                                 ><i class="ri-pencil-line"></i
                                             ></router-link>
                                         </li>
-                                        <!-- <li>
-                                            <a href="javascript:void();"
-                                                ><i
-                                                    class="ri-settings-4-line"
-                                                ></i
-                                            ></a>
-                                        </li> -->
                                     </ul>
                                 </div>
                                 <div class="user-detail text-center mb-3">
@@ -114,6 +106,58 @@
                                                 <h6>Posts</h6>
                                                 <p class="mb-0">6</p>
                                             </li>
+                                            <!--  <div v-if="user.status == 'friend'"> -->
+                                            <li
+                                                class="text-center pl-3"
+                                                @click="DeleteRequest"
+                                                v-if="
+                                                    user.status == 'friend' &&
+                                                        user.message == 'cancel'
+                                                "
+                                            >
+                                                <button
+                                                    class="mr-3 btn btn-danger rounded"
+                                                >
+                                                    <i
+                                                        class="ri-check-line mr-1 text-white font-size-16"
+                                                    ></i>
+                                                    Cancel request
+                                                </button>
+                                            </li>
+                                            <li
+                                                class="text-center pl-3"
+                                                v-else-if="
+                                                    user.status == 'friend' &&
+                                                        user.message == 'accept'
+                                                "
+                                            >
+                                                <button
+                                                    class="mr-3 btn btn-primary rounded"
+                                                    @click="AcceptRequest"
+                                                >
+                                                    <i
+                                                        class="ri-check-line mr-1 text-white font-size-16"
+                                                    ></i>
+                                                    Accept request
+                                                </button>
+                                            </li>
+                                            <li
+                                                class="text-center pl-3"
+                                                v-else-if="
+                                                    user.status == 'friend'
+                                                "
+                                            >
+                                                <button
+                                                    class="mr-3 btn btn-primary rounded"
+                                                    @click="sendRequest"
+                                                >
+                                                    <i
+                                                        class="ri-user-add-line"
+                                                    ></i
+                                                    >Add Friend
+                                                </button>
+                                            </li>
+                                            <!--  </div> -->
                                         </ul>
                                     </div>
                                 </div>
@@ -802,6 +846,35 @@ export default {
                     console.log(res.data);
                     this.user = res.data;
                 });
+        },
+        sendRequest() {
+            axios
+                .post("/SendRequest", {
+                    id: this.user.id
+                })
+                .then(res => {
+                    console.log(res.data);
+                    this.user.message = "cancel";
+                });
+        },
+        DeleteRequest() {
+            axios
+                .post("/DeleteRequest", {
+                    id: this.user.id
+                })
+                .then(res => {
+                    console.log(res);
+                    this.user.message = "";
+                });
+        },
+        AcceptRequest() {
+            axios
+                .post("/AcceptRequest", {
+                    id: this.user.id
+                })
+                .then(res => {
+                    console.log(res);
+                });
         }
     },
     watch: {
@@ -811,6 +884,9 @@ export default {
                 sessionStorage.setItem("id", this.UserId);
                 console.log("profile content watch");
             }
+            this.load();
+        },
+        user: function() {
             this.load();
         }
     }
