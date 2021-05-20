@@ -10107,6 +10107,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10283,6 +10327,33 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res.data);
         _this.user = res.data;
       });
+    },
+    sendRequest: function sendRequest() {
+      var _this2 = this;
+
+      axios.post("/SendRequest", {
+        id: this.user.id
+      }).then(function (res) {
+        console.log(res.data);
+        _this2.user.message = "cancel";
+      });
+    },
+    DeleteRequest: function DeleteRequest() {
+      var _this3 = this;
+
+      axios.post("/DeleteRequest", {
+        id: this.user.id
+      }).then(function (res) {
+        console.log(res);
+        _this3.user.message = "";
+      });
+    },
+    AcceptRequest: function AcceptRequest() {
+      axios.post("/AcceptRequest", {
+        id: this.user.id
+      }).then(function (res) {
+        console.log(res);
+      });
     }
   },
   watch: {
@@ -10293,6 +10364,9 @@ __webpack_require__.r(__webpack_exports__);
         console.log("profile content watch");
       }
 
+      this.load();
+    },
+    user: function user() {
       this.load();
     }
   }
@@ -13246,35 +13320,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      friendRqs: {
-        "1": {
-          id: 1,
-          imgUser: "images/user/05.jpg",
-          UserName: "Jaques Amole",
-          NbrFriend: "40"
-        },
-        "2": {
-          id: 2,
-          imgUser: "images/user/05.jpg",
-          UserName: "Jaques Amole",
-          NbrFriend: "40"
-        },
-        "3": {
-          id: 3,
-          imgUser: "images/user/05.jpg",
-          UserName: "Jaques Amole",
-          NbrFriend: "40"
-        },
-        "4": {
-          id: 4,
-          imgUser: "images/user/05.jpg",
-          UserName: "Jaques Amole",
-          NbrFriend: "40"
-        }
-      },
+      friendRqs: null,
+      allReqs: null,
+      show: true,
       friendKnows: {
         "1": {
           id: 1,
@@ -13302,6 +13356,51 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/LoadRequests").then(function (res) {
+      console.log(res.data);
+      _this.allReqs = res.data;
+      _this.friendRqs = _this.allReqs.slice(0, 4);
+    });
+  },
+  methods: {
+    DeleteRequest: function DeleteRequest(id) {
+      var _this2 = this;
+
+      axios.post("/DeleteReq", {
+        id: id
+      }).then(function (res) {
+        console.log(res);
+        axios.get("/LoadRequests").then(function (res) {
+          console.log(res.data);
+          _this2.allReqs = res.data;
+          _this2.friendRqs = _this2.allReqs.slice(0, 4);
+          _this2.show = true;
+        });
+      });
+    },
+    AcceptRequest: function AcceptRequest(id) {
+      var _this3 = this;
+
+      axios.post("/AcceptRequest", {
+        id: id
+      }).then(function (res) {
+        console.log(res);
+        axios.get("/LoadRequests").then(function (res) {
+          console.log(res.data);
+          _this3.allReqs = res.data;
+          _this3.friendRqs = _this3.allReqs.slice(0, 4);
+          _this3.show = true;
+        });
+      });
+    },
+    loadAll: function loadAll() {
+      this.friendRqs = this.allReqs;
+      this.show = false;
+    }
   }
 });
 
@@ -14157,38 +14256,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       user: null,
       img: "",
-      friendReqs: {
-        "1": {
-          id: 1,
-          img: "images/user/01.jpg",
-          H6: "Jaques Amole",
-          p: "40  friends"
-        },
-        "2": {
-          id: 2,
-          img: "images/user/02.jpg",
-          H6: "Lucy Tania",
-          p: "12  friends"
-        },
-        "3": {
-          id: 3,
-          img: "images/user/03.jpg",
-          H6: "Manny Petty",
-          p: "3  friends"
-        },
-        "4": {
-          id: 4,
-          img: "images/user/04.jpg",
-          H6: "Marsha Mello",
-          p: "15  friends"
-        }
-      },
+      isMounted: false,
+      allReqs: null,
+      loadedReqs: false,
+      friendReqs: null,
       Notifications: {
         "1": {
           id: 1,
@@ -14251,9 +14336,16 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/profile").then(function (res) {
-      //console.log(res.data);
+      console.log(res.data);
       _this.user = res.data;
       _this.img = _this.user.profileimg.name;
+      _this.isMounted = true;
+    });
+    axios.get("/LoadRequests").then(function (res) {
+      console.log(res.data);
+      _this.allReqs = res.data;
+      _this.friendReqs = _this.allReqs.slice(0, 4);
+      _this.loadedReqs = true;
     });
     _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$on("user-update", this.updateUser);
   },
@@ -14265,6 +14357,36 @@ __webpack_require__.r(__webpack_exports__);
         this.img = this.user.profile;
         console.log(this.user);
       }
+    },
+    DeleteRequest: function DeleteRequest(id) {
+      var _this2 = this;
+
+      axios.post("/DeleteReq", {
+        id: id
+      }).then(function (res) {
+        console.log(res);
+        axios.get("/LoadRequests").then(function (res) {
+          console.log(res.data);
+          _this2.allReqs = res.data;
+          _this2.friendReqs = _this2.allReqs.slice(0, 4);
+          _this2.loadedReqs = true;
+        });
+      });
+    },
+    AcceptRequest: function AcceptRequest(id) {
+      var _this3 = this;
+
+      axios.post("/AcceptRequest", {
+        id: id
+      }).then(function (res) {
+        console.log(res);
+        axios.get("/LoadRequests").then(function (res) {
+          console.log(res.data);
+          _this3.allReqs = res.data;
+          _this3.friendReqs = _this3.allReqs.slice(0, 4);
+          _this3.loadedReqs = true;
+        });
+      });
     }
   }
 });
@@ -56709,14 +56831,87 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _vm._m(0)
+                          _c("div", { staticClass: "social-info" }, [
+                            _c(
+                              "ul",
+                              {
+                                staticClass:
+                                  "social-data-block d-flex align-items-center justify-content-between list-inline p-0 m-0"
+                              },
+                              [
+                                _vm._m(0),
+                                _vm._v(" "),
+                                _vm._m(1),
+                                _vm._v(" "),
+                                _vm.user.status == "friend" &&
+                                _vm.user.message == "cancel"
+                                  ? _c(
+                                      "li",
+                                      {
+                                        staticClass: "text-center pl-3",
+                                        on: { click: _vm.DeleteRequest }
+                                      },
+                                      [_vm._m(2)]
+                                    )
+                                  : _vm.user.status == "friend" &&
+                                    _vm.user.message == "accept"
+                                  ? _c(
+                                      "li",
+                                      { staticClass: "text-center pl-3" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "mr-3 btn btn-primary rounded",
+                                            on: { click: _vm.AcceptRequest }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "ri-check-line mr-1 text-white font-size-16"
+                                            }),
+                                            _vm._v(
+                                              "\n                                                Accept request\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm.user.status == "friend"
+                                  ? _c(
+                                      "li",
+                                      { staticClass: "text-center pl-3" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "mr-3 btn btn-primary rounded",
+                                            on: { click: _vm.sendRequest }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "ri-user-add-line"
+                                            }),
+                                            _vm._v(
+                                              "Add Friend\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ]
+                            )
+                          ])
                         ]
                       )
                     ])
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(1)
+                _vm._m(3)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-12" }, [
@@ -56732,7 +56927,7 @@ var render = function() {
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-lg-4" }, [
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(2),
+                              _vm._m(4),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c("div", { staticClass: "row" }, [
@@ -56814,7 +57009,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(3),
+                              _vm._m(5),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c(
@@ -56860,7 +57055,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(4),
+                              _vm._m(6),
                               _vm._v(" "),
                               _c("div", { staticClass: "iq-card-body" }, [
                                 _c(
@@ -56946,7 +57141,7 @@ var render = function() {
                       _c("div", { staticClass: "iq-card" }, [
                         _c("div", { staticClass: "iq-card-body" }, [
                           _c("div", { staticClass: "row" }, [
-                            _vm._m(5),
+                            _vm._m(7),
                             _vm._v(" "),
                             _c("div", { staticClass: "col-md-9 pl-4" }, [
                               _c("div", { staticClass: "tab-content" }, [
@@ -56962,7 +57157,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(6),
+                                      _vm._m(8),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -56974,7 +57169,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(7),
+                                      _vm._m(9),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -56986,7 +57181,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(8),
+                                      _vm._m(10),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57017,7 +57212,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(9),
+                                      _vm._m(11),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57029,7 +57224,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(10),
+                                      _vm._m(12),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57060,7 +57255,7 @@ var render = function() {
                                     _c("hr"),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "row" }, [
-                                      _vm._m(11),
+                                      _vm._m(13),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57084,7 +57279,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(12),
+                                      _vm._m(14),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57100,7 +57295,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(13),
+                                      _vm._m(15),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57112,7 +57307,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(14),
+                                      _vm._m(16),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57124,7 +57319,7 @@ var render = function() {
                                         ])
                                       ]),
                                       _vm._v(" "),
-                                      _vm._m(15),
+                                      _vm._m(17),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "col-9" }, [
                                         _c("p", { staticClass: "mb-0" }, [
@@ -57284,26 +57479,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "social-info" }, [
-      _c(
-        "ul",
-        {
-          staticClass:
-            "social-data-block d-flex align-items-center justify-content-between list-inline p-0 m-0"
-        },
-        [
-          _c("li", { staticClass: "text-center pl-3" }, [
-            _c("h6", [_vm._v("Friends")]),
-            _vm._v(" "),
-            _c("p", { staticClass: "mb-0" }, [_vm._v("206")])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "text-center pl-3" }, [
-            _c("h6", [_vm._v("Posts")]),
-            _vm._v(" "),
-            _c("p", { staticClass: "mb-0" }, [_vm._v("6")])
-          ])
-        ]
+    return _c("li", { staticClass: "text-center pl-3" }, [
+      _c("h6", [_vm._v("Friends")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "mb-0" }, [_vm._v("206")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "text-center pl-3" }, [
+      _c("h6", [_vm._v("Posts")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "mb-0" }, [_vm._v("6")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "mr-3 btn btn-danger rounded" }, [
+      _c("i", { staticClass: "ri-check-line mr-1 text-white font-size-16" }),
+      _vm._v(
+        "\n                                                Cancel request\n                                            "
       )
     ])
   },
@@ -61634,7 +61833,10 @@ var render = function() {
                           _c("div", { staticClass: "user-img img-fluid" }, [
                             _c("img", {
                               staticClass: "rounded-circle avatar-40",
-                              attrs: { src: friendRq.imgUser, alt: "story-img" }
+                              attrs: {
+                                src: "images/user/" + friendRq.profileimg.name,
+                                alt: "story-img"
+                              }
                             })
                           ]),
                           _vm._v(" "),
@@ -61642,20 +61844,71 @@ var render = function() {
                             "div",
                             { staticClass: "media-support-info ml-3" },
                             [
-                              _c("h6", [_vm._v(_vm._s(friendRq.UserName))]),
+                              _c("h6", [_vm._v(_vm._s(friendRq.name))]),
                               _vm._v(" "),
                               _c("p", { staticClass: "mb-0" }, [
-                                _vm._v(_vm._s(friendRq.NbrFriend) + " friends")
+                                _vm._v(
+                                  "\n                                        40 friends\n                                    "
+                                )
                               ])
                             ]
                           ),
                           _vm._v(" "),
-                          _vm._m(1, true)
+                          _c(
+                            "div",
+                            { staticClass: "d-flex align-items-center" },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "mr-3 btn btn-primary rounded",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.AcceptRequest(friendRq.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Confirm\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "mr-3 btn btn-secondary rounded",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.DeleteRequest(friendRq.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Delete Request\n                                    "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
                         ]
                       )
                     }),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _vm.show
+                      ? _c("li", { staticClass: "d-block text-center" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-request",
+                              on: { click: _vm.loadAll }
+                            },
+                            [_vm._v("View More Request")]
+                          )
+                        ])
+                      : _vm._e()
                   ],
                   2
                 )
@@ -61663,7 +61916,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "iq-card" }, [
-              _vm._m(3),
+              _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "iq-card-body" }, [
                 _c(
@@ -61688,11 +61941,15 @@ var render = function() {
                           _c("h6", [_vm._v(_vm._s(friendKnow.UserName))]),
                           _vm._v(" "),
                           _c("p", { staticClass: "mb-0" }, [
-                            _vm._v(_vm._s(friendKnow.NbrFriend) + " friends")
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(friendKnow.NbrFriend) +
+                                " friends\n                                    "
+                            )
                           ])
                         ]),
                         _vm._v(" "),
-                        _vm._m(4, true)
+                        _vm._m(2, true)
                       ]
                     )
                   }),
@@ -61729,40 +61986,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex align-items-center" }, [
-      _c(
-        "a",
-        {
-          staticClass: "mr-3 btn btn-primary rounded",
-          attrs: { href: "javascript:void();" }
-        },
-        [_vm._v("Confirm")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "mr-3 btn btn-secondary rounded",
-          attrs: { href: "javascript:void();" }
-        },
-        [_vm._v("Delete Request")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "d-block text-center" }, [
-      _c("a", { staticClass: "btn btn-request", attrs: { href: "#" } }, [
-        _vm._v("View More Request")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "div",
       { staticClass: "iq-card-header d-flex justify-content-between" },
@@ -61788,7 +62011,10 @@ var staticRenderFns = [
           staticClass: "mr-3 btn btn-primary rounded",
           attrs: { href: "javascript:void();" }
         },
-        [_c("i", { staticClass: "ri-user-add-line" }), _vm._v("Add Friend")]
+        [
+          _c("i", { staticClass: "ri-user-add-line" }),
+          _vm._v("Add\n                                        Friend")
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -62891,7 +63117,7 @@ var render = function() {
     },
     [
       _c("ul", { staticClass: "navbar-nav ml-auto navbar-list" }, [
-        this.user
+        this.isMounted
           ? _c(
               "li",
               [
@@ -62899,7 +63125,14 @@ var render = function() {
                   "router-link",
                   {
                     staticClass: "iq-waves-effect d-flex align-items-center",
-                    attrs: { to: "/profile", tag: "a" }
+                    attrs: {
+                      to: {
+                        name: "profile",
+                        params: { id: _vm.user.id },
+                        query: { user: _vm.user.name }
+                      },
+                      tag: "a"
+                    }
                   },
                   [
                     _c("img", {
@@ -62943,90 +63176,163 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown iq-sub-dropdown-large" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
-              _c(
-                "div",
-                { staticClass: "iq-card-body p-0 " },
-                [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _vm._l(_vm.friendReqs, function(friendReq) {
-                    return _c(
-                      "div",
-                      { key: friendReq.id, staticClass: "iq-friend-request" },
-                      [
-                        _c(
+              _vm.loadedReqs
+                ? _c(
+                    "div",
+                    { staticClass: "iq-card-body p-0 " },
+                    [
+                      _c("div", { staticClass: "bg-primary p-3" }, [
+                        _c("h5", { staticClass: "mb-0 text-white" }, [
+                          _vm._v(
+                            "\n                                Friend Request"
+                          ),
+                          _c(
+                            "small",
+                            {
+                              staticClass: "badge  badge-light float-right pt-1"
+                            },
+                            [_vm._v(_vm._s(_vm.allReqs.length))]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.friendReqs, function(friendReq) {
+                        return _c(
                           "div",
                           {
-                            staticClass:
-                              "iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between"
+                            key: friendReq.id,
+                            staticClass: "iq-friend-request"
                           },
                           [
                             _c(
                               "div",
-                              { staticClass: "d-flex align-items-center" },
+                              {
+                                staticClass:
+                                  "iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between"
+                              },
                               [
-                                _c("div", {}, [
-                                  _c("img", {
-                                    staticClass: "avatar-40 rounded",
-                                    attrs: { src: friendReq.img, alt: "" }
-                                  })
-                                ]),
+                                _c(
+                                  "div",
+                                  { staticClass: "d-flex align-items-center" },
+                                  [
+                                    _c("div", {}, [
+                                      _c("img", {
+                                        staticClass: "avatar-40 rounded",
+                                        attrs: {
+                                          src:
+                                            "images/user/" +
+                                            friendReq.profileimg.name,
+                                          alt: ""
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "media-body ml-3" },
+                                      [
+                                        _c("h6", { staticClass: "mb-0 " }, [
+                                          _vm._v(
+                                            "\n                                            " +
+                                              _vm._s(friendReq.name) +
+                                              "\n                                        "
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("p", { staticClass: "mb-0" }, [
+                                          _vm._v(
+                                            "\n                                            40 friends\n                                        "
+                                          )
+                                        ])
+                                      ]
+                                    )
+                                  ]
+                                ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "media-body ml-3" }, [
-                                  _c("h6", { staticClass: "mb-0 " }, [
-                                    _vm._v(
-                                      "\n                                            " +
-                                        _vm._s(friendReq.H6) +
-                                        "\n                                        "
+                                _c(
+                                  "div",
+                                  { staticClass: "d-flex align-items-center" },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "mr-3 btn btn-primary rounded",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.AcceptRequest(
+                                              friendReq.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                        Confirm\n                                    "
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "mr-3 btn btn-secondary rounded",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.DeleteRequest(
+                                              friendReq.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                        Delete Request\n                                    "
+                                        )
+                                      ]
                                     )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("p", { staticClass: "mb-0" }, [
-                                    _vm._v(
-                                      "\n                                            " +
-                                        _vm._s(friendReq.p) +
-                                        "\n                                        "
-                                    )
-                                  ])
-                                ])
+                                  ]
+                                )
                               ]
-                            ),
-                            _vm._v(" "),
-                            _vm._m(2, true)
+                            )
                           ]
                         )
-                      ]
-                    )
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "text-center" },
-                    [
+                      }),
+                      _vm._v(" "),
                       _c(
-                        "router-link",
-                        {
-                          staticClass: "mr-3 btn text-primary",
-                          attrs: { to: "/friendRequest", tag: "a", exact: "" }
-                        },
+                        "div",
+                        { staticClass: "text-center" },
                         [
-                          _vm._v(
-                            "\n                                View More Request\n                            "
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "mr-3 btn text-primary",
+                              attrs: {
+                                to: "/friendRequest",
+                                tag: "a",
+                                exact: ""
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                View More Request\n                            "
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
                     ],
-                    1
+                    2
                   )
-                ],
-                2
-              )
+                : _vm._e()
             ])
           ])
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item" }, [
-          _vm._m(3),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
@@ -63034,7 +63340,7 @@ var render = function() {
                 "div",
                 { staticClass: "iq-card-body p-0 " },
                 [
-                  _vm._m(4),
+                  _vm._m(2),
                   _vm._v(" "),
                   _vm._l(_vm.Notifications, function(notification) {
                     return _c(
@@ -63104,7 +63410,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item dropdown" }, [
-          _vm._m(5),
+          _vm._m(3),
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
@@ -63112,7 +63418,7 @@ var render = function() {
                 "div",
                 { staticClass: "iq-card-body p-0 " },
                 [
-                  _vm._m(6),
+                  _vm._m(4),
                   _vm._v(" "),
                   _vm._l(_vm.messages, function(message) {
                     return _c(
@@ -63166,43 +63472,6 @@ var staticRenderFns = [
       { staticClass: "search-toggle iq-waves-effect", attrs: { href: "#" } },
       [_c("i", { staticClass: "ri-group-line" })]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "bg-primary p-3" }, [
-      _c("h5", { staticClass: "mb-0 text-white" }, [
-        _vm._v("\n                                Friend Request"),
-        _c("small", { staticClass: "badge  badge-light float-right pt-1" }, [
-          _vm._v("4")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex align-items-center" }, [
-      _c(
-        "a",
-        {
-          staticClass: "mr-3 btn btn-primary rounded",
-          attrs: { href: "javascript:void();" }
-        },
-        [_vm._v("Confirm")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "mr-3 btn btn-secondary rounded",
-          attrs: { href: "javascript:void();" }
-        },
-        [_vm._v("Delete Request")]
-      )
-    ])
   },
   function() {
     var _vm = this

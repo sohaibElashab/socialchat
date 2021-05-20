@@ -32,4 +32,6 @@ Route::post('/BeforeRegister', [App\Http\Controllers\ProfilController::class, 'B
 Route::post('/ProfileSearch', [App\Http\Controllers\FriendController::class, 'ProfileSearch']);
 Route::post('/SendRequest', [App\Http\Controllers\FriendController::class, 'SendRequest']);
 Route::post('/DeleteRequest', [App\Http\Controllers\FriendController::class, 'DeleteRequest']);
-Route::post('/UserID', [App\Http\Controllers\FriendController::class, 'UserID']);
+Route::post('/DeleteReq', [App\Http\Controllers\FriendController::class, 'DeleteReq']);
+Route::get('/LoadRequests', [App\Http\Controllers\FriendController::class, 'LoadRequests']);
+Route::post('/AcceptRequest', [App\Http\Controllers\FriendController::class, 'AcceptRequest']);

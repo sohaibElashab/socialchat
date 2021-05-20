@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Image;
 use App\Models\FriendRequest;
+use App\Models\Friend;
+use Illuminate\Support\Facades\DB;
 
 class FriendController extends Controller
 {
@@ -14,38 +16,28 @@ class FriendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        $user = User::where('id',$request->id)->first();
-        $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
-        $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
-
-        $from = auth()->user()->id;
-        $to = $request->id;
-
-        $Frequest = FriendRequest::where('user_from',$from)->where('user_to',$to)->first();
-        if($Frequest){
-            $user->message = "cancel";
-        }
-
-        $Frequest = FriendRequest::where('user_from',$to)->where('user_to',$from)->first();
-        if($Frequest){
-            $user->message = "accept";
-        }
-
-        return response()->json($user);
-    }
-
-    public function UserID(Request $request)
-    {
-        session(['UserID' => $request->id]);
-        return response()->json();
-        //$value = session('key');
-    }
 
     public function ProfileSearch(Request $request)
     {
         $users = User::where('name','like','%'.$request->value.'%')->get();
+        foreach ($users as  $user) {
+            $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+        }
+        return response()->json($users);
+    }
+
+    public function LoadRequests()
+    {
+        $id=auth()->user()->id;
+
+        $users = DB::table('users')
+                ->join('friend_requests','users.id','=','friend_requests.user_from')
+                ->where('friend_requests.user_to',$id)
+                ->where('friend_requests.status','sent')
+                ->select('users.id','users.name')
+                ->orderBy('friend_requests.updated_at', 'DESC')
+                ->get();
+
         foreach ($users as  $user) {
             $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
         }
@@ -66,20 +58,38 @@ class FriendController extends Controller
         return response()->json($Frequest);
     }
 
-
-
     public function DeleteRequest(Request $request)
     {
+        
         $from = auth()->user()->id;
         $to = $request->id;
         $Frequest = FriendRequest::where('user_from',$from)->where('user_to',$to)->delete();
-     
+        echo $Frequest;
+        //return response()->json(); 
+    }
+ 
+    public function DeleteReq(Request $request)
+    {
+        $from = auth()->user()->id;
+        $to = $request->id;
+        $Frequest = FriendRequest::where('user_from',$to)->where('user_to',$from)->delete();
+        
         return response()->json(); 
     }
     
     public function AcceptRequest(Request $request)
     {
-        # code...
+        $user_id = auth()->user()->id;
+        $friend_id = $request->id;
+
+        $friend=Friend::create([
+            'user_id' => $user_id,
+            'friend_id' => $friend_id
+        ]);
+
+        $Frequest = FriendRequest::where('user_from',$friend_id)->where('user_to',$user_id)->delete();
+
+        return response()->json($friend);
     }
 
     /**

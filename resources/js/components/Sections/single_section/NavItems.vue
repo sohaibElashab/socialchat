@@ -1,9 +1,13 @@
 <template>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto navbar-list">
-            <li v-if="this.user">
+            <li v-if="this.isMounted">
                 <router-link
-                    to="/profile"
+                    :to="{
+                        name: 'profile',
+                        params: { id: user.id },
+                        query: { user: user.name }
+                    }"
                     tag="a"
                     class="iq-waves-effect d-flex align-items-center"
                 >
@@ -34,12 +38,12 @@
                 ></a>
                 <div class="iq-sub-dropdown iq-sub-dropdown-large">
                     <div class="iq-card shadow-none m-0">
-                        <div class="iq-card-body p-0 ">
+                        <div class="iq-card-body p-0 " v-if="loadedReqs">
                             <div class="bg-primary p-3">
                                 <h5 class="mb-0 text-white">
                                     Friend Request<small
                                         class="badge  badge-light float-right pt-1"
-                                        >4</small
+                                        >{{ allReqs.length }}</small
                                     >
                                 </h5>
                             </div>
@@ -55,30 +59,34 @@
                                         <div class="">
                                             <img
                                                 class="avatar-40 rounded"
-                                                :src="friendReq.img"
+                                                :src="
+                                                    `images/user/${friendReq.profileimg.name}`
+                                                "
                                                 alt=""
                                             />
                                         </div>
                                         <div class="media-body ml-3">
                                             <h6 class="mb-0 ">
-                                                {{ friendReq.H6 }}
+                                                {{ friendReq.name }}
                                             </h6>
                                             <p class="mb-0">
-                                                {{ friendReq.p }}
+                                                40 friends
                                             </p>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <a
-                                            href="javascript:void();"
+                                        <button
+                                            @click="AcceptRequest(friendReq.id)"
                                             class="mr-3 btn btn-primary rounded"
-                                            >Confirm</a
                                         >
-                                        <a
-                                            href="javascript:void();"
+                                            Confirm
+                                        </button>
+                                        <button
+                                            @click="DeleteRequest(friendReq.id)"
                                             class="mr-3 btn btn-secondary rounded"
-                                            >Delete Request</a
                                         >
+                                            Delete Request
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -204,32 +212,10 @@ export default {
         return {
             user: null,
             img: "",
-            friendReqs: {
-                "1": {
-                    id: 1,
-                    img: "images/user/01.jpg",
-                    H6: "Jaques Amole",
-                    p: "40  friends"
-                },
-                "2": {
-                    id: 2,
-                    img: "images/user/02.jpg",
-                    H6: "Lucy Tania",
-                    p: "12  friends"
-                },
-                "3": {
-                    id: 3,
-                    img: "images/user/03.jpg",
-                    H6: "Manny Petty",
-                    p: "3  friends"
-                },
-                "4": {
-                    id: 4,
-                    img: "images/user/04.jpg",
-                    H6: "Marsha Mello",
-                    p: "15  friends"
-                }
-            },
+            isMounted: false,
+            allReqs: null,
+            loadedReqs: false,
+            friendReqs: null,
             Notifications: {
                 "1": {
                     id: 1,
@@ -290,9 +276,17 @@ export default {
     },
     mounted() {
         axios.get("/profile").then(res => {
-            //console.log(res.data);
+            console.log(res.data);
             this.user = res.data;
             this.img = this.user.profileimg.name;
+            this.isMounted = true;
+        });
+
+        axios.get("/LoadRequests").then(res => {
+            console.log(res.data);
+            this.allReqs = res.data;
+            this.friendReqs = this.allReqs.slice(0, 4);
+            this.loadedReqs = true;
         });
         EventBus.$on("user-update", this.updateUser);
     },
@@ -303,6 +297,36 @@ export default {
                 this.img = this.user.profile;
                 console.log(this.user);
             }
+        },
+        DeleteRequest(id) {
+            axios
+                .post("/DeleteReq", {
+                    id: id
+                })
+                .then(res => {
+                    console.log(res);
+                    axios.get("/LoadRequests").then(res => {
+                        console.log(res.data);
+                        this.allReqs = res.data;
+                        this.friendReqs = this.allReqs.slice(0, 4);
+                        this.loadedReqs = true;
+                    });
+                });
+        },
+        AcceptRequest(id) {
+            axios
+                .post("/AcceptRequest", {
+                    id: id
+                })
+                .then(res => {
+                    console.log(res);
+                    axios.get("/LoadRequests").then(res => {
+                        console.log(res.data);
+                        this.allReqs = res.data;
+                        this.friendReqs = this.allReqs.slice(0, 4);
+                        this.loadedReqs = true;
+                    });
+                });
         }
     }
 };

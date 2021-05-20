@@ -14,40 +14,44 @@
                             </div>
                         </div>
                         <div class="iq-card-body">
-                            <ul
-                                class="request-list list-inline m-0 p-0"
-                            >
-                                <li class="d-flex align-items-center" v-for="friendRq in friendRqs" :key="friendRq.id"> 
+                            <ul class="request-list list-inline m-0 p-0">
+                                <li
+                                    class="d-flex align-items-center"
+                                    v-for="friendRq in friendRqs"
+                                    :key="friendRq.id"
+                                >
                                     <div class="user-img img-fluid">
                                         <img
-                                            :src="friendRq.imgUser"
+                                            :src="
+                                                `images/user/${friendRq.profileimg.name}`
+                                            "
                                             alt="story-img"
                                             class="rounded-circle avatar-40"
                                         />
                                     </div>
-                                    <div
-                                        class="media-support-info ml-3"
-                                    >
-                                        <h6>{{friendRq.UserName}}</h6>
-                                        <p class="mb-0">{{friendRq.NbrFriend}} friends</p>
+                                    <div class="media-support-info ml-3">
+                                        <h6>{{ friendRq.name }}</h6>
+                                        <p class="mb-0">
+                                            40 friends
+                                        </p>
                                     </div>
-                                    <div
-                                        class="d-flex align-items-center"
-                                    >
-                                        <a
-                                            href="javascript:void();"
+                                    <div class="d-flex align-items-center">
+                                        <button
+                                            @click="AcceptRequest(friendRq.id)"
                                             class="mr-3 btn btn-primary rounded"
-                                            >Confirm</a
                                         >
-                                        <a
-                                            href="javascript:void();"
+                                            Confirm
+                                        </button>
+                                        <button
+                                            @click="DeleteRequest(friendRq.id)"
                                             class="mr-3 btn btn-secondary rounded"
-                                            >Delete Request</a
                                         >
+                                            Delete Request
+                                        </button>
                                     </div>
                                 </li>
-                                <li class="d-block text-center">
-                                    <a href="#" class="btn btn-request"
+                                <li class="d-block text-center" v-if="show">
+                                    <a @click="loadAll" class="btn btn-request"
                                         >View More Request</a
                                     >
                                 </li>
@@ -66,105 +70,124 @@
                         </div>
                         <div class="iq-card-body">
                             <ul class="request-list m-0 p-0">
-                                <li class="d-flex align-items-center" v-for="friendKnow in friendKnows" :key="friendKnow.id">
-                                            <div class="user-img img-fluid">
-                                                <img
-                                                    :src="friendKnow.imgUser"
-                                                    alt="story-img"
-                                                    class="rounded-circle avatar-40"
-                                                />
-                                            </div>
-                                            <div
-                                                class="media-support-info ml-3"
-                                            >
-                                                <h6>{{friendKnow.UserName}}</h6>
-                                                <p class="mb-0">{{friendKnow.NbrFriend}} friends</p>
-                                            </div>
-                                            <div
-                                                class="d-flex align-items-center"
-                                            >
-                                                <a
-                                                    href="javascript:void();"
-                                                    class="mr-3 btn btn-primary rounded"
-                                                    ><i
-                                                        class="ri-user-add-line"
-                                                    ></i
-                                                    >Add Friend</a
-                                                >
-                                                <a
-                                                    href="javascript:void();"
-                                                    class="mr-3 btn btn-secondary rounded"
-                                                    >Remove</a
-                                                >
-                                            </div>
+                                <li
+                                    class="d-flex align-items-center"
+                                    v-for="friendKnow in friendKnows"
+                                    :key="friendKnow.id"
+                                >
+                                    <div class="user-img img-fluid">
+                                        <img
+                                            :src="friendKnow.imgUser"
+                                            alt="story-img"
+                                            class="rounded-circle avatar-40"
+                                        />
+                                    </div>
+                                    <div class="media-support-info ml-3">
+                                        <h6>{{ friendKnow.UserName }}</h6>
+                                        <p class="mb-0">
+                                            {{ friendKnow.NbrFriend }} friends
+                                        </p>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <a
+                                            href="javascript:void();"
+                                            class="mr-3 btn btn-primary rounded"
+                                            ><i class="ri-user-add-line"></i>Add
+                                            Friend</a
+                                        >
+                                        <a
+                                            href="javascript:void();"
+                                            class="mr-3 btn btn-secondary rounded"
+                                            >Remove</a
+                                        >
+                                    </div>
                                 </li>
-                                
                             </ul>
-                        </div>
-                    </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-        data() {
+    data() {
         return {
-            friendRqs : {
-                "1" : {
-                    id: 1,
-                    imgUser: "images/user/05.jpg",
-                    UserName : "Jaques Amole",
-                    NbrFriend : "40",
-                },
-                "2" : {
-                    id: 2,
-                    imgUser: "images/user/05.jpg",
-                    UserName : "Jaques Amole",
-                    NbrFriend : "40",
-                },
-                "3" : {
-                    id: 3,
-                    imgUser: "images/user/05.jpg",
-                    UserName : "Jaques Amole",
-                    NbrFriend : "40",
-                },
-                "4" : {
-                    id: 4,
-                    imgUser: "images/user/05.jpg",
-                    UserName : "Jaques Amole",
-                    NbrFriend : "40",
-                },
-            },
-            friendKnows : {
-                "1" : {
+            friendRqs: null,
+            allReqs: null,
+            show: true,
+            friendKnows: {
+                "1": {
                     id: 1,
                     imgUser: "images/user/15.jpg",
-                    UserName : "Jaques Amole",
-                    NbrFriend : "40",
+                    UserName: "Jaques Amole",
+                    NbrFriend: "40"
                 },
-                "2" : {
+                "2": {
                     id: 2,
                     imgUser: "images/user/15.jpg",
-                    UserName : "Jaques Amole",
-                    NbrFriend : "40",
+                    UserName: "Jaques Amole",
+                    NbrFriend: "40"
                 },
-                "3" : {
+                "3": {
                     id: 3,
                     imgUser: "images/user/15.jpg",
-                    UserName : "Jaques Amole",
-                    NbrFriend : "40",
+                    UserName: "Jaques Amole",
+                    NbrFriend: "40"
                 },
-                "4" : {
+                "4": {
                     id: 4,
                     imgUser: "images/user/15.jpg",
-                    UserName : "Jaques Amole",
-                    NbrFriend : "40",
-                },
-            },
+                    UserName: "Jaques Amole",
+                    NbrFriend: "40"
+                }
+            }
+        };
+    },
+    mounted() {
+        axios.get("/LoadRequests").then(res => {
+            console.log(res.data);
+            this.allReqs = res.data;
+            this.friendRqs = this.allReqs.slice(0, 4);
+        });
+    },
+    methods: {
+        DeleteRequest(id) {
+            axios
+                .post("/DeleteReq", {
+                    id: id
+                })
+                .then(res => {
+                    console.log(res);
+                    axios.get("/LoadRequests").then(res => {
+                        console.log(res.data);
+                        this.allReqs = res.data;
+                        this.friendRqs = this.allReqs.slice(0, 4);
+                        this.show = true;
+                    });
+                });
+        },
+        AcceptRequest(id) {
+            axios
+                .post("/AcceptRequest", {
+                    id: id
+                })
+                .then(res => {
+                    console.log(res);
+                    axios.get("/LoadRequests").then(res => {
+                        console.log(res.data);
+                        this.allReqs = res.data;
+                        this.friendRqs = this.allReqs.slice(0, 4);
+                        this.show = true;
+                    });
+                });
+        },
+        loadAll() {
+            this.friendRqs = this.allReqs;
+            this.show = false;
         }
     }
-}
+};
 </script>
