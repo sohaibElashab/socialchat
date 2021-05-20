@@ -18,14 +18,14 @@
                     <li v-for="result in results" :key="result.id">
                         <router-link
                             :to="{
-                                name: 'friendProfile',
+                                name: 'profile',
                                 params: { id: result.id },
                                 query: { user: result.name }
                             }"
                             tag="a"
                             id="pp"
-                            v-if="user.id != result.id"
-                            ><!--params matat khdemch fach ta tbdel luser fsearchbar ila 7iedt query -->
+                            ><!--
+                                 -->
                             <div class="">
                                 <img
                                     class="avatar-40 rounded"
@@ -37,7 +37,7 @@
                             </div>
                             <span>{{ result.name }}</span>
                         </router-link>
-                        <router-link
+                        <!--   <router-link
                             :to="{
                                 path: '/profile'
                             }"
@@ -55,7 +55,7 @@
                                 />
                             </div>
                             <span>{{ result.name }}</span>
-                        </router-link>
+                        </router-link> -->
                     </li>
                 </ul>
             </div>

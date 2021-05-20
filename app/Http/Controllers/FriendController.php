@@ -36,6 +36,13 @@ class FriendController extends Controller
         return response()->json($user);
     }
 
+    public function UserID(Request $request)
+    {
+        session(['UserID' => $request->id]);
+        return response()->json();
+        //$value = session('key');
+    }
+
     public function ProfileSearch(Request $request)
     {
         $users = User::where('name','like','%'.$request->value.'%')->get();

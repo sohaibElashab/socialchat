@@ -22,6 +22,7 @@
                                             <router-link
                                                 to="/profileEdit"
                                                 tag="a"
+                                                v-if="user.status == 'current'"
                                                 ><i class="ri-pencil-line"></i
                                             ></router-link>
                                         </li>
@@ -82,14 +83,7 @@
                                                         alt="Instagram"
                                                 /></a>
                                             </li>
-                                            <!-- <li class="text-center pr-3">
-                                                <a href="#"
-                                                    ><img
-                                                        src="images/icon/11.png"
-                                                        class="img-fluid rounded"
-                                                        alt="Google plus"
-                                                /></a>
-                                            </li> -->
+
                                             <li class="text-center pr-3">
                                                 <a :href="user.youtube"
                                                     ><img
@@ -337,7 +331,7 @@
                                         <CreatePost />
                                         <Post
                                             v-for="post in posts"
-                                            :key="post.id" 
+                                            :key="post.id"
                                             :post="post"
                                         />
                                     </div>
@@ -594,7 +588,8 @@
                                                 <div class="iq-card-body p-0">
                                                     <ProfileFriend
                                                         :FriendLists="
-                                                            FriendLists"
+                                                            FriendLists
+                                                        "
                                                     />
                                                 </div>
                                             </div>
@@ -618,7 +613,8 @@
                                                 <div class="iq-card-body p-0">
                                                     <ProfileImages
                                                         :ProfileImages="
-                                                            ProfileImages"
+                                                            ProfileImages
+                                                        "
                                                     />
                                                 </div>
                                             </div>
@@ -646,6 +642,7 @@ export default {
         CreatePost,
         Post
     },
+    props: ["UserId"],
     data() {
         return {
             date: null,
@@ -782,10 +779,40 @@ export default {
         };
     },
     mounted() {
-        axios.get("/profile").then(res => {
+        /*  axios.get("/profile").then(res => {
             console.log(res.data);
             this.user = res.data;
-        });
+        }); */
+        if (this.UserId != null) {
+            sessionStorage.clear();
+            sessionStorage.setItem("id", this.UserId);
+        }
+        this.load();
+    },
+    methods: {
+        load() {
+            var id = sessionStorage.getItem("id");
+            console.log("profile content");
+            console.log(sessionStorage.getItem("id"));
+            axios
+                .post("/UserProfile", {
+                    id: id
+                })
+                .then(res => {
+                    console.log(res.data);
+                    this.user = res.data;
+                });
+        }
+    },
+    watch: {
+        UserId: function() {
+            if (this.UserId != null) {
+                sessionStorage.clear();
+                sessionStorage.setItem("id", this.UserId);
+                console.log("profile content watch");
+            }
+            this.load();
+        }
     }
 };
 </script>

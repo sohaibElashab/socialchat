@@ -10,6 +10,7 @@ use Hash;
 use App\Mail\Forgot;
 use App\Mail\Verify;
 use Illuminate\Support\Facades\Mail;
+use App\Models\FriendRequest;
 
 
 class ProfilController extends Controller
@@ -26,6 +27,40 @@ class ProfilController extends Controller
         $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
         return response()->json($user);
     }
+
+    public function UserProfile(Request $request) 
+    {
+        if($request->id == auth()->user()->id){
+            $user = auth()->user();
+            $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+            $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
+            $user->status = "current";
+            return response()->json($user);
+        }else{
+            $user = User::where('id',$request->id)->first();
+            $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+            $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
+            $from = auth()->user()->id;
+            $to = $request->id;
+
+            $Frequest = FriendRequest::where('user_from',$from)->where('user_to',$to)->first();
+            if($Frequest){
+                $user->message = "cancel";
+            }
+
+            $Frequest = FriendRequest::where('user_from',$to)->where('user_to',$from)->first();
+            if($Frequest){
+                $user->message = "accept";
+            }
+
+            $user->status = "friend";
+
+            return response()->json($user);
+        }
+        
+        
+    }
+
 
 
     /**

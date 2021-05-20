@@ -8240,24 +8240,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["id"],
   components: {
     contentProfile: _Sections_general_section_dynamic_section_contentProfile_vue__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  data: function data() {
+    return {
+      isMounted: false
+    };
+  },
+  mounted: function mounted() {
+    console.log("profile mounted   " + this.id);
+    this.isMounted = true;
+  },
+  watch: {
+    id: function id() {
+      console.log("profile watch   " + this.id);
+      this.isMounted = true;
+    }
   }
   /* ,
   beforeRouteEnter(to, from, next) {
-   // called before the route that renders this component is confirmed.
-   // does NOT have access to `this` component instance,
-   // because it has not been created yet when this guard is called!
-     axios
-       .get("/profile")
-       .then(res => {
-           next();
-       })
-       .catch(err => {
-           next({
-               name: "signIn"
-           });
-       });
+      // called before the route that renders this component is confirmed.
+      // does NOT have access to `this` component instance,
+      // because it has not been created yet when this guard is called!
+        axios
+          .get("/profile")
+          .then(res => {
+              next();
+          })
+          .catch(err => {
+              next({
+                  name: "signIn"
+              });
+          });
   } */
 
 });
@@ -10091,10 +10107,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -10106,6 +10118,7 @@ __webpack_require__.r(__webpack_exports__);
     CreatePost: _single_section_CreatePost__WEBPACK_IMPORTED_MODULE_2__.default,
     Post: _single_section_Post__WEBPACK_IMPORTED_MODULE_3__.default
   },
+  props: ["UserId"],
   data: function data() {
     return {
       date: null,
@@ -10246,12 +10259,42 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
+    /*  axios.get("/profile").then(res => {
+        console.log(res.data);
+        this.user = res.data;
+    }); */
+    if (this.UserId != null) {
+      sessionStorage.clear();
+      sessionStorage.setItem("id", this.UserId);
+    }
 
-    axios.get("/profile").then(function (res) {
-      console.log(res.data);
-      _this.user = res.data;
-    });
+    this.load();
+  },
+  methods: {
+    load: function load() {
+      var _this = this;
+
+      var id = sessionStorage.getItem("id");
+      console.log("profile content");
+      console.log(sessionStorage.getItem("id"));
+      axios.post("/UserProfile", {
+        id: id
+      }).then(function (res) {
+        console.log(res.data);
+        _this.user = res.data;
+      });
+    }
+  },
+  watch: {
+    UserId: function UserId() {
+      if (this.UserId != null) {
+        sessionStorage.clear();
+        sessionStorage.setItem("id", this.UserId);
+        console.log("profile content watch");
+      }
+
+      this.load();
+    }
   }
 });
 
@@ -15453,7 +15496,8 @@ var routes = [{
 }, {
   path: "/profile",
   name: "profile",
-  component: _components_Pages_profile_vue__WEBPACK_IMPORTED_MODULE_8__.default
+  component: _components_Pages_profile_vue__WEBPACK_IMPORTED_MODULE_8__.default,
+  props: true
 }, {
   path: "/signIn",
   name: "signIn",
@@ -55416,7 +55460,9 @@ var render = function() {
           _vm._v(" "),
           _c("rightbar"),
           _vm._v(" "),
-          _c("contentProfile")
+          _vm.isMounted
+            ? _c("contentProfile", { attrs: { UserId: _vm.id } })
+            : _vm._e()
         ],
         1
       ),
@@ -56520,11 +56566,19 @@ var render = function() {
                               "li",
                               { staticStyle: { "z-index": "1" } },
                               [
-                                _c(
-                                  "router-link",
-                                  { attrs: { to: "/profileEdit", tag: "a" } },
-                                  [_c("i", { staticClass: "ri-pencil-line" })]
-                                )
+                                _vm.user.status == "current"
+                                  ? _c(
+                                      "router-link",
+                                      {
+                                        attrs: { to: "/profileEdit", tag: "a" }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "ri-pencil-line"
+                                        })
+                                      ]
+                                    )
+                                  : _vm._e()
                               ],
                               1
                             )
@@ -63317,63 +63371,33 @@ var render = function() {
                   "li",
                   { key: result.id },
                   [
-                    _vm.user.id != result.id
-                      ? _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              to: {
-                                name: "friendProfile",
-                                params: { id: result.id },
-                                query: { user: result.name }
-                              },
-                              tag: "a",
-                              id: "pp"
-                            }
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "profile",
+                            params: { id: result.id },
+                            query: { user: result.name }
                           },
-                          [
-                            _c("div", {}, [
-                              _c("img", {
-                                staticClass: "avatar-40 rounded",
-                                attrs: {
-                                  src: "images/user/" + result.profileimg.name,
-                                  alt: "pp"
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("span", [_vm._v(_vm._s(result.name))])
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.user.id == result.id
-                      ? _c(
-                          "router-link",
-                          {
+                          tag: "a",
+                          id: "pp"
+                        }
+                      },
+                      [
+                        _c("div", {}, [
+                          _c("img", {
+                            staticClass: "avatar-40 rounded",
                             attrs: {
-                              to: {
-                                path: "/profile"
-                              },
-                              tag: "a",
-                              id: "pp"
+                              src: "images/user/" + result.profileimg.name,
+                              alt: "pp"
                             }
-                          },
-                          [
-                            _c("div", {}, [
-                              _c("img", {
-                                staticClass: "avatar-40 rounded",
-                                attrs: {
-                                  src: "images/user/" + result.profileimg.name,
-                                  alt: "pp"
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("span", [_vm._v(_vm._s(result.name))])
-                          ]
-                        )
-                      : _vm._e()
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("span", [_vm._v(_vm._s(result.name))])
+                      ]
+                    )
                   ],
                   1
                 )
