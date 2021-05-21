@@ -287,7 +287,7 @@ export default {
             this.user = res.data;
             this.img = this.user.profileimg.name;
             this.isMounted = true;
-        }); 
+        });
 
         axios.get("/LoadRequests").then(res => {
             console.log(res.data);
