@@ -14264,6 +14264,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -14389,47 +14390,44 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     check: function check() {
+      var loading = document.getElementById("loading");
+
       if (swit.checked) {
         //console.log(document.getElementsByTagName("link").length);
-        var oldlinkDarktypography = document.getElementsByTagName("link").item(2);
-        var oldlinkDarkstyle = document.getElementsByTagName("link").item(3);
-        var oldlinkDarkresponsive = document.getElementsByTagName("link").item(4);
-        var newlinkLighttypography = document.createElement("link");
-        var newlinkLightstyle = document.createElement("link");
-        var newlinkLightresponsive = document.createElement("link");
-        newlinkLighttypography.setAttribute("rel", "stylesheet");
-        newlinkLighttypography.setAttribute("type", "text/css");
-        newlinkLighttypography.setAttribute("href", "http://127.0.0.1:8000/css/light/typography.css");
-        newlinkLightstyle.setAttribute("rel", "stylesheet");
-        newlinkLightstyle.setAttribute("type", "text/css");
-        newlinkLightstyle.setAttribute("href", "http://127.0.0.1:8000/css/light/style.css");
-        newlinkLightresponsive.setAttribute("rel", "stylesheet");
-        newlinkLightresponsive.setAttribute("type", "text/css");
-        newlinkLightresponsive.setAttribute("href", "http://127.0.0.1:8000/css/light/responsive.css");
-        document.getElementsByTagName("head").item(0).replaceChild(newlinkLighttypography, oldlinkDarktypography);
-        document.getElementsByTagName("head").item(0).replaceChild(newlinkLightstyle, oldlinkDarkstyle);
-        document.getElementsByTagName("head").item(0).replaceChild(newlinkLightresponsive, oldlinkDarkresponsive);
+        loading.style.display = "block";
+        console.log("block");
+        setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/light/typography.css", "http://127.0.0.1:8000/css/light/style.css", "http://127.0.0.1:8000/css/light/responsive.css"), 3000);
+        setTimeout(function () {
+          loading.style.display = "none";
+        }, 1000);
       } else {
-        console.log("enchecked");
-        var oldlinkLighttypography = document.getElementsByTagName("link").item(2);
-        var oldlinkLightstyle = document.getElementsByTagName("link").item(3);
-        var oldlinkLightresponsive = document.getElementsByTagName("link").item(4);
-        var newlinkDarktypography = document.createElement("link");
-        var newlinkDarkstyle = document.createElement("link");
-        var newlinkDarkresponsive = document.createElement("link");
-        newlinkDarktypography.setAttribute("rel", "stylesheet");
-        newlinkDarktypography.setAttribute("type", "text/css");
-        newlinkDarktypography.setAttribute("href", "http://127.0.0.1:8000/css/typography.css");
-        newlinkDarkstyle.setAttribute("rel", "stylesheet");
-        newlinkDarkstyle.setAttribute("type", "text/css");
-        newlinkDarkstyle.setAttribute("href", "http://127.0.0.1:8000/css/style.css");
-        newlinkDarkresponsive.setAttribute("rel", "stylesheet");
-        newlinkDarkresponsive.setAttribute("type", "text/css");
-        newlinkDarkresponsive.setAttribute("href", "http://127.0.0.1:8000/css/responsive.css");
-        document.getElementsByTagName("head").item(0).replaceChild(newlinkDarktypography, oldlinkLighttypography);
-        document.getElementsByTagName("head").item(0).replaceChild(newlinkDarkstyle, oldlinkLightstyle);
-        document.getElementsByTagName("head").item(0).replaceChild(newlinkDarkresponsive, oldlinkLightresponsive);
+        loading.style.display = "block";
+        console.log("block");
+        setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/typography.css", "http://127.0.0.1:8000/css/style.css", "http://127.0.0.1:8000/css/responsive.css"), 3000);
+        setTimeout(function () {
+          loading.style.display = "none";
+        }, 1000);
       }
+    },
+    modeTOmode: function modeTOmode(href1, href2, href3) {
+      console.log("mode"); // var oldlinktypography = document.getElementsByTagName("link").item(2);
+      // var oldlinkstyle = document.getElementsByTagName("link").item(3);
+      // var oldlinkresponsive = document.getElementsByTagName("link").item(4);
+      // var newlinktypography = document.createElement("link");
+      // var newlinkstyle = document.createElement("link");
+      // var newlinkresponsive = document.createElement("link");
+      // newlinktypography.setAttribute("rel", "stylesheet");
+      // newlinktypography.setAttribute("type", "text/css");
+      // newlinktypography.setAttribute("href", href1);
+      // newlinkstyle.setAttribute("rel", "stylesheet");
+      // newlinkstyle.setAttribute("type", "text/css");
+      // newlinkstyle.setAttribute("href", href2);
+      // newlinkresponsive.setAttribute("rel", "stylesheet");
+      // newlinkresponsive.setAttribute("type", "text/css");
+      // newlinkresponsive.setAttribute("href", href3);
+      // document.getElementsByTagName("head").item(0).replaceChild(newlinktypography , oldlinktypography);
+      // document.getElementsByTagName("head").item(0).replaceChild(newlinkstyle , oldlinkstyle);
+      // document.getElementsByTagName("head").item(0).replaceChild(newlinkresponsive , oldlinkresponsive);
     }
   }
 });
@@ -20265,7 +20263,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nspan.switcher[data-v-671e2088] {\n    position: relative;\n    top: 8px;\n    left: 8px;\n    border-radius: 25px;\n    margin: 20px 0;\n}\nspan.switcher input[data-v-671e2088] {\n    -webkit-appearance: none;\n       -moz-appearance: none;\n            appearance: none;\n    position: relative;\n    width: 50px;\n    height: 25px;\n    border-radius: 25px;\n    background-color: #181f38;\n    outline: none;\n    font-family: 'Oswald', sans-serif;\n}\nspan.switcher input[data-v-671e2088]:before,  span.switcher input[data-v-671e2088]:after {\n    z-index: 2;\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #50b5ff;\n}\nspan.switcher label[data-v-671e2088] {\n    height: 15px;\n    width: 15px;\n    z-index: 1;\n    position: relative;\n    top: 3px;\n    border-radius: 20px;\n}\nspan.switcher.switch input[data-v-671e2088] {\n    transition: 0.25s -0.1s;\n}\nspan.switcher.switch input[data-v-671e2088]:checked {\n    background-color: #50b5ff;\n}\nspan.switcher.switch input[data-v-671e2088]:checked:before {\n    color: #50b5ff;\n    transition: color 0.5s 0.2s;\n}\nspan.switcher.switch input[data-v-671e2088]:checked:after {\n    color: #ccc;\n    transition: color 0.5s;\n}\nspan.switcher.switch input:checked + label[data-v-671e2088] {\n    right: 50px;\n    background: #181f38;\n    transition: left 0.5s, right 0.4s 0.2s;\n}\nspan.switcher.switch input[data-v-671e2088]:not(:checked) {\n    background: #181f38;\n    transition: background 0.5s -0.1s;\n}\nspan.switcher label\n span.switcher.switch input[data-v-671e2088]:not(:checked):before {\n    color: #ccc;\n    transition: color 0.5s;\n}\nspan.switcher.switch input[data-v-671e2088]:not(:checked):after {\n    color: #181f38;\n    transition: color 0.5s 0.2s;\n}\nspan.switcher.switch input:not(:checked) + label[data-v-671e2088] {\n    right: 25px;\n    background: #50b5ff;\n    transition: left 0.4s 0.2s, right 0.5s, background 0.35s -0.1s;\n}\n@-webkit-keyframes turn-on-data-v-671e2088 {\n0% {\n        left: 100%;\n}\n100% {\n        left: 0%;\n}\n}\n@keyframes turn-on-data-v-671e2088 {\n0% {\n        left: 100%;\n}\n100% {\n        left: 0%;\n}\n}\n@-webkit-keyframes turn-off-data-v-671e2088 {\n0% {\n        right: 100%;\n}\n100% {\n        right: 0%;\n}\n}\n@keyframes turn-off-data-v-671e2088 {\n0% {\n        right: 100%;\n}\n100% {\n        right: 0%;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nspan.switcher[data-v-671e2088] {\n    position: relative;\n    top: 8px;\n    left: 8px;\n    border-radius: 25px;\n    margin: 20px 0;\n}\nspan.switcher input[data-v-671e2088] {\n    -webkit-appearance: none;\n       -moz-appearance: none;\n            appearance: none;\n    position: relative;\n    width: 50px;\n    height: 25px;\n    border-radius: 25px;\n    background-color: #181f38;\n    outline: none;\n    font-family: 'Oswald', sans-serif;\n}\nspan.switcher input[data-v-671e2088]:before,  span.switcher input[data-v-671e2088]:after {\n    z-index: 2;\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #50b5ff;\n}\nspan.switcher label[data-v-671e2088] {\n    height: 15px;\n    width: 15px;\n    z-index: 1;\n    position: relative;\n    top: 3px;\n    border-radius: 20px;\n}\nspan.switcher.switch input[data-v-671e2088] {\n    transition: 0.25s -0.1s;\n}\nspan.switcher.switch input[data-v-671e2088]:checked {\n    background-color: #50b5ff;\n}\nspan.switcher.switch input[data-v-671e2088]:checked:before {\n    color: #50b5ff;\n    transition: color 0.5s 0.2s;\n}\nspan.switcher.switch input[data-v-671e2088]:checked:after {\n    color: #ccc;\n    transition: color 0.5s;\n}\nspan.switcher.switch input:checked + label[data-v-671e2088] {\n    right: 50px;\n    background: #ffffff;\n    transition: left 0.5s, right 0.4s 0.2s;\n}\nspan.switcher.switch input[data-v-671e2088]:not(:checked) {\n    background: #181f38;\n    transition: background 0.5s -0.1s;\n}\nspan.switcher label\n span.switcher.switch input[data-v-671e2088]:not(:checked):before {\n    color: #ccc;\n    transition: color 0.5s;\n}\nspan.switcher.switch input[data-v-671e2088]:not(:checked):after {\n    color: #181f38;\n    transition: color 0.5s 0.2s;\n}\nspan.switcher.switch input:not(:checked) + label[data-v-671e2088] {\n    right: 25px;\n    background: #50b5ff;\n    transition: left 0.4s 0.2s, right 0.5s, background 0.35s -0.1s;\n}\n@-webkit-keyframes turn-on-data-v-671e2088 {\n0% {\n        left: 100%;\n}\n100% {\n        left: 0%;\n}\n}\n@keyframes turn-on-data-v-671e2088 {\n0% {\n        left: 100%;\n}\n100% {\n        left: 0%;\n}\n}\n@-webkit-keyframes turn-off-data-v-671e2088 {\n0% {\n        right: 100%;\n}\n100% {\n        right: 0%;\n}\n}\n@keyframes turn-off-data-v-671e2088 {\n0% {\n        right: 100%;\n}\n100% {\n        right: 0%;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -63560,7 +63558,9 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _c("label", { attrs: { for: "swit" } })
+            _c("label", { attrs: { for: "swit" } }),
+            _vm._v(" "),
+            _c("div", { staticClass: "all" })
           ])
         ])
       ])

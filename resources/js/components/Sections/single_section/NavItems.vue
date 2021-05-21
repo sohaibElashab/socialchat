@@ -205,6 +205,7 @@
                 <span class="switcher switch">
                     <input type="checkbox" id="swit" @change="check()" >
                     <label for="swit" ></label>
+                    <div class="all"></div>
                 </span>
             </li>
         </ul>
@@ -335,67 +336,55 @@ export default {
                 });
         },
         check() {
+            var loading = document.getElementById("loading")
+
             if(swit.checked){
                 //console.log(document.getElementsByTagName("link").length);
-
-                var oldlinkDarktypography = document.getElementsByTagName("link").item(2);
-                var oldlinkDarkstyle = document.getElementsByTagName("link").item(3);
-                var oldlinkDarkresponsive = document.getElementsByTagName("link").item(4);
-
-                var newlinkLighttypography = document.createElement("link");
-                var newlinkLightstyle = document.createElement("link");
-                var newlinkLightresponsive = document.createElement("link");
-
-                newlinkLighttypography.setAttribute("rel", "stylesheet");
-                newlinkLighttypography.setAttribute("type", "text/css");
-                newlinkLighttypography.setAttribute("href", "http://127.0.0.1:8000/css/light/typography.css");
-
-                newlinkLightstyle.setAttribute("rel", "stylesheet");
-                newlinkLightstyle.setAttribute("type", "text/css");
-                newlinkLightstyle.setAttribute("href", "http://127.0.0.1:8000/css/light/style.css");
-
-                newlinkLightresponsive.setAttribute("rel", "stylesheet");
-                newlinkLightresponsive.setAttribute("type", "text/css");
-                newlinkLightresponsive.setAttribute("href", "http://127.0.0.1:8000/css/light/responsive.css");
-
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkLighttypography, oldlinkDarktypography);
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkLightstyle, oldlinkDarkstyle);
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkLightresponsive, oldlinkDarkresponsive);
-
+                loading.style.display = "block"
+                console.log("block")
+                setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/light/typography.css","http://127.0.0.1:8000/css/light/style.css","http://127.0.0.1:8000/css/light/responsive.css"), 3000);
+                setTimeout(function(){ loading.style.display = "none" }, 1000);
             }else{
-                console.log("enchecked")
-
-                var oldlinkLighttypography = document.getElementsByTagName("link").item(2);
-                var oldlinkLightstyle = document.getElementsByTagName("link").item(3);
-                var oldlinkLightresponsive = document.getElementsByTagName("link").item(4);
-
-                var newlinkDarktypography = document.createElement("link");
-                var newlinkDarkstyle = document.createElement("link");
-                var newlinkDarkresponsive = document.createElement("link");
-
-                newlinkDarktypography.setAttribute("rel", "stylesheet");
-                newlinkDarktypography.setAttribute("type", "text/css");
-                newlinkDarktypography.setAttribute("href", "http://127.0.0.1:8000/css/typography.css");
-
-                newlinkDarkstyle.setAttribute("rel", "stylesheet");
-                newlinkDarkstyle.setAttribute("type", "text/css");
-                newlinkDarkstyle.setAttribute("href", "http://127.0.0.1:8000/css/style.css");
-
-                newlinkDarkresponsive.setAttribute("rel", "stylesheet");
-                newlinkDarkresponsive.setAttribute("type", "text/css");
-                newlinkDarkresponsive.setAttribute("href", "http://127.0.0.1:8000/css/responsive.css");
-
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkDarktypography , oldlinkLighttypography);
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkDarkstyle , oldlinkLightstyle);
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkDarkresponsive , oldlinkLightresponsive);
+                loading.style.display = "block"
+                console.log("block")
+                setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/typography.css","http://127.0.0.1:8000/css/style.css","http://127.0.0.1:8000/css/responsive.css"), 3000);
+                setTimeout(function(){ loading.style.display = "none" }, 1000);
             }
+        },
+        modeTOmode(href1,href2,href3){
+                console.log("mode")
+
+                // var oldlinktypography = document.getElementsByTagName("link").item(2);
+                // var oldlinkstyle = document.getElementsByTagName("link").item(3);
+                // var oldlinkresponsive = document.getElementsByTagName("link").item(4);
+
+                // var newlinktypography = document.createElement("link");
+                // var newlinkstyle = document.createElement("link");
+                // var newlinkresponsive = document.createElement("link");
+
+                // newlinktypography.setAttribute("rel", "stylesheet");
+                // newlinktypography.setAttribute("type", "text/css");
+                // newlinktypography.setAttribute("href", href1);
+
+                // newlinkstyle.setAttribute("rel", "stylesheet");
+                // newlinkstyle.setAttribute("type", "text/css");
+                // newlinkstyle.setAttribute("href", href2);
+
+                // newlinkresponsive.setAttribute("rel", "stylesheet");
+                // newlinkresponsive.setAttribute("type", "text/css");
+                // newlinkresponsive.setAttribute("href", href3);
+
+                // document.getElementsByTagName("head").item(0).replaceChild(newlinktypography , oldlinktypography);
+                // document.getElementsByTagName("head").item(0).replaceChild(newlinkstyle , oldlinkstyle);
+                // document.getElementsByTagName("head").item(0).replaceChild(newlinkresponsive , oldlinkresponsive);
+
         }
     }
+
 };
 </script>
 
 <style scoped>
-
  span.switcher {
     position: relative;
     top: 8px;
@@ -444,7 +433,7 @@ export default {
 }
  span.switcher.switch input:checked + label {
     right: 50px;
-    background: #181f38;
+    background: #ffffff;
     transition: left 0.5s, right 0.4s 0.2s;
 }
  span.switcher.switch input:not(:checked) {
