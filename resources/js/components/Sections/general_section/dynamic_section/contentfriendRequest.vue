@@ -32,7 +32,7 @@
                                     <div class="media-support-info ml-3">
                                         <h6>{{ friendRq.name }}</h6>
                                         <p class="mb-0">
-                                            40 friends
+                                            {{ friendRq.FriendCount }} friends
                                         </p>
                                     </div>
                                     <div class="d-flex align-items-center">

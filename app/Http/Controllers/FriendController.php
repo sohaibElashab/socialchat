@@ -40,6 +40,7 @@ class FriendController extends Controller
 
         foreach ($users as  $user) {
             $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+            $user->FriendCount = $this->FriendCount($user->id);
         }
         return response()->json($users);
     }
@@ -90,6 +91,65 @@ class FriendController extends Controller
         $Frequest = FriendRequest::where('user_from',$friend_id)->where('user_to',$user_id)->delete();
 
         return response()->json($friend);
+    }
+
+    public function RemoveFriend(Request $request)
+    {
+        $id = $request->id;
+        $friend = Friend::where(function($q) use ($id){
+            $q->where('user_id',auth()->id());
+            $q->where('friend_id',$id);
+        })->orWhere(function($q) use ($id) {
+            $q->where('friend_id',auth()->id());
+            $q->where('user_id',$id);
+        })->delete(); 
+        
+        return response()->json();
+    }
+
+    public function LoadFriends(Request $request)
+    {
+        if($request->id == null){
+            $id = auth()->id();
+        }else{
+            $id = $request->id;
+        }
+        $friends = Friend::where('user_id',$id)->orWhere('friend_id',$id)->get();
+        $new = collect();
+        foreach ($friends as $key => $friend) {
+            if($friend->user_id != $id){
+                $new->add($friend->user_id);
+            } elseif ($friend->friend_id != $id) {
+                $new->add($friend->friend_id);
+            }
+        }
+        $new = $new->unique();
+        $friends = User::whereIn('id',$new)->get();
+        foreach ($friends as  $user) {
+            $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+            $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
+            $user->FriendCount = $this->FriendCount($user->id);
+        }
+
+        return response()->json($friends);
+    }
+
+
+    public function FriendCount($id)
+    {
+        $friends = Friend::where('user_id',$id)->orWhere('friend_id',$id)->get();
+        $new = collect();
+        foreach ($friends as $key => $friend) {
+            if($friend->user_id != $id){
+                $new->add($friend->user_id);
+            } elseif ($friend->friend_id != $id) {
+                $new->add($friend->friend_id);
+            }
+        }
+        $new = $new->unique();
+        $friends = User::whereIn('id',$new)->get();
+
+        return $friends->count();
     }
 
     /**

@@ -36,10 +36,34 @@ class ProfilController extends Controller
             $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
             $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
             $user->status = "current";
-            $user->message = "";
+            $user->message = "current";
             return response()->json($user);
         }else{
             $user = User::where('id',$request->id)->first();
+
+            function Getfriends($id)
+            {
+                $friends = Friend::where('user_id',$id)->orWhere('friend_id',$id)->get();
+                $new = collect();
+                foreach ($friends as $key => $friend) {
+                    if($friend->user_id != $id){
+                        $new->add($friend->user_id);
+                    } elseif ($friend->friend_id != $id) {
+                        $new->add($friend->friend_id);
+                    }
+                }
+                $new = $new->unique();
+                $friends = User::whereIn('id',$new)->get();
+
+                return $friends;
+            }
+
+            $friends = Getfriends(auth()->user()->id);
+            if($friends->contains($user)){
+                $user->message = "friend";
+            } 
+
+
             $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
             $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
             $from = auth()->user()->id;
@@ -55,9 +79,7 @@ class ProfilController extends Controller
                 $user->message = "accept";
             }
 
-            //$friend = Friend::where()
-
-            $user->status = "friend";
+            $user->status = "friend"; 
 
             return response()->json($user);
         }

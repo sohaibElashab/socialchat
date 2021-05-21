@@ -10144,6 +10144,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10161,38 +10173,7 @@ __webpack_require__.r(__webpack_exports__);
       date: null,
       user: null,
       message: "",
-      FriendLists: {
-        "1": {
-          id: 1,
-          FrdImg: "images/user/05.jpg",
-          FrdName: "Petey Cruiser",
-          FrdNamber: "15"
-        },
-        "2": {
-          id: 2,
-          FrdImg: "images/user/07.jpg",
-          FrdName: "Paul Molive",
-          FrdNamber: "50"
-        },
-        "3": {
-          id: 3,
-          FrdImg: "images/user/06.jpg",
-          FrdName: "Anna Sthesia",
-          FrdNamber: "10"
-        },
-        "4": {
-          id: 4,
-          FrdImg: "images/user/08.jpg",
-          FrdName: "Gail Forcewind",
-          FrdNamber: "22"
-        },
-        "5": {
-          id: 5,
-          FrdImg: "images/user/09.jpg",
-          FrdName: "Paige Turner",
-          FrdNamber: "12"
-        }
-      },
+      FriendLists: null,
       ProfileImages: {
         "1": {
           id: 1,
@@ -10345,10 +10326,23 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     AcceptRequest: function AcceptRequest() {
+      var _this4 = this;
+
       axios.post("/AcceptRequest", {
         id: this.user.id
       }).then(function (res) {
         console.log(res);
+        _this4.message = "friend";
+      });
+    },
+    RemoveFriend: function RemoveFriend() {
+      var _this5 = this;
+
+      axios.post("/RemoveFriend", {
+        id: this.user.id
+      }).then(function (res) {
+        console.log(res);
+        _this5.message = "";
       });
     }
   },
@@ -10360,8 +10354,6 @@ __webpack_require__.r(__webpack_exports__);
 
         this.load();
       }
-
-      console.log("z");
     }
   }
 });
@@ -12229,44 +12221,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      friends: {
-        "1": {
-          id: 1,
-          profileImg: "images/user/05.jpg",
-          coverImage: "images/page-img/profile-bg2.jpg",
-          Name: "Anna Sthesia",
-          Interests: "@designer",
-          About: "Lorem Ipsum is simply dummy text of the"
-        },
-        "2": {
-          id: 2,
-          profileImg: "images/user/05.jpg",
-          coverImage: "images/page-img/profile-bg2.jpg",
-          Name: "Anna Sthesia",
-          Interests: "@designer",
-          About: "Lorem Ipsum is simply dummy text of the"
-        },
-        "3": {
-          id: 3,
-          profileImg: "images/user/05.jpg",
-          coverImage: "images/page-img/profile-bg2.jpg",
-          Name: "Anna Sthesia",
-          Interests: "@designer",
-          About: "Lorem Ipsum is simply dummy text of the"
-        },
-        "4": {
-          id: 4,
-          profileImg: "images/user/05.jpg",
-          coverImage: "images/page-img/profile-bg2.jpg",
-          Name: "Anna Sthesia",
-          Interests: "@designer",
-          About: "Lorem Ipsum is simply dummy text of the"
-        }
-      }
+      friends: null
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.post("/LoadFriends", {
+      id: null
+    }).then(function (res) {
+      console.log(res.data);
+      _this.friends = res.data;
+    });
   }
 });
 
@@ -14410,24 +14393,25 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     modeTOmode: function modeTOmode(href1, href2, href3) {
-      console.log("mode"); // var oldlinktypography = document.getElementsByTagName("link").item(2);
-      // var oldlinkstyle = document.getElementsByTagName("link").item(3);
-      // var oldlinkresponsive = document.getElementsByTagName("link").item(4);
-      // var newlinktypography = document.createElement("link");
-      // var newlinkstyle = document.createElement("link");
-      // var newlinkresponsive = document.createElement("link");
-      // newlinktypography.setAttribute("rel", "stylesheet");
-      // newlinktypography.setAttribute("type", "text/css");
-      // newlinktypography.setAttribute("href", href1);
-      // newlinkstyle.setAttribute("rel", "stylesheet");
-      // newlinkstyle.setAttribute("type", "text/css");
-      // newlinkstyle.setAttribute("href", href2);
-      // newlinkresponsive.setAttribute("rel", "stylesheet");
-      // newlinkresponsive.setAttribute("type", "text/css");
-      // newlinkresponsive.setAttribute("href", href3);
-      // document.getElementsByTagName("head").item(0).replaceChild(newlinktypography , oldlinktypography);
-      // document.getElementsByTagName("head").item(0).replaceChild(newlinkstyle , oldlinkstyle);
-      // document.getElementsByTagName("head").item(0).replaceChild(newlinkresponsive , oldlinkresponsive);
+      console.log("mode");
+      var oldlinktypography = document.getElementsByTagName("link").item(2);
+      var oldlinkstyle = document.getElementsByTagName("link").item(3);
+      var oldlinkresponsive = document.getElementsByTagName("link").item(4);
+      var newlinktypography = document.createElement("link");
+      var newlinkstyle = document.createElement("link");
+      var newlinkresponsive = document.createElement("link");
+      newlinktypography.setAttribute("rel", "stylesheet");
+      newlinktypography.setAttribute("type", "text/css");
+      newlinktypography.setAttribute("href", href1);
+      newlinkstyle.setAttribute("rel", "stylesheet");
+      newlinkstyle.setAttribute("type", "text/css");
+      newlinkstyle.setAttribute("href", href2);
+      newlinkresponsive.setAttribute("rel", "stylesheet");
+      newlinkresponsive.setAttribute("type", "text/css");
+      newlinkresponsive.setAttribute("href", href3);
+      document.getElementsByTagName("head").item(0).replaceChild(newlinktypography, oldlinktypography);
+      document.getElementsByTagName("head").item(0).replaceChild(newlinkstyle, oldlinkstyle);
+      document.getElementsByTagName("head").item(0).replaceChild(newlinkresponsive, oldlinkresponsive);
     }
   }
 });
@@ -14714,11 +14698,92 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    FriendLists: {
-      type: Object,
+    Id: {
+      type: Number,
       require: true
+    },
+    status: {
+      type: String
+    }
+  },
+  data: function data() {
+    return {
+      FriendLists: null
+    };
+  },
+  mounted: function mounted() {
+    this.LoadFriends();
+  },
+  methods: {
+    RemoveFriend: function RemoveFriend(id) {
+      var _this = this;
+
+      axios.post("/RemoveFriend", {
+        id: id
+      }).then(function (res) {
+        console.log(res);
+
+        _this.LoadFriends();
+      });
+    },
+    LoadFriends: function LoadFriends() {
+      var _this2 = this;
+
+      axios.post("/LoadFriends", {
+        id: this.Id
+      }).then(function (res) {
+        console.log(res.data);
+        _this2.FriendLists = res.data;
+      });
+    }
+  },
+  watch: {
+    Id: function Id() {
+      this.LoadFriends();
     }
   }
 });
@@ -56992,9 +57057,31 @@ var render = function() {
                                               staticClass: "ri-user-add-line"
                                             }),
                                             _vm._v(
-                                              "Add Friend\n                                                " +
-                                                _vm._s(_vm.message) +
-                                                "\n                                            "
+                                              "Add Friend\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm.message == "friend"
+                                  ? _c(
+                                      "li",
+                                      { staticClass: "text-center pl-3" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "mr-3 btn btn-danger rounded",
+                                            on: { click: _vm.RemoveFriend }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "ri-check-line mr-1 text-white font-size-16"
+                                            }),
+                                            _vm._v(
+                                              "\n                                                Unfriend\n                                            "
                                             )
                                           ]
                                         )
@@ -57511,7 +57598,10 @@ var render = function() {
                                     { staticClass: "iq-card-body p-0" },
                                     [
                                       _c("ProfileFriend", {
-                                        attrs: { FriendLists: _vm.FriendLists }
+                                        attrs: {
+                                          Id: _vm.user.id,
+                                          status: _vm.user.status
+                                        }
                                       })
                                     ],
                                     1
@@ -60596,7 +60686,10 @@ var render = function() {
                     _c("div", { staticClass: "cover-container" }, [
                       _c("img", {
                         staticClass: "rounded img-fluid w-100",
-                        attrs: { src: friend.coverImage, alt: "profile-bg" }
+                        attrs: {
+                          src: "images/user/" + friend.coverimg.name,
+                          alt: "profile-bg"
+                        }
                       })
                     ]),
                     _vm._v(" "),
@@ -60617,7 +60710,8 @@ var render = function() {
                                   _c("img", {
                                     staticClass: "avatar-130 img-fluid",
                                     attrs: {
-                                      src: friend.profileImg,
+                                      src:
+                                        "images/user/" + friend.profileimg.name,
                                       alt: "profile-img"
                                     }
                                   })
@@ -60627,17 +60721,23 @@ var render = function() {
                                   _c("h4", {}, [
                                     _vm._v(
                                       "\n                                                    " +
-                                        _vm._s(friend.Name) +
+                                        _vm._s(friend.name) +
                                         "\n                                                "
                                     )
                                   ]),
                                   _vm._v(" "),
-                                  _c("h6", [_vm._v(_vm._s(friend.Interests))]),
+                                  _c("h6", [
+                                    _vm._v(
+                                      "\n                                                    " +
+                                        _vm._s(friend.interested) +
+                                        "\n                                                "
+                                    )
+                                  ]),
                                   _vm._v(" "),
                                   _c("p", [
                                     _vm._v(
                                       "\n                                                    " +
-                                        _vm._s(friend.About) +
+                                        _vm._s(friend.about) +
                                         "\n                                                "
                                     )
                                   ])
@@ -60646,18 +60746,35 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c(
-                              "button",
+                              "router-link",
                               {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
+                                attrs: {
+                                  to: {
+                                    name: "profile",
+                                    params: {
+                                      id: friend.id
+                                    },
+                                    query: {
+                                      user: friend.name
+                                    }
+                                  },
+                                  tag: "a"
+                                }
                               },
                               [
-                                _vm._v(
-                                  "\n                                            Visit profile\n                                        "
+                                _c(
+                                  "button",
+                                  { staticClass: "btn btn-primary" },
+                                  [
+                                    _vm._v(
+                                      "\n                                                Visit profile\n                                            "
+                                    )
+                                  ]
                                 )
                               ]
                             )
-                          ]
+                          ],
+                          1
                         )
                       ])
                     ])
@@ -61936,7 +62053,9 @@ var render = function() {
                               _vm._v(" "),
                               _c("p", { staticClass: "mb-0" }, [
                                 _vm._v(
-                                  "\n                                        40 friends\n                                    "
+                                  "\n                                        " +
+                                    _vm._s(friendRq.FriendCount) +
+                                    " friends\n                                    "
                                 )
                               ])
                             ]
@@ -63970,24 +64089,83 @@ var render = function() {
                 staticClass: "d-flex align-items-center justify-content-between"
               },
               [
-                _c("div", { staticClass: "d-flex align-items-center" }, [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("img", {
-                      staticClass: "img-fluid",
-                      attrs: { src: FriendList.FrdImg, alt: "profile-img" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "friend-info ml-3" }, [
-                    _c("h5", [_vm._v(_vm._s(FriendList.FrdName))]),
+                _c(
+                  "div",
+                  { staticClass: "d-flex align-items-center" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "profile",
+                            params: { id: FriendList.id },
+                            query: { user: FriendList.name }
+                          },
+                          tag: "a"
+                        }
+                      },
+                      [
+                        _c("a", [
+                          _c("img", {
+                            staticClass: "img-fluid",
+                            attrs: {
+                              src: "images/user/" + FriendList.profileimg.name,
+                              alt: "profile-img"
+                            }
+                          })
+                        ])
+                      ]
+                    ),
                     _vm._v(" "),
-                    _c("p", { staticClass: "mb-0" }, [
-                      _vm._v(_vm._s(FriendList.FrdNamber) + "  friends")
+                    _c("div", { staticClass: "friend-info ml-3" }, [
+                      _c("h5", [_vm._v(_vm._s(FriendList.name))]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "mb-0" }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(FriendList.FriendCount) +
+                            " friends\n                        "
+                        )
+                      ])
                     ])
-                  ])
-                ]),
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _vm._m(0, true)
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "iq-card-header-toolbar d-flex align-items-center"
+                  },
+                  [
+                    _vm.status == "current"
+                      ? _c("div", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "mr-2 btn btn-danger",
+                              on: {
+                                click: function($event) {
+                                  return _vm.RemoveFriend(FriendList.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass:
+                                  "ri-check-line mr-1 text-white font-size-16"
+                              }),
+                              _vm._v(
+                                "\n                            Unfriend\n                        "
+                              )
+                            ]
+                          )
+                        ])
+                      : _vm._e()
+                  ]
+                )
               ]
             )
           ])
@@ -63997,39 +64175,7 @@ var render = function() {
     0
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "iq-card-header-toolbar d-flex align-items-center" },
-      [
-        _c("div", { staticClass: "dropdown" }, [
-          _c(
-            "span",
-            {
-              staticClass: "dropdown-toggle btn btn-danger mr-2",
-              attrs: {
-                id: "dropdownMenuButton01",
-                "data-toggle": "dropdown",
-                "aria-expanded": "true",
-                role: "button"
-              }
-            },
-            [
-              _c("i", {
-                staticClass: "ri-check-line mr-1 text-white font-size-16"
-              }),
-              _vm._v(" Unfriend\n                  ")
-            ]
-          )
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

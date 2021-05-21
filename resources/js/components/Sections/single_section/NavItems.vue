@@ -354,29 +354,29 @@ export default {
         modeTOmode(href1,href2,href3){
                 console.log("mode")
 
-                // var oldlinktypography = document.getElementsByTagName("link").item(2);
-                // var oldlinkstyle = document.getElementsByTagName("link").item(3);
-                // var oldlinkresponsive = document.getElementsByTagName("link").item(4);
+                var oldlinktypography = document.getElementsByTagName("link").item(2);
+                var oldlinkstyle = document.getElementsByTagName("link").item(3);
+                var oldlinkresponsive = document.getElementsByTagName("link").item(4);
 
-                // var newlinktypography = document.createElement("link");
-                // var newlinkstyle = document.createElement("link");
-                // var newlinkresponsive = document.createElement("link");
+                var newlinktypography = document.createElement("link");
+                var newlinkstyle = document.createElement("link");
+                var newlinkresponsive = document.createElement("link");
 
-                // newlinktypography.setAttribute("rel", "stylesheet");
-                // newlinktypography.setAttribute("type", "text/css");
-                // newlinktypography.setAttribute("href", href1);
+                newlinktypography.setAttribute("rel", "stylesheet");
+                newlinktypography.setAttribute("type", "text/css");
+                newlinktypography.setAttribute("href", href1);
 
-                // newlinkstyle.setAttribute("rel", "stylesheet");
-                // newlinkstyle.setAttribute("type", "text/css");
-                // newlinkstyle.setAttribute("href", href2);
+                newlinkstyle.setAttribute("rel", "stylesheet");
+                newlinkstyle.setAttribute("type", "text/css");
+                newlinkstyle.setAttribute("href", href2);
 
-                // newlinkresponsive.setAttribute("rel", "stylesheet");
-                // newlinkresponsive.setAttribute("type", "text/css");
-                // newlinkresponsive.setAttribute("href", href3);
+                newlinkresponsive.setAttribute("rel", "stylesheet");
+                newlinkresponsive.setAttribute("type", "text/css");
+                newlinkresponsive.setAttribute("href", href3);
 
-                // document.getElementsByTagName("head").item(0).replaceChild(newlinktypography , oldlinktypography);
-                // document.getElementsByTagName("head").item(0).replaceChild(newlinkstyle , oldlinkstyle);
-                // document.getElementsByTagName("head").item(0).replaceChild(newlinkresponsive , oldlinkresponsive);
+                document.getElementsByTagName("head").item(0).replaceChild(newlinktypography , oldlinktypography);
+                document.getElementsByTagName("head").item(0).replaceChild(newlinkstyle , oldlinkstyle);
+                document.getElementsByTagName("head").item(0).replaceChild(newlinkresponsive , oldlinkresponsive);
 
         }
     }
