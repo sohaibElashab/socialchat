@@ -70,7 +70,10 @@
                                                 {{ friendReq.name }}
                                             </h6>
                                             <p class="mb-0">
-                                                40 friends
+                                                {{
+                                                    friendReq.FriendCount
+                                                }}
+                                                friends
                                             </p>
                                         </div>
                                     </div>
@@ -203,8 +206,8 @@
             </li>
             <li>
                 <span class="switcher switch">
-                    <input type="checkbox" id="swit" @change="check()" >
-                    <label for="swit" ></label>
+                    <input type="checkbox" id="swit" @change="check()" />
+                    <label for="swit"></label>
                 </span>
             </li>
         </ul>
@@ -212,7 +215,7 @@
 </template>
 
 <script>
-import EventBus from "../../../event-bus"; 
+import EventBus from "../../../event-bus";
 export default {
     data() {
         return {
@@ -335,12 +338,18 @@ export default {
                 });
         },
         check() {
-            if(swit.checked){
+            if (swit.checked) {
                 //console.log(document.getElementsByTagName("link").length);
 
-                var oldlinkDarktypography = document.getElementsByTagName("link").item(2);
-                var oldlinkDarkstyle = document.getElementsByTagName("link").item(3);
-                var oldlinkDarkresponsive = document.getElementsByTagName("link").item(4);
+                var oldlinkDarktypography = document
+                    .getElementsByTagName("link")
+                    .item(2);
+                var oldlinkDarkstyle = document
+                    .getElementsByTagName("link")
+                    .item(3);
+                var oldlinkDarkresponsive = document
+                    .getElementsByTagName("link")
+                    .item(4);
 
                 var newlinkLighttypography = document.createElement("link");
                 var newlinkLightstyle = document.createElement("link");
@@ -348,26 +357,55 @@ export default {
 
                 newlinkLighttypography.setAttribute("rel", "stylesheet");
                 newlinkLighttypography.setAttribute("type", "text/css");
-                newlinkLighttypography.setAttribute("href", "http://127.0.0.1:8000/css/light/typography.css");
+                newlinkLighttypography.setAttribute(
+                    "href",
+                    "http://127.0.0.1:8000/css/light/typography.css"
+                );
 
                 newlinkLightstyle.setAttribute("rel", "stylesheet");
                 newlinkLightstyle.setAttribute("type", "text/css");
-                newlinkLightstyle.setAttribute("href", "http://127.0.0.1:8000/css/light/style.css");
+                newlinkLightstyle.setAttribute(
+                    "href",
+                    "http://127.0.0.1:8000/css/light/style.css"
+                );
 
                 newlinkLightresponsive.setAttribute("rel", "stylesheet");
                 newlinkLightresponsive.setAttribute("type", "text/css");
-                newlinkLightresponsive.setAttribute("href", "http://127.0.0.1:8000/css/light/responsive.css");
+                newlinkLightresponsive.setAttribute(
+                    "href",
+                    "http://127.0.0.1:8000/css/light/responsive.css"
+                );
 
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkLighttypography, oldlinkDarktypography);
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkLightstyle, oldlinkDarkstyle);
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkLightresponsive, oldlinkDarkresponsive);
+                document
+                    .getElementsByTagName("head")
+                    .item(0)
+                    .replaceChild(
+                        newlinkLighttypography,
+                        oldlinkDarktypography
+                    );
+                document
+                    .getElementsByTagName("head")
+                    .item(0)
+                    .replaceChild(newlinkLightstyle, oldlinkDarkstyle);
+                document
+                    .getElementsByTagName("head")
+                    .item(0)
+                    .replaceChild(
+                        newlinkLightresponsive,
+                        oldlinkDarkresponsive
+                    );
+            } else {
+                console.log("enchecked");
 
-            }else{
-                console.log("enchecked")
-
-                var oldlinkLighttypography = document.getElementsByTagName("link").item(2);
-                var oldlinkLightstyle = document.getElementsByTagName("link").item(3);
-                var oldlinkLightresponsive = document.getElementsByTagName("link").item(4);
+                var oldlinkLighttypography = document
+                    .getElementsByTagName("link")
+                    .item(2);
+                var oldlinkLightstyle = document
+                    .getElementsByTagName("link")
+                    .item(3);
+                var oldlinkLightresponsive = document
+                    .getElementsByTagName("link")
+                    .item(4);
 
                 var newlinkDarktypography = document.createElement("link");
                 var newlinkDarkstyle = document.createElement("link");
@@ -375,19 +413,43 @@ export default {
 
                 newlinkDarktypography.setAttribute("rel", "stylesheet");
                 newlinkDarktypography.setAttribute("type", "text/css");
-                newlinkDarktypography.setAttribute("href", "http://127.0.0.1:8000/css/typography.css");
+                newlinkDarktypography.setAttribute(
+                    "href",
+                    "http://127.0.0.1:8000/css/typography.css"
+                );
 
                 newlinkDarkstyle.setAttribute("rel", "stylesheet");
                 newlinkDarkstyle.setAttribute("type", "text/css");
-                newlinkDarkstyle.setAttribute("href", "http://127.0.0.1:8000/css/style.css");
+                newlinkDarkstyle.setAttribute(
+                    "href",
+                    "http://127.0.0.1:8000/css/style.css"
+                );
 
                 newlinkDarkresponsive.setAttribute("rel", "stylesheet");
                 newlinkDarkresponsive.setAttribute("type", "text/css");
-                newlinkDarkresponsive.setAttribute("href", "http://127.0.0.1:8000/css/responsive.css");
+                newlinkDarkresponsive.setAttribute(
+                    "href",
+                    "http://127.0.0.1:8000/css/responsive.css"
+                );
 
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkDarktypography , oldlinkLighttypography);
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkDarkstyle , oldlinkLightstyle);
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkDarkresponsive , oldlinkLightresponsive);
+                document
+                    .getElementsByTagName("head")
+                    .item(0)
+                    .replaceChild(
+                        newlinkDarktypography,
+                        oldlinkLighttypography
+                    );
+                document
+                    .getElementsByTagName("head")
+                    .item(0)
+                    .replaceChild(newlinkDarkstyle, oldlinkLightstyle);
+                document
+                    .getElementsByTagName("head")
+                    .item(0)
+                    .replaceChild(
+                        newlinkDarkresponsive,
+                        oldlinkLightresponsive
+                    );
             }
         }
     }
@@ -395,15 +457,14 @@ export default {
 </script>
 
 <style scoped>
-
- span.switcher {
+span.switcher {
     position: relative;
     top: 8px;
     left: 8px;
     border-radius: 25px;
     margin: 20px 0;
 }
- span.switcher input {
+span.switcher input {
     appearance: none;
     position: relative;
     width: 50px;
@@ -411,16 +472,17 @@ export default {
     border-radius: 25px;
     background-color: #181f38;
     outline: none;
-    font-family: 'Oswald', sans-serif;
+    font-family: "Oswald", sans-serif;
 }
- span.switcher input:before,  span.switcher input:after {
+span.switcher input:before,
+span.switcher input:after {
     z-index: 2;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     color: #50b5ff;
 }
- span.switcher label {
+span.switcher label {
     height: 15px;
     width: 15px;
     z-index: 1;
@@ -428,38 +490,38 @@ export default {
     top: 3px;
     border-radius: 20px;
 }
- span.switcher.switch input {
+span.switcher.switch input {
     transition: 0.25s -0.1s;
 }
- span.switcher.switch input:checked {
+span.switcher.switch input:checked {
     background-color: #50b5ff;
 }
- span.switcher.switch input:checked:before {
+span.switcher.switch input:checked:before {
     color: #50b5ff;
     transition: color 0.5s 0.2s;
 }
- span.switcher.switch input:checked:after {
+span.switcher.switch input:checked:after {
     color: #ccc;
     transition: color 0.5s;
 }
- span.switcher.switch input:checked + label {
+span.switcher.switch input:checked + label {
     right: 50px;
     background: #181f38;
     transition: left 0.5s, right 0.4s 0.2s;
 }
- span.switcher.switch input:not(:checked) {
+span.switcher.switch input:not(:checked) {
     background: #181f38;
     transition: background 0.5s -0.1s;
-} span.switcher label
- span.switcher.switch input:not(:checked):before {
+}
+span.switcher label span.switcher.switch input:not(:checked):before {
     color: #ccc;
     transition: color 0.5s;
 }
- span.switcher.switch input:not(:checked):after {
+span.switcher.switch input:not(:checked):after {
     color: #181f38;
     transition: color 0.5s 0.2s;
 }
- span.switcher.switch input:not(:checked) + label {
+span.switcher.switch input:not(:checked) + label {
     right: 25px;
     background: #50b5ff;
     transition: left 0.4s 0.2s, right 0.5s, background 0.35s -0.1s;
@@ -467,17 +529,17 @@ export default {
 @keyframes turn-on {
     0% {
         left: 100%;
-   }
+    }
     100% {
         left: 0%;
-   }
+    }
 }
 @keyframes turn-off {
     0% {
         right: 100%;
-   }
+    }
     100% {
         right: 0%;
-   }
+    }
 }
 </style>

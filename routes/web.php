@@ -35,3 +35,5 @@ Route::post('/DeleteRequest', [App\Http\Controllers\FriendController::class, 'De
 Route::post('/DeleteReq', [App\Http\Controllers\FriendController::class, 'DeleteReq']);
 Route::get('/LoadRequests', [App\Http\Controllers\FriendController::class, 'LoadRequests']);
 Route::post('/AcceptRequest', [App\Http\Controllers\FriendController::class, 'AcceptRequest']);
+Route::post('/RemoveFriend', [App\Http\Controllers\FriendController::class, 'RemoveFriend']);
+Route::post('/LoadFriends', [App\Http\Controllers\FriendController::class, 'LoadFriends']);

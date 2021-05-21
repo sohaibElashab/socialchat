@@ -2,13 +2,19 @@
     <div id="content-page" class="content-page">
         <div class="container">
             <div class="row">
-                <div class="col-md-6" v-for="friend in friends" :key="friend.id">
+                <div
+                    class="col-md-6"
+                    v-for="friend in friends"
+                    :key="friend.id"
+                >
                     <div class="iq-card">
                         <div class="iq-card-body profile-page p-0">
                             <div class="profile-header-image">
                                 <div class="cover-container">
                                     <img
-                                        :src="friend.coverImage"
+                                        :src="
+                                            `images/user/${friend.coverimg.name}`
+                                        "
                                         alt="profile-bg"
                                         class="rounded img-fluid w-100"
                                     />
@@ -18,36 +24,44 @@
                                         <div
                                             class="d-flex flex-wrap justify-content-between align-items-start"
                                         >
-                                            <div
-                                                class="profile-detail d-flex"
-                                            >
-                                                <div
-                                                    class="profile-img pr-4"
-                                                >
+                                            <div class="profile-detail d-flex">
+                                                <div class="profile-img pr-4">
                                                     <img
-                                                        :src="friend.profileImg"
+                                                        :src="
+                                                            `images/user/${friend.profileimg.name}`
+                                                        "
                                                         alt="profile-img"
                                                         class="avatar-130 img-fluid"
                                                     />
                                                 </div>
-                                                <div
-                                                    class="user-data-block"
-                                                >
+                                                <div class="user-data-block">
                                                     <h4 class="">
-                                                        {{friend.Name}}
+                                                        {{ friend.name }}
                                                     </h4>
-                                                    <h6>{{friend.Interests}}</h6>
+                                                    <h6>
+                                                        {{ friend.interested }}
+                                                    </h6>
                                                     <p>
-                                                        {{friend.About}}
+                                                        {{ friend.about }}
                                                     </p>
                                                 </div>
                                             </div>
-                                            <button
-                                                type="submit"
-                                                class="btn btn-primary"
+                                            <router-link
+                                                :to="{
+                                                    name: 'profile',
+                                                    params: {
+                                                        id: friend.id
+                                                    },
+                                                    query: {
+                                                        user: friend.name
+                                                    }
+                                                }"
+                                                tag="a"
                                             >
-                                                Visit profile
-                                            </button>
+                                                <button class="btn btn-primary">
+                                                    Visit profile
+                                                </button>
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -62,43 +76,20 @@
 
 <script>
 export default {
-        data() {
+    data() {
         return {
-            friends : {
-                "1" : {
-                    id: 1,
-                    profileImg: "images/user/05.jpg",
-                    coverImage : "images/page-img/profile-bg2.jpg",
-                    Name : "Anna Sthesia",
-                    Interests : "@designer",
-                    About : "Lorem Ipsum is simply dummy text of the",
-                },
-                "2" : {
-                    id: 2,
-                    profileImg: "images/user/05.jpg",
-                    coverImage : "images/page-img/profile-bg2.jpg",
-                    Name : "Anna Sthesia",
-                    Interests : "@designer",
-                    About : "Lorem Ipsum is simply dummy text of the",
-                },
-                "3" : {
-                    id: 3,
-                    profileImg: "images/user/05.jpg",
-                    coverImage : "images/page-img/profile-bg2.jpg",
-                    Name : "Anna Sthesia",
-                    Interests : "@designer",
-                    About : "Lorem Ipsum is simply dummy text of the",
-                },
-                "4" : {
-                    id: 4,
-                    profileImg: "images/user/05.jpg",
-                    coverImage : "images/page-img/profile-bg2.jpg",
-                    Name : "Anna Sthesia",
-                    Interests : "@designer",
-                    About : "Lorem Ipsum is simply dummy text of the",
-                },
-            }
-        }
+            friends: null
+        };
+    },
+    mounted() {
+        axios
+            .post("/LoadFriends", {
+                id: null
+            })
+            .then(res => {
+                console.log(res.data);
+                this.friends = res.data;
+            });
     }
-}
+};
 </script>

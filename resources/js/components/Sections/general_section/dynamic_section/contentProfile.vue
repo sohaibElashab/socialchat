@@ -147,7 +147,20 @@
                                                         class="ri-user-add-line"
                                                     ></i
                                                     >Add Friend
-                                                    {{ message }}
+                                                </button>
+                                            </li>
+                                            <li
+                                                class="text-center pl-3"
+                                                v-else-if="message == 'friend'"
+                                            >
+                                                <button
+                                                    class="mr-3 btn btn-danger rounded"
+                                                    @click="RemoveFriend"
+                                                >
+                                                    <i
+                                                        class="ri-check-line mr-1 text-white font-size-16"
+                                                    ></i>
+                                                    Unfriend
                                                 </button>
                                             </li>
                                             <!--  </div> -->
@@ -624,9 +637,8 @@
                                             >
                                                 <div class="iq-card-body p-0">
                                                     <ProfileFriend
-                                                        :FriendLists="
-                                                            FriendLists
-                                                        "
+                                                        :Id="user.id"
+                                                        :status="user.status"
                                                     />
                                                 </div>
                                             </div>
@@ -685,38 +697,7 @@ export default {
             date: null,
             user: null,
             message: "",
-            FriendLists: {
-                "1": {
-                    id: 1,
-                    FrdImg: "images/user/05.jpg",
-                    FrdName: "Petey Cruiser",
-                    FrdNamber: "15"
-                },
-                "2": {
-                    id: 2,
-                    FrdImg: "images/user/07.jpg",
-                    FrdName: "Paul Molive",
-                    FrdNamber: "50"
-                },
-                "3": {
-                    id: 3,
-                    FrdImg: "images/user/06.jpg",
-                    FrdName: "Anna Sthesia",
-                    FrdNamber: "10"
-                },
-                "4": {
-                    id: 4,
-                    FrdImg: "images/user/08.jpg",
-                    FrdName: "Gail Forcewind",
-                    FrdNamber: "22"
-                },
-                "5": {
-                    id: 5,
-                    FrdImg: "images/user/09.jpg",
-                    FrdName: "Paige Turner",
-                    FrdNamber: "12"
-                }
-            },
+            FriendLists: null,
             ProfileImages: {
                 "1": {
                     id: 1,
@@ -870,6 +851,17 @@ export default {
                 })
                 .then(res => {
                     console.log(res);
+                    this.message = "friend";
+                });
+        },
+        RemoveFriend() {
+            axios
+                .post("/RemoveFriend", {
+                    id: this.user.id
+                })
+                .then(res => {
+                    console.log(res);
+                    this.message = "";
                 });
         }
     },
@@ -881,7 +873,6 @@ export default {
                 // console.log("profile content watch");
                 this.load();
             }
-            console.log("z");
         }
     }
 };
