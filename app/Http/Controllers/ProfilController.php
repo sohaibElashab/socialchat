@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\FriendRequest;
 use App\Models\Friend;
 
- 
+
 class ProfilController extends Controller
 { 
     /**
@@ -248,6 +248,13 @@ class ProfilController extends Controller
         Mail::to($em['email'])->send(new Verify($pp));
 
         return response()->json([$pp,$em]);
+    }
+
+    public function GetImages()
+    {
+        $userId = auth()->user()->id;
+        $images = Image::where('user_id',$userId);
+        return response()->json($images);
     }
 
     /**

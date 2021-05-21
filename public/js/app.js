@@ -9309,8 +9309,16 @@ __webpack_require__.r(__webpack_exports__);
           NbrComment: "50",
           NbrPartage: "30"
         }
-      }
+      },
+      Imgs: null
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/Images").then(function (res) {
+      _this.Imgs = res.data;
+    });
   }
 });
 
@@ -62294,7 +62302,7 @@ var render = function() {
           { staticClass: "col-lg-6 text-right" },
           [
             _vm._v("\n            Copyright 2021 "),
-            _c("router-link", { attrs: { to: "/" } }, [_vm._v("SocialV")]),
+            _c("router-link", { attrs: { to: "/" } }, [_vm._v("SocialChat")]),
             _vm._v(" All Rights Reserved.\n         ")
           ],
           1
@@ -63803,7 +63811,7 @@ var render = function() {
           attrs: { src: "images/logo.png", alt: "" }
         }),
         _vm._v(" "),
-        _c("span", [_vm._v("SocialV")])
+        _c("span", [_vm._v("SocialChat")])
       ]),
       _vm._v(" "),
       _vm._m(0)

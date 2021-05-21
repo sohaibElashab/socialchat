@@ -11,7 +11,7 @@
                   </ul>
                </div>
                <div class="col-lg-6 text-right">
-                  Copyright 2021 <router-link to="/">SocialV</router-link> All Rights Reserved.
+                  Copyright 2021 <router-link to="/">SocialChat</router-link> All Rights Reserved.
                </div>
             </div>
          </div>
