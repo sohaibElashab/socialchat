@@ -14373,23 +14373,50 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     check: function check() {
+      var _this4 = this;
+
       var loading = document.getElementById("loading");
 
       if (swit.checked) {
-        //console.log(document.getElementsByTagName("link").length);
-        loading.style.display = "block";
-        console.log("block");
-        setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/light/typography.css", "http://127.0.0.1:8000/css/light/style.css", "http://127.0.0.1:8000/css/light/responsive.css"), 3000);
-        setTimeout(function () {
+        var step3 = function step3() {
           loading.style.display = "none";
-        }, 1000);
+          console.log("3");
+        };
+
+        var step2 = function step2() {
+          mode("http://127.0.0.1:8000/css/light/typography.css", "http://127.0.0.1:8000/css/light/style.css", "http://127.0.0.1:8000/css/light/responsive.css");
+          console.log("2");
+          setTimeout(function () {
+            step3();
+          }, 5000);
+        };
+
+        var step1 = function step1() {
+          loading.style.display = "block";
+          console.log("1");
+          setTimeout(function () {
+            step2();
+          }, 500);
+        };
+
+        console.log("z");
+
+        var mode = function mode(a, b, c) {
+          return _this4.modeTOmode(a, b, c);
+        };
+
+        step1(); //console.log(document.getElementsByTagName("link").length);
+
+        /* loading.style.display = "block"
+        console.log("block")
+        setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/light/typography.css","http://127.0.0.1:8000/css/light/style.css","http://127.0.0.1:8000/css/light/responsive.css"), 3000);
+        setTimeout(function(){ loading.style.display = "none" }, 1000); */
       } else {
-        loading.style.display = "block";
-        console.log("block");
-        setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/typography.css", "http://127.0.0.1:8000/css/style.css", "http://127.0.0.1:8000/css/responsive.css"), 3000);
-        setTimeout(function () {
-          loading.style.display = "none";
-        }, 1000);
+        console.log("a");
+        /* loading.style.display = "block"
+        console.log("block")
+        setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/typography.css","http://127.0.0.1:8000/css/style.css","http://127.0.0.1:8000/css/responsive.css"), 3000);
+        setTimeout(function(){ loading.style.display = "none" }, 1000); */
       }
     },
     modeTOmode: function modeTOmode(href1, href2, href3) {
@@ -20328,7 +20355,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nspan.switcher[data-v-671e2088] {\n    position: relative;\n    top: 8px;\n    left: 8px;\n    border-radius: 25px;\n    margin: 20px 0;\n}\nspan.switcher input[data-v-671e2088] {\n    -webkit-appearance: none;\n       -moz-appearance: none;\n            appearance: none;\n    position: relative;\n    width: 50px;\n    height: 25px;\n    border-radius: 25px;\n    background-color: #181f38;\n    outline: none;\n    font-family: 'Oswald', sans-serif;\n}\nspan.switcher input[data-v-671e2088]:before,  span.switcher input[data-v-671e2088]:after {\n    z-index: 2;\n    position: absolute;\n    top: 50%;\n    transform: translateY(-50%);\n    color: #50b5ff;\n}\nspan.switcher label[data-v-671e2088] {\n    height: 15px;\n    width: 15px;\n    z-index: 1;\n    position: relative;\n    top: 3px;\n    border-radius: 20px;\n}\nspan.switcher.switch input[data-v-671e2088] {\n    transition: 0.25s -0.1s;\n}\nspan.switcher.switch input[data-v-671e2088]:checked {\n    background-color: #50b5ff;\n}\nspan.switcher.switch input[data-v-671e2088]:checked:before {\n    color: #50b5ff;\n    transition: color 0.5s 0.2s;\n}\nspan.switcher.switch input[data-v-671e2088]:checked:after {\n    color: #ccc;\n    transition: color 0.5s;\n}\nspan.switcher.switch input:checked + label[data-v-671e2088] {\n    right: 50px;\n    background: #ffffff;\n    transition: left 0.5s, right 0.4s 0.2s;\n}\nspan.switcher.switch input[data-v-671e2088]:not(:checked) {\n    background: #181f38;\n    transition: background 0.5s -0.1s;\n}\nspan.switcher label\n span.switcher.switch input[data-v-671e2088]:not(:checked):before {\n    color: #ccc;\n    transition: color 0.5s;\n}\nspan.switcher.switch input[data-v-671e2088]:not(:checked):after {\n    color: #181f38;\n    transition: color 0.5s 0.2s;\n}\nspan.switcher.switch input:not(:checked) + label[data-v-671e2088] {\n    right: 25px;\n    background: #50b5ff;\n    transition: left 0.4s 0.2s, right 0.5s, background 0.35s -0.1s;\n}\n@-webkit-keyframes turn-on-data-v-671e2088 {\n0% {\n        left: 100%;\n}\n100% {\n        left: 0%;\n}\n}\n@keyframes turn-on-data-v-671e2088 {\n0% {\n        left: 100%;\n}\n100% {\n        left: 0%;\n}\n}\n@-webkit-keyframes turn-off-data-v-671e2088 {\n0% {\n        right: 100%;\n}\n100% {\n        right: 0%;\n}\n}\n@keyframes turn-off-data-v-671e2088 {\n0% {\n        right: 100%;\n}\n100% {\n        right: 0%;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nspan.switcher[data-v-671e2088] {\r\n    position: relative;\r\n    top: 8px;\r\n    left: 8px;\r\n    border-radius: 25px;\r\n    margin: 20px 0;\n}\nspan.switcher input[data-v-671e2088] {\r\n    -webkit-appearance: none;\r\n       -moz-appearance: none;\r\n            appearance: none;\r\n    position: relative;\r\n    width: 50px;\r\n    height: 25px;\r\n    border-radius: 25px;\r\n    background-color: #181f38;\r\n    outline: none;\r\n    font-family: \"Oswald\", sans-serif;\n}\nspan.switcher input[data-v-671e2088]:before,\r\nspan.switcher input[data-v-671e2088]:after {\r\n    z-index: 2;\r\n    position: absolute;\r\n    top: 50%;\r\n    transform: translateY(-50%);\r\n    color: #50b5ff;\n}\nspan.switcher label[data-v-671e2088] {\r\n    height: 15px;\r\n    width: 15px;\r\n    z-index: 1;\r\n    position: relative;\r\n    top: 3px;\r\n    border-radius: 20px;\n}\nspan.switcher.switch input[data-v-671e2088] {\r\n    transition: 0.25s -0.1s;\n}\nspan.switcher.switch input[data-v-671e2088]:checked {\r\n    background-color: #50b5ff;\n}\nspan.switcher.switch input[data-v-671e2088]:checked:before {\r\n    color: #50b5ff;\r\n    transition: color 0.5s 0.2s;\n}\nspan.switcher.switch input[data-v-671e2088]:checked:after {\r\n    color: #ccc;\r\n    transition: color 0.5s;\n}\nspan.switcher.switch input:checked + label[data-v-671e2088] {\r\n    right: 50px;\r\n    background: #ffffff;\r\n    transition: left 0.5s, right 0.4s 0.2s;\n}\nspan.switcher.switch input[data-v-671e2088]:not(:checked) {\r\n    background: #181f38;\r\n    transition: background 0.5s -0.1s;\n}\nspan.switcher label span.switcher.switch input[data-v-671e2088]:not(:checked):before {\r\n    color: #ccc;\r\n    transition: color 0.5s;\n}\nspan.switcher.switch input[data-v-671e2088]:not(:checked):after {\r\n    color: #181f38;\r\n    transition: color 0.5s 0.2s;\n}\nspan.switcher.switch input:not(:checked) + label[data-v-671e2088] {\r\n    right: 25px;\r\n    background: #50b5ff;\r\n    transition: left 0.4s 0.2s, right 0.5s, background 0.35s -0.1s;\n}\n@-webkit-keyframes turn-on-data-v-671e2088 {\n0% {\r\n        left: 100%;\n}\n100% {\r\n        left: 0%;\n}\n}\n@keyframes turn-on-data-v-671e2088 {\n0% {\r\n        left: 100%;\n}\n100% {\r\n        left: 0%;\n}\n}\n@-webkit-keyframes turn-off-data-v-671e2088 {\n0% {\r\n        right: 100%;\n}\n100% {\r\n        right: 0%;\n}\n}\n@keyframes turn-off-data-v-671e2088 {\n0% {\r\n        right: 100%;\n}\n100% {\r\n        right: 0%;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

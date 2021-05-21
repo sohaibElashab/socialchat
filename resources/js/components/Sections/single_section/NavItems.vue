@@ -203,8 +203,8 @@
             </li>
             <li>
                 <span class="switcher switch">
-                    <input type="checkbox" id="swit" @change="check()" >
-                    <label for="swit" ></label>
+                    <input type="checkbox" id="swit" @change="check()" />
+                    <label for="swit"></label>
                     <div class="all"></div>
                 </span>
             </li>
@@ -213,7 +213,7 @@
 </template>
 
 <script>
-import EventBus from "../../../event-bus"; 
+import EventBus from "../../../event-bus";
 export default {
     data() {
         return {
@@ -336,63 +336,107 @@ export default {
                 });
         },
         check() {
-            var loading = document.getElementById("loading")
+            var loading = document.getElementById("loading");
 
-            if(swit.checked){
+            if (swit.checked) {
+                console.log("z");
+
+                var mode = (a, b, c) => {
+                    return this.modeTOmode(a, b, c);
+                };
+
+                function step3() {
+                    loading.style.display = "none";
+                    console.log("3");
+                }
+
+                function step2() {
+                    mode(
+                        "http://127.0.0.1:8000/css/light/typography.css",
+                        "http://127.0.0.1:8000/css/light/style.css",
+                        "http://127.0.0.1:8000/css/light/responsive.css"
+                    );
+                    console.log("2");
+                    setTimeout(() => {
+                        step3();
+                    }, 5000);
+                }
+
+                function step1() {
+                    loading.style.display = "block";
+                    console.log("1");
+                    setTimeout(() => {
+                        step2();
+                    }, 500);
+                }
+
+                step1();
                 //console.log(document.getElementsByTagName("link").length);
-                loading.style.display = "block"
+                /* loading.style.display = "block"
                 console.log("block")
                 setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/light/typography.css","http://127.0.0.1:8000/css/light/style.css","http://127.0.0.1:8000/css/light/responsive.css"), 3000);
-                setTimeout(function(){ loading.style.display = "none" }, 1000);
-            }else{
-                loading.style.display = "block"
+                setTimeout(function(){ loading.style.display = "none" }, 1000); */
+            } else {
+                console.log("a");
+                /* loading.style.display = "block"
                 console.log("block")
                 setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/typography.css","http://127.0.0.1:8000/css/style.css","http://127.0.0.1:8000/css/responsive.css"), 3000);
-                setTimeout(function(){ loading.style.display = "none" }, 1000);
+                setTimeout(function(){ loading.style.display = "none" }, 1000); */
             }
         },
-        modeTOmode(href1,href2,href3){
-                console.log("mode")
+        modeTOmode(href1, href2, href3) {
+            console.log("mode");
 
-                var oldlinktypography = document.getElementsByTagName("link").item(2);
-                var oldlinkstyle = document.getElementsByTagName("link").item(3);
-                var oldlinkresponsive = document.getElementsByTagName("link").item(4);
+            var oldlinktypography = document
+                .getElementsByTagName("link")
+                .item(2);
+            var oldlinkstyle = document.getElementsByTagName("link").item(3);
+            var oldlinkresponsive = document
+                .getElementsByTagName("link")
+                .item(4);
 
-                var newlinktypography = document.createElement("link");
-                var newlinkstyle = document.createElement("link");
-                var newlinkresponsive = document.createElement("link");
+            var newlinktypography = document.createElement("link");
+            var newlinkstyle = document.createElement("link");
+            var newlinkresponsive = document.createElement("link");
 
-                newlinktypography.setAttribute("rel", "stylesheet");
-                newlinktypography.setAttribute("type", "text/css");
-                newlinktypography.setAttribute("href", href1);
+            newlinktypography.setAttribute("rel", "stylesheet");
+            newlinktypography.setAttribute("type", "text/css");
+            newlinktypography.setAttribute("href", href1);
 
-                newlinkstyle.setAttribute("rel", "stylesheet");
-                newlinkstyle.setAttribute("type", "text/css");
-                newlinkstyle.setAttribute("href", href2);
+            newlinkstyle.setAttribute("rel", "stylesheet");
+            newlinkstyle.setAttribute("type", "text/css");
+            newlinkstyle.setAttribute("href", href2);
 
-                newlinkresponsive.setAttribute("rel", "stylesheet");
-                newlinkresponsive.setAttribute("type", "text/css");
-                newlinkresponsive.setAttribute("href", href3);
+            newlinkresponsive.setAttribute("rel", "stylesheet");
+            newlinkresponsive.setAttribute("type", "text/css");
+            newlinkresponsive.setAttribute("href", href3);
 
-                document.getElementsByTagName("head").item(0).replaceChild(newlinktypography , oldlinktypography);
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkstyle , oldlinkstyle);
-                document.getElementsByTagName("head").item(0).replaceChild(newlinkresponsive , oldlinkresponsive);
-
+            document
+                .getElementsByTagName("head")
+                .item(0)
+                .replaceChild(newlinktypography, oldlinktypography);
+            document
+                .getElementsByTagName("head")
+                .item(0)
+                .replaceChild(newlinkstyle, oldlinkstyle);
+            document
+                .getElementsByTagName("head")
+                .item(0)
+                .replaceChild(newlinkresponsive, oldlinkresponsive);
         }
     }
-
 };
 </script>
 
 <style scoped>
- span.switcher {
+span.switcher {
     position: relative;
     top: 8px;
     left: 8px;
     border-radius: 25px;
     margin: 20px 0;
 }
- span.switcher input {
+span.switcher input {
     appearance: none;
     position: relative;
     width: 50px;
@@ -400,16 +444,17 @@ export default {
     border-radius: 25px;
     background-color: #181f38;
     outline: none;
-    font-family: 'Oswald', sans-serif;
+    font-family: "Oswald", sans-serif;
 }
- span.switcher input:before,  span.switcher input:after {
+span.switcher input:before,
+span.switcher input:after {
     z-index: 2;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     color: #50b5ff;
 }
- span.switcher label {
+span.switcher label {
     height: 15px;
     width: 15px;
     z-index: 1;
@@ -417,38 +462,38 @@ export default {
     top: 3px;
     border-radius: 20px;
 }
- span.switcher.switch input {
+span.switcher.switch input {
     transition: 0.25s -0.1s;
 }
- span.switcher.switch input:checked {
+span.switcher.switch input:checked {
     background-color: #50b5ff;
 }
- span.switcher.switch input:checked:before {
+span.switcher.switch input:checked:before {
     color: #50b5ff;
     transition: color 0.5s 0.2s;
 }
- span.switcher.switch input:checked:after {
+span.switcher.switch input:checked:after {
     color: #ccc;
     transition: color 0.5s;
 }
- span.switcher.switch input:checked + label {
+span.switcher.switch input:checked + label {
     right: 50px;
     background: #ffffff;
     transition: left 0.5s, right 0.4s 0.2s;
 }
- span.switcher.switch input:not(:checked) {
+span.switcher.switch input:not(:checked) {
     background: #181f38;
     transition: background 0.5s -0.1s;
-} span.switcher label
- span.switcher.switch input:not(:checked):before {
+}
+span.switcher label span.switcher.switch input:not(:checked):before {
     color: #ccc;
     transition: color 0.5s;
 }
- span.switcher.switch input:not(:checked):after {
+span.switcher.switch input:not(:checked):after {
     color: #181f38;
     transition: color 0.5s 0.2s;
 }
- span.switcher.switch input:not(:checked) + label {
+span.switcher.switch input:not(:checked) + label {
     right: 25px;
     background: #50b5ff;
     transition: left 0.4s 0.2s, right 0.5s, background 0.35s -0.1s;
@@ -456,17 +501,17 @@ export default {
 @keyframes turn-on {
     0% {
         left: 100%;
-   }
+    }
     100% {
         left: 0%;
-   }
+    }
 }
 @keyframes turn-off {
     0% {
         right: 100%;
-   }
+    }
     100% {
         right: 0%;
-   }
+    }
 }
 </style>
