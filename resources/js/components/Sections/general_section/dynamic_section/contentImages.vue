@@ -63,7 +63,7 @@
 
 <script>
 export default {
-        data() {
+    data() {
         return {
             images : {
                 "1" : {
@@ -95,7 +95,13 @@ export default {
                     NbrPartage : "30",
                 },
             },
+            Imgs : null
         }
+    },
+    mounted() {
+        axios.get("/Images").then(res => {
+            this.Imgs = res.data;
+        });
     }
 }
 </script>
