@@ -9277,6 +9277,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -10151,43 +10152,6 @@ __webpack_require__.r(__webpack_exports__);
       user: null,
       message: "",
       FriendLists: null,
-      ProfileImages: {
-        "1": {
-          id: 1,
-          PrfImg: "images/page-img/51.jpg",
-          likeNbr: "60",
-          CommentNbr: "30",
-          ShareNbr: "10"
-        },
-        "2": {
-          id: 2,
-          PrfImg: "images/page-img/52.jpg",
-          likeNbr: "60",
-          CommentNbr: "60",
-          ShareNbr: "60"
-        },
-        "3": {
-          id: 3,
-          PrfImg: "images/page-img/53.jpg",
-          likeNbr: "60",
-          CommentNbr: "60",
-          ShareNbr: "60"
-        },
-        "4": {
-          id: 4,
-          PrfImg: "images/page-img/54.jpg",
-          likeNbr: "60",
-          CommentNbr: "60",
-          ShareNbr: "60"
-        },
-        "5": {
-          id: 5,
-          PrfImg: "images/page-img/55.jpg",
-          likeNbr: "60",
-          CommentNbr: "60",
-          ShareNbr: "60"
-        }
-      },
       posts: {
         "1": {
           id: 1,
@@ -14886,12 +14850,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    ProfileImages: {
-      type: Object,
+    UserId: {
       require: true
     }
+  },
+  data: function data() {
+    return {
+      images: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.post("/ProfileImages", {
+      id: this.UserId
+    }).then(function (res) {
+      _this.images = res.data;
+    });
   }
 });
 
@@ -56493,7 +56471,8 @@ var render = function() {
                   [
                     _c("a", { attrs: { href: "#" } }, [
                       _c("img", {
-                        staticClass: "img-fluid-images rounded",
+                        staticClass: "rounded",
+                        staticStyle: { width: "313px", height: "250px" },
                         attrs: {
                           src: "images/user/" + image.name,
                           alt: "Responsive image"
@@ -57630,9 +57609,7 @@ var render = function() {
                                     { staticClass: "iq-card-body p-0" },
                                     [
                                       _c("ProfileImages", {
-                                        attrs: {
-                                          ProfileImages: _vm.ProfileImages
-                                        }
+                                        attrs: { UserId: _vm.user.id }
                                       })
                                     ],
                                     1
@@ -64098,7 +64075,7 @@ var render = function() {
                       [
                         _c("a", [
                           _c("img", {
-                            staticClass: "img-fluid",
+                            staticStyle: { width: "150px", height: "150px" },
                             attrs: {
                               src: "images/user/" + FriendList.profileimg.name,
                               alt: "profile-img"
@@ -64191,10 +64168,10 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "row" },
-    _vm._l(_vm.ProfileImages, function(ProfileImage) {
+    _vm._l(_vm.images, function(image) {
       return _c(
         "div",
-        { key: ProfileImage.id, staticClass: "col-md-6 col-lg-3 mb-3" },
+        { key: image.id, staticClass: "col-md-6 col-lg-3 mb-3" },
         [
           _c(
             "div",
@@ -64202,8 +64179,12 @@ var render = function() {
             [
               _c("a", { attrs: { href: "#" } }, [
                 _c("img", {
-                  staticClass: "img-fluid rounded",
-                  attrs: { src: ProfileImage.PrfImg, alt: "Responsive image" }
+                  staticClass: "rounded",
+                  staticStyle: { width: "224px", height: "200px" },
+                  attrs: {
+                    src: "images/user/" + image.name,
+                    alt: "Responsive image"
+                  }
                 })
               ]),
               _vm._v(" "),
@@ -64226,7 +64207,7 @@ var render = function() {
                           [
                             _vm._v(
                               "\n                                " +
-                                _vm._s(ProfileImage.likeNbr) +
+                                _vm._s(image.NbrJaime) +
                                 "\n                                "
                             ),
                             _c("i", { staticClass: "ri-thumb-up-line" })
@@ -64244,7 +64225,7 @@ var render = function() {
                           [
                             _vm._v(
                               "\n                                " +
-                                _vm._s(ProfileImage.CommentNbr) +
+                                _vm._s(image.NbrComment) +
                                 "\n                                "
                             ),
                             _c("i", { staticClass: "ri-chat-3-line" })
@@ -64262,7 +64243,7 @@ var render = function() {
                           [
                             _vm._v(
                               "\n                                " +
-                                _vm._s(ProfileImage.ShareNbr) +
+                                _vm._s(image.NbrPartage) +
                                 "\n                                "
                             ),
                             _c("i", { staticClass: "ri-share-forward-line" })

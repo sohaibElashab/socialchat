@@ -29,6 +29,7 @@ Route::post('/ForgotPass', [App\Http\Controllers\ProfilController::class, 'Forgo
 Route::post('/ResetPassword', [App\Http\Controllers\ProfilController::class, 'ResetPassword']);
 Route::post('/BeforeRegister', [App\Http\Controllers\ProfilController::class, 'BeforeRegister']);
 Route::get('/imagesProfile', [App\Http\Controllers\ProfilController::class, 'GetImages']);
+Route::post('/ProfileImages', [App\Http\Controllers\ProfilController::class, 'GetImagesProfile']);
 //Route::post('/FriendProfile', [App\Http\Controllers\FriendController::class, 'index']);
 Route::post('/ProfileSearch', [App\Http\Controllers\FriendController::class, 'ProfileSearch']);
 Route::post('/SendRequest', [App\Http\Controllers\FriendController::class, 'SendRequest']);

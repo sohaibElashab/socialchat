@@ -2,15 +2,16 @@
     <div class="row">
         <div
             class="col-md-6 col-lg-3 mb-3"
-            v-for="ProfileImage in ProfileImages"
-            :key="ProfileImage.id"
+            v-for="image in images"
+            :key="image.id"
         >
             <div class="user-images position-relative overflow-hidden">
                 <a href="#">
                     <img
-                        :src="ProfileImage.PrfImg"
-                        class="img-fluid rounded"
+                        :src="`images/user/${image.name}`"
+                        class="rounded"
                         alt="Responsive image"
+                        style="width: 224px ; height: 200px;"
                     />
                 </a>
                 <div class="image-hover-data">
@@ -20,19 +21,19 @@
                         >
                             <li>
                                 <a href="#" class="pr-3 text-white">
-                                    {{ ProfileImage.likeNbr }}
+                                    {{ image.NbrJaime }}
                                     <i class="ri-thumb-up-line"></i>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="pr-3 text-white">
-                                    {{ ProfileImage.CommentNbr }}
+                                    {{ image.NbrComment }}
                                     <i class="ri-chat-3-line"></i>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="pr-3 text-white">
-                                    {{ ProfileImage.ShareNbr }}
+                                    {{ image.NbrPartage }}
                                     <i class="ri-share-forward-line"></i>
                                 </a>
                             </li>
@@ -56,10 +57,20 @@
 <script>
 export default {
     props: {
-        ProfileImages: {
-            type: Object,
+        UserId: {
             require: true
         }
+    },
+    data() {
+        return{
+            images : []
+        }
+    },    
+    mounted() {
+        axios.post("/ProfileImages" , { id: this.UserId })
+            .then(res => {
+                this.images = res.data;
+        });
     }
 };
 </script>

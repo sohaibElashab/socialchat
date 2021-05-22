@@ -261,7 +261,19 @@ class ProfilController extends Controller
             $path->NbrPartage = "50";
             
         }
-        return response()->json($Paths);
+        return response()->json($Paths); 
+    }
+    public function GetImagesProfile(Request $request)
+    {
+        
+        $userId = $request->id;
+        $Paths = Image::where('user_id',$userId)->get('name');
+        foreach ($Paths as $key => $path) {
+            $path->NbrJaime = "30";
+            $path->NbrComment = "40";
+            $path->NbrPartage = "50";
+        }
+        return response()->json($Paths); 
     }
 
     /**

@@ -9,8 +9,9 @@
                                 <a href="#">
                                     <img
                                         :src="`images/user/${image.name}`"
-                                        class="img-fluid-images rounded"
+                                        class="rounded"
                                         alt="Responsive image"
+                                        style="width: 313px ; height: 250px;"
                                     />
                                 </a>
                                 <div class="image-hover-data">

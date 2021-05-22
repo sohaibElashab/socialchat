@@ -22,7 +22,7 @@
                                         `images/user/${FriendList.profileimg.name}`
                                     "
                                     alt="profile-img"
-                                    class="img-fluid"
+                                    style="width: 150px ; height: 150px;"
                                 />
                             </a>
                         </router-link>

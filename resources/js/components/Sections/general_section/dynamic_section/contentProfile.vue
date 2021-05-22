@@ -661,8 +661,8 @@
                                             >
                                                 <div class="iq-card-body p-0">
                                                     <ProfileImages
-                                                        :ProfileImages="
-                                                            ProfileImages"
+                                                        :UserId="
+                                                            user.id"
                                                     />
                                                 </div>
                                             </div>
@@ -697,43 +697,6 @@ export default {
             user: null,
             message: "",
             FriendLists: null,
-            ProfileImages: {
-                "1": {
-                    id: 1,
-                    PrfImg: "images/page-img/51.jpg",
-                    likeNbr: "60",
-                    CommentNbr: "30",
-                    ShareNbr: "10"
-                },
-                "2": {
-                    id: 2,
-                    PrfImg: "images/page-img/52.jpg",
-                    likeNbr: "60",
-                    CommentNbr: "60",
-                    ShareNbr: "60"
-                },
-                "3": {
-                    id: 3,
-                    PrfImg: "images/page-img/53.jpg",
-                    likeNbr: "60",
-                    CommentNbr: "60",
-                    ShareNbr: "60"
-                },
-                "4": {
-                    id: 4,
-                    PrfImg: "images/page-img/54.jpg",
-                    likeNbr: "60",
-                    CommentNbr: "60",
-                    ShareNbr: "60"
-                },
-                "5": {
-                    id: 5,
-                    PrfImg: "images/page-img/55.jpg",
-                    likeNbr: "60",
-                    CommentNbr: "60",
-                    ShareNbr: "60"
-                }
-            },
             posts: {
                 "1": {
                     id: 1,
