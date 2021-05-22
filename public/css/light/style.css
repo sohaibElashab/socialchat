@@ -1093,3 +1093,35 @@ li.checkout-product:last-child { margin-bottom: 5px; border-bottom: none; paddin
 #quantity { display: inline-block; width: 30px; height: 28px; border: 1px solid var(--iq-border-light); text-align: center; }
 button.qty-btn { border: 1px solid var(--iq-border-light); background: var(--iq-white); height: 28px; width: 30px; vertical-align: top; }
 .form-add-btn { margin-bottom: 20px; }
+
+/*--------search----------*/
+
+#ser {
+  position: absolute;
+  width: 100%;
+  background-color:  var(--iq-light-primary);
+  color: var(--iq-primary);
+}
+
+#ser ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#pp {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  width: 100%;
+}
+#pp:hover {
+  background-color: #54649452;
+}
+#pp img {
+  margin-right: 5px;
+}
+
+#pp span {
+  color: var(--iq-primary);
+}

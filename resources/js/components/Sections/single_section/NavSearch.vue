@@ -102,35 +102,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-#ser {
-    position: absolute;
-    width: 100%;
-    background-color: #1e2745;
-    color: #8c91b6;
-}
-
-#ser ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#pp {
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    width: 100%;
-}
-#pp:hover {
-    background-color: #54649452;
-}
-#pp img {
-    margin-right: 5px;
-}
-
-#pp span {
-    color: #8c91b6;
-}
-</style>

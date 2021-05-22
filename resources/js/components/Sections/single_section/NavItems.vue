@@ -339,7 +339,7 @@ export default {
             var loading = document.getElementById("loading");
 
             if (swit.checked) {
-                console.log("z");
+                // console.log("z");
 
                 var mode = (a, b, c) => {
                     return this.modeTOmode(a, b, c);
@@ -359,7 +359,7 @@ export default {
                     console.log("2");
                     setTimeout(() => {
                         step3();
-                    }, 5000);
+                    }, 1000);
                 }
 
                 function step1() {
@@ -382,6 +382,38 @@ export default {
                 console.log("block")
                 setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/typography.css","http://127.0.0.1:8000/css/style.css","http://127.0.0.1:8000/css/responsive.css"), 3000);
                 setTimeout(function(){ loading.style.display = "none" }, 1000); */
+                
+
+                var mode = (a, b, c) => {
+                    return this.modeTOmode(a, b, c);
+                };
+
+                function step3() {
+                    loading.style.display = "none";
+                    console.log("3");
+                }
+
+                function step2() {
+                    mode(
+                        "http://127.0.0.1:8000/css/typography.css",
+                        "http://127.0.0.1:8000/css/style.css",
+                        "http://127.0.0.1:8000/css/responsive.css"
+                    );
+                    console.log("2");
+                    setTimeout(() => {
+                        step3();
+                    }, 1000);
+                }
+
+                function step1() {
+                    loading.style.display = "block";
+                    console.log("1");
+                    setTimeout(() => {
+                        step2();
+                    }, 500);
+                }
+
+                step1();
             }
         },
         modeTOmode(href1, href2, href3) {

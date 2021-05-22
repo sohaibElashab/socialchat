@@ -8,8 +8,8 @@
                             >
                                 <a href="#">
                                     <img
-                                        :src="image.imagePath"
-                                        class="img-fluid rounded"
+                                        :src="`images/user/${image.name}`"
+                                        class="img-fluid-images rounded"
                                         alt="Responsive image"
                                     />
                                 </a>
@@ -65,42 +65,12 @@
 export default {
     data() {
         return {
-            images : {
-                "1" : {
-                    id: 1,
-                    imagePath: "images/page-img/51.jpg",
-                    NbrJaime : "60",
-                    NbrComment: "50",
-                    NbrPartage : "30",
-                },
-                "2" : {
-                    id: 2,
-                    imagePath: "images/page-img/51.jpg",
-                    NbrJaime : "60",
-                    NbrComment: "50",
-                    NbrPartage : "30",
-                },
-                "3" : {
-                    id: 3,
-                    imagePath: "images/page-img/51.jpg",
-                    NbrJaime : "60",
-                    NbrComment: "50",
-                    NbrPartage : "30",
-                },
-                "4" : {
-                    id: 4,
-                    imagePath: "images/page-img/51.jpg",
-                    NbrJaime : "60",
-                    NbrComment: "50",
-                    NbrPartage : "30",
-                },
-            },
-            Imgs : null
+            images : null
         }
     },
     mounted() {
-        axios.get("/Images").then(res => {
-            this.Imgs = res.data;
+        axios.get("/imagesProfile").then(res => {
+            this.images = res.data;
         });
     }
 }

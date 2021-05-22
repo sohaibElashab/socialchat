@@ -252,9 +252,16 @@ class ProfilController extends Controller
 
     public function GetImages()
     {
+        
         $userId = auth()->user()->id;
-        $images = Image::where('user_id',$userId);
-        return response()->json($images);
+        $Paths = Image::where('user_id',$userId)->get('name');
+        foreach ($Paths as $key => $path) {
+            $path->NbrJaime = "30";
+            $path->NbrComment = "40";
+            $path->NbrPartage = "50";
+            
+        }
+        return response()->json($Paths);
     }
 
     /**

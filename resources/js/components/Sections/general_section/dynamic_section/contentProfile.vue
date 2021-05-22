@@ -662,8 +662,7 @@
                                                 <div class="iq-card-body p-0">
                                                     <ProfileImages
                                                         :ProfileImages="
-                                                            ProfileImages
-                                                        "
+                                                            ProfileImages"
                                                     />
                                                 </div>
                                             </div>
