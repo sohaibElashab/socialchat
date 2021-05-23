@@ -3,17 +3,17 @@
         <!-- Sign in Start -->
         <section class="sign-in-page">
             <CircleSign />
-            <containerSignup />
+            <contentSignup />
         </section>
     </div>
 </template>
 
 <script>
-import containerSignup from "./../Sections/general_section/dynamic_section/containerSignup.vue";
+import contentSignup from "../Sections/general_section/dynamic_section/contentSignup.vue";
 import CircleSign from "./../Sections/single_section/CircleSign";
 export default {
     components: {
-        containerSignup,
+        contentSignup,
         CircleSign
     } /* ,
     beforeRouteEnter(to, from, next) {

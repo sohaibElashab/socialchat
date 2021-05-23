@@ -22,10 +22,10 @@
                                 params: { id: result.id },
                                 query: { user: result.name }
                             }"
+                            v-on:click.native="vide()"
                             tag="a"
                             id="pp"
-                            ><!--
-                                 -->
+                            >
                             <div class="">
                                 <img
                                     class="avatar-40 rounded"
@@ -98,6 +98,10 @@ export default {
             if (this.value === "") {
                 e.preventDefault();
             }
+        },
+        vide(){
+            this.value = "";
+            this.results = [];
         }
     }
 };

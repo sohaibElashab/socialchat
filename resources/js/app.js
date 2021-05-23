@@ -31,6 +31,7 @@ import friendList from "./components/Pages/friendList.vue";
 import chat from "./components/Pages/chat.vue";
 import resetPassword from "./components/Pages/resetPassword.vue";
 import verifyEmail from "./components/Pages/verifyEmail.vue";
+import post from "./components/Pages/post.vue";
 
 const routes = [
     {
@@ -104,6 +105,11 @@ const routes = [
         path: "/verifyEmail",
         name: "verifyEmail",
         component: verifyEmail
+    },
+    {
+        path: "/post",
+        name: "post",
+        component: post
     }
 ];
 

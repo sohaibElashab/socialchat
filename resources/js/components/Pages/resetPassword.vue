@@ -3,17 +3,17 @@
         <!-- Sign in Start -->
         <section class="sign-in-page">
             <CircleSign />
-            <containerResetPass />
+            <contentResetPass />
         </section>
     </div>
 </template>
 
 <script>
-import containerResetPass from "./../Sections/general_section/dynamic_section/containerResetPass";
+import contentResetPass from "./../Sections/general_section/dynamic_section/contentResetPass";
 import CircleSign from "./../Sections/single_section/CircleSign";
 export default {
     components: {
-        containerResetPass,
+        contentResetPass,
         CircleSign
     },
     beforeRouteEnter(to, from, next) {

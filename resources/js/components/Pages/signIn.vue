@@ -3,17 +3,17 @@
         <!-- Sign in Start -->
         <section class="sign-in-page">
             <CircleSign />
-            <containerSignin />
+            <contentSignin />
         </section>
     </div>
 </template>
 
 <script>
-import containerSignin from "./../Sections/general_section/dynamic_section/containerSignin";
+import contentSignin from "./../Sections/general_section/dynamic_section/contentSignin";
 import CircleSign from "./../Sections/single_section/CircleSign";
 export default {
     components: {
-        containerSignin,
+        contentSignin,
         CircleSign
     } /* ,
     beforeRouteEnter(to, from, next) {

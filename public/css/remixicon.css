@@ -59,7 +59,7 @@
 .ri-add-circle-fill:before { content: "\ea0d"; }
 .ri-add-circle-line:before { content: "\ea0e"; }
 .ri-add-fill:before { content: "\ea0f"; }
-.ri-add-line:before { content: "\ea10"; }
+.ri-add-line:before {content: "\ea10";position: relative;top: -3px;}
 .ri-admin-fill:before { content: "\ea11"; }
 .ri-admin-line:before { content: "\ea12"; }
 .ri-airplay-fill:before { content: "\ea13"; }

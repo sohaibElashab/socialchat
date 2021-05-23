@@ -34,8 +34,9 @@
             </li>
             <li class="nav-item">
                 <a class="search-toggle iq-waves-effect" href="#"
-                    ><i class="ri-group-line"></i
-                ></a>
+                    ><i class="ri-group-line"></i>
+                    <span class="bg-danger dots"></span>
+                </a>
                 <div class="iq-sub-dropdown iq-sub-dropdown-large">
                     <div class="iq-card shadow-none m-0">
                         <div class="iq-card-body p-0 " v-if="loadedReqs">
@@ -107,6 +108,7 @@
             <li class="nav-item">
                 <a href="#" class="search-toggle iq-waves-effect">
                     <i class="las la-bell"></i>
+                    <span class="bg-danger dots"></span>
                 </a>
                 <div class="iq-sub-dropdown">
                     <div class="iq-card shadow-none m-0">
@@ -162,6 +164,7 @@
             <li class="nav-item dropdown">
                 <a href="#" class="search-toggle iq-waves-effect">
                     <i class="las la-inbox"></i>
+                    <span class="bg-danger dots"></span>
                 </a>
                 <div class="iq-sub-dropdown">
                     <div class="iq-card shadow-none m-0">
@@ -197,6 +200,16 @@
                                     </div>
                                 </div>
                             </a>
+                            <div class="text-center">
+                                <router-link
+                                    class="mr-3 btn text-primary"
+                                    to="/chat"
+                                    tag="a"
+                                    exact=""
+                                >
+                                    View More Messages
+                                </router-link>
+                            </div>
                         </div>
                     </div>
                 </div>
