@@ -11,6 +11,11 @@
                   <p class="mb-0 d-inline-block">{{post.statu}}</p>
                   <p class="mb-0 text-primary">{{post.time}}</p>
                </div>
+               <div class="iq-card-post-toolbar">
+                  <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                     <i class=" ri-edit-2-line"></i>
+                  </span>
+               </div>
             </div>
          </div>
          <div class="mt-3" v-if="post.text">

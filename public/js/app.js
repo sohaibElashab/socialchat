@@ -8781,22 +8781,20 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       post: {
-        "1": {
-          id: 1,
-          userImg: "images/user/01.jpg",
-          userName: "Anna Sthesia",
-          statu: "Add New Post",
-          time: "Just Now",
-          text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
-          postImgs: [{
-            img: "images/page-img/p1.jpg"
-          }, {
-            img: "images/page-img/p2.jpg"
-          }, {
-            img: "images/page-img/p3.jpg"
-          }],
-          postVds: []
-        }
+        id: 1,
+        userImg: "images/user/01.jpg",
+        userName: "Anna Sthesia",
+        statu: "Add New Post",
+        time: "Just Now",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
+        postImgs: [{
+          img: "images/page-img/p1.jpg"
+        }, {
+          img: "images/page-img/p2.jpg"
+        }, {
+          img: "images/page-img/p3.jpg"
+        }],
+        postVds: []
       }
     };
   }
@@ -12782,8 +12780,8 @@ __webpack_require__.r(__webpack_exports__);
         "9": {
           id: 9,
           href: "/Saved",
-          iClass: "ri-grid-line",
-          SpanName: "Blog"
+          iClass: "ri-bookmark-3-line",
+          SpanName: "Saved"
         }
       }
     };
@@ -12809,6 +12807,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/profile").then(function (res) {
       console.log(res.data);
       _this2.user = res.data;
+      _this2.menus[2].href = "/profile?user=" + _this2.user.name;
     });
   }
 });
@@ -13822,6 +13821,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _splidejs_splide_dist_css_themes_splide_skyblue_min_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_splidejs_splide_dist_css_themes_splide_skyblue_min_css__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _splidejs_vue_splide__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @splidejs/vue-splide */ "./node_modules/@splidejs/vue-splide/src/js/index.js");
 /* harmony import */ var _Comment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Comment */ "./resources/js/components/Sections/single_section/Comment.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -55486,7 +55490,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container p-0" },
+    { staticClass: "container mt-5 pt-5" },
     [_c("Post", { attrs: { post: _vm.post } })],
     1
   )
@@ -61085,7 +61089,7 @@ var staticRenderFns = [
       [
         _c("input", {
           staticClass: "form-control rounded",
-          attrs: { type: "text" }
+          attrs: { type: "text", placeholder: "Write a comment…" }
         }),
         _vm._v(" "),
         _c("div", { staticClass: "comment-attagement d-flex" }, [
@@ -62229,7 +62233,9 @@ var render = function() {
               _c("p", { staticClass: "mb-0 text-primary" }, [
                 _vm._v(_vm._s(_vm.post.time))
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
           ])
         ]),
         _vm._v(" "),
@@ -62328,7 +62334,28 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iq-card-post-toolbar" }, [
+      _c(
+        "span",
+        {
+          staticClass: "dropdown-toggle",
+          attrs: {
+            "data-toggle": "dropdown",
+            "aria-haspopup": "true",
+            "aria-expanded": "false",
+            role: "button"
+          }
+        },
+        [_c("i", { staticClass: " ri-edit-2-line" })]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 

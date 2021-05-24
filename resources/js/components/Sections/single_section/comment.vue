@@ -58,7 +58,7 @@
             </li>
         </ul>
         <form class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
-            <input type="text" class="form-control rounded">
+            <input type="text" class="form-control rounded" placeholder="Write a comment…">
             <div class="comment-attagement d-flex">
                 <a href="javascript:void();"><i class="ri-link mr-3"></i></a>
                 <a href="javascript:void();"><i class="ri-user-smile-line mr-3"></i></a>

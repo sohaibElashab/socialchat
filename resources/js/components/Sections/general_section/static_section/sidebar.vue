@@ -103,8 +103,8 @@ export default {
                 "9": {
                     id: 9,
                     href: "/Saved",
-                    iClass: "ri-grid-line",
-                    SpanName: "Blog"
+                    iClass: "ri-bookmark-3-line",
+                    SpanName: "Saved"
                 }
             }
         };
@@ -124,6 +124,7 @@ export default {
         axios.get("/profile").then(res => {
             console.log(res.data);
             this.user = res.data;
+            this.menus[2].href = "/profile?user="+this.user.name;
         });
     }
 };
