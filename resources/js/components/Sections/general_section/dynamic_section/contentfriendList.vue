@@ -28,7 +28,7 @@
                                                 <div class="profile-img pr-4">
                                                     <img
                                                         :src="
-                                                            `images/user/${friend.profileimg.name}`
+                                                            `images/user/${friend.profileimg.name}` 
                                                         "
                                                         alt="profile-img"
                                                         class="avatar-130 img-fluid"

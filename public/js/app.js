@@ -9352,9 +9352,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _single_section_ProfileFriend__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../single_section/ProfileFriend */ "./resources/js/components/Sections/single_section/ProfileFriend.vue");
-/* harmony import */ var _single_section_ProfileImages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../single_section/ProfileImages */ "./resources/js/components/Sections/single_section/ProfileImages.vue");
-/* harmony import */ var _single_section_CreatePost__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../single_section/CreatePost */ "./resources/js/components/Sections/single_section/CreatePost.vue");
-/* harmony import */ var _single_section_Post__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../single_section/Post */ "./resources/js/components/Sections/single_section/Post.vue");
+/* harmony import */ var _single_section_ProfileAbout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../single_section/ProfileAbout */ "./resources/js/components/Sections/single_section/ProfileAbout.vue");
+/* harmony import */ var _single_section_ProfileImages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../single_section/ProfileImages */ "./resources/js/components/Sections/single_section/ProfileImages.vue");
+/* harmony import */ var _single_section_CreatePost__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../single_section/CreatePost */ "./resources/js/components/Sections/single_section/CreatePost.vue");
+/* harmony import */ var _single_section_Post__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../single_section/Post */ "./resources/js/components/Sections/single_section/Post.vue");
 //
 //
 //
@@ -9765,276 +9766,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -10042,9 +9774,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     ProfileFriend: _single_section_ProfileFriend__WEBPACK_IMPORTED_MODULE_0__.default,
-    ProfileImages: _single_section_ProfileImages__WEBPACK_IMPORTED_MODULE_1__.default,
-    CreatePost: _single_section_CreatePost__WEBPACK_IMPORTED_MODULE_2__.default,
-    Post: _single_section_Post__WEBPACK_IMPORTED_MODULE_3__.default
+    ProfileImages: _single_section_ProfileImages__WEBPACK_IMPORTED_MODULE_2__.default,
+    CreatePost: _single_section_CreatePost__WEBPACK_IMPORTED_MODULE_3__.default,
+    Post: _single_section_Post__WEBPACK_IMPORTED_MODULE_4__.default,
+    ProfileAbout: _single_section_ProfileAbout__WEBPACK_IMPORTED_MODULE_1__.default
   },
   props: ["UserId"],
   data: function data() {
@@ -10053,6 +9786,7 @@ __webpack_require__.r(__webpack_exports__);
       user: null,
       message: "",
       FriendLists: null,
+      images: [],
       posts: {
         "1": {
           id: 1,
@@ -10126,6 +9860,8 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     this.load();
+    this.imagesLoad();
+    this.friendLoad();
   },
   methods: {
     load: function load() {
@@ -10186,13 +9922,33 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res);
         _this5.message = "";
       });
+    },
+    imagesLoad: function imagesLoad() {
+      var _this6 = this;
+
+      axios.post("/ProfileImages", {
+        id: this.UserId
+      }).then(function (res) {
+        _this6.images = res.data;
+      });
+      console.log("yay");
+    },
+    friendLoad: function friendLoad() {
+      var _this7 = this;
+
+      axios.post("/LoadFriends", {
+        id: this.UserId
+      }).then(function (res) {
+        console.log(res.data);
+        _this7.FriendLists = res.data;
+      });
     }
   },
   watch: {
     UserId: function UserId() {
       if (this.UserId != null) {
         sessionStorage.clear();
-        sessionStorage.setItem("id", this.UserId); // console.log("profile content watch");
+        sessionStorage.setItem("id", this.user.id); // console.log("profile content watch");
 
         this.load();
       }
@@ -13906,6 +13662,265 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    user: {
+      type: Object,
+      require: true
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ProfileFriend.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ProfileFriend.vue?vue&type=script&lang=js& ***!
@@ -13917,6 +13932,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -14047,6 +14081,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -52570,6 +52623,45 @@ component.options.__file = "resources/js/components/Sections/single_section/Post
 
 /***/ }),
 
+/***/ "./resources/js/components/Sections/single_section/ProfileAbout.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Sections/single_section/ProfileAbout.vue ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ProfileAbout_vue_vue_type_template_id_594e7ae2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProfileAbout.vue?vue&type=template&id=594e7ae2& */ "./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=template&id=594e7ae2&");
+/* harmony import */ var _ProfileAbout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfileAbout.vue?vue&type=script&lang=js& */ "./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _ProfileAbout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _ProfileAbout_vue_vue_type_template_id_594e7ae2___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ProfileAbout_vue_vue_type_template_id_594e7ae2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Sections/single_section/ProfileAbout.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Sections/single_section/ProfileFriend.vue":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/Sections/single_section/ProfileFriend.vue ***!
@@ -53595,6 +53687,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileAbout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ProfileAbout.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileAbout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Sections/single_section/ProfileFriend.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************!*\
   !*** ./resources/js/components/Sections/single_section/ProfileFriend.vue?vue&type=script&lang=js& ***!
@@ -54532,6 +54640,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Post_vue_vue_type_template_id_e475566a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Post_vue_vue_type_template_id_e475566a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Post.vue?vue&type=template&id=e475566a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Post.vue?vue&type=template&id=e475566a&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=template&id=594e7ae2&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=template&id=594e7ae2& ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileAbout_vue_vue_type_template_id_594e7ae2___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileAbout_vue_vue_type_template_id_594e7ae2___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileAbout_vue_vue_type_template_id_594e7ae2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ProfileAbout.vue?vue&type=template&id=594e7ae2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=template&id=594e7ae2&");
 
 
 /***/ }),
@@ -56420,559 +56545,264 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-sm-12" }, [
-                _c("div", { staticClass: "tab-content" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "tab-pane fade active show",
-                      attrs: { id: "timeline", role: "tabpanel" }
-                    },
-                    [
-                      _c("div", { staticClass: "iq-card-body p-0" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-lg-4" }, [
-                            _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(3),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "iq-card-body" }, [
-                                _c("div", { staticClass: "row" }, [
-                                  _c("div", { staticClass: "col-sm-12" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "event-post position-relative"
-                                      },
-                                      [
-                                        _c("p", [
-                                          _c("i", {
-                                            staticClass: "las la-home"
-                                          }),
-                                          _vm._v(" "),
-                                          _c("strong", [
+                _c(
+                  "div",
+                  { staticClass: "tab-content" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane fade active show",
+                        attrs: { id: "timeline", role: "tabpanel" }
+                      },
+                      [
+                        _c("div", { staticClass: "iq-card-body p-0" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-lg-4" }, [
+                              _c("div", { staticClass: "iq-card" }, [
+                                _vm._m(3),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "iq-card-body" }, [
+                                  _c("div", { staticClass: "row" }, [
+                                    _c("div", { staticClass: "col-sm-12" }, [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "event-post position-relative"
+                                        },
+                                        [
+                                          _c("p", [
+                                            _c("i", {
+                                              staticClass: "las la-home"
+                                            }),
+                                            _vm._v(" "),
+                                            _c("strong", [
+                                              _vm._v(
+                                                "\n                                                                Lives in\n                                                            "
+                                              )
+                                            ]),
                                             _vm._v(
-                                              "\n                                                                Lives in\n                                                            "
-                                            )
-                                          ]),
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(_vm.user.adress) +
-                                              "\n                                                        "
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("p", [
-                                          _c("i", {
-                                            staticClass: "las la-birthday-cake"
-                                          }),
-                                          _vm._v(" "),
-                                          _c("strong", [
-                                            _vm._v(
-                                              "\n                                                                Birthday is\n                                                                on\n                                                            "
-                                            )
-                                          ]),
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(
-                                                new Date(
-                                                  _vm.user.birth_date
-                                                ).getDate()
-                                              ) +
                                               "\n                                                            " +
-                                              _vm._s(
-                                                new Date(
-                                                  _vm.user.birth_date
-                                                ).toLocaleString("default", {
-                                                  month: "long"
-                                                })
-                                              ) +
-                                              "\n                                                        "
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("p", [
-                                          _c("i", {
-                                            staticClass: "las la-phone"
-                                          }),
-                                          _vm._v(" "),
-                                          _c("strong", [
-                                            _vm._v(
-                                              "\n                                                                Your number\n                                                                is\n                                                            "
+                                                _vm._s(_vm.user.adress) +
+                                                "\n                                                        "
                                             )
                                           ]),
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(_vm.user.mobile) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ]
-                                    )
+                                          _vm._v(" "),
+                                          _c("p", [
+                                            _c("i", {
+                                              staticClass:
+                                                "las la-birthday-cake"
+                                            }),
+                                            _vm._v(" "),
+                                            _c("strong", [
+                                              _vm._v(
+                                                "\n                                                                Birthday is\n                                                                on\n                                                            "
+                                              )
+                                            ]),
+                                            _vm._v(
+                                              "\n                                                            " +
+                                                _vm._s(
+                                                  new Date(
+                                                    _vm.user.birth_date
+                                                  ).getDate()
+                                                ) +
+                                                "\n                                                            " +
+                                                _vm._s(
+                                                  new Date(
+                                                    _vm.user.birth_date
+                                                  ).toLocaleString("default", {
+                                                    month: "long"
+                                                  })
+                                                ) +
+                                                "\n                                                        "
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("p", [
+                                            _c("i", {
+                                              staticClass: "las la-phone"
+                                            }),
+                                            _vm._v(" "),
+                                            _c("strong", [
+                                              _vm._v(
+                                                "\n                                                                Your number\n                                                                is\n                                                            "
+                                              )
+                                            ]),
+                                            _vm._v(
+                                              "\n                                                            " +
+                                                _vm._s(_vm.user.mobile) +
+                                                "\n                                                        "
+                                            )
+                                          ])
+                                        ]
+                                      )
+                                    ])
                                   ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "iq-card" }, [
+                                _vm._m(4),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "iq-card-body" }, [
+                                  _c(
+                                    "ul",
+                                    {
+                                      staticClass:
+                                        "profile-img-gallary d-flex flex-wrap p-0 m-0"
+                                    },
+                                    _vm._l(_vm.images, function(image) {
+                                      return _c(
+                                        "li",
+                                        {
+                                          key: image.id,
+                                          staticClass:
+                                            "col-md-4 col-6 pl-2 pr-0 pb-3"
+                                        },
+                                        [
+                                          _c(
+                                            "a",
+                                            {
+                                              attrs: {
+                                                href: "javascript:void();"
+                                              }
+                                            },
+                                            [
+                                              _c("img", {
+                                                staticClass: "img-fluid",
+                                                attrs: {
+                                                  src: image.name,
+                                                  alt: "gallary-image"
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    }),
+                                    0
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "iq-card" }, [
+                                _vm._m(5),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "iq-card-body" }, [
+                                  _c(
+                                    "ul",
+                                    {
+                                      staticClass:
+                                        "profile-img-gallary d-flex flex-wrap p-0 m-0"
+                                    },
+                                    _vm._l(_vm.FriendLists, function(
+                                      FriendList,
+                                      index
+                                    ) {
+                                      return _c(
+                                        "li",
+                                        {
+                                          key: index,
+                                          staticClass:
+                                            "col-md-4 col-6 pl-2 pr-0 pb-3"
+                                        },
+                                        [
+                                          index < 9
+                                            ? _c(
+                                                "div",
+                                                [
+                                                  _c(
+                                                    "router-link",
+                                                    {
+                                                      attrs: {
+                                                        to: {
+                                                          name: "profile",
+                                                          params: {
+                                                            id: FriendList.id
+                                                          },
+                                                          query: {
+                                                            user:
+                                                              FriendList.name
+                                                          }
+                                                        },
+                                                        tag: "a"
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("img", {
+                                                        staticClass:
+                                                          "img-fluid",
+                                                        attrs: {
+                                                          src:
+                                                            "images/user/" +
+                                                            FriendList
+                                                              .profileimg.name,
+                                                          alt: "gallary-image"
+                                                        }
+                                                      })
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "h6",
+                                                    {
+                                                      staticClass:
+                                                        "mt-2 text-center"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                            " +
+                                                          _vm._s(
+                                                            FriendList.name
+                                                          ) +
+                                                          "\n                                                        "
+                                                      )
+                                                    ]
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    }),
+                                    0
+                                  )
                                 ])
                               ])
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(4),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "iq-card-body" }, [
-                                _c(
-                                  "ul",
-                                  {
-                                    staticClass:
-                                      "profile-img-gallary d-flex flex-wrap p-0 m-0"
-                                  },
-                                  _vm._l(_vm.ProfileImages, function(
-                                    ProfileImage
-                                  ) {
-                                    return _c(
-                                      "li",
-                                      {
-                                        key: ProfileImage.id,
-                                        staticClass:
-                                          "col-md-4 col-6 pl-2 pr-0 pb-3"
-                                      },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "javascript:void();"
-                                            }
-                                          },
-                                          [
-                                            _c("img", {
-                                              staticClass: "img-fluid",
-                                              attrs: {
-                                                src: ProfileImage.PrfImg,
-                                                alt: "gallary-image"
-                                              }
-                                            })
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  }),
-                                  0
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "iq-card" }, [
-                              _vm._m(5),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "iq-card-body" }, [
-                                _c(
-                                  "ul",
-                                  {
-                                    staticClass:
-                                      "profile-img-gallary d-flex flex-wrap p-0 m-0"
-                                  },
-                                  _vm._l(_vm.FriendLists, function(FriendList) {
-                                    return _c(
-                                      "li",
-                                      {
-                                        key: FriendList.id,
-                                        staticClass:
-                                          "col-md-4 col-6 pl-2 pr-0 pb-3"
-                                      },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "javascript:void();"
-                                            }
-                                          },
-                                          [
-                                            _c("img", {
-                                              staticClass: "img-fluid",
-                                              attrs: {
-                                                src: FriendList.FrdImg,
-                                                alt: "gallary-image"
-                                              }
-                                            })
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "h6",
-                                          { staticClass: "mt-2 text-center" },
-                                          [
-                                            _vm._v(
-                                              "\n                                                        " +
-                                                _vm._s(FriendList.FrdName) +
-                                                "\n                                                    "
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  }),
-                                  0
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "col-lg-8" },
-                            [
-                              _c("CreatePost"),
-                              _vm._v(" "),
-                              _vm._l(_vm.posts, function(post) {
-                                return _c("Post", {
-                                  key: post.id,
-                                  attrs: { post: post }
+                            _c(
+                              "div",
+                              { staticClass: "col-lg-8" },
+                              [
+                                _c("CreatePost"),
+                                _vm._v(" "),
+                                _vm._l(_vm.posts, function(post) {
+                                  return _c("Post", {
+                                    key: post.id,
+                                    attrs: { post: post }
+                                  })
                                 })
-                              })
-                            ],
-                            2
-                          )
-                        ])
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "tab-pane fade",
-                      attrs: { id: "about", role: "tabpanel" }
-                    },
-                    [
-                      _c("div", { staticClass: "iq-card" }, [
-                        _c("div", { staticClass: "iq-card-body" }, [
-                          _c("div", { staticClass: "row" }, [
-                            _vm._m(6),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-9 pl-4" }, [
-                              _c("div", { staticClass: "tab-content" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "tab-pane fade active show",
-                                    attrs: { id: "basicinfo", role: "tabpanel" }
-                                  },
-                                  [
-                                    _c("h4", [_vm._v("Contact Information")]),
-                                    _vm._v(" "),
-                                    _c("hr"),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "row" }, [
-                                      _vm._m(7),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-9" }, [
-                                        _c("p", { staticClass: "mb-0" }, [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(_vm.user.email) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _vm._m(8),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-9" }, [
-                                        _c("p", { staticClass: "mb-0" }, [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(_vm.user.mobile) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _vm._m(9),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-9" }, [
-                                        _c("p", { staticClass: "mb-0" }, [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(_vm.user.adress) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ])
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "tab-pane fade",
-                                    attrs: { id: "family", role: "tabpanel" }
-                                  },
-                                  [
-                                    _c("h4", { staticClass: "mt-3" }, [
-                                      _vm._v(
-                                        "\n                                                    Websites and Social\n                                                    Links\n                                                "
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("hr"),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "row" }, [
-                                      _vm._m(10),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-9" }, [
-                                        _c("p", { staticClass: "mb-0" }, [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(_vm.user.website) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _vm._m(11),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-9" }, [
-                                        _c("p", { staticClass: "mb-0" }, [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(_vm.user.facebook) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ])
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "tab-pane fade",
-                                    attrs: { id: "work", role: "tabpanel" }
-                                  },
-                                  [
-                                    _c("h4", { staticClass: "mt-3" }, [
-                                      _vm._v(
-                                        "\n                                                    Basic Information\n                                                "
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("hr"),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "row" }, [
-                                      _vm._m(12),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-9" }, [
-                                        _c("p", { staticClass: "mb-0" }, [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(
-                                                new Date(
-                                                  _vm.user.birth_date
-                                                ).getDate()
-                                              ) +
-                                              "\n                                                            " +
-                                              _vm._s(
-                                                new Date(
-                                                  _vm.user.birth_date
-                                                ).toLocaleString("default", {
-                                                  month: "long"
-                                                })
-                                              ) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _vm._m(13),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-9" }, [
-                                        _c("p", { staticClass: "mb-0" }, [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(
-                                                new Date(
-                                                  _vm.user.birth_date
-                                                ).getFullYear()
-                                              ) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _vm._m(14),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-9" }, [
-                                        _c("p", { staticClass: "mb-0" }, [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(_vm.user.gender) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _vm._m(15),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-9" }, [
-                                        _c("p", { staticClass: "mb-0" }, [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(_vm.user.interested) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _vm._m(16),
-                                      _vm._v(" "),
-                                      _c("div", { staticClass: "col-9" }, [
-                                        _c("p", { staticClass: "mb-0" }, [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(_vm.user.language) +
-                                              "\n                                                        "
-                                          )
-                                        ])
-                                      ])
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "tab-pane fade",
-                                    attrs: { id: "lived", role: "tabpanel" }
-                                  },
-                                  [
-                                    _c("h4", { staticClass: "mb-3" }, [
-                                      _vm._v(
-                                        "\n                                                    About You\n                                                "
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("p", [
-                                      _vm._v(
-                                        "\n                                                    " +
-                                          _vm._s(_vm.user.about) +
-                                          "\n                                                "
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "tab-pane fade",
-                                    attrs: { id: "details", role: "tabpanel" }
-                                  },
-                                  [
-                                    _c("h4", { staticClass: "mt-3 mb-3" }, [
-                                      _vm._v(
-                                        "\n                                                    Favorite Quotes\n                                                "
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("p", [
-                                      _vm._v(
-                                        "\n                                                    " +
-                                          _vm._s(_vm.user.quote) +
-                                          "\n                                                "
-                                      )
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ])
+                              ],
+                              2
+                            )
                           ])
                         ])
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "tab-pane fade",
-                      attrs: { id: "friends", role: "tabpanel" }
-                    },
-                    [
-                      _c("div", { staticClass: "iq-card" }, [
-                        _c("div", { staticClass: "iq-card-body" }, [
-                          _c("h2", [_vm._v("Friends")]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "friend-list-tab mt-2" }, [
-                            _c("div", { staticClass: "tab-content" }, [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "tab-pane fade active show",
-                                  attrs: { id: "all-friends", role: "tabpanel" }
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    { staticClass: "iq-card-body p-0" },
-                                    [
-                                      _c("ProfileFriend", {
-                                        attrs: {
-                                          Id: _vm.user.id,
-                                          status: _vm.user.status
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "tab-pane fade",
-                      attrs: { id: "photos", role: "tabpanel" }
-                    },
-                    [
-                      _c("div", { staticClass: "iq-card" }, [
-                        _c("div", { staticClass: "iq-card-body" }, [
-                          _c("h2", [_vm._v("Photos")]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "friend-list-tab mt-2" }, [
-                            _c("div", { staticClass: "tab-content" }, [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "tab-pane fade active show",
-                                  attrs: { id: "photosofyou", role: "tabpanel" }
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    { staticClass: "iq-card-body p-0" },
-                                    [
-                                      _c("ProfileImages", {
-                                        attrs: { UserId: _vm.user.id }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("ProfileAbout", { attrs: { user: _vm.user } }),
+                    _vm._v(" "),
+                    _c("ProfileFriend", {
+                      attrs: { Id: _vm.user.id, status: _vm.user.status }
+                    }),
+                    _vm._v(" "),
+                    _c("ProfileImages", { attrs: { UserId: _vm.user.id } })
+                  ],
+                  1
+                )
               ])
             ])
           ])
@@ -57131,156 +56961,6 @@ var staticRenderFns = [
         )
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c(
-        "ul",
-        {
-          staticClass:
-            "nav nav-pills basic-info-items list-inline d-block p-0 m-0"
-        },
-        [
-          _c("li", [
-            _c(
-              "a",
-              {
-                staticClass: "nav-link active",
-                attrs: { "data-toggle": "pill", href: "#basicinfo" }
-              },
-              [_vm._v("Contact Information")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c(
-              "a",
-              {
-                staticClass: "nav-link",
-                attrs: { "data-toggle": "pill", href: "#family" }
-              },
-              [
-                _vm._v(
-                  "Websites and Social\n                                                    Links"
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c(
-              "a",
-              {
-                staticClass: "nav-link",
-                attrs: { "data-toggle": "pill", href: "#work" }
-              },
-              [_vm._v("Basic Information")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c(
-              "a",
-              {
-                staticClass: "nav-link",
-                attrs: { "data-toggle": "pill", href: "#lived" }
-              },
-              [
-                _vm._v(
-                  "\n                                                    About You"
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c(
-              "a",
-              {
-                staticClass: "nav-link",
-                attrs: { "data-toggle": "pill", href: "#details" }
-              },
-              [_vm._v("Favorite Quotes")]
-            )
-          ])
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Email")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Mobile")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Address")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Website")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [
-      _c("h6", [_vm._v("Social Link")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [
-      _c("h6", [_vm._v("Birth Date")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [
-      _c("h6", [_vm._v("Birth Year")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Gender")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [
-      _c("h6", [
-        _vm._v(
-          "\n                                                            interested in\n                                                        "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("language")])])
   }
 ]
 render._withStripped = true
@@ -62362,6 +62042,424 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=template&id=594e7ae2&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ProfileAbout.vue?vue&type=template&id=594e7ae2& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "tab-pane fade", attrs: { id: "about", role: "tabpanel" } },
+    [
+      _c("div", { staticClass: "iq-card" }, [
+        _c("div", { staticClass: "iq-card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-9 pl-4" }, [
+              _c("div", { staticClass: "tab-content" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade active show",
+                    attrs: { id: "basicinfo", role: "tabpanel" }
+                  },
+                  [
+                    _c("h4", [_vm._v("Contact Information")]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-9" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.user.email) +
+                              "\n                                    "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-9" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.user.mobile) +
+                              "\n                                    "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-9" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.user.adress) +
+                              "\n                                    "
+                          )
+                        ])
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade",
+                    attrs: { id: "family", role: "tabpanel" }
+                  },
+                  [
+                    _c("h4", { staticClass: "mt-3" }, [
+                      _vm._v(
+                        "\n                                Websites and Social\n                                Links\n                            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-9" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.user.website) +
+                              "\n                                    "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-9" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.user.facebook) +
+                              "\n                                    "
+                          )
+                        ])
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade",
+                    attrs: { id: "work", role: "tabpanel" }
+                  },
+                  [
+                    _c("h4", { staticClass: "mt-3" }, [
+                      _vm._v(
+                        "\n                                Basic Information\n                            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _vm._m(6),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-9" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(new Date(_vm.user.birth_date).getDate()) +
+                              "\n                                        " +
+                              _vm._s(
+                                new Date(_vm.user.birth_date).toLocaleString(
+                                  "default",
+                                  {
+                                    month: "long"
+                                  }
+                                )
+                              ) +
+                              "\n                                    "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-9" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(
+                                new Date(_vm.user.birth_date).getFullYear()
+                              ) +
+                              "\n                                    "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(8),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-9" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.user.gender) +
+                              "\n                                    "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(9),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-9" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.user.interested) +
+                              "\n                                    "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(10),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-9" }, [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.user.language) +
+                              "\n                                    "
+                          )
+                        ])
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade",
+                    attrs: { id: "lived", role: "tabpanel" }
+                  },
+                  [
+                    _c("h4", { staticClass: "mb-3" }, [
+                      _vm._v(
+                        "\n                                About You\n                            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.user.about) +
+                          "\n                            "
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade",
+                    attrs: { id: "details", role: "tabpanel" }
+                  },
+                  [
+                    _c("h4", { staticClass: "mt-3 mb-3" }, [
+                      _vm._v(
+                        "\n                                Favorite Quotes\n                            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.user.quote) +
+                          "\n                            "
+                      )
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3" }, [
+      _c(
+        "ul",
+        {
+          staticClass:
+            "nav nav-pills basic-info-items list-inline d-block p-0 m-0"
+        },
+        [
+          _c("li", [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link active",
+                attrs: { "data-toggle": "pill", href: "#basicinfo" }
+              },
+              [_vm._v("Contact Information")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link",
+                attrs: { "data-toggle": "pill", href: "#family" }
+              },
+              [
+                _vm._v(
+                  "Websites and Social\n                                Links"
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link",
+                attrs: { "data-toggle": "pill", href: "#work" }
+              },
+              [_vm._v("Basic Information")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link",
+                attrs: { "data-toggle": "pill", href: "#lived" }
+              },
+              [_vm._v("\n                                About You")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link",
+                attrs: { "data-toggle": "pill", href: "#details" }
+              },
+              [_vm._v("Favorite Quotes")]
+            )
+          ])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Email")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Mobile")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Address")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Website")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [
+      _c("h6", [_vm._v("Social Link")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [
+      _c("h6", [_vm._v("Birth Date")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [
+      _c("h6", [_vm._v("Birth Year")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("Gender")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [
+      _c("h6", [
+        _vm._v(
+          "\n                                        interested in\n                                    "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3" }, [_c("h6", [_vm._v("language")])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ProfileFriend.vue?vue&type=template&id=4733bee8&":
 /*!*************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ProfileFriend.vue?vue&type=template&id=4733bee8& ***!
@@ -62380,103 +62478,153 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "row" },
-    _vm._l(_vm.FriendLists, function(FriendList) {
-      return _c(
-        "div",
-        { key: FriendList.id, staticClass: "col-md-6 col-lg-6 mb-3" },
-        [
-          _c("div", { staticClass: "iq-friendlist-block" }, [
-            _c(
-              "div",
-              {
-                staticClass: "d-flex align-items-center justify-content-between"
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "d-flex align-items-center" },
-                  [
+    {
+      staticClass: "tab-pane fade",
+      attrs: { id: "friends", role: "tabpanel" }
+    },
+    [
+      _c("div", { staticClass: "iq-card" }, [
+        _c("div", { staticClass: "iq-card-body" }, [
+          _c("h2", [_vm._v("Friends")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "friend-list-tab mt-2" }, [
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade active show",
+                  attrs: { id: "all-friends", role: "tabpanel" }
+                },
+                [
+                  _c("div", { staticClass: "iq-card-body p-0" }, [
                     _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to: {
-                            name: "profile",
-                            params: { id: FriendList.id },
-                            query: { user: FriendList.name }
+                      "div",
+                      { staticClass: "row" },
+                      _vm._l(_vm.FriendLists, function(FriendList) {
+                        return _c(
+                          "div",
+                          {
+                            key: FriendList.id,
+                            staticClass: "col-md-6 col-lg-6 mb-3"
                           },
-                          tag: "a"
-                        }
-                      },
-                      [
-                        _c("a", [
-                          _c("img", {
-                            staticStyle: { width: "150px", height: "150px" },
-                            attrs: {
-                              src: "images/user/" + FriendList.profileimg.name,
-                              alt: "profile-img"
-                            }
-                          })
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "friend-info ml-3" }, [
-                      _c("h5", [_vm._v(_vm._s(FriendList.name))]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "mb-0" }, [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(FriendList.FriendCount) +
-                            " friends\n                        "
-                        )
-                      ])
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "iq-card-header-toolbar d-flex align-items-center"
-                  },
-                  [
-                    _vm.status == "current"
-                      ? _c("div", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "mr-2 btn btn-danger",
-                              on: {
-                                click: function($event) {
-                                  return _vm.RemoveFriend(FriendList.id)
-                                }
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass:
-                                  "ri-check-line mr-1 text-white font-size-16"
-                              }),
-                              _vm._v(
-                                "\n                            Unfriend\n                        "
+                          [
+                            _c("div", { staticClass: "iq-friendlist-block" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "d-flex align-items-center justify-content-between"
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "d-flex align-items-center"
+                                    },
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          attrs: {
+                                            to: {
+                                              name: "profile",
+                                              params: { id: FriendList.id },
+                                              query: { user: FriendList.name }
+                                            },
+                                            tag: "a"
+                                          }
+                                        },
+                                        [
+                                          _c("a", [
+                                            _c("img", {
+                                              staticStyle: {
+                                                width: "150px",
+                                                height: "150px"
+                                              },
+                                              attrs: {
+                                                src:
+                                                  "images/user/" +
+                                                  FriendList.profileimg.name,
+                                                alt: "profile-img"
+                                              }
+                                            })
+                                          ])
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "friend-info ml-3" },
+                                        [
+                                          _c("h5", [
+                                            _vm._v(_vm._s(FriendList.name))
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("p", { staticClass: "mb-0" }, [
+                                            _vm._v(
+                                              "\n                                                        " +
+                                                _vm._s(FriendList.FriendCount) +
+                                                " friends\n                                                    "
+                                            )
+                                          ])
+                                        ]
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "iq-card-header-toolbar d-flex align-items-center"
+                                    },
+                                    [
+                                      _vm.status == "current"
+                                        ? _c("div", [
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "mr-2 btn btn-danger",
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.RemoveFriend(
+                                                      FriendList.id
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass:
+                                                    "ri-check-line mr-1 text-white font-size-16"
+                                                }),
+                                                _vm._v(
+                                                  "\n                                                        Unfriend\n                                                    "
+                                                )
+                                              ]
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ]
                               )
-                            ]
-                          )
-                        ])
-                      : _vm._e()
-                  ]
-                )
-              ]
-            )
+                            ])
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  ])
+                ]
+              )
+            ])
           ])
-        ]
-      )
-    }),
-    0
+        ])
+      ])
+    ]
   )
 }
 var staticRenderFns = []
@@ -62504,101 +62652,146 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "row" },
-    _vm._l(_vm.images, function(image) {
-      return _c(
-        "div",
-        { key: image.id, staticClass: "col-md-6 col-lg-3 mb-3" },
-        [
-          _c(
-            "div",
-            { staticClass: "user-images position-relative overflow-hidden" },
-            [
-              _c("a", { attrs: { href: "#" } }, [
-                _c("img", {
-                  staticClass: "rounded",
-                  staticStyle: { width: "224px", height: "200px" },
-                  attrs: {
-                    src: "images/user/" + image.name,
-                    alt: "Responsive image"
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "image-hover-data" }, [
-                _c("div", { staticClass: "product-elements-icon" }, [
-                  _c(
-                    "ul",
-                    {
-                      staticClass:
-                        "d-flex align-items-center m-0 p-0 list-inline"
-                    },
-                    [
-                      _c("li", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "pr-3 text-white",
-                            attrs: { href: "#" }
-                          },
+    { staticClass: "tab-pane fade", attrs: { id: "photos", role: "tabpanel" } },
+    [
+      _c("div", { staticClass: "iq-card" }, [
+        _c("div", { staticClass: "iq-card-body" }, [
+          _c("h2", [_vm._v("Photos")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "friend-list-tab mt-2" }, [
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade active show",
+                  attrs: { id: "photosofyou", role: "tabpanel" }
+                },
+                [
+                  _c("div", { staticClass: "iq-card-body p-0" }, [
+                    _c(
+                      "div",
+                      { staticClass: "row" },
+                      _vm._l(_vm.images, function(image, index) {
+                        return _c(
+                          "div",
+                          { key: index, staticClass: "col-md-6 col-lg-3 mb-3" },
                           [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(image.NbrJaime) +
-                                "\n                                "
-                            ),
-                            _c("i", { staticClass: "ri-thumb-up-line" })
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "user-images position-relative overflow-hidden"
+                              },
+                              [
+                                _c("a", { attrs: { href: "#" } }, [
+                                  _c("img", {
+                                    staticClass: "rounded",
+                                    staticStyle: {
+                                      width: "224px",
+                                      height: "200px"
+                                    },
+                                    attrs: {
+                                      src: "images/user/" + image.name,
+                                      alt: "Responsive image"
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "image-hover-data" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "product-elements-icon" },
+                                    [
+                                      _c(
+                                        "ul",
+                                        {
+                                          staticClass:
+                                            "d-flex align-items-center m-0 p-0 list-inline"
+                                        },
+                                        [
+                                          _c("li", [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass: "pr-3 text-white",
+                                                attrs: { href: "#" }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                            " +
+                                                    _vm._s(image.NbrJaime) +
+                                                    "\n                                                            "
+                                                ),
+                                                _c("i", {
+                                                  staticClass:
+                                                    "ri-thumb-up-line"
+                                                })
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("li", [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass: "pr-3 text-white",
+                                                attrs: { href: "#" }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                            " +
+                                                    _vm._s(image.NbrComment) +
+                                                    "\n                                                            "
+                                                ),
+                                                _c("i", {
+                                                  staticClass: "ri-chat-3-line"
+                                                })
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("li", [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass: "pr-3 text-white",
+                                                attrs: { href: "#" }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                            " +
+                                                    _vm._s(image.NbrPartage) +
+                                                    "\n                                                            "
+                                                ),
+                                                _c("i", {
+                                                  staticClass:
+                                                    "ri-share-forward-line"
+                                                })
+                                              ]
+                                            )
+                                          ])
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _vm._m(0, true)
+                              ]
+                            )
                           ]
                         )
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "pr-3 text-white",
-                            attrs: { href: "#" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(image.NbrComment) +
-                                "\n                                "
-                            ),
-                            _c("i", { staticClass: "ri-chat-3-line" })
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "pr-3 text-white",
-                            attrs: { href: "#" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(image.NbrPartage) +
-                                "\n                                "
-                            ),
-                            _c("i", { staticClass: "ri-share-forward-line" })
-                          ]
-                        )
-                      ])
-                    ]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._m(0, true)
-            ]
-          )
-        ]
-      )
-    }),
-    0
+                      }),
+                      0
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ])
+    ]
   )
 }
 var staticRenderFns = [

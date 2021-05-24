@@ -109,7 +109,7 @@ class FriendController extends Controller
 
     public function LoadFriends(Request $request)
     {
-        if($request->id == null){
+        if($request->id == null){ 
             $id = auth()->id();
         }else{
             $id = $request->id;

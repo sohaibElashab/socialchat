@@ -90,7 +90,7 @@ NOTE: This file contains the styling for responsive Template.
 		.iq-top-navbar .navbar { position: relative; }
 		.iq-top-navbar .navbar-toggler { position: static; color: var(--iq-primary); background: var(--iq-dark-primary); border: none; padding: 7px 10px; border-radius: 5px; font-size: 24px; }
 		.navbar-collapse {display: flex; position: absolute; top:100%; left: 0; width: 100%; background: var(--iq-dark-box);  -webkit-box-shadow: 0px 5px 12px 0px rgba(55, 73, 72, 0.15); -moz-box-shadow: 0px 5px 12px 0px rgba(55, 73, 72, 0.15); box-shadow: 0px 5px 12px 0px rgba(55, 73, 72, 0.15); }
-		.navbar-nav.navbar-list { float: right; display: inline-block; }
+		.navbar-nav.navbar-list { display: inline-block; }
 		.iq-top-navbar .iq-navbar-custom .iq-menu-bt { right: 125px; top: 18px; }
 		.animation-card .an-img .bodymovin { margin-bottom: 0; margin-left: 0; width: 100%; }
 		.iq-footer, .iq-footer .col-lg-6.text-right { text-align: center !important; }
@@ -221,4 +221,4 @@ NOTE: This file contains the styling for responsive Template.
 		.iq-birthday-block .d-flex {display: block !important; text-align: center; margin: 10px 0;}
 		.friend-info.ml-3 {margin: 10px 0 0 !important;}
 	}
-	@media(max-width:359px) { }
+	/* @media(max-width:359px) { } */

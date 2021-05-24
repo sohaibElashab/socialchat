@@ -308,15 +308,15 @@
                                                 >
                                                     <li
                                                         class="col-md-4 col-6 pl-2 pr-0 pb-3"
-                                                        v-for="ProfileImage in ProfileImages"
-                                                        :key="ProfileImage.id"
+                                                        v-for="image in images"
+                                                        :key="image.id"
                                                     >
                                                         <a
                                                             href="javascript:void();"
                                                         >
                                                             <img
                                                                 :src="
-                                                                    ProfileImage.PrfImg
+                                                                    image.name
                                                                 "
                                                                 alt="gallary-image"
                                                                 class="img-fluid"
@@ -352,26 +352,33 @@
                                                 >
                                                     <li
                                                         class="col-md-4 col-6 pl-2 pr-0 pb-3"
-                                                        v-for="FriendList in FriendLists"
-                                                        :key="FriendList.id"
+                                                        v-for="(FriendList, index) in FriendLists"
+                                                        :key="index"
                                                     >
-                                                        <a
-                                                            href="javascript:void();"
-                                                        >
-                                                            <img
-                                                                :src="
-                                                                    FriendList.FrdImg
-                                                                "
-                                                                alt="gallary-image"
-                                                                class="img-fluid"
-                                                        /></a>
-                                                        <h6
-                                                            class="mt-2 text-center"
-                                                        >
-                                                            {{
-                                                                FriendList.FrdName
-                                                            }}
-                                                        </h6>
+                                                        <div v-if="index < 9">
+                                                            <router-link 
+                                                                :to="{
+                                                                    name: 'profile',
+                                                                    params: { id: FriendList.id },
+                                                                    query: { user: FriendList.name }
+                                                                }"
+                                                                tag="a"
+                                                            >
+                                                                <img
+                                                                    :src="
+                                                                        `images/user/${FriendList.profileimg.name}`
+                                                                    "
+                                                                    alt="gallary-image"
+                                                                    class="img-fluid"/>
+                                                            </router-link>
+                                                            <h6
+                                                                class="mt-2 text-center"
+                                                            >
+                                                                {{
+                                                                    FriendList.name
+                                                                }}
+                                                            </h6>
+                                                        </div>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -389,288 +396,11 @@
                             </div>
                         </div>
                         <!-- about user -->
-                        <div class="tab-pane fade" id="about" role="tabpanel">
-                            <div class="iq-card">
-                                <div class="iq-card-body">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <ul
-                                                class="nav nav-pills basic-info-items list-inline d-block p-0 m-0"
-                                            >
-                                                <li>
-                                                    <a
-                                                        class="nav-link active"
-                                                        data-toggle="pill"
-                                                        href="#basicinfo"
-                                                        >Contact Information</a
-                                                    >
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="nav-link"
-                                                        data-toggle="pill"
-                                                        href="#family"
-                                                        >Websites and Social
-                                                        Links</a
-                                                    >
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="nav-link"
-                                                        data-toggle="pill"
-                                                        href="#work"
-                                                        >Basic Information</a
-                                                    >
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="nav-link"
-                                                        data-toggle="pill"
-                                                        href="#lived"
-                                                    >
-                                                        About You</a
-                                                    >
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        class="nav-link"
-                                                        data-toggle="pill"
-                                                        href="#details"
-                                                        >Favorite Quotes</a
-                                                    >
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-9 pl-4">
-                                            <div class="tab-content">
-                                                <div
-                                                    class="tab-pane fade active show"
-                                                    id="basicinfo"
-                                                    role="tabpanel"
-                                                >
-                                                    <h4>Contact Information</h4>
-                                                    <hr />
-                                                    <div class="row">
-                                                        <div class="col-3">
-                                                            <h6>Email</h6>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p class="mb-0">
-                                                                {{ user.email }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <h6>Mobile</h6>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p class="mb-0">
-                                                                {{
-                                                                    user.mobile
-                                                                }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <h6>Address</h6>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p class="mb-0">
-                                                                {{
-                                                                    user.adress
-                                                                }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="tab-pane fade"
-                                                    id="family"
-                                                    role="tabpanel"
-                                                >
-                                                    <h4 class="mt-3">
-                                                        Websites and Social
-                                                        Links
-                                                    </h4>
-                                                    <hr />
-                                                    <div class="row">
-                                                        <div class="col-3">
-                                                            <h6>Website</h6>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p class="mb-0">
-                                                                {{
-                                                                    user.website
-                                                                }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <h6>Social Link</h6>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p class="mb-0">
-                                                                {{
-                                                                    user.facebook
-                                                                }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="tab-pane fade"
-                                                    id="work"
-                                                    role="tabpanel"
-                                                >
-                                                    <h4 class="mt-3">
-                                                        Basic Information
-                                                    </h4>
-                                                    <hr />
-                                                    <div class="row">
-                                                        <div class="col-3">
-                                                            <h6>Birth Date</h6>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p class="mb-0">
-                                                                {{
-                                                                    new Date(
-                                                                        user.birth_date
-                                                                    ).getDate()
-                                                                }}
-                                                                {{
-                                                                    new Date(
-                                                                        user.birth_date
-                                                                    ).toLocaleString(
-                                                                        "default",
-                                                                        {
-                                                                            month:
-                                                                                "long"
-                                                                        }
-                                                                    )
-                                                                }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <h6>Birth Year</h6>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p class="mb-0">
-                                                                {{
-                                                                    new Date(
-                                                                        user.birth_date
-                                                                    ).getFullYear()
-                                                                }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <h6>Gender</h6>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p class="mb-0">
-                                                                {{
-                                                                    user.gender
-                                                                }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <h6>
-                                                                interested in
-                                                            </h6>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p class="mb-0">
-                                                                {{
-                                                                    user.interested
-                                                                }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-3">
-                                                            <h6>language</h6>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <p class="mb-0">
-                                                                {{
-                                                                    user.language
-                                                                }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="tab-pane fade"
-                                                    id="lived"
-                                                    role="tabpanel"
-                                                >
-                                                    <h4 class="mb-3">
-                                                        About You
-                                                    </h4>
-                                                    <p>
-                                                        {{ user.about }}
-                                                    </p>
-                                                </div>
-                                                <div
-                                                    class="tab-pane fade"
-                                                    id="details"
-                                                    role="tabpanel"
-                                                >
-                                                    <h4 class="mt-3 mb-3">
-                                                        Favorite Quotes
-                                                    </h4>
-                                                    <p>
-                                                        {{ user.quote }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <ProfileAbout :user="user" />
                         <!-- friend lists -->
-                        <div class="tab-pane fade" id="friends" role="tabpanel">
-                            <div class="iq-card">
-                                <div class="iq-card-body">
-                                    <h2>Friends</h2>
-                                    <div class="friend-list-tab mt-2">
-                                        <div class="tab-content">
-                                            <div
-                                                class="tab-pane fade active show"
-                                                id="all-friends"
-                                                role="tabpanel"
-                                            >
-                                                <div class="iq-card-body p-0">
-                                                    <ProfileFriend
-                                                        :Id="user.id"
-                                                        :status="user.status"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <ProfileFriend :Id="user.id" :status="user.status"/>
                         <!-- photo galery -->
-                        <div class="tab-pane fade" id="photos" role="tabpanel">
-                            <div class="iq-card">
-                                <div class="iq-card-body">
-                                    <h2>Photos</h2>
-                                    <div class="friend-list-tab mt-2">
-                                        <div class="tab-content">
-                                            <div
-                                                class="tab-pane fade active show"
-                                                id="photosofyou"
-                                                role="tabpanel"
-                                            >
-                                                <div class="iq-card-body p-0">
-                                                    <ProfileImages
-                                                        :UserId="
-                                                            user.id"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <ProfileImages :UserId="user.id" />
                     </div>
                 </div>
             </div>
@@ -680,6 +410,7 @@
 
 <script>
 import ProfileFriend from "../../single_section/ProfileFriend";
+import ProfileAbout from "../../single_section/ProfileAbout";
 import ProfileImages from "../../single_section/ProfileImages";
 import CreatePost from "../../single_section/CreatePost";
 import Post from "../../single_section/Post";
@@ -688,7 +419,8 @@ export default {
         ProfileFriend,
         ProfileImages,
         CreatePost,
-        Post
+        Post,
+        ProfileAbout
     },
     props: ["UserId"],
     data() {
@@ -697,6 +429,7 @@ export default {
             user: null,
             message: "",
             FriendLists: null,
+            images: [],
             posts: {
                 "1": {
                     id: 1,
@@ -765,6 +498,8 @@ export default {
             sessionStorage.setItem("id", this.UserId);
         }
         this.load();
+        this.imagesLoad();
+        this.friendLoad();
     },
     methods: {
         load() {
@@ -825,13 +560,30 @@ export default {
                     console.log(res);
                     this.message = "";
                 });
+        },
+        imagesLoad() {
+            axios.post("/ProfileImages" , { id: this.UserId })
+                .then(res => {
+                    this.images = res.data;
+            });
+            console.log("yay");
+        },
+        friendLoad() {
+            axios
+                .post("/LoadFriends", {
+                    id: this.UserId
+                })
+                .then(res => {
+                    console.log(res.data);
+                    this.FriendLists = res.data;
+            });
         }
     },
     watch: {
         UserId: function() {
             if (this.UserId != null) {
                 sessionStorage.clear();
-                sessionStorage.setItem("id", this.UserId);
+                sessionStorage.setItem("id", this.user.id);
                 // console.log("profile content watch");
                 this.load();
             }
