@@ -8,14 +8,30 @@
                         v-for="menu in menus"
                         :key="menu.id"
                     >
-                        <router-link
-                            class="iq-waves-effect"
-                            :to="menu.href"
-                            tag="a"
-                            exact=""
-                            ><i :class="menu.iClass"></i
-                            ><span>{{ menu.SpanName }}</span></router-link
-                        >
+                        <div v-if="menu.href == '/profile'">
+                            <router-link
+                                class="iq-waves-effect"
+                                :to="{
+                                    name: 'profile',
+                                    params: { id: user.id },
+                                    query: { user: user.name }
+                                }"
+                                tag="a"
+                                exact=""
+                                ><i :class="menu.iClass"></i
+                                ><span>{{ menu.SpanName }}</span></router-link
+                            >
+                        </div>
+                        <div v-else>
+                            <router-link
+                                class="iq-waves-effect"
+                                :to="menu.href"
+                                tag="a"
+                                exact=""
+                                ><i :class="menu.iClass"></i
+                                ><span>{{ menu.SpanName }}</span></router-link
+                            >
+                        </div>
                     </li>
                     <li>
                         <a class="iq-waves-effect" @click="logout">
@@ -34,6 +50,7 @@ export default {
     data() {
         return {
             UrlHref: "",
+            user: null,
             menus: {
                 "1": {
                     id: 1,
@@ -103,6 +120,11 @@ export default {
     },
     created() {
         this.UrlHref = "/" + window.location.href.split("/")[4];
+        
+        axios.get("/profile").then(res => {
+            console.log(res.data);
+            this.user = res.data;
+        });
     }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="iq-search-bar">
+    <div class="iq-search-bar" >
         <form action="#" class="searchbox">
             <input
                 type="text"
@@ -65,6 +65,12 @@
 
 <script>
 export default {
+    props: {
+        show: {
+            type:Boolean,
+            require: false
+        }
+    },
     data() {
         return {
             value: "",
@@ -74,7 +80,7 @@ export default {
         };
     },
     mounted() {
-        axios.get("/profile").then(res => {
+        axios.get("/profile").then(res => { 
             //console.log(res.data);
             this.user = res.data;
         });
@@ -102,6 +108,23 @@ export default {
         vide(){
             this.value = "";
             this.results = [];
+        }
+    },
+    watch: {
+        show: function() {
+                    console.log("showSearch")
+            var search = document.getElementsByClassName("iq-search-bar");
+            // show ? search.style.display = "flex" : search.style.display = "none" ;
+            if(this.show)
+                {
+                    search[0].style.display = "flex";
+                    console.log("fles")
+                }
+            else
+                {
+                    search[0].style.display = "none" ;
+                    console.log("none")
+                }
         }
     }
 };

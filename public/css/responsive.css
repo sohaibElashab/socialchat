@@ -126,6 +126,8 @@ NOTE: This file contains the styling for responsive Template.
 		.header-for-bg .title-on-header{top: 32%;}
 		.sign-in-page{overflow-y: scroll;}
 		ul.social-data-block li {padding-right: 10px !important;}
+		.iq-search-bar {display: none; position: absolute; top: 122px; left: 0; width: 100%; background: var(--iq-dark-box); -webkit-box-shadow: 0px 5px 12px 0px rgb(55 73 72 / 15%); -moz-box-shadow: 0px 5px 12px 0px rgba(55, 73, 72, 0.15); box-shadow: 0px 5px 12px 0px rgb(55 73 72 / 15%);
+
 	}
 	@media(max-width:979px) {
 		.iq-circle-progressbar .percent { font-size: 2.5rem !important; }
@@ -162,7 +164,6 @@ NOTE: This file contains the styling for responsive Template.
 		.iq-advance-course.d-flex { display: block !important; text-align: center; }
 		.right-block .image-absulute.image-absulute-1 { right: 50px; }
 		.right-block .image-absulute.image-absulute-2 { left: 40px; right: auto; top: auto; bottom: 50px; }
-		.iq-search-bar {display: none;}
 		ul.post-opt-block li {font-size: 0;}
 		.profile-header .user-detail{position: relative; bottom: 0;margin-top: -70px;}
 		.profile-info.p-4.d-flex {display: block !important;}
@@ -178,6 +179,10 @@ NOTE: This file contains the styling for responsive Template.
 		.iq-sub-card.iq-sub-card-big div + div {margin-top: 10px;}
 		.iq-sub-dropdown.iq-sub-dropdown-large { width: 300px;}
 	}
+	/* @media(max-width:610px) {
+		.iq-search-bar {display: none; position: absolute; top: 122px;  margin-top: 13px; left: 0; width: 100%; background: var(--iq-dark-box); -webkit-box-shadow: 0px 5px 12px 0px rgb(55 73 72 / 15%); -moz-box-shadow: 0px 5px 12px 0px rgba(55, 73, 72, 0.15); box-shadow: 0px 5px 12px 0px rgb(55 73 72 / 15%);
+		}
+	} */
 	@media(max-width:479px) {
 		.display-1 { font-size: 2.0rem; font-weight: 500; }
 		.display-2 { font-size: 1.8rem; font-weight: 500; }

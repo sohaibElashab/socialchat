@@ -3,18 +3,15 @@
         <div class="iq-navbar-custom">
             <nav class="navbar navbar-expand-lg navbar-light p-0">
                 <NavLogo></NavLogo>
-                <NavSearch></NavSearch>
+                <NavSearch :show="show"></NavSearch>
                 <button
                     class="navbar-toggler"
                     type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-label="Toggle navigation"
+                    v-on:click="showCollapse()"
                 >
                     <i class="ri-menu-3-line"></i>
                 </button>
-                <NavItems></NavItems>
+                <NavItems :show="show"></NavItems>
             </nav>
         </div>
     </div>
@@ -36,6 +33,17 @@ export default {
         NavLogo,
         NavSearch,
         NavItems
+    },
+    data(){
+        return{
+            show:false
+        }
+    },
+    methods:{
+        showCollapse() {
+            this.show = !this.show;
+        }
+
     }
 };
 </script>

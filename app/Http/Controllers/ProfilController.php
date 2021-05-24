@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Image;
+use App\Models\Video;
 use Auth;
 use Hash;
 use App\Mail\Forgot;
@@ -263,6 +264,20 @@ class ProfilController extends Controller
         }
         return response()->json($Paths); 
     }
+    public function GetVideos()
+    {
+        
+        $userId = auth()->user()->id;
+        $Paths = Video::where('user_id',$userId)->get('name');
+        foreach ($Paths as $key => $path) {
+            $path->NbrJaime = "30";
+            $path->NbrComment = "40";
+            $path->NbrPartage = "50";
+            
+        }
+        return response()->json($Paths); 
+    }
+
     public function GetImagesProfile(Request $request)
     {
         

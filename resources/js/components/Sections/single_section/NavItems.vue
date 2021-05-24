@@ -1,5 +1,5 @@
 <template>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" :class="{show: show}">
         <ul class="navbar-nav ml-auto navbar-list">
             <li v-if="this.isMounted">
                 <router-link
@@ -228,6 +228,12 @@
 <script>
 import EventBus from "../../../event-bus";
 export default {
+    props: {
+        show:{
+            type : Boolean,
+            require: false
+        }
+    },
     data() {
         return {
             user: null,
@@ -236,6 +242,7 @@ export default {
             allReqs: null,
             loadedReqs: false,
             friendReqs: null,
+            isActive: false,
             Notifications: {
                 "1": {
                     id: 1,

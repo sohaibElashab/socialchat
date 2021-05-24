@@ -11246,959 +11246,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      videos: {
-        "1": {
-          id: 1,
-          VideoPath: "https://www.youtube.com/embed/K3M-czGNUCg",
-          NbrJaime: "60",
-          NbrComment: "50",
-          NbrPartage: "30"
-        },
-        "2": {
-          id: 2,
-          VideoPath: "https://www.youtube.com/embed/K3M-czGNUCg",
-          NbrJaime: "60",
-          NbrComment: "50",
-          NbrPartage: "30"
-        },
-        "3": {
-          id: 3,
-          VideoPath: "https://www.youtube.com/embed/K3M-czGNUCg",
-          NbrJaime: "60",
-          NbrComment: "50",
-          NbrPartage: "30"
-        },
-        "4": {
-          id: 4,
-          VideoPath: "https://www.youtube.com/embed/K3M-czGNUCg",
-          NbrJaime: "60",
-          NbrComment: "50",
-          NbrPartage: "30"
-        }
-      }
+      videos: null
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/videosProfile").then(function (res) {
+      _this.videos = res.data;
+    });
   }
 });
 
@@ -13650,10 +12709,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       UrlHref: "",
+      user: null,
       menus: {
         "1": {
           id: 1,
@@ -13727,7 +12803,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    var _this2 = this;
+
     this.UrlHref = "/" + window.location.href.split("/")[4];
+    axios.get("/profile").then(function (res) {
+      console.log(res.data);
+      _this2.user = res.data;
+    });
   }
 });
 
@@ -13766,9 +12848,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -13783,6 +12862,16 @@ __webpack_require__.r(__webpack_exports__);
     NavLogo: _single_section_NavLogo__WEBPACK_IMPORTED_MODULE_0__.default,
     NavSearch: _single_section_NavSearch__WEBPACK_IMPORTED_MODULE_1__.default,
     NavItems: _single_section_NavItems__WEBPACK_IMPORTED_MODULE_2__.default
+  },
+  data: function data() {
+    return {
+      show: false
+    };
+  },
+  methods: {
+    showCollapse: function showCollapse() {
+      this.show = !this.show;
+    }
   }
 });
 
@@ -14319,6 +13408,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    show: {
+      type: Boolean,
+      require: false
+    }
+  },
   data: function data() {
     return {
       user: null,
@@ -14327,6 +13422,7 @@ __webpack_require__.r(__webpack_exports__);
       allReqs: null,
       loadedReqs: false,
       friendReqs: null,
+      isActive: false,
       Notifications: {
         "1": {
           id: 1,
@@ -14646,6 +13742,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    show: {
+      type: Boolean,
+      require: false
+    }
+  },
   data: function data() {
     return {
       value: "",
@@ -14685,6 +13787,20 @@ __webpack_require__.r(__webpack_exports__);
     vide: function vide() {
       this.value = "";
       this.results = [];
+    }
+  },
+  watch: {
+    show: function show() {
+      console.log("showSearch");
+      var search = document.getElementsByClassName("iq-search-bar"); // show ? search.style.display = "flex" : search.style.display = "none" ;
+
+      if (this.show) {
+        search[0].style.display = "flex";
+        console.log("fles");
+      } else {
+        search[0].style.display = "none";
+        console.log("none");
+      }
     }
   }
 });
@@ -59627,7 +58743,109 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "content-page", attrs: { id: "content-page" } },
+    [
+      _c("div", { staticClass: "container" }, [
+        _c(
+          "div",
+          { staticClass: "row" },
+          _vm._l(_vm.videos, function(video) {
+            return _c(
+              "div",
+              { key: video.id, staticClass: "col-md-6 col-lg-4 mb-3" },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "user-images position-relative overflow-hidden"
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "embed-responsive embed-responsive-16by9"
+                      },
+                      [
+                        _c("iframe", {
+                          staticClass: "embed-responsive-item",
+                          attrs: {
+                            src: "videos/" + video.name,
+                            allowfullscreen: ""
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "image-hover-data" }, [
+                      _c("div", { staticClass: "product-elements-icon" }, [
+                        _c(
+                          "ul",
+                          {
+                            staticClass:
+                              "d-flex align-items-center m-0 p-0 list-inline"
+                          },
+                          [
+                            _c("li", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "pr-3 text-white",
+                                  attrs: { href: "#" }
+                                },
+                                [
+                                  _vm._v(" " + _vm._s(video.NbrJaime) + " "),
+                                  _c("i", { staticClass: "ri-thumb-up-line" })
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "pr-3 text-white",
+                                  attrs: { href: "#" }
+                                },
+                                [
+                                  _vm._v(" " + _vm._s(video.NbrComment) + " "),
+                                  _c("i", { staticClass: "ri-chat-3-line" })
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "pr-3 text-white",
+                                  attrs: { href: "#" }
+                                },
+                                [
+                                  _vm._v(" " + _vm._s(video.NbrPartage) + " "),
+                                  _c("i", {
+                                    staticClass: "ri-share-forward-line"
+                                  })
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0, true)
+                  ]
+                )
+              ]
+            )
+          }),
+          0
+        )
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -59635,1341 +58853,18 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
-      { staticClass: "content-page", attrs: { id: "content-page" } },
-      [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg2.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/05.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _vm._v(
-                                      "\n                                                    Anna Sthesia\n                                                "
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@designer")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg1.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/06.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _vm._v(
-                                      "\n                                                    Paul Molive\n                                                "
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@developer")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg4.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/07.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Anna\n                                                        Mull"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@designer")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg5.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/08.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Paige\n                                                        Turner"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@tester")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg6.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/09.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Bob\n                                                        Frapples"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@developer")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg7.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/10.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Barb\n                                                        Ackue"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@grapfics")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg8.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/13.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Greta\n                                                        Life"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@fashion")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg9.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/14.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Ira\n                                                        Membrit"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@designer")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg1.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/15.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Pete\n                                                        Sariya"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@designer")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg2.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/16.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Monty\n                                                        Carlo"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@designer")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg5.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/17.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Ed\n                                                        Itorial"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@testen")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg8.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/18.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Paul\n                                                        Issy"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@r&d")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg7.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/19.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Rick\n                                                        Shaw"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@coder")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg9.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/07.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Ben\n                                                        Effit"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@designer")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg4.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/08.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Justin\n                                                        Case"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@designer")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/page-img/profile-bg2.jpg",
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src: "images/user/09.jpg",
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "friend-profile.html" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Aaron\n                                                        Ottix"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [_vm._v("@designer")]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    Lorem Ipsum is\n                                                    simply dummy\n                                                    text of the\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary",
-                                attrs: { type: "submit" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                            Following\n                                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]
+      "a",
+      {
+        staticClass: "image-edit-btn",
+        attrs: {
+          href: "#",
+          "data-toggle": "tooltip",
+          "data-placement": "top",
+          title: "",
+          "data-original-title": "Edit or Remove"
+        }
+      },
+      [_c("i", { staticClass: "ri-edit-2-fill" })]
     )
   }
 ]
@@ -62772,19 +60667,50 @@ var render = function() {
                   class: _vm.UrlHref == menu.href ? "active" : ""
                 },
                 [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "iq-waves-effect",
-                      attrs: { to: menu.href, tag: "a", exact: "" }
-                    },
-                    [
-                      _c("i", { class: menu.iClass }),
-                      _c("span", [_vm._v(_vm._s(menu.SpanName))])
-                    ]
-                  )
-                ],
-                1
+                  menu.href == "/profile"
+                    ? _c(
+                        "div",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "iq-waves-effect",
+                              attrs: {
+                                to: {
+                                  name: "profile",
+                                  params: { id: _vm.user.id },
+                                  query: { user: _vm.user.name }
+                                },
+                                tag: "a",
+                                exact: ""
+                              }
+                            },
+                            [
+                              _c("i", { class: menu.iClass }),
+                              _c("span", [_vm._v(_vm._s(menu.SpanName))])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    : _c(
+                        "div",
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "iq-waves-effect",
+                              attrs: { to: menu.href, tag: "a", exact: "" }
+                            },
+                            [
+                              _c("i", { class: menu.iClass }),
+                              _c("span", [_vm._v(_vm._s(menu.SpanName))])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                ]
               )
             }),
             _vm._v(" "),
@@ -62838,38 +60764,30 @@ var render = function() {
         [
           _c("NavLogo"),
           _vm._v(" "),
-          _c("NavSearch"),
+          _c("NavSearch", { attrs: { show: _vm.show } }),
           _vm._v(" "),
-          _vm._m(0),
+          _c(
+            "button",
+            {
+              staticClass: "navbar-toggler",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.showCollapse()
+                }
+              }
+            },
+            [_c("i", { staticClass: "ri-menu-3-line" })]
+          ),
           _vm._v(" "),
-          _c("NavItems")
+          _c("NavItems", { attrs: { show: _vm.show } })
         ],
         1
       )
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "navbar-toggler",
-        attrs: {
-          type: "button",
-          "data-toggle": "collapse",
-          "data-target": "#navbarSupportedContent",
-          "aria-controls": "navbarSupportedContent",
-          "aria-label": "Toggle navigation"
-        }
-      },
-      [_c("i", { staticClass: "ri-menu-3-line" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -63643,10 +61561,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "collapse navbar-collapse",
-      attrs: { id: "navbarSupportedContent" }
-    },
+    { staticClass: "collapse navbar-collapse", class: { show: _vm.show } },
     [
       _c("ul", { staticClass: "navbar-nav ml-auto navbar-list" }, [
         this.isMounted
