@@ -779,9 +779,8 @@ export default {
         onCoverChange(e) {
             const file = e.target.files[0];
             this.cover = URL.createObjectURL(file);
-
             this.cover_img = file;
-            //console.log(this.cover_img);
+            console.log(this.cover_img);
         },
         reset() {
             axios

@@ -32,6 +32,7 @@ import chat from "./components/Pages/chat.vue";
 import resetPassword from "./components/Pages/resetPassword.vue";
 import verifyEmail from "./components/Pages/verifyEmail.vue";
 import post from "./components/Pages/post.vue";
+import postEdit from "./components/Pages/postEdit.vue";
 
 const routes = [
     {
@@ -110,6 +111,11 @@ const routes = [
         path: "/post",
         name: "post",
         component: post
+    },
+    {
+        path: "/postEdit",
+        name: "postEdit",
+        component: postEdit
     }
 ];
 
