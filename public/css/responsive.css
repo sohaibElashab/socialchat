@@ -102,7 +102,7 @@ NOTE: This file contains the styling for responsive Template.
 		.offer-an-img { position: static; width: 100%; }
 		.sign-in-from { padding: 0 20px; }
 		.iq-maintenance .col-lg-4 { margin-bottom: 15px; }
-		.chat-data-left { position: absolute; left: 0; max-width: 320px; top: 0; z-index: 9; background: var(--iq-white); transform: translateX(-100%); opacity: 0; transition: all 0.45s ease 0s; box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); overflow-y: scroll; height: 100%; }
+		.chat-data-left { position: absolute; left: 0; max-width: 320px; top: 0; z-index: 9; background: var(--iq-dark-box); transform: translateX(-100%); opacity: 0; transition: all 0.45s ease 0s; box-shadow: 0px 0px 12px 0px rgba(55, 73, 72, 0.06); overflow-y: scroll; height: 100%; }
 		.chat-sidebar-channel { overflow: auto; height: auto; padding-left: 0 !important; }
 		.chat-search { padding-left: 0 !important; }
 		.chat-data-left.show { transform: translateX(0); opacity: 1; transition: all 0.45s ease 0s; }
@@ -220,5 +220,7 @@ NOTE: This file contains the styling for responsive Template.
 		.iq-top-navbar .iq-sub-dropdown.iq-user-dropdown{right: 0;}
 		.iq-birthday-block .d-flex {display: block !important; text-align: center; margin: 10px 0;}
 		.friend-info.ml-3 {margin: 10px 0 0 !important;}
+		.emoji-div{position: relative !important;width: 75% !important;}
+		.-create{width: 100% !important;}
 	}
 	/* @media(max-width:359px) { } */
