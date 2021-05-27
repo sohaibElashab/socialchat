@@ -19,7 +19,7 @@ import VueEmoji from 'emoji-vue'
 export default {
     data(){
         return{
-            // myText: "Type your message..."
+            myText: ""
         }
     },
     methods: {

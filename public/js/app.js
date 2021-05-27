@@ -12858,7 +12858,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
-    return {// myText: "Type your message..."
+    return {
+      myText: ""
     };
   },
   methods: {
@@ -72481,8 +72482,8 @@ var render = function() {
     _c(
       "ul",
       { staticClass: "iq-chat-ui nav flex-column nav-pills" },
-      _vm._l(_vm.ChatLists, function(ChatList) {
-        return _c("li", { key: ChatList }, [
+      _vm._l(_vm.ChatLists, function(ChatList, index) {
+        return _c("li", { key: index }, [
           _c("a", { attrs: { "data-toggle": "pill", href: "#chatbox1" } }, [
             _c("div", { staticClass: "d-flex align-items-center" }, [
               _c("div", { staticClass: "avatar mr-2" }, [

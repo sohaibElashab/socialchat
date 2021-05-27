@@ -1150,3 +1150,46 @@ button.qty-btn { border: 1px solid var(--iq-border-dark); background: transparen
 #pp span {
   color: var(--iq-dark-title-text);
 }
+
+/*=-------------------- emoji div--------------------- */
+
+.post-text{
+  position: relative;
+  width: 90%;
+}
+/* -------------------input imoji---------------- */
+
+.emoji-div{
+    position: relative !important;
+    width: 100% !important;
+}
+.emoji-div > div{
+    position: relative !important;
+    width: 100% !important;
+}
+.emoji-div > div > div {
+    position: relative !important;
+    width: 90% !important;
+    border-radius: 10px;
+}
+.emoji-div > div > textarea {
+    position: relative !important;
+    width: 100% !important;
+    max-height: 60px !important;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background: transparent;
+}
+.-create > div > i {
+  top: 35px !important;
+  right: -15px;
+  background: transparent url("../images/icon/happy.png") no-repeat center center !important;
+  color: var(--iq-primary) !important;
+}
+.emoji-div > div > div:focus-visible ,
+.emoji-div > div > textarea:focus-visible 
+{
+  color: var(--iq-dark-title-text) !important;
+  border: 2px solid var(--iq-primary) !important;
+  outline: none !important;
+}

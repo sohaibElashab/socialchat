@@ -2,7 +2,7 @@
     <div class="chat-sidebar-channel scroller mt-4 pl-3">
         <h5 class="mt-3">Direct Message</h5>
         <ul class="iq-chat-ui nav flex-column nav-pills">
-            <li v-for="ChatList in ChatLists" :key="ChatList">
+            <li v-for="(ChatList , index) in ChatLists" :key="index">
                 <a  data-toggle="pill" href="#chatbox1">
                     <div class="d-flex align-items-center">
                         <div class="avatar mr-2">
@@ -27,7 +27,7 @@
 <script>
 export default {
     props: {
-        ChatLists : {
+        ChatLists : { 
             require: true,
             type: Object
         }
