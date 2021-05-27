@@ -1,6 +1,6 @@
 <template>
 
-   <div id="post-modal-data" class="iq-card iq-card-block iq-card-stretch">
+   <div id="post-modal-data" class="iq-card iq-card-block iq-card-stretch" v-if="user">
       <div class="iq-card-header d-flex justify-content-between">
          <div class="iq-header-title">
             <h4 class="card-title">Create Post</h4>
@@ -8,7 +8,7 @@
       </div>
       <div class="iq-card-body" data-toggle="modal" data-target="#post-modal">
          <div class="d-flex align-items-center">
-            <div class="user-img">
+            <div class="user-img" >
                <img :src="`images/user/${user.profileimg.name}`" alt="userimg" class="avatar-60 rounded-circle">
             </div>
             <form class="post-text ml-3 w-100" action="javascript:void();">
@@ -94,7 +94,8 @@ import VueEmoji from 'emoji-vue'
 export default {
    data(){
       return{
-         user:null
+         user:null,
+         myText: "",
       }
    },
    methods: {

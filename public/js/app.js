@@ -13169,7 +13169,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      user: null
+      user: null,
+      myText: ""
     };
   },
   methods: {
@@ -69715,151 +69716,158 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "iq-card iq-card-block iq-card-stretch",
-      attrs: { id: "post-modal-data" }
-    },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
+  return _vm.user
+    ? _c(
         "div",
         {
-          staticClass: "iq-card-body",
-          attrs: { "data-toggle": "modal", "data-target": "#post-modal" }
+          staticClass: "iq-card iq-card-block iq-card-stretch",
+          attrs: { id: "post-modal-data" }
         },
         [
-          _c("div", { staticClass: "d-flex align-items-center" }, [
-            _c("div", { staticClass: "user-img" }, [
-              _c("img", {
-                staticClass: "avatar-60 rounded-circle",
-                attrs: {
-                  src: "images/user/" + _vm.user.profileimg.name,
-                  alt: "userimg"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _vm._m(1)
-          ]),
+          _vm._m(0),
           _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _vm._m(2)
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade",
-          staticStyle: { display: "none" },
-          attrs: {
-            id: "post-modal",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "post-modalLabel",
-            "aria-hidden": "true"
-          }
-        },
-        [
           _c(
             "div",
-            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            {
+              staticClass: "iq-card-body",
+              attrs: { "data-toggle": "modal", "data-target": "#post-modal" }
+            },
             [
-              _c("div", { staticClass: "modal-content" }, [
-                _vm._m(3),
+              _c("div", { staticClass: "d-flex align-items-center" }, [
+                _c("div", { staticClass: "user-img" }, [
+                  _c("img", {
+                    staticClass: "avatar-60 rounded-circle",
+                    attrs: {
+                      src: "images/user/" + _vm.user.profileimg.name,
+                      alt: "userimg"
+                    }
+                  })
+                ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _c(
-                    "div",
-                    { staticClass: "d-flex flex-column bd-highlight" },
-                    [
-                      _c("div", { staticClass: "bd-highlight mb-2" }, [
-                        _c("div", { staticClass: "d-flex flex-wrap" }, [
-                          _c(
-                            "div",
-                            { staticClass: "media-support-user-img mr-3" },
-                            [
-                              _c("img", {
-                                staticClass: "rounded-circle img-fluid",
-                                attrs: {
-                                  src:
-                                    "images/user/" + _vm.user.profileimg.name,
-                                  alt: ""
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "media-support-info mt-2" },
-                            [
-                              _c("h5", { staticClass: "mb-0 d-inline-block" }, [
-                                _vm._v(_vm._s(_vm.user.name))
-                              ]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "mb-0 text-primary" }, [
-                                _vm._v("post.statu")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm._m(4)
-                        ])
-                      ]),
-                      _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _vm._m(2)
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              staticStyle: { display: "none" },
+              attrs: {
+                id: "post-modal",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "post-modalLabel",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "modal-dialog", attrs: { role: "document" } },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
                       _c(
                         "div",
-                        {
-                          staticClass:
-                            "bd-highlight justify-content-center mt-2"
-                        },
+                        { staticClass: "d-flex flex-column bd-highlight" },
                         [
+                          _c("div", { staticClass: "bd-highlight mb-2" }, [
+                            _c("div", { staticClass: "d-flex flex-wrap" }, [
+                              _c(
+                                "div",
+                                { staticClass: "media-support-user-img mr-3" },
+                                [
+                                  _c("img", {
+                                    staticClass: "rounded-circle img-fluid",
+                                    attrs: {
+                                      src:
+                                        "images/user/" +
+                                        _vm.user.profileimg.name,
+                                      alt: ""
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "media-support-info mt-2" },
+                                [
+                                  _c(
+                                    "h5",
+                                    { staticClass: "mb-0 d-inline-block" },
+                                    [_vm._v(_vm._s(_vm.user.name))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    { staticClass: "mb-0 text-primary" },
+                                    [_vm._v("post.statu")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm._m(4)
+                            ])
+                          ]),
+                          _vm._v(" "),
                           _c(
-                            "form",
+                            "div",
                             {
-                              staticClass: "post-text ml-3",
-                              attrs: { action: "javascript:void();" }
+                              staticClass:
+                                "bd-highlight justify-content-center mt-2"
                             },
                             [
-                              _c("VueEmoji", {
-                                ref: "emoji",
-                                staticClass: "emoji-div -create",
-                                attrs: { height: "100", value: _vm.myText },
-                                on: { input: _vm.onInput }
-                              })
-                            ],
-                            1
+                              _c(
+                                "form",
+                                {
+                                  staticClass: "post-text ml-3",
+                                  attrs: { action: "javascript:void();" }
+                                },
+                                [
+                                  _c("VueEmoji", {
+                                    ref: "emoji",
+                                    staticClass: "emoji-div -create",
+                                    attrs: { height: "100", value: _vm.myText },
+                                    on: { input: _vm.onInput }
+                                  })
+                                ],
+                                1
+                              )
+                            ]
                           )
                         ]
+                      ),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary d-block w-100 mt-3",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Post")]
                       )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("hr"),
-                  _vm._v(" "),
-                  _vm._m(5),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary d-block w-100 mt-3",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Post")]
-                  )
-                ])
-              ])
+                    ])
+                  ])
+                ]
+              )
             ]
           )
         ]
       )
-    ]
-  )
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
