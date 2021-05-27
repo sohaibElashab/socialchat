@@ -23,20 +23,20 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 311:
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_627__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_648__) => {
 
 // ESM COMPAT FLAG
-__nested_webpack_require_627__.r(__webpack_exports__);
+__nested_webpack_require_648__.r(__webpack_exports__);
 
 // EXPORTS
-__nested_webpack_require_627__.d(__webpack_exports__, {
+__nested_webpack_require_648__.d(__webpack_exports__, {
   "default": () => /* binding */ module_Splide
 });
 
 // NAMESPACE OBJECT: ./src/js/constants/states.js
 var states_namespaceObject = {};
-__nested_webpack_require_627__.r(states_namespaceObject);
-__nested_webpack_require_627__.d(states_namespaceObject, {
+__nested_webpack_require_648__.r(states_namespaceObject);
+__nested_webpack_require_648__.d(states_namespaceObject, {
   "CREATED": () => CREATED,
   "DESTROYED": () => DESTROYED,
   "IDLE": () => IDLE,
@@ -5855,7 +5855,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_139193__(moduleId) {
+/******/ 	function __nested_webpack_require_142871__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		if(__webpack_module_cache__[moduleId]) {
 /******/ 			return __webpack_module_cache__[moduleId].exports;
@@ -5868,7 +5868,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_139193__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_142871__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -5878,9 +5878,9 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__nested_webpack_require_139193__.d = (exports, definition) => {
+/******/ 		__nested_webpack_require_142871__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
-/******/ 				if(__nested_webpack_require_139193__.o(definition, key) && !__nested_webpack_require_139193__.o(exports, key)) {
+/******/ 				if(__nested_webpack_require_142871__.o(definition, key) && !__nested_webpack_require_142871__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
@@ -5889,13 +5889,13 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__nested_webpack_require_139193__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__nested_webpack_require_142871__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__nested_webpack_require_139193__.r = (exports) => {
+/******/ 		__nested_webpack_require_142871__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
@@ -5907,7 +5907,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __nested_webpack_require_139193__(311);
+/******/ 	return __nested_webpack_require_142871__(311);
 /******/ })()
 ;
 });
@@ -15387,7 +15387,14 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_5__.default({
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
   \***********************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+Object(function webpackMissingModule() { var e = new Error("Cannot find module 'laravel-echo'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+var _Echo;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
@@ -15416,14 +15423,17 @@ window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
-// import Echo from 'laravel-echo';
-// window.Pusher = require('pusher-js');
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     forceTLS: true
-// });
+
+
+window.Pusher = __webpack_require__(Object(function webpackMissingModule() { var e = new Error("Cannot find module 'pusher-js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+window.Echo = new Object(function webpackMissingModule() { var e = new Error("Cannot find module 'laravel-echo'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())((_Echo = {
+  broadcaster: "pusher",
+  key: "",
+  cluster: "mt1",
+  forceTLS: true,
+  wsHost: window.location.hostname,
+  wsPort: 6001
+}, _defineProperty(_Echo, "forceTLS", false), _defineProperty(_Echo, "disableStats", true), _Echo));
 
 /***/ }),
 
@@ -19936,7 +19946,7 @@ var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_img_IconsetSmiles_png__WEBPACK_IMPORTED_MODULE_2__.default);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_img_IconsetSmiles_1x_png__WEBPACK_IMPORTED_MODULE_3__.default);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "span.emoji {\n    display: -moz-inline-box;\n    display: inline-block;\n    vertical-align: baseline;\n    *vertical-align: auto;\n    *zoom: 1;\n    *display: inline;\n    width: 1em;\n    height: 1em;\n    background-size: 1em;\n    background-repeat: no-repeat;\n    text-indent: -9999px;\n}\n\nspan.emoji-sizer {\n    line-height: 0.81em;\n    font-size: 1em;\n    margin: -2px 0;\n}\n\nspan.emoji-outer {\n    display: -moz-inline-box;\n    display: inline-block;\n    *display: inline;\n    height: 1em;\n    width: 1em;\n}\n\nspan.emoji-inner {\n    display: -moz-inline-box;\n    display: inline-block;\n    text-indent: -9999px;\n    width: 100%;\n    height: 100%;\n    vertical-align: baseline;\n    *vertical-align: auto;\n    *zoom: 1;\n}\n\nimg.emoji {\n    width: 1em;\n    height: 1em;\n}\n\n.emoji-wysiwyg-editor:empty:before {\n    content: attr(placeholder);\n    color: #9aa2ab;\n}\n\n.emoji-picker-container {\n    position: relative;\n}\n\n.emoji-picker-icon {\n    position: absolute;\n    right: 10px;\n    top: 5px;\n    font-size: 20px;\n    opacity: 0.7;\n    z-index: 100;\n    transition: none;\n    color: black;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n.emoji-picker-icon.parent-has-scroll {\n    right: 28px;\n}\n\n.emoji-picker-icon:hover {\n    opacity: 1;\n}\n\n/* Emoji area */\n\n.emoji-wysiwyg-editor:empty:before {\n    content: attr(placeholder);\n    color: #9aa2ab;\n}\n\n.emoji-wysiwyg-editor:active:before,\n.emoji-wysiwyg-editor:focus:before {\n    content: none;\n}\n\n.emoji-wysiwyg-editor {\n    padding: 6px;\n    padding-right: 35px;\n    margin-bottom: 0px;\n    min-height: 35px; /* 35 */\n    height: 30px;\n    max-height: 284px;\n    overflow: auto;\n    line-height: 17px;\n    border: 1px solid #d2dbe3;\n    border-radius: 2px;\n    box-shadow: none;\n    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;\n    -webkit-user-select: text;\n    word-wrap: break-word;\n}\n\n.emoji-wysiwyg-editor.parent-has-scroll {\n     padding-right: 40px;\n }\n\n.emoji-wysiwyg-editor.single-line-editor {\n    min-height: 35px;\n    height: inherit;\n}\n\n.emoji-wysiwyg-editor img {\n    width: 20px;\n    height: 20px;\n    vertical-align: middle;\n    margin: -3px 0 0 0;\n}\n\n.emoji-menu {\n    position: absolute;\n    z-index: 999;\n    width: 225px;\n    overflow: hidden;\n    border: 1px #dfdfdf solid;\n    border-radius: 3px;\n    overflow: hidden;\n    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);\n}\n\n.emoji-items-wrap1 {\n    background: #ffffff;\n    padding: 5px 2px 5px 5px;\n}\n\n.emoji-items-wrap1 .emoji-menu-tabs {\n    width: 100%;\n    margin-bottom: 8px;\n    margin-top: 3px;\n}\n\n.emoji-items-wrap1 .emoji-menu-tabs td {\n    text-align: center;\n    color: white;\n    line-height: 0;\n}\n\n.emoji-menu-tabs .emoji-menu-tab {\n    display: inline-block;\n    width: 24px;\n    height: 29px;\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\n    background-size: 42px 350px;\n    border: 0;\n}\n\n.is_1x .emoji-menu-tabs .emoji-menu-tab {\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n}\n\n.emoji-menu-tabs .icon-recent { background-position: -9px -306px; }\n\n.emoji-menu-tabs .icon-recent-selected { background-position: -9px -277px; }\n\n.emoji-menu-tabs .icon-smile { background-position: -9px -34px; }\n\n.emoji-menu-tabs .icon-smile-selected { background-position: -9px -5px; }\n\n.emoji-menu-tabs .icon-flower { background-position: -9px -145px; }\n\n.emoji-menu-tabs .icon-flower-selected { background-position: -9px -118px; }\n\n.emoji-menu-tabs .icon-bell { background-position: -9px -89px; }\n\n.emoji-menu-tabs .icon-bell-selected { background-position: -9px -61px; }\n\n.emoji-menu-tabs .icon-car { background-position: -9px -196px; }\n\n.emoji-menu-tabs .icon-car-selected { background-position: -9px -170px; }\n\n.emoji-menu-tabs .icon-grid { background-position: -9px -248px; }\n\n.emoji-menu-tabs .icon-grid-selected { background-position: -9px -222px; }\n\n.emoji-menu-tabs .icon-smile,\n.emoji-menu-tabs .icon-flower,\n.emoji-menu-tabs .icon-bell,\n.emoji-menu-tabs .icon-car,\n.emoji-menu-tabs .icon-grid {\n    opacity: 0.7;\n}\n\n.emoji-menu-tabs .icon-smile:hover,\n.emoji-menu-tabs .icon-flower:hover,\n.emoji-menu-tabs .icon-bell:hover,\n.emoji-menu-tabs .icon-car:hover,\n.emoji-menu-tabs .icon-grid:hover {\n    opacity: 1;\n}\n\n.emoji-menu .emoji-items-wrap {\n    position: relative;\n    height: 174px;\n}\n\n.emoji-menu .emoji-items {\n    padding-right: 8px;\n    outline: 0 !important;\n}\n\n.emoji-menu img {\n    width: 20px;\n    height: 20px;\n    vertical-align: middle;\n    border: 0 none;\n}\n\n.emoji-menu .emoji-items a {\n    margin: -1px 0 0 -1px;\n    padding: 5px;\n    display: block;\n    float: left;\n    border-radius: 2px;\n    border: 0;\n}\n\n.emoji-menu .emoji-items a:hover {\n    background-color: #edf2f5;\n}\n\n.emoji-menu:after {\n    content: ' ';\n    display: block;\n    clear: left;\n}\n\n.emoji-menu a .label {\n    display: none;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "span.emoji {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    vertical-align: baseline;\r\n    *vertical-align: auto;\r\n    *zoom: 1;\r\n    *display: inline;\r\n    width: 1em;\r\n    height: 1em;\r\n    background-size: 1em;\r\n    background-repeat: no-repeat;\r\n    text-indent: -9999px;\r\n}\r\n\r\nspan.emoji-sizer {\r\n    line-height: 0.81em;\r\n    font-size: 1em;\r\n    margin: -2px 0;\r\n}\r\n\r\nspan.emoji-outer {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    *display: inline;\r\n    height: 1em;\r\n    width: 1em;\r\n}\r\n\r\nspan.emoji-inner {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    text-indent: -9999px;\r\n    width: 100%;\r\n    height: 100%;\r\n    vertical-align: baseline;\r\n    *vertical-align: auto;\r\n    *zoom: 1;\r\n}\r\n\r\nimg.emoji {\r\n    width: 1em;\r\n    height: 1em;\r\n}\r\n\r\n.emoji-wysiwyg-editor:empty:before {\r\n    content: attr(placeholder);\r\n    color: #9aa2ab;\r\n}\r\n\r\n.emoji-picker-container {\r\n    position: relative;\r\n}\r\n\r\n.emoji-picker-icon {\r\n    position: absolute;\r\n    right: 10px;\r\n    top: 5px;\r\n    font-size: 20px;\r\n    opacity: 0.7;\r\n    z-index: 100;\r\n    transition: none;\r\n    color: black;\r\n    -moz-user-select: none;\r\n    -webkit-user-select: none;\r\n    -o-user-select: none;\r\n    -ms-user-select: none;\r\n        user-select: none;\r\n}\r\n\r\n.emoji-picker-icon.parent-has-scroll {\r\n    right: 28px;\r\n}\r\n\r\n.emoji-picker-icon:hover {\r\n    opacity: 1;\r\n}\r\n\r\n/* Emoji area */\r\n\r\n.emoji-wysiwyg-editor:empty:before {\r\n    content: attr(placeholder);\r\n    color: #9aa2ab;\r\n}\r\n\r\n.emoji-wysiwyg-editor:active:before,\r\n.emoji-wysiwyg-editor:focus:before {\r\n    content: none;\r\n}\r\n\r\n.emoji-wysiwyg-editor {\r\n    padding: 6px;\r\n    padding-right: 35px;\r\n    margin-bottom: 0px;\r\n    min-height: 35px; /* 35 */\r\n    height: 30px;\r\n    max-height: 284px;\r\n    overflow: auto;\r\n    line-height: 17px;\r\n    border: 1px solid #d2dbe3;\r\n    border-radius: 2px;\r\n    box-shadow: none;\r\n    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;\r\n    -webkit-user-select: text;\r\n    word-wrap: break-word;\r\n}\r\n\r\n.emoji-wysiwyg-editor.parent-has-scroll {\r\n     padding-right: 40px;\r\n }\r\n\r\n.emoji-wysiwyg-editor.single-line-editor {\r\n    min-height: 35px;\r\n    height: inherit;\r\n}\r\n\r\n.emoji-wysiwyg-editor img {\r\n    width: 20px;\r\n    height: 20px;\r\n    vertical-align: middle;\r\n    margin: -3px 0 0 0;\r\n}\r\n\r\n.emoji-menu {\r\n    position: absolute;\r\n    z-index: 999;\r\n    width: 225px;\r\n    overflow: hidden;\r\n    border: 1px #dfdfdf solid;\r\n    border-radius: 3px;\r\n    overflow: hidden;\r\n    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.emoji-items-wrap1 {\r\n    background: #ffffff;\r\n    padding: 5px 2px 5px 5px;\r\n}\r\n\r\n.emoji-items-wrap1 .emoji-menu-tabs {\r\n    width: 100%;\r\n    margin-bottom: 8px;\r\n    margin-top: 3px;\r\n}\r\n\r\n.emoji-items-wrap1 .emoji-menu-tabs td {\r\n    text-align: center;\r\n    color: white;\r\n    line-height: 0;\r\n}\r\n\r\n.emoji-menu-tabs .emoji-menu-tab {\r\n    display: inline-block;\r\n    width: 24px;\r\n    height: 29px;\r\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\r\n    background-size: 42px 350px;\r\n    border: 0;\r\n}\r\n\r\n.is_1x .emoji-menu-tabs .emoji-menu-tab {\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\r\n}\r\n\r\n.emoji-menu-tabs .icon-recent { background-position: -9px -306px; }\r\n\r\n.emoji-menu-tabs .icon-recent-selected { background-position: -9px -277px; }\r\n\r\n.emoji-menu-tabs .icon-smile { background-position: -9px -34px; }\r\n\r\n.emoji-menu-tabs .icon-smile-selected { background-position: -9px -5px; }\r\n\r\n.emoji-menu-tabs .icon-flower { background-position: -9px -145px; }\r\n\r\n.emoji-menu-tabs .icon-flower-selected { background-position: -9px -118px; }\r\n\r\n.emoji-menu-tabs .icon-bell { background-position: -9px -89px; }\r\n\r\n.emoji-menu-tabs .icon-bell-selected { background-position: -9px -61px; }\r\n\r\n.emoji-menu-tabs .icon-car { background-position: -9px -196px; }\r\n\r\n.emoji-menu-tabs .icon-car-selected { background-position: -9px -170px; }\r\n\r\n.emoji-menu-tabs .icon-grid { background-position: -9px -248px; }\r\n\r\n.emoji-menu-tabs .icon-grid-selected { background-position: -9px -222px; }\r\n\r\n.emoji-menu-tabs .icon-smile,\r\n.emoji-menu-tabs .icon-flower,\r\n.emoji-menu-tabs .icon-bell,\r\n.emoji-menu-tabs .icon-car,\r\n.emoji-menu-tabs .icon-grid {\r\n    opacity: 0.7;\r\n}\r\n\r\n.emoji-menu-tabs .icon-smile:hover,\r\n.emoji-menu-tabs .icon-flower:hover,\r\n.emoji-menu-tabs .icon-bell:hover,\r\n.emoji-menu-tabs .icon-car:hover,\r\n.emoji-menu-tabs .icon-grid:hover {\r\n    opacity: 1;\r\n}\r\n\r\n.emoji-menu .emoji-items-wrap {\r\n    position: relative;\r\n    height: 174px;\r\n}\r\n\r\n.emoji-menu .emoji-items {\r\n    padding-right: 8px;\r\n    outline: 0 !important;\r\n}\r\n\r\n.emoji-menu img {\r\n    width: 20px;\r\n    height: 20px;\r\n    vertical-align: middle;\r\n    border: 0 none;\r\n}\r\n\r\n.emoji-menu .emoji-items a {\r\n    margin: -1px 0 0 -1px;\r\n    padding: 5px;\r\n    display: block;\r\n    float: left;\r\n    border-radius: 2px;\r\n    border: 0;\r\n}\r\n\r\n.emoji-menu .emoji-items a:hover {\r\n    background-color: #edf2f5;\r\n}\r\n\r\n.emoji-menu:after {\r\n    content: ' ';\r\n    display: block;\r\n    clear: left;\r\n}\r\n\r\n.emoji-menu a .label {\r\n    display: none;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -19960,7 +19970,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/** initial setup **/\n.nano {\n  position : relative;\n  width    : 100%;\n  height   : 100%;\n  overflow : hidden;\n}\n.nano > .nano-content {\n  position      : absolute;\n  overflow      : scroll;\n  overflow-x    : hidden;\n  top           : 0;\n  right         : 0;\n  bottom        : 0;\n  left          : 0;\n}\n.nano > .nano-content:focus {\n  outline: thin dotted;\n}\n.nano > .nano-content::-webkit-scrollbar {\n  display: none;\n}\n.has-scrollbar > .nano-content::-webkit-scrollbar {\n  display: block;\n}\n.nano > .nano-pane {\n  background : rgba(0,0,0,.25);\n  position   : absolute;\n  width      : 10px;\n  right      : 0;\n  top        : 0;\n  bottom     : 0;\n  visibility : hidden\\9; /* Target only IE7 and IE8 with this hack */\n  opacity    : .01;\n  transition            : .2s;\n  border-radius         : 5px;\n}\n.nano > .nano-pane > .nano-slider {\n  background: #444;\n  background: rgba(0,0,0,.5);\n  position              : relative;\n  margin                : 0 1px;\n  border-radius         : 3px;\n}\n.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {\n  visibility : visible\\9; /* Target only IE7 and IE8 with this hack */\n  opacity    : 0.99;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/** initial setup **/\r\n.nano {\r\n  position : relative;\r\n  width    : 100%;\r\n  height   : 100%;\r\n  overflow : hidden;\r\n}\r\n.nano > .nano-content {\r\n  position      : absolute;\r\n  overflow      : scroll;\r\n  overflow-x    : hidden;\r\n  top           : 0;\r\n  right         : 0;\r\n  bottom        : 0;\r\n  left          : 0;\r\n}\r\n.nano > .nano-content:focus {\r\n  outline: thin dotted;\r\n}\r\n.nano > .nano-content::-webkit-scrollbar {\r\n  display: none;\r\n}\r\n.has-scrollbar > .nano-content::-webkit-scrollbar {\r\n  display: block;\r\n}\r\n.nano > .nano-pane {\r\n  background : rgba(0,0,0,.25);\r\n  position   : absolute;\r\n  width      : 10px;\r\n  right      : 0;\r\n  top        : 0;\r\n  bottom     : 0;\r\n  visibility : hidden\\9; /* Target only IE7 and IE8 with this hack */\r\n  opacity    : .01;\r\n  transition            : .2s;\r\n  border-radius         : 5px;\r\n}\r\n.nano > .nano-pane > .nano-slider {\r\n  background: #444;\r\n  background: rgba(0,0,0,.5);\r\n  position              : relative;\r\n  margin                : 0 1px;\r\n  border-radius         : 3px;\r\n}\r\n.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {\r\n  visibility : visible\\9; /* Target only IE7 and IE8 with this hack */\r\n  opacity    : 0.99;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
