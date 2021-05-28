@@ -315,7 +315,7 @@ export default {
             this.img = this.user.profileimg.name;
             this.isMounted = true;
             Echo.private(`sendRequest.${this.user.id}`).listen(
-                "SendRequestEvent",
+                "SendRequestEvent", 
                 e => {
                     console.log(e.user);
                     this.allReqs.unshift(e.user);

@@ -50,7 +50,6 @@
                        <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
                           Voici <a :href="vds.vd">un lien pour télécharger la vidéo</a>.</p>
                     </video>
-                    <!-- <iframe class="embed-responsive-item" v-for="vds in post.postVds" :key="vds.vd" :src="vds.vd" allowfullscreen></iframe> -->
                  </div>
               </div>
            </div>

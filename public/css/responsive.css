@@ -222,5 +222,6 @@ NOTE: This file contains the styling for responsive Template.
 		.friend-info.ml-3 {margin: 10px 0 0 !important;}
 		.emoji-div{position: relative !important;width: 75% !important;}
 		.-create{width: 100% !important;}
+		.feeling{ width: 100% !important;}
 	}
 	/* @media(max-width:359px) { } */
