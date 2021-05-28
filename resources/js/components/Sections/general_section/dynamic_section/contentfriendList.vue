@@ -1,6 +1,13 @@
 <template>
     <div id="content-page" class="content-page">
         <div class="container">
+            <span
+                class="badge badge-primary"
+                style="cursor:pointer;display:none;"
+                @click="LoadFriends"
+                id="New"
+                >New friends</span
+            >
             <div class="row">
                 <div
                     class="col-md-6"
@@ -28,7 +35,7 @@
                                                 <div class="profile-img pr-4">
                                                     <img
                                                         :src="
-                                                            `images/user/${friend.profileimg.name}` 
+                                                            `images/user/${friend.profileimg.name}`
                                                         "
                                                         alt="profile-img"
                                                         class="avatar-130 img-fluid"
@@ -49,15 +56,14 @@
                                             <router-link
                                                 :to="{
                                                     name: 'profile',
-                                                    params: {
-                                                        id: friend.id
-                                                    },
                                                     query: {
-                                                        user: friend.name
+                                                        user: friend.id
                                                     }
                                                 }"
                                                 tag="a"
-                                            >
+                                                ><!--  params: {
+                                                        id: friend.id
+                                                    },-->
                                                 <button class="btn btn-primary">
                                                     Visit profile
                                                 </button>
@@ -78,18 +84,35 @@
 export default {
     data() {
         return {
-            friends: null
+            friends: null,
+            OnlineUser: null
         };
     },
     mounted() {
-        axios
-            .post("/LoadFriends", {
-                id: null
-            })
-            .then(res => {
-                console.log(res.data);
-                this.friends = res.data;
-            });
+        this.LoadFriends();
+
+        axios.get("/profile").then(res => {
+            this.OnlineUser = res.data;
+            Echo.private(`acceptRequest.${this.Id}`).listen(
+                "AcceptRequestEvent",
+                e => {
+                    document.getElementById("New").style.display = "initial";
+                }
+            );
+        });
+    },
+    methods: {
+        LoadFriends() {
+            axios
+                .post("/LoadFriends", {
+                    id: null
+                })
+                .then(res => {
+                    console.log(res.data);
+                    this.friends = res.data;
+                });
+            document.getElementById("New").style.display = "none";
+        }
     }
 };
 </script>

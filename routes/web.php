@@ -40,3 +40,4 @@ Route::get('/LoadRequests', [App\Http\Controllers\FriendController::class, 'Load
 Route::post('/AcceptRequest', [App\Http\Controllers\FriendController::class, 'AcceptRequest']);
 Route::post('/RemoveFriend', [App\Http\Controllers\FriendController::class, 'RemoveFriend']);
 Route::post('/LoadFriends', [App\Http\Controllers\FriendController::class, 'LoadFriends']);
+Route::post('/LogoutUser', [App\Http\Controllers\ProfilController::class, 'LogoutUser']); 

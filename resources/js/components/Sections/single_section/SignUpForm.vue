@@ -159,7 +159,7 @@ export default {
         };
     },
     mounted() {
-        axios.post("/logout").then(res => {
+        axios.post("/LogoutUser").then(res => {
             console.log(res);
         });
     },

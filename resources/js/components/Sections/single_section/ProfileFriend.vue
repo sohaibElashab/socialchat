@@ -11,6 +11,13 @@
                             role="tabpanel"
                         >
                             <div class="iq-card-body p-0">
+                                <span
+                                    class="badge badge-primary"
+                                    style="cursor:pointer;display:none;"
+                                    @click="LoadFriends"
+                                    id="New"
+                                    >New friends</span
+                                >
                                 <div class="row">
                                     <div
                                         class="col-md-6 col-lg-6 mb-3"
@@ -18,13 +25,24 @@
                                         :key="FriendList.id"
                                     >
                                         <div class="iq-friendlist-block">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center">
+                                            <div
+                                                class="d-flex align-items-center justify-content-between"
+                                            >
+                                                <div
+                                                    class="d-flex align-items-center"
+                                                >
+                                                    <!-- ,
+                                                            params: {
+                                                                id:
+                                                                    FriendList.id
+                                                            }, -->
                                                     <router-link
                                                         :to="{
                                                             name: 'profile',
-                                                            params: { id: FriendList.id },
-                                                            query: { user: FriendList.name }
+                                                            query: {
+                                                                user:
+                                                                    FriendList.id
+                                                            }
                                                         }"
                                                         tag="a"
                                                     >
@@ -38,17 +56,30 @@
                                                             />
                                                         </a>
                                                     </router-link>
-                                                    <div class="friend-info ml-3">
-                                                        <h5>{{ FriendList.name }}</h5>
+                                                    <div
+                                                        class="friend-info ml-3"
+                                                    >
+                                                        <h5>
+                                                            {{
+                                                                FriendList.name
+                                                            }}
+                                                        </h5>
                                                         <p class="mb-0">
-                                                            {{ FriendList.FriendCount }} friends
+                                                            {{
+                                                                FriendList.FriendCount
+                                                            }}
+                                                            friends
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div
                                                     class="iq-card-header-toolbar d-flex align-items-center"
                                                 >
-                                                    <div v-if="status == 'current'">
+                                                    <div
+                                                        v-if="
+                                                            status == 'current'
+                                                        "
+                                                    >
                                                         <!--    <span
                                                             class="dropdown-toggle btn btn-danger mr-2"
                                                             id="dropdownMenuButton01"
@@ -64,7 +95,11 @@
                                                         </span> -->
                                                         <button
                                                             class="mr-2 btn btn-danger"
-                                                            @click="RemoveFriend(FriendList.id)"
+                                                            @click="
+                                                                RemoveFriend(
+                                                                    FriendList.id
+                                                                )
+                                                            "
                                                         >
                                                             <i
                                                                 class="ri-check-line mr-1 text-white font-size-16"
@@ -93,6 +128,10 @@ export default {
             type: Number,
             require: true
         },
+        IdOnline: {
+            type: Number,
+            require: true
+        },
         status: {
             type: String
         }
@@ -104,6 +143,18 @@ export default {
     },
     mounted() {
         this.LoadFriends();
+        Echo.private(`acceptRequest.${this.Id}`).listen(
+            "AcceptRequestEvent",
+            e => {
+                document.getElementById("New").style.display = "initial";
+            }
+        );
+        Echo.private(`acceptRequest.${this.IdOnline}`).listen(
+            "AcceptRequestEvent",
+            e => {
+                document.getElementById("New").style.display = "initial";
+            }
+        );
     },
     methods: {
         RemoveFriend(id) {
@@ -125,6 +176,7 @@ export default {
                     console.log(res.data);
                     this.FriendLists = res.data;
                 });
+            document.getElementById("New").style.display = "none";
         }
     },
     watch: {

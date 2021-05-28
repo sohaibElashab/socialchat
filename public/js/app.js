@@ -23,20 +23,20 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 311:
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_627__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_648__) => {
 
 // ESM COMPAT FLAG
-__nested_webpack_require_627__.r(__webpack_exports__);
+__nested_webpack_require_648__.r(__webpack_exports__);
 
 // EXPORTS
-__nested_webpack_require_627__.d(__webpack_exports__, {
+__nested_webpack_require_648__.d(__webpack_exports__, {
   "default": () => /* binding */ module_Splide
 });
 
 // NAMESPACE OBJECT: ./src/js/constants/states.js
 var states_namespaceObject = {};
-__nested_webpack_require_627__.r(states_namespaceObject);
-__nested_webpack_require_627__.d(states_namespaceObject, {
+__nested_webpack_require_648__.r(states_namespaceObject);
+__nested_webpack_require_648__.d(states_namespaceObject, {
   "CREATED": () => CREATED,
   "DESTROYED": () => DESTROYED,
   "IDLE": () => IDLE,
@@ -5855,7 +5855,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_139193__(moduleId) {
+/******/ 	function __nested_webpack_require_142871__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		if(__webpack_module_cache__[moduleId]) {
 /******/ 			return __webpack_module_cache__[moduleId].exports;
@@ -5868,7 +5868,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_139193__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_142871__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -5878,9 +5878,9 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__nested_webpack_require_139193__.d = (exports, definition) => {
+/******/ 		__nested_webpack_require_142871__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
-/******/ 				if(__nested_webpack_require_139193__.o(definition, key) && !__nested_webpack_require_139193__.o(exports, key)) {
+/******/ 				if(__nested_webpack_require_142871__.o(definition, key) && !__nested_webpack_require_142871__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
@@ -5889,13 +5889,13 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__nested_webpack_require_139193__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__nested_webpack_require_142871__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__nested_webpack_require_139193__.r = (exports) => {
+/******/ 		__nested_webpack_require_142871__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
@@ -5907,7 +5907,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __nested_webpack_require_139193__(311);
+/******/ 	return __nested_webpack_require_142871__(311);
 /******/ })()
 ;
 });
@@ -8366,27 +8366,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["id"],
+  /* 
+  props: ["id"], */
   components: {
     contentProfile: _Sections_general_section_dynamic_section_contentProfile_vue__WEBPACK_IMPORTED_MODULE_0__.default
-  },
-  data: function data() {
+  }
+  /*,
+  data() {
     return {
-      isMounted: false
+        isMounted: false
     };
-  },
-  mounted: function mounted() {
+  } ,
+  mounted() {
     console.log("profile mounted   " + this.id);
     this.isMounted = true;
   },
   watch: {
-    id: function id() {
-      console.log("profile watch   " + this.id);
-      this.isMounted = true;
+    id: function() {
+        console.log("profile watch   " + this.id);
+        this.isMounted = true;
     }
-  }
+  } */
+
   /* ,
   beforeRouteEnter(to, from, next) {
       // called before the route that renders this component is confirmed.
@@ -9960,6 +9964,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -9972,14 +9992,18 @@ __webpack_require__.r(__webpack_exports__);
     CreatePost: _single_section_CreatePost__WEBPACK_IMPORTED_MODULE_3__.default,
     Post: _single_section_Post__WEBPACK_IMPORTED_MODULE_4__.default,
     ProfileAbout: _single_section_ProfileAbout__WEBPACK_IMPORTED_MODULE_1__.default
-  },
-  props: ["UserId"],
+  }
+  /* 
+  props: ["UserId"], */
+  ,
   data: function data() {
     return {
       date: null,
       user: null,
+      OnlineUser: null,
       message: "",
       FriendLists: null,
+      loaded: false,
       images: [],
       posts: {
         "1": {
@@ -10048,11 +10072,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    if (this.UserId != null) {
-      sessionStorage.clear();
-      sessionStorage.setItem("id", this.UserId);
-    }
-
+    /*   if (this.UserId != null) {
+        sessionStorage.clear();
+        sessionStorage.setItem("id", this.UserId);
+    } */
     this.load();
     this.imagesLoad();
     this.friendLoad();
@@ -10061,11 +10084,11 @@ __webpack_require__.r(__webpack_exports__);
     load: function load() {
       var _this = this;
 
-      var id = sessionStorage.getItem("id");
+      /*   var id = sessionStorage.getItem("id");
       console.log("profile content");
-      console.log(sessionStorage.getItem("id"));
+      console.log(sessionStorage.getItem("id")); */
       axios.post("/UserProfile", {
-        id: id
+        id: this.$route.query.user
       }).then(function (res) {
         console.log(res.data);
         _this.user = res.data;
@@ -10075,6 +10098,47 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           _this.message = "";
         }
+
+        Echo["private"]("cancelRequest.".concat(_this.user.id)).listen("CancelRequestEvent", function (e) {
+          console.log(e.user.name);
+
+          if (_this.user.status == "friend") {
+            _this.message = "";
+          }
+        });
+        Echo["private"]("sendRequest.".concat(_this.user.id)).listen("SendRequestEvent", function (e) {
+          console.log(e.user);
+          console.log("accept");
+        });
+        Echo["private"]("acceptRequest.".concat(_this.user.id)).listen("AcceptRequestEvent", function (e) {
+          console.log(e.user.name);
+
+          if (_this.user.status == "friend") {
+            _this.message = "friend";
+          }
+        });
+      });
+      axios.get("/profile").then(function (res) {
+        _this.OnlineUser = res.data;
+        _this.loaded = true;
+        Echo["private"]("cancelRequest.".concat(_this.OnlineUser.id)).listen("CancelRequestEvent", function (e) {
+          //console.log(e.user.name);
+
+          /*  if (this.user.status == "friend") {
+              } */
+          _this.message = "";
+        });
+        Echo["private"]("sendRequest.".concat(_this.OnlineUser.id)).listen("SendRequestEvent", function (e) {
+          //console.log(e.user);
+          _this.message = "accept";
+        });
+        Echo["private"]("acceptRequest.".concat(_this.OnlineUser.id)).listen("AcceptRequestEvent", function (e) {
+          //console.log(e.user.name);
+
+          /*    if (this.user.status == "friend") {
+              } */
+          _this.message = "friend";
+        });
       });
     },
     sendRequest: function sendRequest() {
@@ -10105,6 +10169,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         console.log(res);
         _this4.message = "friend";
+        /*    var child = this.$refs.friends;
+        child.LoadFriends(); */
       });
     },
     RemoveFriend: function RemoveFriend() {
@@ -10115,6 +10181,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         console.log(res);
         _this5.message = "";
+        var child = _this5.$refs.friends;
+        child.LoadFriends();
       });
     },
     imagesLoad: function imagesLoad() {
@@ -10131,7 +10199,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this7 = this;
 
       axios.post("/LoadFriends", {
-        id: this.UserId
+        id: this.$route.query.user
       }).then(function (res) {
         console.log(res.data);
         _this7.FriendLists = res.data;
@@ -10139,13 +10207,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
-    UserId: function UserId() {
-      if (this.UserId != null) {
-        sessionStorage.clear();
-        sessionStorage.setItem("id", this.user.id); // console.log("profile content watch");
-
-        this.load();
-      }
+    "$route.query.user": function $routeQueryUser() {
+      /*      if (this.UserId != null) {
+          sessionStorage.clear();
+          sessionStorage.setItem("id", this.user.id);
+          // console.log("profile content watch");
+      } */
+      this.load();
+      this.friendLoad();
+      this.imagesLoad();
     }
   }
 });
@@ -11299,21 +11369,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      friends: null
+      friends: null,
+      OnlineUser: null
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    axios.post("/LoadFriends", {
-      id: null
-    }).then(function (res) {
-      console.log(res.data);
-      _this.friends = res.data;
+    this.LoadFriends();
+    axios.get("/profile").then(function (res) {
+      _this.OnlineUser = res.data;
+      Echo["private"]("acceptRequest.".concat(_this.Id)).listen("AcceptRequestEvent", function (e) {
+        document.getElementById("New").style.display = "initial";
+      });
     });
+  },
+  methods: {
+    LoadFriends: function LoadFriends() {
+      var _this2 = this;
+
+      axios.post("/LoadFriends", {
+        id: null
+      }).then(function (res) {
+        console.log(res.data);
+        _this2.friends = res.data;
+      });
+      document.getElementById("New").style.display = "none";
+    }
   }
 });
 
@@ -12401,6 +12492,45 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    axios.get("/profile").then(function (res) {
+      console.log(res.data);
+      _this.user = res.data;
+      _this.img = _this.user.profileimg.name;
+      _this.isMounted = true;
+      Echo["private"]("sendRequest.".concat(_this.user.id)).listen("SendRequestEvent", function (e) {
+        console.log(e.user);
+
+        _this.allReqs.unshift(e.user);
+
+        _this.friendRqs = _this.allReqs.slice(0, 4);
+      });
+      Echo["private"]("cancelRequest.".concat(_this.user.id)).listen("CancelRequestEvent", function (e) {
+        console.log(e.user); // console.log(this.allReqs.indexOf(e.user));
+
+        _this.allReqs.forEach(function (req) {
+          if (req.id === e.user.id) {
+            var index = _this.allReqs.indexOf(req);
+
+            _this.allReqs.splice(index, 1);
+
+            _this.friendRqs = _this.allReqs.slice(0, 4);
+          }
+        });
+      });
+      Echo["private"]("acceptRequest.".concat(_this.user.id)).listen("AcceptRequestEvent", function (e) {
+        console.log(e.user); // console.log(this.allReqs.indexOf(e.user));
+
+        _this.allReqs.forEach(function (req) {
+          if (req.id === e.user.id) {
+            var index = _this.allReqs.indexOf(req);
+
+            _this.allReqs.splice(index, 1);
+
+            _this.friendRqs = _this.allReqs.slice(0, 4);
+          }
+        });
+      });
+    });
     axios.get("/LoadRequests").then(function (res) {
       console.log(res.data);
       _this.allReqs = res.data;
@@ -12674,6 +12804,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -12742,7 +12876,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       e.preventDefault();
-      axios.post("/logout").then(function (res) {
+      axios.post("/LogoutUser").then(function (res) {
         console.log(res);
 
         _this.$router.push({
@@ -12758,7 +12892,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/profile").then(function (res) {
       console.log(res.data);
       _this2.user = res.data;
-      _this2.menus[2].href = "/profile?user=" + _this2.user.name;
+      _this2.menus[2].href = "/profile?user=" + _this2.user.id;
     });
   }
 });
@@ -13435,6 +13569,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -13518,6 +13659,43 @@ __webpack_require__.r(__webpack_exports__);
       _this.user = res.data;
       _this.img = _this.user.profileimg.name;
       _this.isMounted = true;
+      Echo["private"]("sendRequest.".concat(_this.user.id)).listen("SendRequestEvent", function (e) {
+        console.log(e.user);
+
+        _this.allReqs.unshift(e.user);
+
+        _this.friendReqs = _this.allReqs.slice(0, 4);
+        _this.loadedReqs = true;
+        document.getElementById("redREQ").style.display = "initial";
+      });
+      Echo["private"]("cancelRequest.".concat(_this.user.id)).listen("CancelRequestEvent", function (e) {
+        console.log(e.user); // console.log(this.allReqs.indexOf(e.user));
+
+        _this.allReqs.forEach(function (req) {
+          if (req.id === e.user.id) {
+            var index = _this.allReqs.indexOf(req);
+
+            _this.allReqs.splice(index, 1);
+
+            _this.friendReqs = _this.allReqs.slice(0, 4);
+            _this.loadedReqs = true;
+          }
+        });
+      });
+      Echo["private"]("acceptRequest.".concat(_this.user.id)).listen("AcceptRequestEvent", function (e) {
+        console.log(e.user); // console.log(this.allReqs.indexOf(e.user));
+
+        _this.allReqs.forEach(function (req) {
+          if (req.id === e.user.id) {
+            var index = _this.allReqs.indexOf(req);
+
+            _this.allReqs.splice(index, 1);
+
+            _this.friendReqs = _this.allReqs.slice(0, 4);
+            _this.loadedReqs = true;
+          }
+        });
+      });
     });
     axios.get("/LoadRequests").then(function (res) {
       console.log(res.data);
@@ -13659,6 +13837,9 @@ __webpack_require__.r(__webpack_exports__);
       document.getElementsByTagName("head").item(0).replaceChild(newlinktypography, oldlinktypography);
       document.getElementsByTagName("head").item(0).replaceChild(newlinkstyle, oldlinkstyle);
       document.getElementsByTagName("head").item(0).replaceChild(newlinkresponsive, oldlinkresponsive);
+    },
+    removeDot: function removeDot() {
+      document.getElementById("redREQ").style.display = "none";
     }
   }
 });
@@ -13705,6 +13886,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -14294,9 +14476,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     Id: {
+      type: Number,
+      require: true
+    },
+    IdOnline: {
       type: Number,
       require: true
     },
@@ -14311,6 +14532,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.LoadFriends();
+    Echo["private"]("acceptRequest.".concat(this.Id)).listen("AcceptRequestEvent", function (e) {
+      document.getElementById("New").style.display = "initial";
+    });
+    Echo["private"]("acceptRequest.".concat(this.IdOnline)).listen("AcceptRequestEvent", function (e) {
+      document.getElementById("New").style.display = "initial";
+    });
   },
   methods: {
     RemoveFriend: function RemoveFriend(id) {
@@ -14333,6 +14560,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res.data);
         _this2.FriendLists = res.data;
       });
+      document.getElementById("New").style.display = "none";
     }
   },
   watch: {
@@ -14746,7 +14974,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    axios.post("/logout").then(function (res) {
+    axios.post("/LogoutUser").then(function (res) {
       console.log(res);
     });
   },
@@ -14974,7 +15202,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    axios.post("/logout").then(function (res) {
+    axios.post("/LogoutUser").then(function (res) {
       console.log(res);
     });
   },
@@ -19946,7 +20174,7 @@ var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_img_IconsetSmiles_png__WEBPACK_IMPORTED_MODULE_2__.default);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_img_IconsetSmiles_1x_png__WEBPACK_IMPORTED_MODULE_3__.default);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "span.emoji {\n    display: -moz-inline-box;\n    display: inline-block;\n    vertical-align: baseline;\n    *vertical-align: auto;\n    *zoom: 1;\n    *display: inline;\n    width: 1em;\n    height: 1em;\n    background-size: 1em;\n    background-repeat: no-repeat;\n    text-indent: -9999px;\n}\n\nspan.emoji-sizer {\n    line-height: 0.81em;\n    font-size: 1em;\n    margin: -2px 0;\n}\n\nspan.emoji-outer {\n    display: -moz-inline-box;\n    display: inline-block;\n    *display: inline;\n    height: 1em;\n    width: 1em;\n}\n\nspan.emoji-inner {\n    display: -moz-inline-box;\n    display: inline-block;\n    text-indent: -9999px;\n    width: 100%;\n    height: 100%;\n    vertical-align: baseline;\n    *vertical-align: auto;\n    *zoom: 1;\n}\n\nimg.emoji {\n    width: 1em;\n    height: 1em;\n}\n\n.emoji-wysiwyg-editor:empty:before {\n    content: attr(placeholder);\n    color: #9aa2ab;\n}\n\n.emoji-picker-container {\n    position: relative;\n}\n\n.emoji-picker-icon {\n    position: absolute;\n    right: 10px;\n    top: 5px;\n    font-size: 20px;\n    opacity: 0.7;\n    z-index: 100;\n    transition: none;\n    color: black;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n.emoji-picker-icon.parent-has-scroll {\n    right: 28px;\n}\n\n.emoji-picker-icon:hover {\n    opacity: 1;\n}\n\n/* Emoji area */\n\n.emoji-wysiwyg-editor:empty:before {\n    content: attr(placeholder);\n    color: #9aa2ab;\n}\n\n.emoji-wysiwyg-editor:active:before,\n.emoji-wysiwyg-editor:focus:before {\n    content: none;\n}\n\n.emoji-wysiwyg-editor {\n    padding: 6px;\n    padding-right: 35px;\n    margin-bottom: 0px;\n    min-height: 35px; /* 35 */\n    height: 30px;\n    max-height: 284px;\n    overflow: auto;\n    line-height: 17px;\n    border: 1px solid #d2dbe3;\n    border-radius: 2px;\n    box-shadow: none;\n    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;\n    -webkit-user-select: text;\n    word-wrap: break-word;\n}\n\n.emoji-wysiwyg-editor.parent-has-scroll {\n     padding-right: 40px;\n }\n\n.emoji-wysiwyg-editor.single-line-editor {\n    min-height: 35px;\n    height: inherit;\n}\n\n.emoji-wysiwyg-editor img {\n    width: 20px;\n    height: 20px;\n    vertical-align: middle;\n    margin: -3px 0 0 0;\n}\n\n.emoji-menu {\n    position: absolute;\n    z-index: 999;\n    width: 225px;\n    overflow: hidden;\n    border: 1px #dfdfdf solid;\n    border-radius: 3px;\n    overflow: hidden;\n    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);\n}\n\n.emoji-items-wrap1 {\n    background: #ffffff;\n    padding: 5px 2px 5px 5px;\n}\n\n.emoji-items-wrap1 .emoji-menu-tabs {\n    width: 100%;\n    margin-bottom: 8px;\n    margin-top: 3px;\n}\n\n.emoji-items-wrap1 .emoji-menu-tabs td {\n    text-align: center;\n    color: white;\n    line-height: 0;\n}\n\n.emoji-menu-tabs .emoji-menu-tab {\n    display: inline-block;\n    width: 24px;\n    height: 29px;\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\n    background-size: 42px 350px;\n    border: 0;\n}\n\n.is_1x .emoji-menu-tabs .emoji-menu-tab {\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n}\n\n.emoji-menu-tabs .icon-recent { background-position: -9px -306px; }\n\n.emoji-menu-tabs .icon-recent-selected { background-position: -9px -277px; }\n\n.emoji-menu-tabs .icon-smile { background-position: -9px -34px; }\n\n.emoji-menu-tabs .icon-smile-selected { background-position: -9px -5px; }\n\n.emoji-menu-tabs .icon-flower { background-position: -9px -145px; }\n\n.emoji-menu-tabs .icon-flower-selected { background-position: -9px -118px; }\n\n.emoji-menu-tabs .icon-bell { background-position: -9px -89px; }\n\n.emoji-menu-tabs .icon-bell-selected { background-position: -9px -61px; }\n\n.emoji-menu-tabs .icon-car { background-position: -9px -196px; }\n\n.emoji-menu-tabs .icon-car-selected { background-position: -9px -170px; }\n\n.emoji-menu-tabs .icon-grid { background-position: -9px -248px; }\n\n.emoji-menu-tabs .icon-grid-selected { background-position: -9px -222px; }\n\n.emoji-menu-tabs .icon-smile,\n.emoji-menu-tabs .icon-flower,\n.emoji-menu-tabs .icon-bell,\n.emoji-menu-tabs .icon-car,\n.emoji-menu-tabs .icon-grid {\n    opacity: 0.7;\n}\n\n.emoji-menu-tabs .icon-smile:hover,\n.emoji-menu-tabs .icon-flower:hover,\n.emoji-menu-tabs .icon-bell:hover,\n.emoji-menu-tabs .icon-car:hover,\n.emoji-menu-tabs .icon-grid:hover {\n    opacity: 1;\n}\n\n.emoji-menu .emoji-items-wrap {\n    position: relative;\n    height: 174px;\n}\n\n.emoji-menu .emoji-items {\n    padding-right: 8px;\n    outline: 0 !important;\n}\n\n.emoji-menu img {\n    width: 20px;\n    height: 20px;\n    vertical-align: middle;\n    border: 0 none;\n}\n\n.emoji-menu .emoji-items a {\n    margin: -1px 0 0 -1px;\n    padding: 5px;\n    display: block;\n    float: left;\n    border-radius: 2px;\n    border: 0;\n}\n\n.emoji-menu .emoji-items a:hover {\n    background-color: #edf2f5;\n}\n\n.emoji-menu:after {\n    content: ' ';\n    display: block;\n    clear: left;\n}\n\n.emoji-menu a .label {\n    display: none;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "span.emoji {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    vertical-align: baseline;\r\n    *vertical-align: auto;\r\n    *zoom: 1;\r\n    *display: inline;\r\n    width: 1em;\r\n    height: 1em;\r\n    background-size: 1em;\r\n    background-repeat: no-repeat;\r\n    text-indent: -9999px;\r\n}\r\n\r\nspan.emoji-sizer {\r\n    line-height: 0.81em;\r\n    font-size: 1em;\r\n    margin: -2px 0;\r\n}\r\n\r\nspan.emoji-outer {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    *display: inline;\r\n    height: 1em;\r\n    width: 1em;\r\n}\r\n\r\nspan.emoji-inner {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    text-indent: -9999px;\r\n    width: 100%;\r\n    height: 100%;\r\n    vertical-align: baseline;\r\n    *vertical-align: auto;\r\n    *zoom: 1;\r\n}\r\n\r\nimg.emoji {\r\n    width: 1em;\r\n    height: 1em;\r\n}\r\n\r\n.emoji-wysiwyg-editor:empty:before {\r\n    content: attr(placeholder);\r\n    color: #9aa2ab;\r\n}\r\n\r\n.emoji-picker-container {\r\n    position: relative;\r\n}\r\n\r\n.emoji-picker-icon {\r\n    position: absolute;\r\n    right: 10px;\r\n    top: 5px;\r\n    font-size: 20px;\r\n    opacity: 0.7;\r\n    z-index: 100;\r\n    transition: none;\r\n    color: black;\r\n    -moz-user-select: none;\r\n    -webkit-user-select: none;\r\n    -o-user-select: none;\r\n    -ms-user-select: none;\r\n        user-select: none;\r\n}\r\n\r\n.emoji-picker-icon.parent-has-scroll {\r\n    right: 28px;\r\n}\r\n\r\n.emoji-picker-icon:hover {\r\n    opacity: 1;\r\n}\r\n\r\n/* Emoji area */\r\n\r\n.emoji-wysiwyg-editor:empty:before {\r\n    content: attr(placeholder);\r\n    color: #9aa2ab;\r\n}\r\n\r\n.emoji-wysiwyg-editor:active:before,\r\n.emoji-wysiwyg-editor:focus:before {\r\n    content: none;\r\n}\r\n\r\n.emoji-wysiwyg-editor {\r\n    padding: 6px;\r\n    padding-right: 35px;\r\n    margin-bottom: 0px;\r\n    min-height: 35px; /* 35 */\r\n    height: 30px;\r\n    max-height: 284px;\r\n    overflow: auto;\r\n    line-height: 17px;\r\n    border: 1px solid #d2dbe3;\r\n    border-radius: 2px;\r\n    box-shadow: none;\r\n    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;\r\n    -webkit-user-select: text;\r\n    word-wrap: break-word;\r\n}\r\n\r\n.emoji-wysiwyg-editor.parent-has-scroll {\r\n     padding-right: 40px;\r\n }\r\n\r\n.emoji-wysiwyg-editor.single-line-editor {\r\n    min-height: 35px;\r\n    height: inherit;\r\n}\r\n\r\n.emoji-wysiwyg-editor img {\r\n    width: 20px;\r\n    height: 20px;\r\n    vertical-align: middle;\r\n    margin: -3px 0 0 0;\r\n}\r\n\r\n.emoji-menu {\r\n    position: absolute;\r\n    z-index: 999;\r\n    width: 225px;\r\n    overflow: hidden;\r\n    border: 1px #dfdfdf solid;\r\n    border-radius: 3px;\r\n    overflow: hidden;\r\n    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.emoji-items-wrap1 {\r\n    background: #ffffff;\r\n    padding: 5px 2px 5px 5px;\r\n}\r\n\r\n.emoji-items-wrap1 .emoji-menu-tabs {\r\n    width: 100%;\r\n    margin-bottom: 8px;\r\n    margin-top: 3px;\r\n}\r\n\r\n.emoji-items-wrap1 .emoji-menu-tabs td {\r\n    text-align: center;\r\n    color: white;\r\n    line-height: 0;\r\n}\r\n\r\n.emoji-menu-tabs .emoji-menu-tab {\r\n    display: inline-block;\r\n    width: 24px;\r\n    height: 29px;\r\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\r\n    background-size: 42px 350px;\r\n    border: 0;\r\n}\r\n\r\n.is_1x .emoji-menu-tabs .emoji-menu-tab {\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\r\n}\r\n\r\n.emoji-menu-tabs .icon-recent { background-position: -9px -306px; }\r\n\r\n.emoji-menu-tabs .icon-recent-selected { background-position: -9px -277px; }\r\n\r\n.emoji-menu-tabs .icon-smile { background-position: -9px -34px; }\r\n\r\n.emoji-menu-tabs .icon-smile-selected { background-position: -9px -5px; }\r\n\r\n.emoji-menu-tabs .icon-flower { background-position: -9px -145px; }\r\n\r\n.emoji-menu-tabs .icon-flower-selected { background-position: -9px -118px; }\r\n\r\n.emoji-menu-tabs .icon-bell { background-position: -9px -89px; }\r\n\r\n.emoji-menu-tabs .icon-bell-selected { background-position: -9px -61px; }\r\n\r\n.emoji-menu-tabs .icon-car { background-position: -9px -196px; }\r\n\r\n.emoji-menu-tabs .icon-car-selected { background-position: -9px -170px; }\r\n\r\n.emoji-menu-tabs .icon-grid { background-position: -9px -248px; }\r\n\r\n.emoji-menu-tabs .icon-grid-selected { background-position: -9px -222px; }\r\n\r\n.emoji-menu-tabs .icon-smile,\r\n.emoji-menu-tabs .icon-flower,\r\n.emoji-menu-tabs .icon-bell,\r\n.emoji-menu-tabs .icon-car,\r\n.emoji-menu-tabs .icon-grid {\r\n    opacity: 0.7;\r\n}\r\n\r\n.emoji-menu-tabs .icon-smile:hover,\r\n.emoji-menu-tabs .icon-flower:hover,\r\n.emoji-menu-tabs .icon-bell:hover,\r\n.emoji-menu-tabs .icon-car:hover,\r\n.emoji-menu-tabs .icon-grid:hover {\r\n    opacity: 1;\r\n}\r\n\r\n.emoji-menu .emoji-items-wrap {\r\n    position: relative;\r\n    height: 174px;\r\n}\r\n\r\n.emoji-menu .emoji-items {\r\n    padding-right: 8px;\r\n    outline: 0 !important;\r\n}\r\n\r\n.emoji-menu img {\r\n    width: 20px;\r\n    height: 20px;\r\n    vertical-align: middle;\r\n    border: 0 none;\r\n}\r\n\r\n.emoji-menu .emoji-items a {\r\n    margin: -1px 0 0 -1px;\r\n    padding: 5px;\r\n    display: block;\r\n    float: left;\r\n    border-radius: 2px;\r\n    border: 0;\r\n}\r\n\r\n.emoji-menu .emoji-items a:hover {\r\n    background-color: #edf2f5;\r\n}\r\n\r\n.emoji-menu:after {\r\n    content: ' ';\r\n    display: block;\r\n    clear: left;\r\n}\r\n\r\n.emoji-menu a .label {\r\n    display: none;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -19970,7 +20198,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/** initial setup **/\n.nano {\n  position : relative;\n  width    : 100%;\n  height   : 100%;\n  overflow : hidden;\n}\n.nano > .nano-content {\n  position      : absolute;\n  overflow      : scroll;\n  overflow-x    : hidden;\n  top           : 0;\n  right         : 0;\n  bottom        : 0;\n  left          : 0;\n}\n.nano > .nano-content:focus {\n  outline: thin dotted;\n}\n.nano > .nano-content::-webkit-scrollbar {\n  display: none;\n}\n.has-scrollbar > .nano-content::-webkit-scrollbar {\n  display: block;\n}\n.nano > .nano-pane {\n  background : rgba(0,0,0,.25);\n  position   : absolute;\n  width      : 10px;\n  right      : 0;\n  top        : 0;\n  bottom     : 0;\n  visibility : hidden\\9; /* Target only IE7 and IE8 with this hack */\n  opacity    : .01;\n  transition            : .2s;\n  border-radius         : 5px;\n}\n.nano > .nano-pane > .nano-slider {\n  background: #444;\n  background: rgba(0,0,0,.5);\n  position              : relative;\n  margin                : 0 1px;\n  border-radius         : 3px;\n}\n.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {\n  visibility : visible\\9; /* Target only IE7 and IE8 with this hack */\n  opacity    : 0.99;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/** initial setup **/\r\n.nano {\r\n  position : relative;\r\n  width    : 100%;\r\n  height   : 100%;\r\n  overflow : hidden;\r\n}\r\n.nano > .nano-content {\r\n  position      : absolute;\r\n  overflow      : scroll;\r\n  overflow-x    : hidden;\r\n  top           : 0;\r\n  right         : 0;\r\n  bottom        : 0;\r\n  left          : 0;\r\n}\r\n.nano > .nano-content:focus {\r\n  outline: thin dotted;\r\n}\r\n.nano > .nano-content::-webkit-scrollbar {\r\n  display: none;\r\n}\r\n.has-scrollbar > .nano-content::-webkit-scrollbar {\r\n  display: block;\r\n}\r\n.nano > .nano-pane {\r\n  background : rgba(0,0,0,.25);\r\n  position   : absolute;\r\n  width      : 10px;\r\n  right      : 0;\r\n  top        : 0;\r\n  bottom     : 0;\r\n  visibility : hidden\\9; /* Target only IE7 and IE8 with this hack */\r\n  opacity    : .01;\r\n  transition            : .2s;\r\n  border-radius         : 5px;\r\n}\r\n.nano > .nano-pane > .nano-slider {\r\n  background: #444;\r\n  background: rgba(0,0,0,.5);\r\n  position              : relative;\r\n  margin                : 0 1px;\r\n  border-radius         : 3px;\r\n}\r\n.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {\r\n  visibility : visible\\9; /* Target only IE7 and IE8 with this hack */\r\n  opacity    : 0.99;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -58547,7 +58775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	var installedModules = {};
 /******/
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_669__(moduleId) {
+/******/ 	function __nested_webpack_require_692__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId]) {
@@ -58561,7 +58789,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_669__);
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_692__);
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
@@ -58572,20 +58800,20 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__nested_webpack_require_669__.m = modules;
+/******/ 	__nested_webpack_require_692__.m = modules;
 /******/
 /******/ 	// expose the module cache
-/******/ 	__nested_webpack_require_669__.c = installedModules;
+/******/ 	__nested_webpack_require_692__.c = installedModules;
 /******/
 /******/ 	// define getter function for harmony exports
-/******/ 	__nested_webpack_require_669__.d = function(exports, name, getter) {
-/******/ 		if(!__nested_webpack_require_669__.o(exports, name)) {
+/******/ 	__nested_webpack_require_692__.d = function(exports, name, getter) {
+/******/ 		if(!__nested_webpack_require_692__.o(exports, name)) {
 /******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
-/******/ 	__nested_webpack_require_669__.r = function(exports) {
+/******/ 	__nested_webpack_require_692__.r = function(exports) {
 /******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 		}
@@ -58597,35 +58825,35 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// mode & 2: merge all properties of value into the ns
 /******/ 	// mode & 4: return value when already ns object
 /******/ 	// mode & 8|1: behave like require
-/******/ 	__nested_webpack_require_669__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __nested_webpack_require_669__(value);
+/******/ 	__nested_webpack_require_692__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __nested_webpack_require_692__(value);
 /******/ 		if(mode & 8) return value;
 /******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
 /******/ 		var ns = Object.create(null);
-/******/ 		__nested_webpack_require_669__.r(ns);
+/******/ 		__nested_webpack_require_692__.r(ns);
 /******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __nested_webpack_require_669__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __nested_webpack_require_692__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
 /******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__nested_webpack_require_669__.n = function(module) {
+/******/ 	__nested_webpack_require_692__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
 /******/ 			function getDefault() { return module['default']; } :
 /******/ 			function getModuleExports() { return module; };
-/******/ 		__nested_webpack_require_669__.d(getter, 'a', getter);
+/******/ 		__nested_webpack_require_692__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
 /******/
 /******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__nested_webpack_require_669__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/ 	__nested_webpack_require_692__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__nested_webpack_require_669__.p = "";
+/******/ 	__nested_webpack_require_692__.p = "";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __nested_webpack_require_669__(__nested_webpack_require_669__.s = 2);
+/******/ 	return __nested_webpack_require_692__(__nested_webpack_require_692__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -59073,18 +59301,18 @@ exports.decode = decode;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __nested_webpack_require_19967__) {
+/***/ (function(module, exports, __nested_webpack_require_20516__) {
 
 // required so we don't have to do require('pusher').default etc.
-module.exports = __nested_webpack_require_19967__(3).default;
+module.exports = __nested_webpack_require_20516__(3).default;
 
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_20171__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_20728__) {
 
 "use strict";
-__nested_webpack_require_20171__.r(__webpack_exports__);
+__nested_webpack_require_20728__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./src/runtimes/web/dom/script_receiver_factory.ts
 var ScriptReceiverFactory = (function () {
@@ -61071,10 +61299,10 @@ var presence_channel_PresenceChannel = (function (_super) {
 /* harmony default export */ var presence_channel = (presence_channel_PresenceChannel);
 
 // EXTERNAL MODULE: ./node_modules/@stablelib/utf8/lib/utf8.js
-var utf8 = __nested_webpack_require_20171__(1);
+var utf8 = __nested_webpack_require_20728__(1);
 
 // EXTERNAL MODULE: ./node_modules/@stablelib/base64/lib/base64.js
-var base64 = __nested_webpack_require_20171__(0);
+var base64 = __nested_webpack_require_20728__(0);
 
 // CONCATENATED MODULE: ./src/core/channels/encrypted_channel.ts
 var encrypted_channel_extends = (undefined && undefined.__extends) || (function () {
@@ -69952,9 +70180,7 @@ var render = function() {
           _vm._v(" "),
           _c("rightbar"),
           _vm._v(" "),
-          _vm.isMounted
-            ? _c("contentProfile", { attrs: { UserId: _vm.id } })
-            : _vm._e()
+          _c("contentProfile")
         ],
         1
       ),
@@ -71609,12 +71835,9 @@ var render = function() {
                                                       attrs: {
                                                         to: {
                                                           name: "profile",
-                                                          params: {
-                                                            id: FriendList.id
-                                                          },
+
                                                           query: {
-                                                            user:
-                                                              FriendList.name
+                                                            user: FriendList.id
                                                           }
                                                         },
                                                         tag: "a"
@@ -71686,9 +71909,16 @@ var render = function() {
                     _vm._v(" "),
                     _c("ProfileAbout", { attrs: { user: _vm.user } }),
                     _vm._v(" "),
-                    _c("ProfileFriend", {
-                      attrs: { Id: _vm.user.id, status: _vm.user.status }
-                    }),
+                    _vm.loaded
+                      ? _c("ProfileFriend", {
+                          ref: "friends",
+                          attrs: {
+                            Id: _vm.user.id,
+                            IdOnline: _vm.OnlineUser.id,
+                            status: _vm.user.status
+                          }
+                        })
+                      : _vm._e(),
                     _vm._v(" "),
                     _c("ProfileImages", { attrs: { UserId: _vm.user.id } })
                   ],
@@ -73471,6 +73701,17 @@ var render = function() {
     [
       _c("div", { staticClass: "container" }, [
         _c(
+          "span",
+          {
+            staticClass: "badge badge-primary",
+            staticStyle: { cursor: "pointer", display: "none" },
+            attrs: { id: "New" },
+            on: { click: _vm.LoadFriends }
+          },
+          [_vm._v("New friends")]
+        ),
+        _vm._v(" "),
+        _c(
           "div",
           { staticClass: "row" },
           _vm._l(_vm.friends, function(friend) {
@@ -73546,11 +73787,8 @@ var render = function() {
                                 attrs: {
                                   to: {
                                     name: "profile",
-                                    params: {
-                                      id: friend.id
-                                    },
                                     query: {
-                                      user: friend.name
+                                      user: friend.id
                                     }
                                   },
                                   tag: "a"
@@ -75227,86 +75465,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "iq-sidebar" }, [
-    _c("div", { attrs: { id: "sidebar-scrollbar" } }, [
-      _c("nav", { staticClass: "iq-sidebar-menu" }, [
-        _c(
-          "ul",
-          { staticClass: "iq-menu", attrs: { id: "iq-sidebar-toggle" } },
-          [
-            _vm._l(_vm.menus, function(menu) {
-              return _c(
-                "li",
-                {
-                  key: menu.id,
-                  class: _vm.UrlHref == menu.href ? "active" : ""
-                },
-                [
-                  menu.href == "/profile"
-                    ? _c(
-                        "div",
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "iq-waves-effect",
-                              attrs: {
-                                to: {
-                                  name: "profile",
-                                  params: { id: _vm.user.id },
-                                  query: { user: _vm.user.name }
+  return _vm.user
+    ? _c("div", { staticClass: "iq-sidebar" }, [
+        _c("div", { attrs: { id: "sidebar-scrollbar" } }, [
+          _c("nav", { staticClass: "iq-sidebar-menu" }, [
+            _c(
+              "ul",
+              { staticClass: "iq-menu", attrs: { id: "iq-sidebar-toggle" } },
+              [
+                _vm._l(_vm.menus, function(menu) {
+                  return _c(
+                    "li",
+                    {
+                      key: menu.id,
+                      class: _vm.UrlHref == menu.href ? "active" : ""
+                    },
+                    [
+                      menu.href == "/profile"
+                        ? _c(
+                            "div",
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "iq-waves-effect",
+                                  attrs: {
+                                    to: {
+                                      name: "profile",
+                                      query: { user: _vm.user.id }
+                                    },
+                                    tag: "a",
+                                    exact: ""
+                                  }
                                 },
-                                tag: "a",
-                                exact: ""
-                              }
-                            },
-                            [
-                              _c("i", { class: menu.iClass }),
-                              _c("span", [_vm._v(_vm._s(menu.SpanName))])
-                            ]
+                                [
+                                  _c("i", { class: menu.iClass }),
+                                  _c("span", [_vm._v(_vm._s(menu.SpanName))])
+                                ]
+                              )
+                            ],
+                            1
                           )
-                        ],
-                        1
-                      )
-                    : _c(
-                        "div",
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "iq-waves-effect",
-                              attrs: { to: menu.href, tag: "a", exact: "" }
-                            },
+                        : _c(
+                            "div",
                             [
-                              _c("i", { class: menu.iClass }),
-                              _c("span", [_vm._v(_vm._s(menu.SpanName))])
-                            ]
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "iq-waves-effect",
+                                  attrs: { to: menu.href, tag: "a", exact: "" }
+                                },
+                                [
+                                  _c("i", { class: menu.iClass }),
+                                  _c("span", [_vm._v(_vm._s(menu.SpanName))])
+                                ]
+                              )
+                            ],
+                            1
                           )
-                        ],
-                        1
-                      )
-                ]
-              )
-            }),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                { staticClass: "iq-waves-effect", on: { click: _vm.logout } },
-                [
-                  _c("i", { staticClass: "ri-login-box-line" }),
-                  _c("span", [_vm._v("logout")])
-                ]
-              )
-            ])
-          ],
-          2
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-3" })
-    ])
-  ])
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c("li", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "iq-waves-effect",
+                      staticStyle: { cursor: "pointer" },
+                      on: { click: _vm.logout }
+                    },
+                    [
+                      _c("i", { staticClass: "ri-login-box-line" }),
+                      _c("span", [_vm._v("logout")])
+                    ]
+                  )
+                ])
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-3" })
+        ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -76235,8 +76478,7 @@ var render = function() {
                     attrs: {
                       to: {
                         name: "profile",
-                        params: { id: _vm.user.id },
-                        query: { user: _vm.user.name }
+                        query: { user: _vm.user.id }
                       },
                       tag: "a"
                     }
@@ -76279,7 +76521,23 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item" }, [
-          _vm._m(0),
+          _c(
+            "a",
+            {
+              staticClass: "search-toggle iq-waves-effect",
+              attrs: { href: "#" },
+              on: { click: _vm.removeDot }
+            },
+            [
+              _c("i", { staticClass: "ri-group-line" }),
+              _vm._v(" "),
+              _c("span", {
+                staticClass: "bg-danger dots",
+                staticStyle: { display: "none" },
+                attrs: { id: "redREQ" }
+              })
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown iq-sub-dropdown-large" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
@@ -76348,7 +76606,9 @@ var render = function() {
                                         _vm._v(" "),
                                         _c("p", { staticClass: "mb-0" }, [
                                           _vm._v(
-                                            "\n                                            40 friends\n                                        "
+                                            "\n                                            " +
+                                              _vm._s(friendReq.FriendCount) +
+                                              "\n                                            friends\n                                        "
                                           )
                                         ])
                                       ]
@@ -76439,7 +76699,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item" }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
@@ -76447,7 +76707,7 @@ var render = function() {
                 "div",
                 { staticClass: "iq-card-body p-0 " },
                 [
-                  _vm._m(2),
+                  _vm._m(1),
                   _vm._v(" "),
                   _vm._l(_vm.Notifications, function(notification) {
                     return _c(
@@ -76517,7 +76777,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item dropdown" }, [
-          _vm._m(3),
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
@@ -76525,7 +76785,7 @@ var render = function() {
                 "div",
                 { staticClass: "iq-card-body p-0 " },
                 [
-                  _vm._m(4),
+                  _vm._m(3),
                   _vm._v(" "),
                   _vm._l(_vm.messages, function(message) {
                     return _c(
@@ -76607,20 +76867,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "search-toggle iq-waves-effect", attrs: { href: "#" } },
-      [
-        _c("i", { staticClass: "ri-group-line" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "bg-danger dots" })
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -76795,38 +77041,39 @@ var render = function() {
                   "li",
                   { key: result.id },
                   [
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to: {
-                            name: "profile",
-                            params: { id: result.id },
-                            query: { user: result.name }
-                          },
-                          tag: "a",
-                          id: "pp"
-                        },
-                        nativeOn: {
-                          click: function($event) {
-                            return _vm.vide()
-                          }
-                        }
-                      },
-                      [
-                        _c("div", {}, [
-                          _c("img", {
-                            staticClass: "avatar-40 rounded",
+                    _vm.user.id != result.id
+                      ? _c(
+                          "router-link",
+                          {
                             attrs: {
-                              src: "images/user/" + result.profileimg.name,
-                              alt: "pp"
+                              to: {
+                                name: "profile",
+                                query: { user: result.id }
+                              },
+                              tag: "a",
+                              id: "pp"
+                            },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.vide()
+                              }
                             }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("span", [_vm._v(_vm._s(result.name))])
-                      ]
-                    )
+                          },
+                          [
+                            _c("div", {}, [
+                              _c("img", {
+                                staticClass: "avatar-40 rounded",
+                                attrs: {
+                                  src: "images/user/" + result.profileimg.name,
+                                  alt: "pp"
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("span", [_vm._v(_vm._s(result.name))])
+                          ]
+                        )
+                      : _vm._e()
                   ],
                   1
                 )
@@ -77474,6 +77721,17 @@ var render = function() {
                 [
                   _c("div", { staticClass: "iq-card-body p-0" }, [
                     _c(
+                      "span",
+                      {
+                        staticClass: "badge badge-primary",
+                        staticStyle: { cursor: "pointer", display: "none" },
+                        attrs: { id: "New" },
+                        on: { click: _vm.LoadFriends }
+                      },
+                      [_vm._v("New friends")]
+                    ),
+                    _vm._v(" "),
+                    _c(
                       "div",
                       { staticClass: "row" },
                       _vm._l(_vm.FriendLists, function(FriendList) {
@@ -77504,8 +77762,9 @@ var render = function() {
                                           attrs: {
                                             to: {
                                               name: "profile",
-                                              params: { id: FriendList.id },
-                                              query: { user: FriendList.name }
+                                              query: {
+                                                user: FriendList.id
+                                              }
                                             },
                                             tag: "a"
                                           }
@@ -77533,14 +77792,18 @@ var render = function() {
                                         { staticClass: "friend-info ml-3" },
                                         [
                                           _c("h5", [
-                                            _vm._v(_vm._s(FriendList.name))
+                                            _vm._v(
+                                              "\n                                                        " +
+                                                _vm._s(FriendList.name) +
+                                                "\n                                                    "
+                                            )
                                           ]),
                                           _vm._v(" "),
                                           _c("p", { staticClass: "mb-0" }, [
                                             _vm._v(
                                               "\n                                                        " +
                                                 _vm._s(FriendList.FriendCount) +
-                                                " friends\n                                                    "
+                                                "\n                                                        friends\n                                                    "
                                             )
                                           ])
                                         ]

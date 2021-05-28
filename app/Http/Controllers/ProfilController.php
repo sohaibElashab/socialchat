@@ -13,15 +13,20 @@ use App\Mail\Verify;
 use Illuminate\Support\Facades\Mail;
 use App\Models\FriendRequest;
 use App\Models\Friend;
+use App\Events\OfflineFriendEvent;
 
-
+ 
 class ProfilController extends Controller
 { 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function LogoutUser()
+    {
+        if(auth()->user()){
+            broadcast(new OfflineFriendEvent(auth()->user()));
+            Auth::logout();
+        } 
+    }
+
     public function index() 
     {
         $user = auth()->user();
@@ -70,12 +75,12 @@ class ProfilController extends Controller
             $from = auth()->user()->id;
             $to = $request->id;
 
-            $Frequest = FriendRequest::where('user_from',$from)->where('user_to',$to)->first();
+            $Frequest = FriendRequest::where('user_from',$from)->where('user_to',$to)->where('status','sent')->first();
             if($Frequest){
                 $user->message = "cancel";
             }
 
-            $Frequest = FriendRequest::where('user_from',$to)->where('user_to',$from)->first();
+            $Frequest = FriendRequest::where('user_from',$to)->where('user_to',$from)->where('status','sent')->first();
             if($Frequest){
                 $user->message = "accept";
             }

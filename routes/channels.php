@@ -13,6 +13,22 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('sendRequest.{id}', function ($user, $id) {
+    return Auth::check();
+});
+
+Broadcast::channel('cancelRequest.{id}', function ($user, $id) {
+    return Auth::check();
+});
+
+Broadcast::channel('acceptRequest.{id}', function ($user, $id) {
+    return Auth::check();
+});
+
+Broadcast::channel('onlineFriend', function () {
+    return Auth::check();
+});
+
+Broadcast::channel('offlineFriend', function () {
+    return Auth::check();
 });

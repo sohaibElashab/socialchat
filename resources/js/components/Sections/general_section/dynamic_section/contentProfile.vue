@@ -352,15 +352,24 @@
                                                 >
                                                     <li
                                                         class="col-md-4 col-6 pl-2 pr-0 pb-3"
-                                                        v-for="(FriendList, index) in FriendLists"
+                                                        v-for="(FriendList,
+                                                        index) in FriendLists"
                                                         :key="index"
                                                     >
+                                                        <!--params: {
+                                                                        id:
+                                                                            FriendList.id
+                                                                    },  -->
                                                         <div v-if="index < 9">
-                                                            <router-link 
+                                                            <router-link
                                                                 :to="{
-                                                                    name: 'profile',
-                                                                    params: { id: FriendList.id },
-                                                                    query: { user: FriendList.name }
+                                                                    name:
+                                                                        'profile',
+
+                                                                    query: {
+                                                                        user:
+                                                                            FriendList.id
+                                                                    }
                                                                 }"
                                                                 tag="a"
                                                             >
@@ -369,7 +378,8 @@
                                                                         `images/user/${FriendList.profileimg.name}`
                                                                     "
                                                                     alt="gallary-image"
-                                                                    class="img-fluid"/>
+                                                                    class="img-fluid"
+                                                                />
                                                             </router-link>
                                                             <h6
                                                                 class="mt-2 text-center"
@@ -398,7 +408,13 @@
                         <!-- about user -->
                         <ProfileAbout :user="user" />
                         <!-- friend lists -->
-                        <ProfileFriend :Id="user.id" :status="user.status"/>
+                        <ProfileFriend
+                            :Id="user.id"
+                            :IdOnline="OnlineUser.id"
+                            :status="user.status"
+                            ref="friends"
+                            v-if="loaded"
+                        />
                         <!-- photo galery -->
                         <ProfileImages :UserId="user.id" />
                     </div>
@@ -421,14 +437,16 @@ export default {
         CreatePost,
         Post,
         ProfileAbout
-    },
-    props: ["UserId"],
+    } /* 
+    props: ["UserId"], */,
     data() {
         return {
             date: null,
             user: null,
+            OnlineUser: null,
             message: "",
             FriendLists: null,
+            loaded: false,
             images: [],
             posts: {
                 "1": {
@@ -493,22 +511,22 @@ export default {
         };
     },
     mounted() {
-        if (this.UserId != null) {
+        /*   if (this.UserId != null) {
             sessionStorage.clear();
             sessionStorage.setItem("id", this.UserId);
-        }
+        } */
         this.load();
         this.imagesLoad();
         this.friendLoad();
     },
     methods: {
         load() {
-            var id = sessionStorage.getItem("id");
+            /*   var id = sessionStorage.getItem("id");
             console.log("profile content");
-            console.log(sessionStorage.getItem("id"));
+            console.log(sessionStorage.getItem("id")); */
             axios
                 .post("/UserProfile", {
-                    id: id
+                    id: this.$route.query.user
                 })
                 .then(res => {
                     console.log(res.data);
@@ -518,7 +536,66 @@ export default {
                     } else {
                         this.message = "";
                     }
+                    Echo.private(`cancelRequest.${this.user.id}`).listen(
+                        "CancelRequestEvent",
+                        e => {
+                            console.log(e.user.name);
+                            if (this.user.status == "friend") {
+                                this.message = "";
+                            }
+                        }
+                    );
+
+                    Echo.private(`sendRequest.${this.user.id}`).listen(
+                        "SendRequestEvent",
+                        e => {
+                            console.log(e.user);
+                            console.log("accept");
+                        }
+                    );
+
+                    Echo.private(`acceptRequest.${this.user.id}`).listen(
+                        "AcceptRequestEvent",
+                        e => {
+                            console.log(e.user.name);
+                            if (this.user.status == "friend") {
+                                this.message = "friend";
+                            }
+                        }
+                    );
                 });
+
+            axios.get("/profile").then(res => {
+                this.OnlineUser = res.data;
+                this.loaded = true;
+                Echo.private(`cancelRequest.${this.OnlineUser.id}`).listen(
+                    "CancelRequestEvent",
+                    e => {
+                        //console.log(e.user.name);
+                        /*  if (this.user.status == "friend") {
+                            } */
+                        this.message = "";
+                    }
+                );
+
+                Echo.private(`sendRequest.${this.OnlineUser.id}`).listen(
+                    "SendRequestEvent",
+                    e => {
+                        //console.log(e.user);
+                        this.message = "accept";
+                    }
+                );
+
+                Echo.private(`acceptRequest.${this.OnlineUser.id}`).listen(
+                    "AcceptRequestEvent",
+                    e => {
+                        //console.log(e.user.name);
+                        /*    if (this.user.status == "friend") {
+                            } */
+                        this.message = "friend";
+                    }
+                );
+            });
         },
         sendRequest() {
             axios
@@ -549,6 +626,8 @@ export default {
                 .then(res => {
                     console.log(res);
                     this.message = "friend";
+                    /*    var child = this.$refs.friends;
+                    child.LoadFriends(); */
                 });
         },
         RemoveFriend() {
@@ -559,34 +638,37 @@ export default {
                 .then(res => {
                     console.log(res);
                     this.message = "";
+                    var child = this.$refs.friends;
+                    child.LoadFriends();
                 });
         },
         imagesLoad() {
-            axios.post("/ProfileImages" , { id: this.UserId })
-                .then(res => {
-                    this.images = res.data;
+            axios.post("/ProfileImages", { id: this.UserId }).then(res => {
+                this.images = res.data;
             });
             console.log("yay");
         },
         friendLoad() {
             axios
                 .post("/LoadFriends", {
-                    id: this.UserId
+                    id: this.$route.query.user
                 })
                 .then(res => {
                     console.log(res.data);
                     this.FriendLists = res.data;
-            });
+                });
         }
     },
     watch: {
-        UserId: function() {
-            if (this.UserId != null) {
+        "$route.query.user": function() {
+            /*      if (this.UserId != null) {
                 sessionStorage.clear();
                 sessionStorage.setItem("id", this.user.id);
                 // console.log("profile content watch");
-                this.load();
-            }
+            } */
+            this.load();
+            this.friendLoad();
+            this.imagesLoad();
         }
     }
 };

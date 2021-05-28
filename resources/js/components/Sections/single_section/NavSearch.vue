@@ -1,5 +1,5 @@
 <template>
-    <div class="iq-search-bar" >
+    <div class="iq-search-bar">
         <form action="#" class="searchbox">
             <input
                 type="text"
@@ -19,13 +19,14 @@
                         <router-link
                             :to="{
                                 name: 'profile',
-                                params: { id: result.id },
-                                query: { user: result.name }
+                                query: { user: result.id }
                             }"
                             v-on:click.native="vide()"
                             tag="a"
                             id="pp"
-                            >
+                            v-if="user.id != result.id"
+                            ><!-- 
+                                params: { id: result.id }, -->
                             <div class="">
                                 <img
                                     class="avatar-40 rounded"
@@ -67,7 +68,7 @@
 export default {
     props: {
         show: {
-            type:Boolean,
+            type: Boolean,
             require: false
         }
     },
@@ -80,7 +81,7 @@ export default {
         };
     },
     mounted() {
-        axios.get("/profile").then(res => { 
+        axios.get("/profile").then(res => {
             //console.log(res.data);
             this.user = res.data;
         });
@@ -105,26 +106,23 @@ export default {
                 e.preventDefault();
             }
         },
-        vide(){
+        vide() {
             this.value = "";
             this.results = [];
         }
     },
     watch: {
         show: function() {
-                    console.log("showSearch")
+            console.log("showSearch");
             var search = document.getElementsByClassName("iq-search-bar");
             // show ? search.style.display = "flex" : search.style.display = "none" ;
-            if(this.show)
-                {
-                    search[0].style.display = "flex";
-                    console.log("fles")
-                }
-            else
-                {
-                    search[0].style.display = "none" ;
-                    console.log("none")
-                }
+            if (this.show) {
+                search[0].style.display = "flex";
+                console.log("fles");
+            } else {
+                search[0].style.display = "none";
+                console.log("none");
+            }
         }
     }
 };

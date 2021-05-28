@@ -1,16 +1,15 @@
 <template>
-    <div class="collapse navbar-collapse" :class="{show: show}">
+    <div class="collapse navbar-collapse" :class="{ show: show }">
         <ul class="navbar-nav ml-auto navbar-list">
             <li v-if="this.isMounted">
                 <router-link
                     :to="{
                         name: 'profile',
-                        params: { id: user.id },
-                        query: { user: user.name }
+                        query: { user: user.id }
                     }"
                     tag="a"
                     class="iq-waves-effect d-flex align-items-center"
-                >
+                    ><!-- params: { id: user.id }, -->
                     <img
                         :src="`images/user/${img}`"
                         class="img-fluid rounded-circle mr-3"
@@ -33,9 +32,16 @@
                 </router-link>
             </li>
             <li class="nav-item">
-                <a class="search-toggle iq-waves-effect" href="#"
+                <a
+                    class="search-toggle iq-waves-effect"
+                    href="#"
+                    @click="removeDot"
                     ><i class="ri-group-line"></i>
-                    <span class="bg-danger dots"></span>
+                    <span
+                        class="bg-danger dots"
+                        id="redREQ"
+                        style="display:none;"
+                    ></span>
                 </a>
                 <div class="iq-sub-dropdown iq-sub-dropdown-large">
                     <div class="iq-card shadow-none m-0">
@@ -71,7 +77,8 @@
                                                 {{ friendReq.name }}
                                             </h6>
                                             <p class="mb-0">
-                                                40 friends
+                                                {{ friendReq.FriendCount }}
+                                                friends
                                             </p>
                                         </div>
                                     </div>
@@ -229,8 +236,8 @@
 import EventBus from "../../../event-bus";
 export default {
     props: {
-        show:{
-            type : Boolean,
+        show: {
+            type: Boolean,
             require: false
         }
     },
@@ -307,6 +314,46 @@ export default {
             this.user = res.data;
             this.img = this.user.profileimg.name;
             this.isMounted = true;
+            Echo.private(`sendRequest.${this.user.id}`).listen(
+                "SendRequestEvent",
+                e => {
+                    console.log(e.user);
+                    this.allReqs.unshift(e.user);
+                    this.friendReqs = this.allReqs.slice(0, 4);
+                    this.loadedReqs = true;
+                    document.getElementById("redREQ").style.display = "initial";
+                }
+            );
+            Echo.private(`cancelRequest.${this.user.id}`).listen(
+                "CancelRequestEvent",
+                e => {
+                    console.log(e.user);
+                    // console.log(this.allReqs.indexOf(e.user));
+                    this.allReqs.forEach(req => {
+                        if (req.id === e.user.id) {
+                            var index = this.allReqs.indexOf(req);
+                            this.allReqs.splice(index, 1);
+                            this.friendReqs = this.allReqs.slice(0, 4);
+                            this.loadedReqs = true;
+                        }
+                    });
+                }
+            );
+            Echo.private(`acceptRequest.${this.user.id}`).listen(
+                "AcceptRequestEvent",
+                e => {
+                    console.log(e.user);
+                    // console.log(this.allReqs.indexOf(e.user));
+                    this.allReqs.forEach(req => {
+                        if (req.id === e.user.id) {
+                            var index = this.allReqs.indexOf(req);
+                            this.allReqs.splice(index, 1);
+                            this.friendReqs = this.allReqs.slice(0, 4);
+                            this.loadedReqs = true;
+                        }
+                    });
+                }
+            );
         });
 
         axios.get("/LoadRequests").then(res => {
@@ -402,7 +449,6 @@ export default {
                 console.log("block")
                 setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/typography.css","http://127.0.0.1:8000/css/style.css","http://127.0.0.1:8000/css/responsive.css"), 3000);
                 setTimeout(function(){ loading.style.display = "none" }, 1000); */
-                
 
                 var mode = (a, b, c) => {
                     return this.modeTOmode(a, b, c);
@@ -475,6 +521,9 @@ export default {
                 .getElementsByTagName("head")
                 .item(0)
                 .replaceChild(newlinkresponsive, oldlinkresponsive);
+        },
+        removeDot() {
+            document.getElementById("redREQ").style.display = "none";
         }
     }
 };

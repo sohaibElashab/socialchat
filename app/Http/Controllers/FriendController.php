@@ -8,6 +8,9 @@ use App\Models\Image;
 use App\Models\FriendRequest;
 use App\Models\Friend;
 use Illuminate\Support\Facades\DB;
+use App\Events\SendRequestEvent;
+use App\Events\CancelRequestEvent;
+use App\Events\AcceptRequestEvent;
 
 class FriendController extends Controller
 {
@@ -49,14 +52,19 @@ class FriendController extends Controller
     {
         $from = auth()->user()->id;
         $to = $request->id;
+        $req = $Frequest = FriendRequest::where('user_from',$from)->where('user_to',$to)->first();
 
-        $Frequest = FriendRequest::create([
+        if($req == null){
+            $Frequest = FriendRequest::create([
             'user_from' => $from,
             'user_to' => $to,
             'status' => 'sent',
-        ]); 
+            ]); 
 
-        return response()->json($Frequest);
+            broadcast(new SendRequestEvent($Frequest));
+
+            return response()->json($Frequest);
+        }
     }
 
     public function DeleteRequest(Request $request)
@@ -64,16 +72,21 @@ class FriendController extends Controller
         
         $from = auth()->user()->id;
         $to = $request->id;
-        $Frequest = FriendRequest::where('user_from',$from)->where('user_to',$to)->delete();
-        echo $Frequest;
-        //return response()->json(); 
+        $req = FriendRequest::where('user_from',$from)->where('user_to',$to)->first();
+        broadcast(new CancelRequestEvent($req));
+        $req->delete();
+        //$Frequest = FriendRequest::where('user_from',$from)->where('user_to',$to)->delete();
+        return response()->json(); 
     }
  
     public function DeleteReq(Request $request)
     {
         $from = auth()->user()->id;
         $to = $request->id;
-        $Frequest = FriendRequest::where('user_from',$to)->where('user_to',$from)->delete();
+        $req = FriendRequest::where('user_from',$to)->where('user_to',$from)->first();
+        broadcast(new CancelRequestEvent($req));
+        $req->delete();
+        // $Frequest = FriendRequest::where('user_from',$to)->where('user_to',$from)->delete();
         
         return response()->json(); 
     }
@@ -87,8 +100,11 @@ class FriendController extends Controller
             'user_id' => $user_id,
             'friend_id' => $friend_id
         ]);
-
-        $Frequest = FriendRequest::where('user_from',$friend_id)->where('user_to',$user_id)->delete();
+            //update in original project
+        $Frequest = FriendRequest::where('user_from',$friend_id)->where('user_to',$user_id)->first();
+        $Frequest->status = "accepted";
+        $Frequest->save();
+        broadcast(new AcceptRequestEvent($Frequest));
 
         return response()->json($friend);
     }
@@ -102,6 +118,14 @@ class FriendController extends Controller
         })->orWhere(function($q) use ($id) {
             $q->where('friend_id',auth()->id());
             $q->where('user_id',$id);
+        })->delete(); 
+        
+        $req = FriendRequest::where(function($q) use ($id){
+            $q->where('user_from',auth()->id());
+            $q->where('user_to',$id);
+        })->orWhere(function($q) use ($id) {
+            $q->where('user_to',auth()->id());
+            $q->where('user_from',$id);
         })->delete(); 
         
         return response()->json();

@@ -1,5 +1,5 @@
 <template>
-    <div class="iq-sidebar">
+    <div class="iq-sidebar" v-if="user">
         <div id="sidebar-scrollbar">
             <nav class="iq-sidebar-menu">
                 <ul id="iq-sidebar-toggle" class="iq-menu">
@@ -9,12 +9,12 @@
                         :key="menu.id"
                     >
                         <div v-if="menu.href == '/profile'">
+                            <!-- params: { id: user.id }, -->
                             <router-link
                                 class="iq-waves-effect"
                                 :to="{
                                     name: 'profile',
-                                    params: { id: user.id },
-                                    query: { user: user.name }
+                                    query: { user: user.id }
                                 }"
                                 tag="a"
                                 exact=""
@@ -34,7 +34,11 @@
                         </div>
                     </li>
                     <li>
-                        <a class="iq-waves-effect" @click="logout">
+                        <a
+                            class="iq-waves-effect"
+                            @click="logout"
+                            style="cursor:pointer;"
+                        >
                             <i class="ri-login-box-line"></i><span>logout</span>
                         </a>
                     </li>
@@ -112,7 +116,7 @@ export default {
     methods: {
         logout(e) {
             e.preventDefault();
-            axios.post("/logout").then(res => {
+            axios.post("/LogoutUser").then(res => {
                 console.log(res);
                 this.$router.push({ name: "signIn" });
             });
@@ -120,11 +124,11 @@ export default {
     },
     created() {
         this.UrlHref = "/" + window.location.href.split("/")[4];
-        
+
         axios.get("/profile").then(res => {
             console.log(res.data);
             this.user = res.data;
-            this.menus[2].href = "/profile?user="+this.user.name;
+            this.menus[2].href = "/profile?user=" + this.user.id;
         });
     }
 };

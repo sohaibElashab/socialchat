@@ -15,8 +15,9 @@
             <!-- Right Sidebar Panel End-->
 
             <!-- Page Content  -->
-            <contentProfile :UserId="id" v-if="isMounted" />
+            <contentProfile />
             <!-- Page Content End -->
+            <!--  :UserId="id" v-if="isMounted"-->
         </div>
         <!-- Wrapper END -->
         <bottombar />
@@ -27,15 +28,16 @@
 <script>
 import contentProfile from "./../Sections/general_section/dynamic_section/contentProfile.vue";
 export default {
-    props: ["id"],
+    /* 
+    props: ["id"], */
     components: {
         contentProfile
-    },
+    } /*,
     data() {
         return {
             isMounted: false
         };
-    },
+    } ,
     mounted() {
         console.log("profile mounted   " + this.id);
         this.isMounted = true;
@@ -45,7 +47,7 @@ export default {
             console.log("profile watch   " + this.id);
             this.isMounted = true;
         }
-    }
+    } */
 
     /* ,
     beforeRouteEnter(to, from, next) {
