@@ -13386,7 +13386,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       postImgs: [],
-      postVds: []
+      postVds: ""
     };
   },
   methods: {
@@ -13418,17 +13418,7 @@ __webpack_require__.r(__webpack_exports__);
         this.postImgs = newPostImgs;
       } else {
         console.log("removeFile else");
-        var newPostVds = [];
-
-        for (var _index = 0; _index < this.postVds.length; _index++) {
-          if (this.postVds[_index].vd != path) {
-            newPostVds.push({
-              vd: this.postVds[_index].img
-            });
-          }
-        }
-
-        this.postVds = newPostVds;
+        this.postVds = "";
       }
 
       this.disabled();
@@ -13444,16 +13434,14 @@ __webpack_require__.r(__webpack_exports__);
     addVd: function addVd(e) {
       var file = e.target.files[0];
       var NewVd = URL.createObjectURL(file);
-      this.postVds.push({
-        vd: NewVd
-      });
+      this.postVds = NewVd;
       this.disabled();
     },
     disabled: function disabled() {
       if (this.postImgs.length > 0) {
         document.getElementById("addvd").setAttribute('disabled', 'disabled');
         document.getElementById("div-vd").classList.add('classDisabled');
-      } else if (this.postVds.length > 0) {
+      } else if (this.postVds != "") {
         document.getElementById("addImg").setAttribute('disabled', 'disabled');
         document.getElementById("div-img").classList.add('classDisabled');
       } else {
@@ -13462,11 +13450,9 @@ __webpack_require__.r(__webpack_exports__);
         document.getElementById("div-img").classList.remove('classDisabled');
         document.getElementById("div-vd").classList.remove('classDisabled');
       }
-
-      if (this.postVds.length == 1) {
-        document.getElementById("addvd").setAttribute('disabled', 'disabled');
-        document.getElementById("div-vd").classList.add('classDisabled');
-      }
+    },
+    SelectFFeeling: function SelectFFeeling() {
+      consol.log("index");
     }
   },
   components: {
@@ -20423,7 +20409,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.feelings[data-v-eb6038b2]{\r\n   position: relative;\r\n   width: 97%;\r\n   border: 1px solid var(--primary);\r\n   border-radius: 10px;\r\n   margin-top: 10px;\r\n   display: flex;\r\n   flex-wrap: wrap;\r\n   justify-content: center;\n}\n.feeling[data-v-eb6038b2]{\r\n   position: relative;\r\n   width: 48%;\r\n   height: 45px;\r\n   margin: 5px;\r\n   border-radius: 10px;\r\n   display: flex;\r\n   flex-direction: row;\r\n   align-items: center;\r\n   justify-content: center;\n}\n.feeling[data-v-eb6038b2]:hover{\r\n   background: rgba(128, 128, 128, 0.171);\n}\n.feelImg[data-v-eb6038b2]{\r\n   position: relative;\r\n   width: 20%;\r\n   text-align: center;\n}\n.feelSpan[data-v-eb6038b2]{\r\n   position: relative;\r\n   \r\n   width: 60%;\r\n   text-align: center;\n}\n.img-add[data-v-eb6038b2] { \r\n   width: 100%;\r\n   height: 100%;\r\n   position: relative;\r\n   top: -25px;\n}\n.delete-btn[data-v-eb6038b2] { \r\n   position: relative;\r\n   top: 5px;\r\n   left: 150px;\r\n   background: var(--iq-white);\r\n   height: 25px;\r\n   width: 25px;\r\n   text-align: center;\r\n   border: none;\r\n   border-radius: 5px;\r\n   opacity: 0;\r\n   z-index: 1;\n}\n.add-images:hover .delete-btn[data-v-eb6038b2],\r\n.add-video:hover .delete-btn[data-v-eb6038b2] { \r\n   opacity: 1; \r\n   transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-eb6038b2] { \r\n   color: var(--iq-primary);\n}\n.vd-btn[data-v-eb6038b2]{\r\n   position: absolute;\r\n    left: 90%\n}\n.add-images[data-v-eb6038b2] { \r\n   width: 180px;\r\n   height: 180px;\r\n   margin: 10px;\r\n   float: left;\n}\n.classDisabled[data-v-eb6038b2]{\r\n   color: grey !important\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.feelings[data-v-eb6038b2]{\r\n   position: relative;\r\n   width: 97%;\r\n   border: 1px solid var(--primary);\r\n   border-radius: 10px;\r\n   margin-top: 10px;\r\n   display: flex;\r\n   flex-wrap: wrap;\r\n   justify-content: center;\n}\n.feeling[data-v-eb6038b2]{\r\n   position: relative;\r\n   width: 48%;\r\n   height: 45px;\r\n   margin: 5px;\r\n   border-radius: 10px;\r\n   display: flex;\r\n   flex-direction: row;\r\n   align-items: center;\r\n   justify-content: center;\n}\n.feeling[data-v-eb6038b2]:hover{\r\n   background: rgba(128, 128, 128, 0.171);\n}\n.feelImg[data-v-eb6038b2]{\r\n   position: relative;\r\n   width: 20%;\r\n   text-align: center;\n}\n.feelSpan[data-v-eb6038b2]{\r\n   position: relative;\r\n   \r\n   width: 60%;\r\n   text-align: center;\n}\n.img-add[data-v-eb6038b2] { \r\n   width: 100%;\r\n   height: 100%;\r\n   position: relative;\r\n   top: -25px;\n}\n.delete-btn[data-v-eb6038b2] { \r\n   position: relative;\r\n   top: 5px;\r\n   left: 150px;\r\n   background: var(--iq-white);\r\n   height: 25px;\r\n   width: 25px;\r\n   text-align: center;\r\n   border: none;\r\n   border-radius: 5px;\r\n   opacity: 0;\r\n   z-index: 1;\n}\n.add-images:hover .delete-btn[data-v-eb6038b2],\r\n.add-video:hover .delete-btn[data-v-eb6038b2] { \r\n   opacity: 1; \r\n   transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-eb6038b2] { \r\n   color: var(--iq-primary);\n}\n.vd-btn[data-v-eb6038b2]{\r\n   position: absolute;\r\n    left: 90%\n}\n.add-images[data-v-eb6038b2] { \r\n   width: 180px;\r\n   height: 180px;\r\n   margin: 10px;\r\n   float: left;\n}\n.classDisabled[data-v-eb6038b2]{\r\n   color: grey !important\n}\n.classActive[data-v-eb6038b2]{\r\n   background: rgba(128, 128, 128, 0.171) !important\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -76481,7 +76467,7 @@ var render = function() {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
-                      _vm.postVds.length > 0
+                      _vm.postVds
                         ? _c("div", [
                             _c(
                               "div",
@@ -76495,11 +76481,10 @@ var render = function() {
                                     staticClass:
                                       "bd-highlight justify-content-center mt-2"
                                   },
-                                  _vm._l(_vm.postVds, function(vds, index) {
-                                    return _c(
+                                  [
+                                    _c(
                                       "div",
                                       {
-                                        key: index,
                                         staticClass:
                                           "embed-responsive embed-responsive-16by9 add-video"
                                       },
@@ -76512,7 +76497,9 @@ var render = function() {
                                               staticClass: "ri-delete-bin-line",
                                               on: {
                                                 click: function($event) {
-                                                  return _vm.removeFile(vds.vd)
+                                                  return _vm.removeFile(
+                                                    _vm.postVds
+                                                  )
                                                 }
                                               }
                                             })
@@ -76525,14 +76512,14 @@ var render = function() {
                                           [
                                             _c("source", {
                                               attrs: {
-                                                src: vds.vd,
+                                                src: _vm.postVds,
                                                 type: "video/mp4"
                                               }
                                             }),
                                             _vm._v(" "),
                                             _c("source", {
                                               attrs: {
-                                                src: vds.vd,
+                                                src: _vm.postVds,
                                                 type: "video/webm"
                                               }
                                             }),
@@ -76543,7 +76530,9 @@ var render = function() {
                                               ),
                                               _c(
                                                 "a",
-                                                { attrs: { href: vds.vd } },
+                                                {
+                                                  attrs: { href: _vm.postVds }
+                                                },
                                                 [
                                                   _vm._v(
                                                     "un lien pour télécharger la vidéo"
@@ -76556,8 +76545,7 @@ var render = function() {
                                         )
                                       ]
                                     )
-                                  }),
-                                  0
+                                  ]
                                 )
                               ]
                             ),
@@ -76648,7 +76636,15 @@ var render = function() {
                                   ) {
                                     return _c(
                                       "div",
-                                      { key: index, staticClass: "feeling" },
+                                      {
+                                        key: index,
+                                        staticClass: "feeling",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.SelectFFeeling()
+                                          }
+                                        }
+                                      },
                                       [
                                         _c("div", { staticClass: "feelImg" }, [
                                           _c("img", {
@@ -76663,9 +76659,9 @@ var render = function() {
                                         _c("div", { staticClass: "feelSpan" }, [
                                           _c("span", [
                                             _vm._v(
-                                              " \n                                    " +
+                                              " \n                                       " +
                                                 _vm._s(feeling.FeelTitle) +
-                                                "\n                                 "
+                                                "\n                                    "
                                             )
                                           ])
                                         ])

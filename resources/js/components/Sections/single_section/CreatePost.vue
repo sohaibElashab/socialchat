@@ -69,18 +69,18 @@
                      </div> 
                      <hr>
                   </div> 
-                  <div v-if="postVds.length > 0">
+                  <div v-if="postVds">
                      <div class="d-flex flex-column bd-highlight">
                         <div class="bd-highlight justify-content-center mt-2">
-                           <div class="embed-responsive embed-responsive-16by9 add-video" v-for="(vds , index) in postVds" :key="index">
+                           <div class="embed-responsive embed-responsive-16by9 add-video">
                               <button class="delete-btn vd-btn" >
-                                 <i class="ri-delete-bin-line" @click="removeFile(vds.vd)"></i>
+                                 <i class="ri-delete-bin-line" @click="removeFile(postVds)"></i>
                               </button>
                               <video controls >
-                                 <source :src="vds.vd" type="video/mp4">
-                                 <source :src="vds.vd" type="video/webm">
+                                 <source :src="postVds" type="video/mp4">
+                                 <source :src="postVds" type="video/webm">
                                  <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
-                                    Voici <a :href="vds.vd">un lien pour télécharger la vidéo</a>.</p>
+                                    Voici <a :href="postVds">un lien pour télécharger la vidéo</a>.</p>
                               </video>
                            </div>
                         </div>
@@ -113,15 +113,15 @@
                         </div>
                         <div class="collapse" :class="{ show: showFeeling }">
                            <div class="feelings">
-                              <div class="feeling" v-for="(feeling,index) in feelings" :key="index">
-                                 <div class="feelImg">
-                                    <img :src="feeling.FeelImg" alt="feeling icon" style="width: 60%;">
-                                 </div>
-                                 <div class="feelSpan">
-                                    <span> 
-                                       {{feeling.FeelTitle}}
-                                    </span>
-                                 </div>
+                              <div class="feeling" v-for="(feeling,index) in feelings" :key="index" v-on:click="SelectFFeeling()">
+                                    <div class="feelImg">
+                                       <img :src="feeling.FeelImg" alt="feeling icon" style="width: 60%;">
+                                    </div>
+                                    <div class="feelSpan">
+                                       <span> 
+                                          {{feeling.FeelTitle}}
+                                       </span>
+                                    </div>
                               </div>
                            </div>
                         </div>
@@ -178,7 +178,7 @@ export default {
             },
          },
          postImgs: [],
-         postVds: []
+         postVds: ""
       }
    },
    methods: {
@@ -205,13 +205,7 @@ export default {
             this.postImgs = newPostImgs
          }else{
             console.log("removeFile else")
-            var newPostVds = []
-            for (let index = 0; index < this.postVds.length; index++) {
-               if(this.postVds[index].vd != path){
-                  newPostVds.push({ vd : this.postVds[index].img})
-               }
-            }
-            this.postVds = newPostVds
+            this.postVds = ""
          }
          this.disabled();
       },
@@ -224,7 +218,7 @@ export default {
       addVd(e){
          const file = e.target.files[0];
          var NewVd = URL.createObjectURL(file);
-         this.postVds.push({ vd : NewVd });
+         this.postVds = NewVd;
          this.disabled();
       },
       disabled(){
@@ -232,7 +226,7 @@ export default {
             	document.getElementById("addvd").setAttribute('disabled','disabled');
             	document.getElementById("div-vd").classList.add('classDisabled');
 
-         }else if(this.postVds.length > 0){
+         }else if(this.postVds != ""){
             	document.getElementById("addImg").setAttribute('disabled','disabled');
             	document.getElementById("div-img").classList.add('classDisabled');
          }else{
@@ -241,11 +235,9 @@ export default {
             	document.getElementById("div-img").classList.remove('classDisabled');
             	document.getElementById("div-vd").classList.remove('classDisabled');
          }
-
-         if (this.postVds.length == 1){
-            	document.getElementById("addvd").setAttribute('disabled','disabled');
-            	document.getElementById("div-vd").classList.add('classDisabled');
-         }
+      },
+      SelectFFeeling(){
+         consol.log("index")
       }
    },
    components: {
@@ -334,5 +326,8 @@ export default {
 }
 .classDisabled{
    color: grey !important
+}
+.classActive{
+   background: rgba(128, 128, 128, 0.171) !important
 }
 </style>
