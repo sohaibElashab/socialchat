@@ -606,6 +606,11 @@ class ComposerStaticInit902e0e25db7b28765152cd88a93e1973
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\Events\\AcceptRequestEvent' => __DIR__ . '/../..' . '/app/Events/AcceptRequestEvent.php',
+        'App\\Events\\CancelRequestEvent' => __DIR__ . '/../..' . '/app/Events/CancelRequestEvent.php',
+        'App\\Events\\OfflineFriendEvent' => __DIR__ . '/../..' . '/app/Events/OfflineFriendEvent.php',
+        'App\\Events\\OnlineFriendEvent' => __DIR__ . '/../..' . '/app/Events/OnlineFriendEvent.php',
+        'App\\Events\\SendRequestEvent' => __DIR__ . '/../..' . '/app/Events/SendRequestEvent.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -643,6 +648,7 @@ class ComposerStaticInit902e0e25db7b28765152cd88a93e1973
         'App\\Models\\Message' => __DIR__ . '/../..' . '/app/Models/Message.php',
         'App\\Models\\MessageRead' => __DIR__ . '/../..' . '/app/Models/MessageRead.php',
         'App\\Models\\Notification' => __DIR__ . '/../..' . '/app/Models/Notification.php',
+        'App\\Models\\Online' => __DIR__ . '/../..' . '/app/Models/Online.php',
         'App\\Models\\Post' => __DIR__ . '/../..' . '/app/Models/Post.php',
         'App\\Models\\PostLike' => __DIR__ . '/../..' . '/app/Models/PostLike.php',
         'App\\Models\\PostSave' => __DIR__ . '/../..' . '/app/Models/PostSave.php',

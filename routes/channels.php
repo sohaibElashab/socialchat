@@ -33,6 +33,3 @@ Broadcast::channel('offlineFriend', function () {
     return Auth::check();
 });
 
-Broadcast::channel('users', function ($user) {
-    return $user;
-});

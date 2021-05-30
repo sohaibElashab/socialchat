@@ -33,6 +33,7 @@ Route::get('/imagesProfile', [App\Http\Controllers\ProfilController::class, 'Get
 Route::get('/videosProfile', [App\Http\Controllers\ProfilController::class, 'GetVideos']);
 Route::post('/ProfileImages', [App\Http\Controllers\ProfilController::class, 'GetImagesProfile']);
 Route::post('/LogoutUser', [App\Http\Controllers\ProfilController::class, 'LogoutUser']);
+Route::get('/OnlineUsers', [App\Http\Controllers\ProfilController::class, 'OnlineUsers']); 
 
 //FriendController
 Route::post('/ProfileSearch', [App\Http\Controllers\FriendController::class, 'ProfileSearch']);

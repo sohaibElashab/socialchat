@@ -59,6 +59,7 @@ export default {
             friends: null,
             changed: false,
             DBfriends: null,
+            OnlineUser: null,
             friendsLL: {
                 "1": {
                     id: 1,
@@ -144,71 +145,24 @@ export default {
         };
     },
     mounted() {
-        var ses = sessionStorage.getItem("OnlFriends");
-        this.friends = JSON.parse(ses);
-        axios
-            .post("/LoadFriends", {
-                id: null
-            })
-            .then(res => {
-                console.log("friends");
-                console.log(res.data);
-                this.DBfriends = res.data;
-                Echo.join("users").here(users => {
-                    console.log("changed");
-                    users.forEach(user => {
-                        if (this.checkFriend(user.id) != null) {
-                            console.log(user);
-                            var fr = this.checkFriend(user.id);
-                            var index = this.DBfriends.indexOf(fr);
-                            this.DBfriends[index].statu = "status-online";
-                            this.DBfriends[index].time = "Online";
-                        }
-                    });
-                    console.log("pp");
-                    console.log(this.DBfriends);
-                    this.friends = this.DBfriends;
-                    sessionStorage.clear();
+        /* var ses = sessionStorage.getItem("OnlFriends");
+        console.log("session friends");
+        console.log(JSON.parse(ses));
+        this.friends = JSON.parse(ses); */
 
-                    sessionStorage.setItem(
-                        "OnlFriends",
-                        JSON.stringify(this.friends)
-                    );
-                });
+        axios.get("/profile").then(res => {
+            this.OnlineUser = res.data;
+            console.log("aa");
+            Echo.private(`acceptRequest.${this.OnlineUser.id}`).listen(
+                "AcceptRequestEvent",
+                e => {
+                    console.log("bb");
+                    this.load();
+                }
+            );
+        });
 
-                Echo.private(`onlineFriend`).listen("OnlineFriendEvent", e => {
-                    if (this.checkOnlineFriend(e.user.id) != null) {
-                        var fr = this.checkOnlineFriend(e.user.id);
-                        var index = this.friends.indexOf(fr);
-                        this.friends[index].statu = "status-online";
-                        this.friends[index].time = "Online";
-                        sessionStorage.clear();
-
-                        sessionStorage.setItem(
-                            "OnlFriends",
-                            JSON.stringify(this.friends)
-                        );
-                    }
-                });
-
-                Echo.private(`offlineFriend`).listen(
-                    "OfflineFriendEvent",
-                    e => {
-                        if (this.checkOnlineFriend(e.user.id) != null) {
-                            var fr = this.checkOnlineFriend(e.user.id);
-                            var index = this.friends.indexOf(fr);
-                            this.friends[index].statu = "status-offline";
-                            this.friends[index].time = "Offline";
-                            sessionStorage.clear();
-
-                            sessionStorage.setItem(
-                                "OnlFriends",
-                                JSON.stringify(this.friends)
-                            );
-                        }
-                    }
-                );
-            });
+        this.load();
     },
     methods: {
         checkFriend(id) {
@@ -230,6 +184,89 @@ export default {
                 }
             });
             return p;
+        },
+        load() {
+            axios
+                .post("/LoadFriends", {
+                    id: null
+                })
+                .then(res => {
+                    console.log("friends");
+                    console.log(res.data);
+                    this.DBfriends = res.data;
+                    axios.get("/OnlineUsers").then(res => {
+                        console.log("on");
+                        console.log(res.data);
+                        var users = res.data;
+                        users.forEach(user => {
+                            if (this.checkFriend(user.user_id) != null) {
+                                console.log(user);
+                                var fr = this.checkFriend(user.user_id);
+                                var index = this.DBfriends.indexOf(fr);
+                                this.DBfriends[index].statu = "status-online";
+                                this.DBfriends[index].time = "Online";
+                            }
+                        });
+                        this.friends = this.DBfriends;
+                    });
+                    /*      Echo.join("users").here(users => {
+                    console.log("changed");
+                    users.forEach(user => {
+                        if (this.checkFriend(user.id) != null) {
+                            console.log(user);
+                            var fr = this.checkFriend(user.id);
+                            var index = this.DBfriends.indexOf(fr);
+                            this.DBfriends[index].statu = "status-online";
+                            this.DBfriends[index].time = "Online";
+                        }
+                    });
+                    console.log("pp");
+                    console.log(this.DBfriends);
+                    this.friends = this.DBfriends;
+                    sessionStorage.clear();
+
+                    sessionStorage.setItem(
+                        "OnlFriends",
+                        JSON.stringify(this.friends)
+                    );
+                });
+ */
+                    Echo.private(`onlineFriend`).listen(
+                        "OnlineFriendEvent",
+                        e => {
+                            if (this.checkOnlineFriend(e.user.id) != null) {
+                                var fr = this.checkOnlineFriend(e.user.id);
+                                var index = this.friends.indexOf(fr);
+                                this.friends[index].statu = "status-online";
+                                this.friends[index].time = "Online";
+                                /* sessionStorage.clear();
+
+                        sessionStorage.setItem(
+                            "OnlFriends",
+                            JSON.stringify(this.friends)
+                        ); */
+                            }
+                        }
+                    );
+
+                    Echo.private(`offlineFriend`).listen(
+                        "OfflineFriendEvent",
+                        e => {
+                            if (this.checkOnlineFriend(e.user.id) != null) {
+                                var fr = this.checkOnlineFriend(e.user.id);
+                                var index = this.friends.indexOf(fr);
+                                this.friends[index].statu = "status-offline";
+                                this.friends[index].time = "Offline";
+                                /*    sessionStorage.clear();
+
+                            sessionStorage.setItem(
+                                "OnlFriends",
+                                JSON.stringify(this.friends)
+                            ); */
+                            }
+                        }
+                    );
+                });
         }
     }
 };

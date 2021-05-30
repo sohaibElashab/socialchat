@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Events\OnlineFriendEvent;
+use App\Models\Online;
 
 class LoginController extends Controller
 { 
@@ -41,6 +42,9 @@ class LoginController extends Controller
 
     protected function sendLoginResponse() {
         broadcast(new OnlineFriendEvent(auth()->user()));
+        Online::create([
+            'user_id' => auth()->user()->id,
+        ]); 
        // echo auth()->user()->id;
     }
 }

@@ -7,6 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
+    'App\\Events\\AcceptRequestEvent' => $baseDir . '/app/Events/AcceptRequestEvent.php',
+    'App\\Events\\CancelRequestEvent' => $baseDir . '/app/Events/CancelRequestEvent.php',
+    'App\\Events\\OfflineFriendEvent' => $baseDir . '/app/Events/OfflineFriendEvent.php',
+    'App\\Events\\OnlineFriendEvent' => $baseDir . '/app/Events/OnlineFriendEvent.php',
+    'App\\Events\\SendRequestEvent' => $baseDir . '/app/Events/SendRequestEvent.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AdminController' => $baseDir . '/app/Http/Controllers/AdminController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -44,6 +49,7 @@ return array(
     'App\\Models\\Message' => $baseDir . '/app/Models/Message.php',
     'App\\Models\\MessageRead' => $baseDir . '/app/Models/MessageRead.php',
     'App\\Models\\Notification' => $baseDir . '/app/Models/Notification.php',
+    'App\\Models\\Online' => $baseDir . '/app/Models/Online.php',
     'App\\Models\\Post' => $baseDir . '/app/Models/Post.php',
     'App\\Models\\PostLike' => $baseDir . '/app/Models/PostLike.php',
     'App\\Models\\PostSave' => $baseDir . '/app/Models/PostSave.php',

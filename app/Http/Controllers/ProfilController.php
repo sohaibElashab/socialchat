@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\FriendRequest;
 use App\Models\Friend;
 use App\Events\OfflineFriendEvent;
-
+use App\Models\Online;
  
 class ProfilController extends Controller
 { 
@@ -23,8 +23,15 @@ class ProfilController extends Controller
     {
         if(auth()->user()){
             broadcast(new OfflineFriendEvent(auth()->user()));
+            $log = Online::where('user_id',auth()->user()->id)->delete();
             Auth::logout();
         } 
+    }
+
+    public function OnlineUsers()
+    {
+       $o = Online::get();
+       return response()->json($o);
     }
 
     public function index() 
