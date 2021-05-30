@@ -84,7 +84,7 @@ class RegisterController extends Controller
             'user_id' => $user->id,
             'name' => 'BG/'.$BGpics[$Bpic],
             'type' => 'cover', 
-        ]);
+        ]); 
 
        if ($data['gender'] == 'female') {
            $femalePics = array("female1.jpg","female2.jpg","female3.jpg","female4.jpg","female5.jpg","female6.jpg","female7.jpg","female8.jpg");

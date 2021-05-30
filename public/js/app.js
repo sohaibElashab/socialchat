@@ -12654,13 +12654,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      friends: {
+      friends: null,
+      changed: false,
+      DBfriends: null,
+      friendsLL: {
         "1": {
           id: 1,
-          statu: 'status-online',
+          statu: "status-online",
           href: "/",
           img: "images/user/01.jpg",
           name: "Anna Sthesia",
@@ -12668,7 +12693,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         "2": {
           id: 2,
-          statu: 'status-online',
+          statu: "status-online",
           href: "/",
           img: "images/user/02.jpg",
           name: "Paul Molive",
@@ -12676,7 +12701,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         "3": {
           id: 3,
-          statu: 'status-online',
+          statu: "status-online",
           href: "/",
           img: "images/user/03.jpg",
           name: "Anna Mull",
@@ -12684,7 +12709,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         "4": {
           id: 4,
-          statu: 'status-online',
+          statu: "status-online",
           href: "/",
           img: "images/user/04.jpg",
           name: "Paige Turner",
@@ -12692,7 +12717,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         "5": {
           id: 5,
-          statu: 'status-away',
+          statu: "status-away",
           href: "/",
           img: "images/user/11.jpg",
           name: "Bob Frapples",
@@ -12700,7 +12725,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         "6": {
           id: 6,
-          statu: 'status-away',
+          statu: "status-away",
           href: "/",
           img: "images/user/02.jpg",
           name: "Barb Ackue",
@@ -12708,7 +12733,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         "7": {
           id: 7,
-          statu: 'status-away',
+          statu: "status-away",
           href: "/",
           img: "images/user/03.jpg",
           name: "Greta Life",
@@ -12716,7 +12741,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         "8": {
           id: 8,
-          statu: 'status-away',
+          statu: "status-away",
           href: "/",
           img: "images/user/12.jpg",
           name: "Ira Membrit",
@@ -12724,7 +12749,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         "9": {
           id: 9,
-          statu: 'status-offline',
+          statu: "status-offline",
           href: "/",
           img: "images/user/01.jpg",
           name: "Pete Sariya",
@@ -12732,7 +12757,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         "10": {
           id: 10,
-          statu: 'status-offline',
+          statu: "status-offline",
           href: "/",
           img: "images/user/02.jpg",
           name: "Monty Carlo",
@@ -12740,6 +12765,87 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    var ses = sessionStorage.getItem("OnlFriends");
+    this.friends = JSON.parse(ses);
+    axios.post("/LoadFriends", {
+      id: null
+    }).then(function (res) {
+      console.log("friends");
+      console.log(res.data);
+      _this.DBfriends = res.data;
+      Echo.join("users").here(function (users) {
+        console.log("changed");
+        users.forEach(function (user) {
+          if (_this.checkFriend(user.id) != null) {
+            console.log(user);
+
+            var fr = _this.checkFriend(user.id);
+
+            var index = _this.DBfriends.indexOf(fr);
+
+            _this.DBfriends[index].statu = "status-online";
+            _this.DBfriends[index].time = "Online";
+          }
+        });
+        console.log("pp");
+        console.log(_this.DBfriends);
+        _this.friends = _this.DBfriends;
+        sessionStorage.clear();
+        sessionStorage.setItem("OnlFriends", JSON.stringify(_this.friends));
+      });
+      Echo["private"]("onlineFriend").listen("OnlineFriendEvent", function (e) {
+        if (_this.checkOnlineFriend(e.user.id) != null) {
+          var fr = _this.checkOnlineFriend(e.user.id);
+
+          var index = _this.friends.indexOf(fr);
+
+          _this.friends[index].statu = "status-online";
+          _this.friends[index].time = "Online";
+          sessionStorage.clear();
+          sessionStorage.setItem("OnlFriends", JSON.stringify(_this.friends));
+        }
+      });
+      Echo["private"]("offlineFriend").listen("OfflineFriendEvent", function (e) {
+        if (_this.checkOnlineFriend(e.user.id) != null) {
+          var fr = _this.checkOnlineFriend(e.user.id);
+
+          var index = _this.friends.indexOf(fr);
+
+          _this.friends[index].statu = "status-offline";
+          _this.friends[index].time = "Offline";
+          sessionStorage.clear();
+          sessionStorage.setItem("OnlFriends", JSON.stringify(_this.friends));
+        }
+      });
+    });
+  },
+  methods: {
+    checkFriend: function checkFriend(id) {
+      var p = null;
+      this.DBfriends.forEach(function (friend) {
+        if (friend.id == id) {
+          p = friend;
+          return true;
+        }
+      });
+      return p;
+    },
+    checkOnlineFriend: function checkOnlineFriend(id) {
+      var _this2 = this;
+
+      var p = null;
+      this.friends.forEach(function (friend) {
+        if (friend.id == id && _this2.checkFriend(id) != null) {
+          p = friend;
+          return true;
+        }
+      });
+      return p;
+    }
   }
 });
 
@@ -13344,6 +13450,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -13351,48 +13469,76 @@ __webpack_require__.r(__webpack_exports__);
       user: null,
       myText: "",
       showFeeling: false,
-      feelings: {
-        "0": {
-          FeelImg: "https://img.icons8.com/color/48/000000/happy--v1.png",
-          FeelTitle: "Happy"
-        },
-        "1": {
-          FeelImg: "https://img.icons8.com/fluent/48/000000/sad.png",
-          FeelTitle: "Sad"
-        },
-        "2": {
-          FeelImg: "https://img.icons8.com/color/64/000000/in-love--v1.png",
-          FeelTitle: "Loved"
-        },
-        "3": {
-          FeelImg: "https://img.icons8.com/color/48/000000/angry.png",
-          FeelTitle: "Angry"
-        },
-        "4": {
-          FeelImg: "https://img.icons8.com/fluent/48/000000/crazy.png",
-          FeelTitle: "Crazy"
-        },
-        "5": {
-          FeelImg: "https://img.icons8.com/emoji/48/000000/drooling-face-emoji.png",
-          FeelTitle: "Hungry"
-        },
-        "6": {
-          FeelImg: "https://img.icons8.com/emoji/48/000000/sleeping-face.png",
-          FeelTitle: "Sleepy"
-        },
-        "7": {
-          FeelImg: "https://img.icons8.com/color/48/000000/bored.png",
-          FeelTitle: "Bored"
-        }
-      },
+      feelings: [{
+        FeelImg: "https://img.icons8.com/color/48/000000/happy--v1.png",
+        FeelTitle: "Happy",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/fluent/48/000000/sad.png",
+        FeelTitle: "Sad",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/color/64/000000/in-love--v1.png",
+        FeelTitle: "Loved",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/color/48/000000/angry.png",
+        FeelTitle: "Angry",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/fluent/48/000000/crazy.png",
+        FeelTitle: "Crazy",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/emoji/48/000000/drooling-face-emoji.png",
+        FeelTitle: "Hungry",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/emoji/48/000000/sleeping-face.png",
+        FeelTitle: "Sleepy",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/color/48/000000/bored.png",
+        FeelTitle: "Bored",
+        active: ""
+      }],
+      UserStatu: "",
+      Images: [],
+      Videos: null,
       postImgs: [],
       postVds: ""
     };
   },
   methods: {
+    SelectFFeeling: function SelectFFeeling(index) {
+      var _this = this;
+
+      var bl = false;
+      this.feelings.forEach(function (element) {
+        if (element == _this.feelings[index]) {
+          if (_this.feelings[index].active == "") {
+            bl = true;
+          } else {
+            bl = false;
+          }
+        } else {
+          element.active = "";
+          _this.UserStatu = "";
+        }
+      });
+
+      if (bl) {
+        this.UserStatu = "is feeling " + this.feelings[index].FeelTitle;
+        this.feelings[index].active = "classActive";
+      } else {
+        this.UserStatu = "";
+        this.feelings[index].active = "";
+      }
+    },
     onInput: function onInput(event) {
       //event.data contains the value of the textarea
       console.log(event.data);
+      this.myText = event.data;
     },
     clearTextarea: function clearTextarea() {
       this.$refs.emoji.clear();
@@ -13404,21 +13550,17 @@ __webpack_require__.r(__webpack_exports__);
       console.log("removeFile");
 
       if (this.postImgs.length > 0) {
-        console.log("removeFile if");
         var newPostImgs = [];
 
         for (var index = 0; index < this.postImgs.length; index++) {
-          if (this.postImgs[index].img != path) {
-            newPostImgs.push({
-              img: this.postImgs[index].img
-            });
+          if (this.postImgs[index].img == path) {
+            this.postImgs.splice(index, 1);
+            this.Images.splice(index, 1);
           }
         }
-
-        this.postImgs = newPostImgs;
       } else {
-        console.log("removeFile else");
         this.postVds = "";
+        this.Videos = null;
       }
 
       this.disabled();
@@ -13429,12 +13571,16 @@ __webpack_require__.r(__webpack_exports__);
       this.postImgs.push({
         img: NewImage
       });
+      this.Images.push({
+        file: file
+      });
       this.disabled();
     },
     addVd: function addVd(e) {
       var file = e.target.files[0];
       var NewVd = URL.createObjectURL(file);
       this.postVds = NewVd;
+      this.Videos = file;
       this.disabled();
     },
     disabled: function disabled() {
@@ -13451,18 +13597,33 @@ __webpack_require__.r(__webpack_exports__);
         document.getElementById("div-vd").classList.remove('classDisabled');
       }
     },
-    SelectFFeeling: function SelectFFeeling() {
-      consol.log("index");
+    createPost: function createPost() {
+      var _this2 = this;
+
+      var data = new FormData();
+      data.append("Statu", this.UserStatu);
+      data.append("Text", this.myText);
+      data.append("Images", this.Images);
+      data.append("Viedos", this.Videos);
+      axios.post("/create-post", data).then(function (res) {
+        console.log(res);
+
+        _this2.$router.push({
+          name: "home"
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
     }
   },
   components: {
     VueEmoji: emoji_vue__WEBPACK_IMPORTED_MODULE_0__.default
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this3 = this;
 
     axios.get("/profile").then(function (res) {
-      _this.user = res.data;
+      _this3.user = res.data;
     });
   }
 });
@@ -75550,57 +75711,73 @@ var render = function() {
       _c("div", { staticClass: "right-sidebar-panel p-0" }, [
         _c("div", { staticClass: "iq-card shadow-none" }, [
           _c("div", { staticClass: "iq-card-body p-0" }, [
-            _c(
-              "div",
-              { staticClass: "media-height p-3" },
-              _vm._l(_vm.friends, function(friend) {
-                return _c(
+            _vm.friends
+              ? _c(
                   "div",
-                  {
-                    key: friend.id,
-                    staticClass: "media align-items-center mb-4"
-                  },
-                  [
-                    _c(
+                  { staticClass: "media-height p-3" },
+                  _vm._l(_vm.friends, function(friend) {
+                    return _c(
                       "div",
-                      { staticClass: "iq-profile-avatar", class: friend.statu },
+                      {
+                        key: friend.id,
+                        staticClass: "media align-items-center mb-4"
+                      },
                       [
-                        _c("img", {
-                          staticClass: "rounded-circle avatar-50",
-                          attrs: { src: friend.img, alt: "" }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "media-body ml-3" }, [
-                      _c(
-                        "h6",
-                        { staticClass: "mb-0" },
-                        [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "iq-profile-avatar",
+                            class: friend.statu
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "rounded-circle avatar-50",
+                              attrs: {
+                                src: "images/user/" + friend.profileimg.name,
+                                alt: ""
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "media-body ml-3" }, [
                           _c(
-                            "router-link",
-                            { attrs: { tag: "a", to: friend.href } },
+                            "h6",
+                            { staticClass: "mb-0" },
                             [
-                              _vm._v(
-                                "\n                           " +
-                                  _vm._s(friend.name) +
-                                  "\n                        "
+                              _c(
+                                "router-link",
+                                {
+                                  attrs: {
+                                    to: {
+                                      name: "chat",
+                                      query: { user: friend.id }
+                                    },
+                                    tag: "a"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(friend.name) +
+                                      "\n                                "
+                                  )
+                                ]
                               )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "mb-0" }, [
-                        _vm._v(_vm._s(friend.time))
-                      ])
-                    ])
-                  ]
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "mb-0" }, [
+                            _vm._v(_vm._s(friend.time))
+                          ])
+                        ])
+                      ]
+                    )
+                  }),
+                  0
                 )
-              }),
-              0
-            ),
+              : _vm._e(),
             _vm._v(" "),
             _vm._m(0)
           ])
@@ -76360,11 +76537,13 @@ var render = function() {
                                     [_vm._v(_vm._s(_vm.user.name))]
                                   ),
                                   _vm._v(" "),
-                                  _c(
-                                    "p",
-                                    { staticClass: "mb-0 text-primary" },
-                                    [_vm._v("post.statu")]
-                                  )
+                                  _vm.UserStatu
+                                    ? _c(
+                                        "p",
+                                        { staticClass: "mb-0 text-primary" },
+                                        [_vm._v(_vm._s(_vm.UserStatu))]
+                                      )
+                                    : _vm._e()
                                 ]
                               ),
                               _vm._v(" "),
@@ -76526,7 +76705,7 @@ var render = function() {
                                             _vm._v(" "),
                                             _c("p", [
                                               _vm._v(
-                                                "Votre navigateur ne prend pas en charge les vidéos HTML5.\n                                 Voici "
+                                                "Votre navigateur ne prend pas en charge les vidéos HTML5.\n                                    Voici "
                                               ),
                                               _c(
                                                 "a",
@@ -76615,7 +76794,7 @@ var render = function() {
                                   }
                                 }),
                                 _vm._v(
-                                  " \n                        Feeling\n                     "
+                                  " \n                           Feeling\n                        "
                                 )
                               ]
                             ),
@@ -76638,10 +76817,10 @@ var render = function() {
                                       "div",
                                       {
                                         key: index,
-                                        staticClass: "feeling",
+                                        class: "feeling " + feeling.active,
                                         on: {
                                           click: function($event) {
-                                            return _vm.SelectFFeeling()
+                                            return _vm.SelectFFeeling(index)
                                           }
                                         }
                                       },
@@ -76659,9 +76838,9 @@ var render = function() {
                                         _c("div", { staticClass: "feelSpan" }, [
                                           _c("span", [
                                             _vm._v(
-                                              " \n                                       " +
+                                              " \n                                          " +
                                                 _vm._s(feeling.FeelTitle) +
-                                                "\n                                    "
+                                                "\n                                       "
                                             )
                                           ])
                                         ])
@@ -76680,7 +76859,11 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-primary d-block w-100 mt-3",
-                          attrs: { type: "submit" }
+                          on: {
+                            click: function($event) {
+                              return _vm.createPost()
+                            }
+                          }
                         },
                         [_vm._v("Post")]
                       )
@@ -76832,7 +77015,7 @@ var staticRenderFns = [
               attrs: { src: "images/small/07.png", alt: "icon" }
             }),
             _vm._v(
-              " \n                              Photo\n                        "
+              " \n                                 Photo\n                           "
             )
           ]
         )
@@ -76862,7 +77045,7 @@ var staticRenderFns = [
               attrs: { src: "images/small/08.png", alt: "icon" }
             }),
             _vm._v(
-              " \n                              Video\n                        "
+              " \n                                 Video\n                           "
             )
           ]
         )

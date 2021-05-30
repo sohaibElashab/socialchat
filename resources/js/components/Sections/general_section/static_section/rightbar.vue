@@ -224,7 +224,7 @@ export default {
         checkOnlineFriend(id) {
             var p = null;
             this.friends.forEach(friend => {
-                if (friend.id == id) {
+                if (friend.id == id && this.checkFriend(id) != null) {
                     p = friend;
                     return true;
                 }

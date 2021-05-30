@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//ProfilController
 Route::get('/profile', [App\Http\Controllers\ProfilController::class, 'index']);
 Route::post('/UserProfile', [App\Http\Controllers\ProfilController::class, 'UserProfile']);
 Route::get('/GatHashed', [App\Http\Controllers\ProfilController::class, 'GatHashed']);
@@ -31,7 +32,9 @@ Route::post('/BeforeRegister', [App\Http\Controllers\ProfilController::class, 'B
 Route::get('/imagesProfile', [App\Http\Controllers\ProfilController::class, 'GetImages']);
 Route::get('/videosProfile', [App\Http\Controllers\ProfilController::class, 'GetVideos']);
 Route::post('/ProfileImages', [App\Http\Controllers\ProfilController::class, 'GetImagesProfile']);
-//Route::post('/FriendProfile', [App\Http\Controllers\FriendController::class, 'index']);
+Route::post('/LogoutUser', [App\Http\Controllers\ProfilController::class, 'LogoutUser']);
+
+//FriendController
 Route::post('/ProfileSearch', [App\Http\Controllers\FriendController::class, 'ProfileSearch']);
 Route::post('/SendRequest', [App\Http\Controllers\FriendController::class, 'SendRequest']);
 Route::post('/DeleteRequest', [App\Http\Controllers\FriendController::class, 'DeleteRequest']);
@@ -40,4 +43,7 @@ Route::get('/LoadRequests', [App\Http\Controllers\FriendController::class, 'Load
 Route::post('/AcceptRequest', [App\Http\Controllers\FriendController::class, 'AcceptRequest']);
 Route::post('/RemoveFriend', [App\Http\Controllers\FriendController::class, 'RemoveFriend']);
 Route::post('/LoadFriends', [App\Http\Controllers\FriendController::class, 'LoadFriends']);
-Route::post('/LogoutUser', [App\Http\Controllers\ProfilController::class, 'LogoutUser']); 
+//Route::post('/FriendProfile', [App\Http\Controllers\FriendController::class, 'index']);
+
+//PostController
+Route::post('/create-post', [App\Http\Controllers\PostController::class, 'create']); 

@@ -703,7 +703,7 @@ export default {
             data.append("linkedin", this.linkedin);
 
             //axios.post("/profile-update", data, config);
-            axios
+            axios 
                 .post("/profile-update", data)
                 .then(res => {
                     console.log(res);

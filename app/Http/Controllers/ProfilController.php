@@ -118,7 +118,7 @@ class ProfilController extends Controller
 
         $user = User::findOrFail(auth()->user()->id);
 
-         $user->update([
+        $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'mobile' => $request->mobile,
@@ -277,7 +277,7 @@ class ProfilController extends Controller
         foreach ($Paths as $key => $path) {
             $path->NbrJaime = "30";
             $path->NbrComment = "40";
-            $path->NbrPartage = "50";
+            $path->NbrPartage = "50"; 
             
         }
         return response()->json($Paths); 
