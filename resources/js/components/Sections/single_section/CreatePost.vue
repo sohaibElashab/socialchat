@@ -154,6 +154,11 @@ export default {
       return{
          user:null,
          myText: "",
+         UserStatu: "",
+         image: null,
+         Images: [],
+         fruits : ["Banana","Orange","Apple","Mango"],
+         Videos: null,
          showFeeling: false,
          feelings: [
             {
@@ -197,9 +202,6 @@ export default {
                active: ""
             },
          ],
-         UserStatu: "",
-         Images: [],
-         Videos: null,
          postImgs: [],
          postVds: ""
       }
@@ -262,7 +264,8 @@ export default {
          const file = e.target.files[0];
          var NewImage = URL.createObjectURL(file);
          this.postImgs.push({ img : NewImage });
-         this.Images.push({ file : file });
+         this.image = file;
+         this.Images.push(this.image);
          this.disabled();
       },
       addVd(e){
@@ -291,14 +294,17 @@ export default {
          let data = new FormData()
          data.append("Statu", this.UserStatu);
          data.append("Text", this.myText);
+
+     	   // for (let i = 0; i < this.Images.length; i++) {
+        	//    let file = this.Images[i];
+        	//    data.append("Images[" + i + "]", file);
+      	// }
          data.append("Images", this.Images);
          data.append("Viedos", this.Videos);
-
          axios
             .post("/create-post", data)
             .then(res => {
                console.log(res);
-               this.$router.push({ name: "home" });
             })
             .catch(err => {
                console.log(err);

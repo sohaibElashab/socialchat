@@ -12682,6 +12682,7 @@ __webpack_require__.r(__webpack_exports__);
       friends: null,
       changed: false,
       DBfriends: null,
+      OnlineUser: null,
       friendsLL: {
         "1": {
           id: 1,
@@ -12769,59 +12770,20 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    var ses = sessionStorage.getItem("OnlFriends");
-    this.friends = JSON.parse(ses);
-    axios.post("/LoadFriends", {
-      id: null
-    }).then(function (res) {
-      console.log("friends");
-      console.log(res.data);
-      _this.DBfriends = res.data;
-      Echo.join("users").here(function (users) {
-        console.log("changed");
-        users.forEach(function (user) {
-          if (_this.checkFriend(user.id) != null) {
-            console.log(user);
+    /* var ses = sessionStorage.getItem("OnlFriends");
+    console.log("session friends");
+    console.log(JSON.parse(ses));
+    this.friends = JSON.parse(ses); */
+    axios.get("/profile").then(function (res) {
+      _this.OnlineUser = res.data;
+      console.log("aa");
+      Echo["private"]("acceptRequest.".concat(_this.OnlineUser.id)).listen("AcceptRequestEvent", function (e) {
+        console.log("bb");
 
-            var fr = _this.checkFriend(user.id);
-
-            var index = _this.DBfriends.indexOf(fr);
-
-            _this.DBfriends[index].statu = "status-online";
-            _this.DBfriends[index].time = "Online";
-          }
-        });
-        console.log("pp");
-        console.log(_this.DBfriends);
-        _this.friends = _this.DBfriends;
-        sessionStorage.clear();
-        sessionStorage.setItem("OnlFriends", JSON.stringify(_this.friends));
-      });
-      Echo["private"]("onlineFriend").listen("OnlineFriendEvent", function (e) {
-        if (_this.checkOnlineFriend(e.user.id) != null) {
-          var fr = _this.checkOnlineFriend(e.user.id);
-
-          var index = _this.friends.indexOf(fr);
-
-          _this.friends[index].statu = "status-online";
-          _this.friends[index].time = "Online";
-          sessionStorage.clear();
-          sessionStorage.setItem("OnlFriends", JSON.stringify(_this.friends));
-        }
-      });
-      Echo["private"]("offlineFriend").listen("OfflineFriendEvent", function (e) {
-        if (_this.checkOnlineFriend(e.user.id) != null) {
-          var fr = _this.checkOnlineFriend(e.user.id);
-
-          var index = _this.friends.indexOf(fr);
-
-          _this.friends[index].statu = "status-offline";
-          _this.friends[index].time = "Offline";
-          sessionStorage.clear();
-          sessionStorage.setItem("OnlFriends", JSON.stringify(_this.friends));
-        }
+        _this.load();
       });
     });
+    this.load();
   },
   methods: {
     checkFriend: function checkFriend(id) {
@@ -12845,6 +12807,87 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       return p;
+    },
+    load: function load() {
+      var _this3 = this;
+
+      axios.post("/LoadFriends", {
+        id: null
+      }).then(function (res) {
+        console.log("friends");
+        console.log(res.data);
+        _this3.DBfriends = res.data;
+        axios.get("/OnlineUsers").then(function (res) {
+          console.log("on");
+          console.log(res.data);
+          var users = res.data;
+          users.forEach(function (user) {
+            if (_this3.checkFriend(user.user_id) != null) {
+              console.log(user);
+
+              var fr = _this3.checkFriend(user.user_id);
+
+              var index = _this3.DBfriends.indexOf(fr);
+
+              _this3.DBfriends[index].statu = "status-online";
+              _this3.DBfriends[index].time = "Online";
+            }
+          });
+          _this3.friends = _this3.DBfriends;
+        });
+        /*      Echo.join("users").here(users => {
+        console.log("changed");
+        users.forEach(user => {
+            if (this.checkFriend(user.id) != null) {
+                console.log(user);
+                var fr = this.checkFriend(user.id);
+                var index = this.DBfriends.indexOf(fr);
+                this.DBfriends[index].statu = "status-online";
+                this.DBfriends[index].time = "Online";
+            }
+        });
+        console.log("pp");
+        console.log(this.DBfriends);
+        this.friends = this.DBfriends;
+        sessionStorage.clear();
+          sessionStorage.setItem(
+            "OnlFriends",
+            JSON.stringify(this.friends)
+        );
+        });
+        */
+
+        Echo["private"]("onlineFriend").listen("OnlineFriendEvent", function (e) {
+          if (_this3.checkOnlineFriend(e.user.id) != null) {
+            var fr = _this3.checkOnlineFriend(e.user.id);
+
+            var index = _this3.friends.indexOf(fr);
+
+            _this3.friends[index].statu = "status-online";
+            _this3.friends[index].time = "Online";
+            /* sessionStorage.clear();
+            sessionStorage.setItem(
+            "OnlFriends",
+            JSON.stringify(this.friends)
+            ); */
+          }
+        });
+        Echo["private"]("offlineFriend").listen("OfflineFriendEvent", function (e) {
+          if (_this3.checkOnlineFriend(e.user.id) != null) {
+            var fr = _this3.checkOnlineFriend(e.user.id);
+
+            var index = _this3.friends.indexOf(fr);
+
+            _this3.friends[index].statu = "status-offline";
+            _this3.friends[index].time = "Offline";
+            /*    sessionStorage.clear();
+            sessionStorage.setItem(
+            "OnlFriends",
+            JSON.stringify(this.friends)
+            ); */
+          }
+        });
+      });
     }
   }
 });
@@ -13468,6 +13511,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       user: null,
       myText: "",
+      UserStatu: "",
+      image: null,
+      Images: [],
+      fruits: ["Banana", "Orange", "Apple", "Mango"],
+      Videos: null,
       showFeeling: false,
       feelings: [{
         FeelImg: "https://img.icons8.com/color/48/000000/happy--v1.png",
@@ -13502,9 +13550,6 @@ __webpack_require__.r(__webpack_exports__);
         FeelTitle: "Bored",
         active: ""
       }],
-      UserStatu: "",
-      Images: [],
-      Videos: null,
       postImgs: [],
       postVds: ""
     };
@@ -13571,9 +13616,8 @@ __webpack_require__.r(__webpack_exports__);
       this.postImgs.push({
         img: NewImage
       });
-      this.Images.push({
-        file: file
-      });
+      this.image = file;
+      this.Images.push(this.image);
       this.disabled();
     },
     addVd: function addVd(e) {
@@ -13598,19 +13642,17 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     createPost: function createPost() {
-      var _this2 = this;
-
       var data = new FormData();
       data.append("Statu", this.UserStatu);
-      data.append("Text", this.myText);
+      data.append("Text", this.myText); // for (let i = 0; i < this.Images.length; i++) {
+      //    let file = this.Images[i];
+      //    data.append("Images[" + i + "]", file);
+      // }
+
       data.append("Images", this.Images);
       data.append("Viedos", this.Videos);
       axios.post("/create-post", data).then(function (res) {
         console.log(res);
-
-        _this2.$router.push({
-          name: "home"
-        });
       })["catch"](function (err) {
         console.log(err);
       });
@@ -13620,10 +13662,10 @@ __webpack_require__.r(__webpack_exports__);
     VueEmoji: emoji_vue__WEBPACK_IMPORTED_MODULE_0__.default
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this2 = this;
 
     axios.get("/profile").then(function (res) {
-      _this3.user = res.data;
+      _this2.user = res.data;
     });
   }
 });

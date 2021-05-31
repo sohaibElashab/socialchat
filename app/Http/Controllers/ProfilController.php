@@ -111,7 +111,7 @@ class ProfilController extends Controller
      */
     public function update(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'name'  => 'required',
             'email' => 'required|email',
             'gender' => 'required',
