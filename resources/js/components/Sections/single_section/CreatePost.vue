@@ -295,16 +295,23 @@ export default {
          data.append("Statu", this.UserStatu);
          data.append("Text", this.myText);
 
-     	   // for (let i = 0; i < this.Images.length; i++) {
-        	//    let file = this.Images[i];
-        	//    data.append("Images[" + i + "]", file);
-      	// }
-         data.append("Images", this.Images);
+     	   for (let i = 0; i < this.Images.length; i++) {
+        	   let file = this.Images[i];
+        	   data.append("Images[" + i + "]", file);
+      	}
+         data.append('imagenbr' ,this.Images.length)
+         // data.append("Images", this.Images[0]);
+         // console.log( this.Images)
          data.append("Viedos", this.Videos);
          axios
             .post("/create-post", data)
             .then(res => {
                console.log(res);
+               for (var value of res.config.data.entries()) {
+                  console.log(value);
+               }
+
+               // console.log(res.config.data)
             })
             .catch(err => {
                console.log(err);
