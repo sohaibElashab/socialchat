@@ -114,7 +114,7 @@
                            </div>
                            <div class="collapse" :class="{ show: showFeeling }">
                               <div class="feelings">
-                                 <div :class="`feeling ${feeling.active}`" v-for="(feeling,index) in feelings" :key="index"  @click="SelectFFeeling(index)">
+                                 <div :class="`feeling ${feeling.active}`" v-for="(feeling,index) in feelings" :key="index"  @click="SelectFeeling(index)">
                                        <div class="feelImg">
                                           <img :src="feeling.FeelImg" alt="feeling icon" style="width: 60%;">
                                        </div>
@@ -124,7 +124,7 @@
                                           </span>
                                        </div>
                                  </div>
-                                 <!-- <div class="feeling" @click="SelectFFeeling()">
+                                 <!-- <div class="feeling" @click="SelectFeeling()">
                                        <div class="feelImg">
                                           <img src="https://img.icons8.com/color/48/000000/happy--v1.png" alt="feeling icon" style="width: 60%;">
                                        </div>
@@ -139,6 +139,10 @@
                         </li>
                      </ul>
                      <button @click="createPost()" class="btn btn-primary d-block w-100 mt-3">Post</button>
+                     <div id="warning" class="alert alert-warning mt-3" style="display:none;" role="alert" >
+                        <strong>The post </strong> must conatin a text, photos, video, or feelings
+                     </div>
+                     <!-- <div class="d-block w-100 mt-3 p-2" style="background-color: #e3342f;border-radius: 5px;text-align: center;color: white;"></div> -->
                   <!-- </form> -->
                </div>
             </div>
@@ -207,7 +211,7 @@ export default {
       }
    },
    methods: {
-      SelectFFeeling(index){
+      SelectFeeling(index){
          var bl = false;
          this.feelings.forEach(element => {
             if(element == this.feelings[index]){
@@ -291,31 +295,36 @@ export default {
          }
       },
       createPost(){
-         let data = new FormData()
-         data.append("Statu", this.UserStatu);
-         data.append("Text", this.myText);
+         if(this.myText == "" && this.UserStatu=="" && !this.Images.length && this.Videos == null){
+            document.getElementById("warning").style.display = 'block';
+         }else{
+            let data = new FormData()
+            data.append("Statu", this.UserStatu);
+            data.append("Text", this.myText);
+            data.append("Viedos", this.Videos);
 
-     	   for (let i = 0; i < this.Images.length; i++) {
-        	   let file = this.Images[i];
-        	   data.append("Images[" + i + "]", file);
-      	}
-         data.append('imagenbr' ,this.Images.length)
-         // data.append("Images", this.Images[0]);
-         // console.log( this.Images)
-         data.append("Viedos", this.Videos);
-         axios
-            .post("/create-post", data)
-            .then(res => {
-               console.log(res);
-               for (var value of res.config.data.entries()) {
-                  console.log(value);
-               }
+     	       for (let i = 0; i < this.Images.length; i++) {
+        	       let file = this.Images[i];
+        	       data.append("Images[" + i + "]", file);
+      	   }
+            
+            data.append('imagenbr' ,this.Images.length)
 
-               // console.log(res.config.data)
-            })
-            .catch(err => {
-               console.log(err);
-            })
+            axios
+               .post("/create-post", data)
+               .then(res => {
+                  console.log(res);
+                  for (var value of res.config.data.entries()) {
+                     console.log(value);
+                  }
+
+                  // console.log(res.config.data)
+               })
+               .catch(err => {
+                  console.log(err);
+               });
+            // document.getElementById("post-modal").style.display = 'none';
+         }
       }
    },
    components: {

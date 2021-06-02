@@ -13458,6 +13458,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -13508,7 +13512,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     };
   },
   methods: {
-    SelectFFeeling: function SelectFFeeling(index) {
+    SelectFeeling: function SelectFeeling(index) {
       var _this = this;
 
       var bl = false;
@@ -13595,39 +13599,41 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }
     },
     createPost: function createPost() {
-      var data = new FormData();
-      data.append("Statu", this.UserStatu);
-      data.append("Text", this.myText);
+      if (this.myText == "" && this.UserStatu == "" && !this.Images.length && this.Videos == null) {
+        document.getElementById("warning").style.display = 'block';
+      } else {
+        var data = new FormData();
+        data.append("Statu", this.UserStatu);
+        data.append("Text", this.myText);
+        data.append("Viedos", this.Videos);
 
-      for (var i = 0; i < this.Images.length; i++) {
-        var file = this.Images[i];
-        data.append("Images[" + i + "]", file);
-      }
-
-      data.append('imagenbr', this.Images.length); // data.append("Images", this.Images[0]);
-      // console.log( this.Images)
-
-      data.append("Viedos", this.Videos);
-      axios.post("/create-post", data).then(function (res) {
-        console.log(res);
-
-        var _iterator = _createForOfIteratorHelper(res.config.data.entries()),
-            _step;
-
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var value = _step.value;
-            console.log(value);
-          } // console.log(res.config.data)
-
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
+        for (var i = 0; i < this.Images.length; i++) {
+          var file = this.Images[i];
+          data.append("Images[" + i + "]", file);
         }
-      })["catch"](function (err) {
-        console.log(err);
-      });
+
+        data.append('imagenbr', this.Images.length);
+        axios.post("/create-post", data).then(function (res) {
+          console.log(res);
+
+          var _iterator = _createForOfIteratorHelper(res.config.data.entries()),
+              _step;
+
+          try {
+            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+              var value = _step.value;
+              console.log(value);
+            } // console.log(res.config.data)
+
+          } catch (err) {
+            _iterator.e(err);
+          } finally {
+            _iterator.f();
+          }
+        })["catch"](function (err) {
+          console.log(err);
+        }); // document.getElementById("post-modal").style.display = 'none';
+      }
     }
   },
   components: {
@@ -71345,7 +71351,14 @@ var render = function() {
           _c("div", { staticClass: "col-lg-8 row m-0 p-0" }, [
             _c("div", { staticClass: "col-sm-12" }, [_c("CreatePost")], 1),
             _vm._v(" "),
-            _c("div", { staticClass: "col-sm-12" }),
+            _c(
+              "div",
+              { staticClass: "col-sm-12" },
+              _vm._l(_vm.posts, function(post, index) {
+                return _c("Post", { key: index, attrs: { post: post } })
+              }),
+              1
+            ),
             _vm._v(" "),
             _vm._m(0)
           ]),
@@ -76841,7 +76854,7 @@ var render = function() {
                                         class: "feeling " + feeling.active,
                                         on: {
                                           click: function($event) {
-                                            return _vm.SelectFFeeling(index)
+                                            return _vm.SelectFeeling(index)
                                           }
                                         }
                                       },
@@ -76887,7 +76900,9 @@ var render = function() {
                           }
                         },
                         [_vm._v("Post")]
-                      )
+                      ),
+                      _vm._v(" "),
+                      _vm._m(7)
                     ])
                   ])
                 ]
@@ -77069,6 +77084,25 @@ var staticRenderFns = [
               " \n                                 Video\n                           "
             )
           ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "alert alert-warning mt-3",
+        staticStyle: { display: "none" },
+        attrs: { id: "warning", role: "alert" }
+      },
+      [
+        _c("strong", [_vm._v("The post ")]),
+        _vm._v(
+          " must conatin a text, photos, video, or feelings\n                  "
         )
       ]
     )
@@ -77799,7 +77833,7 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _vm.post.postImgs
+            Object.keys(_vm.post.postImgs).length > 0
               ? _c(
                   "div",
                   {
@@ -77839,28 +77873,77 @@ var render = function() {
                           ],
                           1
                         )
-                      : _c(
-                          "div",
-                          { staticClass: "user-post text-center" },
-                          _vm._l(_vm.post.postImgs, function(imgs) {
-                            return _c(
-                              "a",
-                              {
-                                key: imgs,
-                                attrs: { href: "javascript:void();" }
-                              },
-                              [
-                                _c("img", {
-                                  staticClass: "img-fluid rounded w-100",
-                                  attrs: { src: imgs.img, alt: "post-image" }
-                                })
-                              ]
-                            )
-                          }),
-                          0
-                        )
+                      : _c("div", { staticClass: "user-post text-center" }, [
+                          _c("a", { attrs: { href: "javascript:void();" } }, [
+                            _c("img", {
+                              staticClass: "img-fluid rounded w-100",
+                              attrs: {
+                                src:
+                                  "images/posts/" +
+                                  _vm.post.user_id +
+                                  "/" +
+                                  _vm.post.postImgs[0],
+                                alt: "post-image"
+                              }
+                            })
+                          ])
+                        ])
                   ]
                 )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.post.postVds
+              ? _c("div", { staticClass: "user-post" }, [
+                  _c(
+                    "div",
+                    { staticClass: "embed-responsive embed-responsive-16by9" },
+                    [
+                      _c("video", { attrs: { controls: "" } }, [
+                        _c("source", {
+                          attrs: {
+                            src:
+                              "videos/posts/" +
+                              _vm.post.user_id +
+                              "/" +
+                              _vm.post.postVds,
+                            type: "video/mp4"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("source", {
+                          attrs: {
+                            src:
+                              "videos/posts/" +
+                              _vm.post.user_id +
+                              "/" +
+                              _vm.post.postVds,
+                            type: "video/webm"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(
+                            "Votre navigateur ne prend pas en charge les vidéos HTML5.\n                  Voici "
+                          ),
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href:
+                                  "videos/posts/" +
+                                  _vm.post.user_id +
+                                  "/" +
+                                  _vm.post.postVds
+                              }
+                            },
+                            [_vm._v("un lien pour télécharger la vidéo")]
+                          ),
+                          _vm._v(".")
+                        ])
+                      ])
+                    ]
+                  )
+                ])
               : _vm._e(),
             _vm._v(" "),
             _c("Comment")

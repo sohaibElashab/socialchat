@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\datetime;
+use DateTime;
+use App\Http\Controllers\format;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Image;
@@ -11,6 +12,8 @@ use App\Models\Video;
 use Auth;
 use DateTime as GlobalDateTime;
 use PhpParser\Node\Expr\Cast\Array_;
+
+use function PHPUnit\Framework\isEmpty;
 
 class PostController extends Controller
 {
@@ -21,19 +24,19 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('type','post')->get();
+        $posts = Post::where('type','post')->orderBy('time', 'DESC')->get();
         $images = Image::get();
+        $videos = Video::get();
         date_default_timezone_set('Africa/Casablanca');
 
         $userImage = '';
         $userName = '';
         $userId = '';
-        $time = array();
-        // array_push($time, date("Y-m-d H:i:s"));
         
         foreach($posts as $post){
             $user = User::where('id',$post->user_id)->first();
             $imagesArray = array();
+
             foreach($images as $image){
                 if($post->id == $image->post_id && $image->type == "post"){
                     array_push($imagesArray,$image->name);
@@ -44,19 +47,28 @@ class PostController extends Controller
                     $userId = $user->id;
                 }
             }
-            list($date , $timeOn) = explode(' ', $post->time);
-            list($annee, $mois, $jour) = explode('-', $date);
-            list($hh, $mm, $ss) = explode(':', $timeOn);
-            // list() = explode('-', $post->time);
-            array_push($time, $annee);
-            array_push($time, $mois);
-            array_push($time, $jour);
-            array_push($time, $hh);
-            array_push($time, $mm);
-            array_push($time, $ss);
 
-            // $time = $post->time;
+            foreach($videos as $video){
+                if($post->id == $video->post_id){
+                    $post->postVds = $video->name;
+                }
+            }
 
+            $datetime1 = new DateTime($post->time);
+            $datetime2 = new DateTime(date("Y-m-d H:i:s"));
+            $interval = $datetime1->diff($datetime2);
+            if((int)$interval->format('%y') > 0)
+                $post->time = $interval->format('%y y');
+            elseif((int)$interval->format('%m') > 0)
+                $post->time = $interval->format('%m m');
+            elseif((int)$interval->format('%d') > 0)
+                $post->time = $interval->format('%d d');
+            elseif((int)$interval->format('%i') > 0)
+                $post->time = $interval->format('%i min');
+            else
+                $post->time = 'just Now';
+
+            // array_push($time , $post->time);
             $post->userImg = $userImage;
             $post->userName = $userName;
             $post->userId = $userId;
@@ -69,7 +81,7 @@ class PostController extends Controller
             }
         };
 
-        return response()->json($time);   
+        return response()->json($posts);
 
     }
 
@@ -82,22 +94,12 @@ class PostController extends Controller
     {
         $user = User::findOrFail(auth()->user()->id);
         date_default_timezone_set('Africa/Casablanca');
-        // dd($request);
-        // dd($request->Images);
-        // print_r(str_split($request->Images, 4));
-
-        // dd($request->Images);
-        
-
-        // foreach ($request->Images as $image) {
-        //     dd($image);
-        // }
-
-        // $lwa = "9lwa";
-        // dd($lwa);
-
-
-        // echo($request->Images);
+        if($request->Statu == ""){
+            $request->Statu = " ";
+        };
+        if($request->Text == ""){
+            $request->Text = " ";
+        };
         $post = Post::create([
             'user_id' => $user->id,
             'type' => 'post',
@@ -108,22 +110,36 @@ class PostController extends Controller
 
         // $images = $request->file('Images');
 
-        $images= array();
-        for ($i=0; $i < $request->imagenbr; $i++) { 
-            array_push($images ,$request->Images[$i] );
+        if($request->imagenbr > 0){
+            $images= array();
+            for ($i=0; $i < $request->imagenbr; $i++) { 
+                array_push($images ,$request->Images[$i] );
+            };
+    
+            foreach ($images as $image) {
+                $new_name = 'postImg-'.rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/posts/'.$user->id),$new_name);
+                Image::create([
+                    'post_id' => $post->id,
+                    'user_id' => $user->id,
+                    'name' => $new_name,
+                    'type' => 'post', 
+                ]);
+            };
         };
 
-        foreach ($images as $image) {
-            $new_name = 'post'.rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/posts/'.$user->id),$new_name);
-            Image::create([
+        if($request->Viedos != null){
+            $video = $request->Viedos;
+    
+            $new_name = 'postVd-'.rand() . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path('videos/posts/'.$user->id),$new_name);
+            Video::create([
                 'post_id' => $post->id,
                 'user_id' => $user->id,
                 'name' => $new_name,
                 'type' => 'post', 
             ]);
-            $post->images = $new_name;
-        };
+        }
 
         // if($request->file('Images') != [] ){
         // }

@@ -7,11 +7,11 @@
                         <CreatePost />
                     </div>
                     <div class="col-sm-12">
-                        <!-- <Post
+                        <Post
                             v-for="(post , index) in posts"
                             :key="index"
                             :post="post"
-                        /> -->
+                        />
 
                     </div>
                     <div class="col-sm-12 text-center">

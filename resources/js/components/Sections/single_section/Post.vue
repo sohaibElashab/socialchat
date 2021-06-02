@@ -21,7 +21,7 @@
          <div class="mt-3" v-if="post.text">
             <p>{{post.text}}</p>
          </div>
-         <div class="user-post" v-if="post.postImgs" style="text-align: -webkit-center;">
+         <div class="user-post" v-if="Object.keys(post.postImgs).length > 0" style="text-align: -webkit-center;">
             <div v-if="Object.keys(post.postImgs).length > 1" >
                <splide :options="options">
                   <splide-slide v-for="(imgs , index) in post.postImgs" :key="index" style="border-radius: 5px;">
@@ -30,19 +30,19 @@
                </splide>
             </div>
             <div v-else class="user-post text-center">
-               <a href="javascript:void();" v-for="imgs in post.postImgs" :key="imgs" ><img :src="imgs.img" alt="post-image" class="img-fluid rounded w-100"></a>
+               <a href="javascript:void();" ><img :src="`images/posts/${post.user_id}/${post.postImgs[0]}`" alt="post-image" class="img-fluid rounded w-100"></a>
             </div>
          </div>
-         <!-- <div class="user-post" v-if="Object.keys(post.postVds).length > 0">
+         <div class="user-post" v-if="post.postVds">
             <div class="embed-responsive embed-responsive-16by9">
-               <video controls v-for="vds in post.postVds" :key="vds.vd">
-                  <source :src="vds.vd" type="video/mp4">
-                  <source :src="vds.vd" type="video/webm">
+               <video controls >
+                  <source :src="`videos/posts/${post.user_id}/${post.postVds}`" type="video/mp4">
+                  <source :src="`videos/posts/${post.user_id}/${post.postVds}`" type="video/webm">
                   <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
-                     Voici <a :href="vds.vd">un lien pour télécharger la vidéo</a>.</p>
+                     Voici <a :href="`videos/posts/${post.user_id}/${post.postVds}`" >un lien pour télécharger la vidéo</a>.</p>
                </video>
             </div>
-         </div> -->
+         </div>
          <Comment/>
       </div>
    </div>
