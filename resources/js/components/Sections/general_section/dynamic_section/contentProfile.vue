@@ -6,12 +6,11 @@
                     <div class="iq-card">
                         <div class="iq-card-body profile-page p-0">
                             <div class="profile-header">
-                                <div class="cover-container">
+                                <div class="cover-container" style="height: 250px;">
                                     <img
-                                        :src="
-                                            `images/user/${user.coverimg.name}`
-                                        "
+                                        :src="`images/user/${user.coverimg.name}`"
                                         alt="profile-bg"
+                                        style="position: relative; width: 100%; height: 100%;"
                                         class="rounded img-fluid"
                                     />
                                     <ul

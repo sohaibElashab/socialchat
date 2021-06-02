@@ -9926,7 +9926,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -71342,23 +71341,16 @@ var render = function() {
     { staticClass: "content-page", attrs: { id: "content-page" } },
     [
       _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "row rowHome" }, [
           _c("div", { staticClass: "col-lg-8 row m-0 p-0" }, [
             _c("div", { staticClass: "col-sm-12" }, [_c("CreatePost")], 1),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-sm-12" },
-              _vm._l(_vm.posts, function(post, index) {
-                return _c("Post", { key: index, attrs: { post: post } })
-              }),
-              1
-            )
+            _c("div", { staticClass: "col-sm-12" }),
+            _vm._v(" "),
+            _vm._m(0)
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-lg-4" }, [_c("story")], 1),
-          _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "col-lg-4" }, [_c("story")], 1)
         ])
       ])
     ]
@@ -71734,45 +71726,60 @@ var render = function() {
                 _c("div", { staticClass: "iq-card" }, [
                   _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
                     _c("div", { staticClass: "profile-header" }, [
-                      _c("div", { staticClass: "cover-container" }, [
-                        _c("img", {
-                          staticClass: "rounded img-fluid",
-                          attrs: {
-                            src: "images/user/" + _vm.user.coverimg.name,
-                            alt: "profile-bg"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "ul",
-                          {
-                            staticClass:
-                              "header-nav d-flex flex-wrap justify-end p-0 m-0"
-                          },
-                          [
-                            _c(
-                              "li",
-                              { staticStyle: { "z-index": "1" } },
-                              [
-                                _vm.user.status == "current"
-                                  ? _c(
-                                      "router-link",
-                                      {
-                                        attrs: { to: "/profileEdit", tag: "a" }
-                                      },
-                                      [
-                                        _c("i", {
-                                          staticClass: "ri-pencil-line"
-                                        })
-                                      ]
-                                    )
-                                  : _vm._e()
-                              ],
-                              1
-                            )
-                          ]
-                        )
-                      ]),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "cover-container",
+                          staticStyle: { height: "250px" }
+                        },
+                        [
+                          _c("img", {
+                            staticClass: "rounded img-fluid",
+                            staticStyle: {
+                              position: "relative",
+                              width: "100%",
+                              height: "100%"
+                            },
+                            attrs: {
+                              src: "images/user/" + _vm.user.coverimg.name,
+                              alt: "profile-bg"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "ul",
+                            {
+                              staticClass:
+                                "header-nav d-flex flex-wrap justify-end p-0 m-0"
+                            },
+                            [
+                              _c(
+                                "li",
+                                { staticStyle: { "z-index": "1" } },
+                                [
+                                  _vm.user.status == "current"
+                                    ? _c(
+                                        "router-link",
+                                        {
+                                          attrs: {
+                                            to: "/profileEdit",
+                                            tag: "a"
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "ri-pencil-line"
+                                          })
+                                        ]
+                                      )
+                                    : _vm._e()
+                                ],
+                                1
+                              )
+                            ]
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c(
                         "div",

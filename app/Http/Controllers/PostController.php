@@ -23,10 +23,14 @@ class PostController extends Controller
     {
         $posts = Post::where('type','post')->get();
         $images = Image::get();
+        date_default_timezone_set('Africa/Casablanca');
 
         $userImage = '';
         $userName = '';
         $userId = '';
+        $time = array();
+        // array_push($time, date("Y-m-d H:i:s"));
+        
         foreach($posts as $post){
             $user = User::where('id',$post->user_id)->first();
             $imagesArray = array();
@@ -40,6 +44,19 @@ class PostController extends Controller
                     $userId = $user->id;
                 }
             }
+            list($date , $timeOn) = explode(' ', $post->time);
+            list($annee, $mois, $jour) = explode('-', $date);
+            list($hh, $mm, $ss) = explode(':', $timeOn);
+            // list() = explode('-', $post->time);
+            array_push($time, $annee);
+            array_push($time, $mois);
+            array_push($time, $jour);
+            array_push($time, $hh);
+            array_push($time, $mm);
+            array_push($time, $ss);
+
+            // $time = $post->time;
+
             $post->userImg = $userImage;
             $post->userName = $userName;
             $post->userId = $userId;
@@ -52,7 +69,7 @@ class PostController extends Controller
             }
         };
 
-        return response()->json($posts);   
+        return response()->json($time);   
 
     }
 
