@@ -1,35 +1,47 @@
 <template>
-    <div class="container mt-5 pt-5">
+    <div class="container mt-5 pt-5" v-if="post">
         <div class="iq-card iq-card-block iq-card-stretch">
            <div class="iq-card-body" >
               <div class="user-post-data">
                  <div class="d-flex flex-wrap">
                     <div class="media-support-user-img mr-3">
-                       <img class="rounded-circle img-fluid" :src="post.userImg" alt="">
+                       <img class="rounded-circle img-fluid" v-if="post.userImg"  :src="`images/user/${post.userImg}`" alt="">
                     </div>
                     <div class="media-support-info mt-2">
-                       <h5 class="mb-0 d-inline-block"><a href="#" class="">{{post.userName}}</a></h5>
-                       <p class="mb-0 d-inline-block">{{post.statu}}</p>
-                       <p class="mb-0 text-primary">{{post.time}}</p>
+                       <h5 class="mb-0 d-inline-block"><a href="#" v-if="post.userName" >{{post.userName}}</a></h5>
+                       <p class="mb-0 d-inline-block" v-if="post.statu" >{{post.statu}}</p>
+                       <p class="mb-0 text-primary" v-if="post.time" >{{post.time}}</p>
                     </div>
                  </div>
               </div>
               <div class="mt-3" v-if="post.text">
                  <textarea name="" class="form-control" :value="post.text" id=""></textarea>
               </div>
-              <div class="user-post" v-if="post.postImgs" style="text-align: -webkit-center;">
+              <div class="user-post" style="text-align: -webkit-center;">
                  <div class="user-post text-center">
-                    <div class="edit-images" v-for="(imgs , index) in post.postImgs" :key="index" >
-                        <button class="edit-btn" >
-                            <i class="ri-delete-bin-line" @click="removeImage(imgs.img)"></i>
-                        </button>
-                        <a href="javascript:void();" >
-                            <img :src="imgs.img" alt="post-image" class="img-edit rounded">
-                        </a>
+                    <div v-if="post.postImgs" >
+                        <div class="edit-images" v-for="(imgs , index) in post.postImgs" :key="index" >
+                            <button class="edit-btn" >
+                                <i class="ri-delete-bin-line" @click="removeImage(imgs , 'old')"></i>
+                            </button>
+                            <a href="javascript:void();" >
+                                <img :src="`images/posts/${post.user_id}/${imgs}`" alt="post-image" class="img-edit rounded">
+                            </a>
+                        </div>
+                    </div>
+                    <div v-if="NewImgs" >
+                        <div class="edit-images" v-for="(img , index) in NewImgs" :key="index" >
+                            <button class="edit-btn" >
+                                <i class="ri-delete-bin-line" @click="removeImage(img , 'new')"></i>
+                            </button>
+                            <a href="javascript:void();" >
+                                <img :src="`${img}`" alt="post-image" class="img-edit rounded">
+                            </a>
+                        </div>
                     </div>
                     <div class="edit-images">
                         <div class="box">
-				        	<input type="file" name="file" id="file" @change="addImages" class="inputfile" multiple="">
+				        	<input type="file" name="file" id="file" @change="addImages" class="inputfile" :accept="accept" multiple="">
 				        	<label for="file">
                                 <figure>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
@@ -42,13 +54,13 @@
                     </div>
                  </div>
               </div>
-              <div class="user-post" v-if="Object.keys(post.postVds).length > 0">
+              <div class="user-post" v-if="post.postVds">
                  <div class="embed-responsive embed-responsive-16by9">
-                    <video controls v-for="vds in post.postVds" :key="vds.vd">
-                       <source :src="vds.vd" type="video/mp4">
-                       <source :src="vds.vd" type="video/webm">
+                    <video controls >
+                       <source :src="`videos/posts/${post.user_id}/${post.postVds}`" type="video/mp4">
+                       <source :src="`videos/posts/${post.user_id}/${post.postVds}`" type="video/webm">
                        <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
-                          Voici <a :href="vds.vd">un lien pour télécharger la vidéo</a>.</p>
+                          Voici <a :href="`videos/posts/${post.user_id}/${post.postVds}`">un lien pour télécharger la vidéo</a>.</p>
                     </video>
                  </div>
               </div>
@@ -65,44 +77,82 @@
 export default {
     data() {
         return {
-            post: {
-                id: 1,
-                userImg: "images/user/01.jpg",
-                userName: "Anna Sthesia",
-                statu: "Add New Post",
-                time: "Just Now",
-                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
-                postImgs: [
-                    { img: "images/page-img/test/p1.jpg" },
-                    { img: "images/page-img/test/p2.jpg" },
-                    { img: "images/page-img/test/p3.jpg" },
-                    { img: "images/page-img/test/p4.jpg" },
-                    { img: "images/page-img/test/p5.jpg" },
-                ],
-                postVds: []
-            },
-            NewFiles : []
+            // post: {
+            //     id: 1,
+            //     userImg: "images/user/01.jpg",
+            //     userName: "Anna Sthesia",
+            //     statu: "Add New Post",
+            //     time: "Just Now",
+            //     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
+            //     postImgs: [
+            //         { img: "images/page-img/test/p1.jpg" },
+            //         { img: "images/page-img/test/p2.jpg" },
+            //         { img: "images/page-img/test/p3.jpg" },
+            //         { img: "images/page-img/test/p4.jpg" },
+            //         { img: "images/page-img/test/p5.jpg" },
+            //     ],
+            //     postVds: []
+            // },
+            post: null,
+            NewFiles : [],
+            NewImgs: [],
+            postId : null,
+            accept:'',
         };
     },
+    mounted(){
+        this.postId = this.$route.query.postId;
+        axios.post("/GetPost" , { id: this.postId })
+            .then(res => {
+                console.log("this.post");
+                this.post = res.data;
+                console.log(res.data);
+                console.log(this.post);
+        });
+        this.acceptFiles()
+    },
     methods: {
-        removeImage(path) {
+        acceptFiles(){
+            if(this.post.postImgs != [] || this.NewImgs != []){
+                this.accept = 'image/*'
+            }else if(this.post.video != []){
+                this.accept = 'video/*'
+            }else{
+                this.accept = 'image/*|video/*'
+            }
+        },
+        removeImage(path , list ) {
             console.log(path)
             var newPostImgs = []
-            for (let index = 0; index < this.post.postImgs.length; index++) {
-                if(this.post.postImgs[index].img != path){
-                    newPostImgs.push({ img : this.post.postImgs[index].img})
+            var newFilesImgs = []
+            if(list == 'old'){
+                for (let index = 0; index < this.post.postImgs.length; index++) {
+                    if(this.post.postImgs[index] != path){
+                        newPostImgs.push(this.post.postImgs[index])
+                    }
                 }
+                this.post.postImgs = newPostImgs;
+            }else{
+                for (let index = 0; index < this.NewImgs.length; index++) {
+                    if(this.NewImgs[index] != path){
+                        newPostImgs.push(this.NewImgs[index])
+                        newFilesImgs.push(this.NewFiles[index])
+                    }
+                }
+                this.NewImgs = newPostImgs;
+                this.NewFiles = newFilesImgs;
             }
-            this.post.postImgs = newPostImgs
+            this.acceptFiles()
         },
         addImages(e){
             const file = e.target.files[0];
             var NewImage = URL.createObjectURL(file);
-            this.post.postImgs.push({ img : NewImage });
+            this.NewImgs.push(NewImage);
             this.NewFiles.push(e.target.files[0]);
             console.log(e.target.files[0]);
+            this.acceptFiles()
         }
-    }
+    } 
 };
 </script>
 

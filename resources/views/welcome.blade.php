@@ -17,7 +17,7 @@
             .loader { width: 3em; height: 3em; margin: auto; left: 0; right: 0; top: 0; bottom: 0; position: absolute;z-index: 999999; }
         </style>
     </head>
-    <body >
+    <body id="DOMbody">
         <div id="app">
             <div id="loading">
                 <div id="loading-center">

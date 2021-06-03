@@ -44,7 +44,7 @@ const routes = [
         path: "/profile",
         name: "profile",
         component: Profile,
-        props: true
+        props: true 
     },
     {
         path: "/signIn",
@@ -115,7 +115,8 @@ const routes = [
     {
         path: "/postEdit",
         name: "postEdit",
-        component: postEdit
+        component: postEdit,
+        props: true
     }
 ];
 

@@ -4,17 +4,17 @@
          <div class="user-post-data">
             <div class="d-flex flex-wrap">
                <div class="media-support-user-img mr-3" >
-                  <img class="rounded-circle img-fluid"  :src="`images/user/${post.userImg}`" alt="">
+                  <img class="rounded-circle img-fluid" v-if="post.userImg"  :src="`images/user/${post.userImg}`" alt="">
                </div>
                <div class="media-support-info mt-2">
-                  <h5 class="mb-0 d-inline-block"><a href="#" class="">{{post.userName}}</a></h5>
-                  <p class="mb-0 d-inline-block">{{post.statu}}</p>
-                  <p class="mb-0 text-primary">{{post.time}}</p>
+                  <h5 class="mb-0 d-inline-block"><a href="#" class="" v-if="post.userName" >{{post.userName}}</a></h5>
+                  <p class="mb-0 d-inline-block" v-if="post.statu" >{{post.statu}}</p>
+                  <p class="mb-0 text-primary" v-if="post.time" >{{post.time}}</p>
                </div>
                <div class="iq-card-post-toolbar">
-                  <span class="dropdown-toggle" v-if="post.edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                  <router-link tag="span" :to="{name:'postEdit',query: {postId:post.id}}" class="dropdown-toggle" v-if="post.edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
                      <i class=" ri-edit-2-line"></i>
-                  </span>
+                  </router-link>
                </div>
             </div>
          </div>

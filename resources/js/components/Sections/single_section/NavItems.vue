@@ -364,6 +364,13 @@ export default {
         });
         EventBus.$on("user-update", this.updateUser);
 
+        
+        window.onload = function () {
+            if (sessionStorage.getItem("themeMode") !== null) {
+                sessionStorage.setItem("themeMode", false);
+                document.getElementById("swit").checked = false;
+            }
+        }
         if (sessionStorage.getItem("themeMode") === null) {
             console.log("cree session");
             sessionStorage.setItem("themeMode", false);

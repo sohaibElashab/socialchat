@@ -12,7 +12,6 @@
                             :key="index"
                             :post="post"
                         />
-
                     </div>
                     <div class="col-sm-12 text-center">
                         <img
@@ -51,7 +50,6 @@ export default {
                 console.log("this.posts");
                 this.posts = res.data;
                 console.log(res.data);
-                console.log(this.posts);
         });
     },
 };
