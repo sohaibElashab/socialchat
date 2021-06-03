@@ -315,7 +315,7 @@ export default {
             this.img = this.user.profileimg.name;
             this.isMounted = true;
             Echo.private(`sendRequest.${this.user.id}`).listen(
-                "SendRequestEvent", 
+                "SendRequestEvent",
                 e => {
                     console.log(e.user);
                     this.allReqs.unshift(e.user);
@@ -363,8 +363,74 @@ export default {
             this.loadedReqs = true;
         });
         EventBus.$on("user-update", this.updateUser);
+
+        if (sessionStorage.getItem("themeMode") === null) {
+            console.log("cree session");
+            sessionStorage.setItem("themeMode", false);
+        } else {
+            if (sessionStorage.getItem("themeMode") == "true") {
+                document.getElementById("swit").checked = true;
+            } else {
+                document.getElementById("swit").checked = false;
+            }
+            // check();
+        }
     },
     methods: {
+        aplaytheme(){
+            
+            var loading = document.getElementById("loading");
+            var mode = (a, b, c) => {
+                this.modeTOmode(a, b, c).then(() => {
+                    console.log("test");
+                    return true;
+                });
+            };
+
+            function step1() {
+                loading.style.display = "block";
+                console.log("1");
+                setTimeout(() => {
+                    step2();
+                }, 500);
+            }
+
+            function step2() {
+                if (swit.checked) {
+                    mode(
+                        "http://127.0.0.1:8000/css/light/typography.css",
+                        "http://127.0.0.1:8000/css/light/style.css",
+                        "http://127.0.0.1:8000/css/light/responsive.css"
+                    );
+                } else {
+                    mode(
+                        "http://127.0.0.1:8000/css/dark/typography.css",
+                        "http://127.0.0.1:8000/css/dark/style.css",
+                        "http://127.0.0.1:8000/css/dark/responsive.css"
+                    );
+                }
+                console.log("2");
+                setTimeout(() => {
+                    step3();
+                    var theme = swit.checked ? "dark" : "light";
+                    console.log(
+                        document.querySelectorAll("link[href*='" + theme + "']")
+                    );
+                    document
+                        .querySelectorAll("link[href*='" + theme + "']")
+                        .forEach(elem => {
+                            document.head.removeChild(elem);
+                        });
+                }, 1000);
+            }
+
+            function step3() {
+                loading.style.display = "none";
+                console.log("3");
+            }
+
+            step1();
+        },
         updateUser(data) {
             this.user = data;
             if (this.user.profile) {
@@ -403,124 +469,53 @@ export default {
                 });
         },
         check() {
-            var loading = document.getElementById("loading");
+            console.log("before ", sessionStorage.getItem("themeMode"));
 
-            if (swit.checked) {
-                // console.log("z");
+            var reverse =
+                sessionStorage.getItem("themeMode") == "true"
+                    ? "false"
+                    : "true";
+            sessionStorage.setItem("themeMode", reverse);
+            console.log("after ", sessionStorage.getItem("themeMode"));
+            this.aplaytheme();
 
-                var mode = (a, b, c) => {
-                    return this.modeTOmode(a, b, c);
-                };
-
-                function step3() {
-                    loading.style.display = "none";
-                    console.log("3");
-                }
-
-                function step2() {
-                    mode(
-                        "http://127.0.0.1:8000/css/light/typography.css",
-                        "http://127.0.0.1:8000/css/light/style.css",
-                        "http://127.0.0.1:8000/css/light/responsive.css"
-                    );
-                    console.log("2");
-                    setTimeout(() => {
-                        step3();
-                    }, 1000);
-                }
-
-                function step1() {
-                    loading.style.display = "block";
-                    console.log("1");
-                    setTimeout(() => {
-                        step2();
-                    }, 500);
-                }
-
-                step1();
-                //console.log(document.getElementsByTagName("link").length);
-                /* loading.style.display = "block"
-                console.log("block")
-                setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/light/typography.css","http://127.0.0.1:8000/css/light/style.css","http://127.0.0.1:8000/css/light/responsive.css"), 3000);
-                setTimeout(function(){ loading.style.display = "none" }, 1000); */
-            } else {
-                console.log("a");
-                /* loading.style.display = "block"
-                console.log("block")
-                setTimeout(this.modeTOmode("http://127.0.0.1:8000/css/typography.css","http://127.0.0.1:8000/css/style.css","http://127.0.0.1:8000/css/responsive.css"), 3000);
-                setTimeout(function(){ loading.style.display = "none" }, 1000); */
-
-                var mode = (a, b, c) => {
-                    return this.modeTOmode(a, b, c);
-                };
-
-                function step3() {
-                    loading.style.display = "none";
-                    console.log("3");
-                }
-
-                function step2() {
-                    mode(
-                        "http://127.0.0.1:8000/css/typography.css",
-                        "http://127.0.0.1:8000/css/style.css",
-                        "http://127.0.0.1:8000/css/responsive.css"
-                    );
-                    console.log("2");
-                    setTimeout(() => {
-                        step3();
-                    }, 1000);
-                }
-
-                function step1() {
-                    loading.style.display = "block";
-                    console.log("1");
-                    setTimeout(() => {
-                        step2();
-                    }, 500);
-                }
-
-                step1();
-            }
         },
-        modeTOmode(href1, href2, href3) {
+        async modeTOmode(href1, href2, href3) {
             console.log("mode");
-
-            var oldlinktypography = document
-                .getElementsByTagName("link")
-                .item(2);
-            var oldlinkstyle = document.getElementsByTagName("link").item(3);
-            var oldlinkresponsive = document
-                .getElementsByTagName("link")
-                .item(4);
 
             var newlinktypography = document.createElement("link");
             var newlinkstyle = document.createElement("link");
             var newlinkresponsive = document.createElement("link");
 
-            newlinktypography.setAttribute("rel", "stylesheet");
-            newlinktypography.setAttribute("type", "text/css");
-            newlinktypography.setAttribute("href", href1);
+            assignAttr(newlinkresponsive, href3);
+            assignAttr(newlinktypography, href1);
+            assignAttr(newlinkstyle, href2);
 
-            newlinkstyle.setAttribute("rel", "stylesheet");
-            newlinkstyle.setAttribute("type", "text/css");
-            newlinkstyle.setAttribute("href", href2);
+            newlinktypography.onload = addEventListener(
+                "load",
+                appendToHead(newlinktypography),
+                true
+            );
+            newlinkstyle.onload = addEventListener(
+                "load",
+                appendToHead(newlinkstyle),
+                true
+            );
+            newlinkresponsive.onload = addEventListener(
+                "load",
+                appendToHead(newlinkresponsive),
+                true
+            );
 
-            newlinkresponsive.setAttribute("rel", "stylesheet");
-            newlinkresponsive.setAttribute("type", "text/css");
-            newlinkresponsive.setAttribute("href", href3);
+            function appendToHead(n) {
+                document.head.appendChild(n);
+            }
 
-            document
-                .getElementsByTagName("head")
-                .item(0)
-                .replaceChild(newlinktypography, oldlinktypography);
-            document
-                .getElementsByTagName("head")
-                .item(0)
-                .replaceChild(newlinkstyle, oldlinkstyle);
-            document
-                .getElementsByTagName("head")
-                .item(0)
-                .replaceChild(newlinkresponsive, oldlinkresponsive);
+            function assignAttr(elem, href) {
+                elem.setAttribute("rel", "stylesheet");
+                elem.setAttribute("type", "text/css");
+                elem.setAttribute("href", href);
+            }
         },
         removeDot() {
             document.getElementById("redREQ").style.display = "none";

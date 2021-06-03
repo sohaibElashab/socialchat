@@ -43,6 +43,6 @@ export default {
         showCollapse() {
             this.show = !this.show;
         }
-    }
+    } 
 };
 </script>

@@ -8,13 +8,13 @@
         <title>SocialChat</title>
         <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}" />
         <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
-        <link href="{{asset('css/typography.css')}}" rel="stylesheet" >
-        <link href="{{asset('css/style.css')}}" rel="stylesheet" >
-        <link href="{{asset('css/responsive.css')}}" rel="stylesheet" > 
+        <link href="{{asset('css/dark/typography.css')}}" rel="stylesheet" >
+        <link href="{{asset('css/dark/style.css')}}" rel="stylesheet" >
+        <link href="{{asset('css/dark/responsive.css')}}" rel="stylesheet" > 
         <style>
             #loading { background-color: var(--iq-dark-bg); height: 100%; width: 100%;  position: fixed; margin-top: 0px; top: 0px; left: 0px; bottom: 0px; overflow: hidden !important; right: 0px; z-index: 999999;}
             #loading-center {background: url(../images/loader.png) no-repeat scroll center center;background-size: 10%; width: 100%; height: 100%; position: relative; }
-            .loader { width: 3em; height: 3em; margin: auto; left: 0; right: 0; top: 0; bottom: 0; position: absolute; }
+            .loader { width: 3em; height: 3em; margin: auto; left: 0; right: 0; top: 0; bottom: 0; position: absolute;z-index: 999999; }
         </style>
     </head>
     <body >
