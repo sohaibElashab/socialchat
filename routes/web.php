@@ -48,5 +48,6 @@ Route::post('/LoadFriends', [App\Http\Controllers\FriendController::class, 'Load
 
 //PostController
 Route::post('/create-post', [App\Http\Controllers\PostController::class, 'create']); 
+Route::post('/update-post', [App\Http\Controllers\PostController::class, 'edit']); 
 Route::post('/GetPost', [App\Http\Controllers\PostController::class, 'show']);
 Route::get('/GetPosts', [App\Http\Controllers\PostController::class, 'index']);

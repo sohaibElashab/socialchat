@@ -8964,30 +8964,91 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      // post: {
-      //     id: 1,
-      //     userImg: "images/user/01.jpg",
-      //     userName: "Anna Sthesia",
-      //     statu: "Add New Post",
-      //     time: "Just Now",
-      //     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
-      //     postImgs: [
-      //         { img: "images/page-img/test/p1.jpg" },
-      //         { img: "images/page-img/test/p2.jpg" },
-      //         { img: "images/page-img/test/p3.jpg" },
-      //         { img: "images/page-img/test/p4.jpg" },
-      //         { img: "images/page-img/test/p5.jpg" },
-      //     ],
-      //     postVds: []
-      // },
       post: null,
+      text: '',
       NewFiles: [],
+      typeFiles: '',
       NewImgs: [],
+      NewVd: '',
       postId: null,
-      accept: ''
+      accept: '',
+      feelings: [{
+        FeelImg: "https://img.icons8.com/color/48/000000/happy--v1.png",
+        FeelTitle: "Happy",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/fluent/48/000000/sad.png",
+        FeelTitle: "Sad",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/color/64/000000/in-love--v1.png",
+        FeelTitle: "Loved",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/color/48/000000/angry.png",
+        FeelTitle: "Angry",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/fluent/48/000000/crazy.png",
+        FeelTitle: "Crazy",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/emoji/48/000000/drooling-face-emoji.png",
+        FeelTitle: "Hungry",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/emoji/48/000000/sleeping-face.png",
+        FeelTitle: "Sleepy",
+        active: ""
+      }, {
+        FeelImg: "https://img.icons8.com/color/48/000000/bored.png",
+        FeelTitle: "Bored",
+        active: ""
+      }]
     };
   },
   mounted: function mounted() {
@@ -8999,19 +9060,36 @@ __webpack_require__.r(__webpack_exports__);
     }).then(function (res) {
       console.log("this.post");
       _this.post = res.data;
+
+      _this.feelings.forEach(function (element, index) {
+        if (element.FeelTitle == _this.post.statu.substring(11)) {
+          _this.SelectFeeling(index);
+        }
+      });
+
+      _this.testFiles(_this.post.postImgs, _this.NewImgs, _this.NewVd);
+
+      _this.text = _this.post.text;
+
+      _this.acceptFiles();
+
       console.log(res.data);
       console.log(_this.post);
     });
-    this.acceptFiles();
   },
   methods: {
     acceptFiles: function acceptFiles() {
-      if (this.post.postImgs != [] || this.NewImgs != []) {
+      console.log('accepte file');
+
+      if (this.post.postImgs.length > 0 || this.NewImgs.length > 0) {
         this.accept = 'image/*';
-      } else if (this.post.video != []) {
+        console.log('accepte image');
+      } else if (this.post.postVds != '') {
         this.accept = 'video/*';
+        console.log('accepte video');
       } else {
         this.accept = 'image/*|video/*';
+        console.log('accepte video et image');
       }
     },
     removeImage: function removeImage(path, list) {
@@ -9039,15 +9117,103 @@ __webpack_require__.r(__webpack_exports__);
         this.NewFiles = newFilesImgs;
       }
 
+      this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd);
+      this.acceptFiles();
+    },
+    removeVideo: function removeVideo() {
+      this.NewFiles = [];
+      this.NewVd = '';
+      this.post.postVds = '';
+      this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd);
       this.acceptFiles();
     },
     addImages: function addImages(e) {
       var file = e.target.files[0];
-      var NewImage = URL.createObjectURL(file);
-      this.NewImgs.push(NewImage);
-      this.NewFiles.push(e.target.files[0]);
-      console.log(e.target.files[0]);
+      console.log();
+      var NewLink = URL.createObjectURL(file);
+
+      if (file.type.substring(0, 5) == "image") {
+        this.NewImgs.push(NewLink);
+        this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd);
+      } else {
+        this.NewFiles = [];
+        this.post.postVds = '';
+        this.NewVd = NewLink;
+        this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd);
+      }
+
+      this.NewFiles.push(file);
       this.acceptFiles();
+      document.getElementById("fileForm").reset();
+    },
+    SelectFeeling: function SelectFeeling(index) {
+      var _this2 = this;
+
+      var bl = false;
+      this.feelings.forEach(function (element) {
+        if (element == _this2.feelings[index]) {
+          if (_this2.feelings[index].active == "") {
+            bl = true;
+          } else {
+            bl = false;
+          }
+        } else {
+          element.active = "";
+          _this2.post.statu = "";
+        }
+      });
+
+      if (bl) {
+        this.post.statu = "is feeling " + this.feelings[index].FeelTitle;
+        this.feelings[index].active = "classActive";
+      } else {
+        this.post.statu = "";
+        this.feelings[index].active = "";
+      }
+    },
+    testFiles: function testFiles(listImgOld, listImgNew, video) {
+      if (listImgOld.length == 0 && listImgNew.length == 0 && video == '') {
+        this.typeFiles = '';
+      } else if (video != '') {
+        this.typeFiles = 'video';
+      } else {
+        this.typeFiles = 'images';
+      }
+    },
+    UpdatePost: function UpdatePost() {
+      if (this.text == "" && this.post.statu == "" && !this.NewFiles.length && !this.post.postImgs && this.post.postVds == "") {
+        document.getElementById("warning").style.display = 'block';
+      } else {
+        var data = new FormData();
+        data.append("id", this.post.id);
+        data.append("Statu", this.post.statu);
+        data.append("Text", this.text); // data.append("images", this.post.postImgs);
+
+        data.append("video", this.post.postVds);
+
+        for (var i = 0; i < this.post.postImgs.length; i++) {
+          var file = this.post.postImgs[i];
+          data.append("image[" + i + "]", file);
+        }
+
+        data.append('imgLength', this.post.postImgs.length);
+
+        for (var _i = 0; _i < this.NewFiles.length; _i++) {
+          var _file = this.NewFiles[_i];
+          data.append("file[" + _i + "]", _file);
+        }
+
+        data.append('fileLength', this.NewFiles.length); // console.log(data);
+
+        axios.post("/update-post", data).then(function (res) {
+          console.log(res.data); // for (var value of res.config.data.entries()) {
+          //     console.log(value);
+          // }
+          // console.log(res.config.data)
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      }
     }
   }
 });
@@ -13362,16 +13528,6 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -20640,7 +20796,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.img-edit[data-v-5281f7ec] { \r\n    width: 100%;\r\n    height: 100%;\r\n    position: relative;\r\n    top: -25px;\n}\n.edit-btn[data-v-5281f7ec] { \r\n    position: relative;\r\n    top: 5px;\r\n    left: 108px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.edit-images:hover .edit-btn[data-v-5281f7ec] { \r\n    opacity: 1; \r\n    transition: all 0.45s ease 0s;\n}\n.edit-btn > i[data-v-5281f7ec] { \r\n    color: var(--iq-primary);\n}\n.edit-images[data-v-5281f7ec] { \r\n    width: 250px;\r\n    height: 250px;\r\n    margin: 20px;\r\n    float: left;\n}\n.inputfile[data-v-5281f7ec] {\r\n    width: 0.1px;\r\n    height: 0.1px;\r\n    opacity: 0;\r\n    overflow: hidden;\r\n    position: absolute;\r\n    display: none;\r\n    z-index: -1;\n}\n.inputfile + label[data-v-5281f7ec] {\r\n    max-width: 80%;\r\n    font-size: 1.15rem;\r\n    font-weight: 700;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    overflow: hidden;\n}\n.inputfile:focus + label[data-v-5281f7ec],\r\n.inputfile.has-focus + label[data-v-5281f7ec] {\r\n    outline: 1px dotted #000;\r\n    outline: -webkit-focus-ring-color auto 5px;\n}\n.inputfile + label svg[data-v-5281f7ec] {\r\n    width: 1em;\r\n    height: 1em;\r\n    vertical-align: middle;\r\n    fill: currentColor;\r\n    margin-top: -0.25em;\r\n    /* 4px */\r\n    margin-right: 0.25em;\r\n    /* 4px */\n}\n.inputfile + label[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\n}\n.inputfile:focus + label[data-v-5281f7ec],\r\n.inputfile.has-focus + label[data-v-5281f7ec],\r\n.inputfile + label[data-v-5281f7ec]:hover {\r\n    color: var(--iq-light);\n}\n.inputfile + label figure[data-v-5281f7ec] {\r\n    width: 80px;\r\n    height: 80px;\r\n    border-radius: 50%;\r\n    background-color: var(--iq-primary);\r\n    display: block;\r\n    padding: 20px;\r\n    margin: 0 auto 10px;\n}\n.inputfile:focus + label figure[data-v-5281f7ec],\r\n.inputfile.has-focus + label figure[data-v-5281f7ec],\r\n.inputfile + label:hover figure[data-v-5281f7ec] {\r\n    background-color: var(--iq-light);\n}\n.inputfile + label svg[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    fill: var(--iq-dark-bg);\n}\n.box[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: 40px;\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.img-edit[data-v-5281f7ec] { \r\n    width: 100%;\r\n    height: 100%;\r\n    position: relative;\r\n    top: -25px;\n}\n.delete-btn[data-v-5281f7ec] { \r\n    position: relative;\r\n    top: 5px;\r\n    left: 108px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.delete:hover .delete-btn[data-v-5281f7ec] { \r\n    opacity: 1; \r\n    transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-5281f7ec] { \r\n    color: var(--iq-primary);\r\n    position: relative;\r\n    top: -2px;\n}\n.delete-images[data-v-5281f7ec] { \r\n    width: 250px;\r\n    height: 250px;\r\n    margin: 20px;\r\n    float: left;\n}\n.d-video[data-v-5281f7ec]{\r\n    position: relative;\r\n    top: -500px;\r\n    left: 95%;\r\n    background: var(--iq-dark-bg);\n}\n.inputfile[data-v-5281f7ec] {\r\n    width: 0.1px;\r\n    height: 0.1px;\r\n    opacity: 0;\r\n    overflow: hidden;\r\n    position: absolute;\r\n    display: none;\r\n    z-index: -1;\n}\n.labelfile[data-v-5281f7ec] {\r\n    padding: 30% 30%;\n}\n.inputfile[data-v-5281f7ec], .labelfile[data-v-5281f7ec] {\r\n    max-width: 1000%;\r\n    font-size: 1.15rem;\r\n    font-weight: 700;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    overflow: hidden;\n}\n.inputfile[data-v-5281f7ec], .labelfile svg[data-v-5281f7ec] {\r\n    width: 1em;\r\n    height: 1em;\r\n    vertical-align: middle;\r\n    fill: currentColor;\r\n    margin-top: -0.25em;\r\n    /* 4px */\r\n    margin-right: 0.25em;\r\n    /* 4px */\n}\n.inputfile[data-v-5281f7ec], .labelfile[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\n}\n.inputfile:focus .labelfile[data-v-5281f7ec],\r\n.inputfile.has-focus .labelfile[data-v-5281f7ec],\r\n.inputfile .labelfile[data-v-5281f7ec]:hover {\r\n    color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec], .labelfile figure[data-v-5281f7ec] {\r\n    width: 80px;\r\n    height: 80px;\r\n    border-radius: 50%;\r\n    background-color: var(--iq-primary);\r\n    display: block;\r\n    padding: 20px;\r\n    margin: 0 auto 10px;\n}\n.inputfile[data-v-5281f7ec]:focus , .labelfile figure[data-v-5281f7ec],\r\n.inputfile.has-focus[data-v-5281f7ec], .labelfile figure[data-v-5281f7ec],\r\n.inputfile[data-v-5281f7ec], .labelfile:hover figure[data-v-5281f7ec] {\r\n    background-color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec], .labelfile svg[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    fill: var(--iq-dark-bg);\n}\n.box[data-v-5281f7ec] {\r\n    position: relative;\r\n    height: 100%;\r\n    border: 1px dashed var(--iq-primary);\r\n    border-radius: 5px;\r\n    width: 100%;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -20664,7 +20820,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.feelings[data-v-eb6038b2]{\r\n   position: relative;\r\n   width: 97%;\r\n   border: 1px solid var(--primary);\r\n   border-radius: 10px;\r\n   margin-top: 10px;\r\n   display: flex;\r\n   flex-wrap: wrap;\r\n   justify-content: center;\n}\n.feeling[data-v-eb6038b2]{\r\n   position: relative;\r\n   width: 48%;\r\n   height: 45px;\r\n   margin: 5px;\r\n   border-radius: 10px;\r\n   display: flex;\r\n   flex-direction: row;\r\n   align-items: center;\r\n   justify-content: center;\n}\n.feeling[data-v-eb6038b2]:hover{\r\n   background: rgba(128, 128, 128, 0.171);\n}\n.feelImg[data-v-eb6038b2]{\r\n   position: relative;\r\n   width: 20%;\r\n   text-align: center;\n}\n.feelSpan[data-v-eb6038b2]{\r\n   position: relative;\r\n   \r\n   width: 60%;\r\n   text-align: center;\n}\n.img-add[data-v-eb6038b2] { \r\n   width: 100%;\r\n   height: 100%;\r\n   position: relative;\r\n   top: -25px;\n}\n.delete-btn[data-v-eb6038b2] { \r\n   position: relative;\r\n   top: 5px;\r\n   left: 150px;\r\n   background: var(--iq-white);\r\n   height: 25px;\r\n   width: 25px;\r\n   text-align: center;\r\n   border: none;\r\n   border-radius: 5px;\r\n   opacity: 0;\r\n   z-index: 1;\n}\n.add-images:hover .delete-btn[data-v-eb6038b2],\r\n.add-video:hover .delete-btn[data-v-eb6038b2] { \r\n   opacity: 1; \r\n   transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-eb6038b2] { \r\n   color: var(--iq-primary);\n}\n.vd-btn[data-v-eb6038b2]{\r\n   position: absolute;\r\n    left: 90%\n}\n.add-images[data-v-eb6038b2] { \r\n   width: 180px;\r\n   height: 180px;\r\n   margin: 10px;\r\n   float: left;\n}\n.classDisabled[data-v-eb6038b2]{\r\n   color: grey !important\n}\n.classActive[data-v-eb6038b2]{\r\n   background: rgba(128, 128, 128, 0.171) !important\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.img-add[data-v-eb6038b2] { \r\n   width: 100%;\r\n   height: 100%;\r\n   position: relative;\r\n   top: -25px;\n}\n.delete-btn[data-v-eb6038b2] { \r\n   position: relative;\r\n   top: 5px;\r\n   left: 150px;\r\n   background: var(--iq-white);\r\n   height: 25px;\r\n   width: 25px;\r\n   text-align: center;\r\n   border: none;\r\n   border-radius: 5px;\r\n   opacity: 0;\r\n   z-index: 1;\n}\n.add-images:hover .delete-btn[data-v-eb6038b2],\r\n.add-video:hover .delete-btn[data-v-eb6038b2] { \r\n   opacity: 1; \r\n   transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-eb6038b2] { \r\n   color: var(--iq-primary);\n}\n.vd-btn[data-v-eb6038b2]{\r\n   position: absolute;\r\n    left: 90%\n}\n.add-images[data-v-eb6038b2] { \r\n   width: 180px;\r\n   height: 180px;\r\n   margin: 10px;\r\n   float: left;\n}\n.classDisabled[data-v-eb6038b2]{\r\n   color: grey !important\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -71786,16 +71942,34 @@ var render = function() {
                         _vm._v(_vm._s(_vm.post.time))
                       ])
                     : _vm._e()
-                ])
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
               ])
             ]),
             _vm._v(" "),
             _vm.post.text
               ? _c("div", { staticClass: "mt-3" }, [
                   _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.text,
+                        expression: "text"
+                      }
+                    ],
                     staticClass: "form-control",
-                    attrs: { name: "", id: "" },
-                    domProps: { value: _vm.post.text }
+                    attrs: { name: "", id: "textarea" },
+                    domProps: { value: _vm.text },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.text = $event.target.value
+                      }
+                    }
                   })
                 ])
               : _vm._e(),
@@ -71808,15 +71982,15 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "user-post text-center" }, [
-                  _vm.post.postImgs
+                  _vm.post.postImgs.length > 0
                     ? _c(
                         "div",
                         _vm._l(_vm.post.postImgs, function(imgs, index) {
                           return _c(
                             "div",
-                            { key: index, staticClass: "edit-images" },
+                            { key: index, staticClass: "delete-images delete" },
                             [
-                              _c("button", { staticClass: "edit-btn" }, [
+                              _c("button", { staticClass: "delete-btn" }, [
                                 _c("i", {
                                   staticClass: "ri-delete-bin-line",
                                   on: {
@@ -71851,15 +72025,15 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.NewImgs
+                  _vm.NewImgs.length > 0
                     ? _c(
                         "div",
                         _vm._l(_vm.NewImgs, function(img, index) {
                           return _c(
                             "div",
-                            { key: index, staticClass: "edit-images" },
+                            { key: index, staticClass: "delete-images delete" },
                             [
-                              _c("button", { staticClass: "edit-btn" }, [
+                              _c("button", { staticClass: "delete-btn" }, [
                                 _c("i", {
                                   staticClass: "ri-delete-bin-line",
                                   on: {
@@ -71887,57 +72061,77 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _c("div", { staticClass: "edit-images" }, [
-                    _c("div", { staticClass: "box" }, [
-                      _c("input", {
-                        staticClass: "inputfile",
-                        attrs: {
-                          type: "file",
-                          name: "file",
-                          id: "file",
-                          accept: _vm.accept,
-                          multiple: ""
-                        },
-                        on: { change: _vm.addImages }
-                      }),
-                      _vm._v(" "),
-                      _c("label", { attrs: { for: "file" } }, [
-                        _c("figure", [
-                          _c(
-                            "svg",
-                            {
+                  _vm.NewVd == ""
+                    ? _c("div", { staticClass: "delete-images" }, [
+                        _c("div", { staticClass: "box" }, [
+                          _c("form", { attrs: { id: "fileForm" } }, [
+                            _c("input", {
+                              staticClass: "inputfile",
                               attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                width: "20",
-                                height: "17",
-                                viewBox: "0 0 20 17"
-                              }
+                                type: "file",
+                                name: "file",
+                                id: "file",
+                                accept: _vm.accept,
+                                multiple: ""
+                              },
+                              on: { change: _vm.addImages }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "labelfile",
+                              attrs: { for: "file" }
                             },
                             [
-                              _c("path", {
-                                attrs: {
-                                  d:
-                                    "M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"
-                                }
-                              })
+                              _c("figure", [
+                                _c(
+                                  "svg",
+                                  {
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      width: "20",
+                                      height: "17",
+                                      viewBox: "0 0 20 17"
+                                    }
+                                  },
+                                  [
+                                    _c("path", {
+                                      attrs: {
+                                        d:
+                                          "M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ])
                             ]
                           )
-                        ]),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("Add another picture ...")])
+                        ])
                       ])
-                    ])
-                  ])
+                    : _vm._e()
                 ])
               ]
             ),
             _vm._v(" "),
-            _vm.post.postVds
-              ? _c("div", { staticClass: "user-post" }, [
+            _vm.post.postVds != ""
+              ? _c("div", { staticClass: "user-post delete" }, [
                   _c(
                     "div",
                     { staticClass: "embed-responsive embed-responsive-16by9" },
                     [
+                      _c("button", { staticClass: "delete-btn" }, [
+                        _c("i", {
+                          staticClass: "ri-delete-bin-line",
+                          on: {
+                            click: function($event) {
+                              return _vm.removeVideo()
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
                       _c("video", { attrs: { controls: "" } }, [
                         _c("source", {
                           attrs: {
@@ -71984,10 +72178,118 @@ var render = function() {
                     ]
                   )
                 ])
-              : _vm._e()
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.NewVd != ""
+              ? _c("div", { staticClass: "user-post delete" }, [
+                  _c(
+                    "div",
+                    { staticClass: "embed-responsive embed-responsive-16by9" },
+                    [
+                      _c("button", { staticClass: "delete-btn d-video" }, [
+                        _c("i", {
+                          staticClass: "ri-delete-bin-line",
+                          on: {
+                            click: function($event) {
+                              return _vm.removeVideo()
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("video", { attrs: { controls: "" } }, [
+                        _c("source", {
+                          attrs: { src: _vm.NewVd, type: "video/mp4" }
+                        }),
+                        _vm._v(" "),
+                        _c("source", {
+                          attrs: { src: _vm.NewVd, type: "video/webm" }
+                        }),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(
+                            "Votre navigateur ne prend pas en charge les vidéos HTML5.\n                          Voici "
+                          ),
+                          _c("a", { attrs: { href: _vm.NewVd } }, [
+                            _vm._v("un lien pour télécharger la vidéo")
+                          ]),
+                          _vm._v(".")
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", [
+              _c("div", { staticClass: "collapse show" }, [
+                _c(
+                  "div",
+                  { staticClass: "feelings" },
+                  _vm._l(_vm.feelings, function(feeling, index) {
+                    return _c(
+                      "div",
+                      {
+                        key: index,
+                        class: "feeling " + feeling.active,
+                        on: {
+                          click: function($event) {
+                            return _vm.SelectFeeling(index)
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "feelImg" }, [
+                          _c("img", {
+                            staticStyle: { width: "60%" },
+                            attrs: { src: feeling.FeelImg, alt: "feeling icon" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "feelSpan" }, [
+                          _c("span", [
+                            _vm._v(
+                              " \n                                  " +
+                                _vm._s(feeling.FeelTitle) +
+                                "\n                               "
+                            )
+                          ])
+                        ])
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ])
+            ])
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary ml-4 mb-4 mt-4",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.UpdatePost()
+                  }
+                }
+              },
+              [_vm._v("Update")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger ml-4 mb-4 mt-4",
+                attrs: { type: "button" }
+              },
+              [_vm._v("Cancel")]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(1)
         ])
       ])
     : _vm._e()
@@ -71997,25 +72299,38 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
+    return _c("div", { staticClass: "iq-card-post-toolbar" }, [
       _c(
-        "button",
+        "span",
         {
-          staticClass: "btn btn-primary ml-4 mb-4 mt-4",
-          attrs: { type: "button" }
+          staticClass: "dropdown-toggle",
+          attrs: {
+            "data-toggle": "dropdown",
+            "aria-haspopup": "true",
+            "aria-expanded": "false",
+            role: "button"
+          }
         },
-        [_vm._v("Submit")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-danger ml-4 mb-4 mt-4",
-          attrs: { type: "button" }
-        },
-        [_vm._v("Cancel")]
+        [_c("i", { staticClass: "ri-delete-bin-line" })]
       )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "alert alert-warning mt-3",
+        staticStyle: { display: "none" },
+        attrs: { id: "warning", role: "alert" }
+      },
+      [
+        _c("strong", [_vm._v("The post ")]),
+        _vm._v(" must conatin a text, photos, video, or feelings\n            ")
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -77520,7 +77835,7 @@ var render = function() {
                                   _c("VueEmoji", {
                                     ref: "emoji",
                                     staticClass: "emoji-div -create",
-                                    attrs: { height: "100", value: _vm.myText },
+                                    attrs: { height: "100" },
                                     on: { input: _vm.onInput }
                                   })
                                 ],

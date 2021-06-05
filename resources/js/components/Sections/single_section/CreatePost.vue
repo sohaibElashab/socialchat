@@ -50,7 +50,7 @@
                         <div class="bd-highlight justify-content-center mt-2">
                            <form class="post-text ml-3" action="javascript:void();">
                               <!-- <input type="text" class="form-control rounded" placeholder="Write something here..." style="border:none;"> -->
-                              <VueEmoji ref="emoji" @input="onInput" height="100" class="emoji-div -create" :value="myText" />
+                              <VueEmoji ref="emoji" @input="onInput" height="100" class="emoji-div -create" />
                            </form>
                         </div>
                      </div> 
@@ -124,16 +124,6 @@
                                           </span>
                                        </div>
                                  </div>
-                                 <!-- <div class="feeling" @click="SelectFeeling()">
-                                       <div class="feelImg">
-                                          <img src="https://img.icons8.com/color/48/000000/happy--v1.png" alt="feeling icon" style="width: 60%;">
-                                       </div>
-                                       <div class="feelSpan">
-                                          <span> 
-                                             test
-                                          </span>
-                                       </div>
-                                 </div> -->
                               </div>
                            </div>
                         </li>
@@ -339,41 +329,6 @@ export default {
 </script>
 
 <style scoped>
-.feelings{
-   position: relative;
-   width: 97%;
-   border: 1px solid var(--primary);
-   border-radius: 10px;
-   margin-top: 10px;
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
-}
-.feeling{
-   position: relative;
-   width: 48%;
-   height: 45px;
-   margin: 5px;
-   border-radius: 10px;
-   display: flex;
-   flex-direction: row;
-   align-items: center;
-   justify-content: center;
-}
-.feeling:hover{
-   background: rgba(128, 128, 128, 0.171);
-}
-.feelImg{
-   position: relative;
-   width: 20%;
-   text-align: center;
-}
-.feelSpan{
-   position: relative;
-   
-   width: 60%;
-   text-align: center;
-}
 .img-add { 
    width: 100%;
    height: 100%;
@@ -413,8 +368,5 @@ export default {
 }
 .classDisabled{
    color: grey !important
-}
-.classActive{
-   background: rgba(128, 128, 128, 0.171) !important
 }
 </style>

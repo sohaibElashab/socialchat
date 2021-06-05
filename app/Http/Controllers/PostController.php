@@ -113,8 +113,6 @@ class PostController extends Controller
             'time' => date("Y-m-d H:i:s"),
         ]);
 
-        // $images = $request->file('Images');
-
         if($request->imagenbr > 0){
             $images= array();
             for ($i=0; $i < $request->imagenbr; $i++) { 
@@ -145,20 +143,6 @@ class PostController extends Controller
                 'type' => 'post', 
             ]);
         }
-
-        // if($request->file('Images') != [] ){
-        // }
-        // if(empty($request->file('Videos'))){
-        //     $video = $request->file('Videos');
-        //     $new_name = rand() . '.' . $image->getClientOriginalExtension();
-        //     $video->move(public_path('images/user/'.$user->id.'/posts/'.$post->id),$new_name);
-        //     Video::create([
-        //         'post_id' => $post->id,
-        //         'user_id' => $user->id,
-        //         'name' => $new_name,
-        //         'type' => 'post', 
-        //     ]);
-        // }
 
         return response()->json($request->Images);   
     }
@@ -191,6 +175,8 @@ class PostController extends Controller
         $userImage = '';
         $userName = '';
         $userId = '';
+        $post->postImgs = array();
+        $post->postVds = '';
 
         $user = User::where('id',$post->user_id)->first();
         $imagesArray = array();
@@ -244,9 +230,87 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        // $user = User::findOrFail($request->id);
+        // $post = Post::findOrFail($request->id);
+        $images = Image::where('post_id',$request->id)->get();
+        // date_default_timezone_set('Africa/Casablanca');
+        // if($request->Statu == ""){
+        //     $request->Statu = " ";
+        // };
+        // if($request->Text == ""){
+        //     $request->Text = " ";
+        // };
+        // $post->update([
+        //     'type' => 'post',
+        //     'statu' => $request->Statu,
+        //     'text' => $request->Text,
+        // ]);
+
+        $oldimages= array();
+        for ($i=0; $i < $request->imgLength; $i++) { 
+            array_push($oldimages ,$request->image[$i] );
+        };
+
+        $data = array(); 
+        if(count($images)>0){
+            foreach($images as $image){
+                $delete = false;
+                foreach($oldimages as $oldImg){
+                    if($oldImg == $image->name){
+                        // array_push($arr , $image->name);
+                        $delete = true;
+                    }
+                }
+                if($delete == false){ 
+                    $res=Image::find($image->id)->delete();
+                    if ($res){
+                        $data=[
+                        'status'=>'1',
+                        'msg'=>'success'
+                    ];
+                    }else{
+                        $data=[
+                        'status'=>'0',
+                        'msg'=>'fail'
+                    ];}
+                }
+            }
+        }
+
+        // if($request->fileLength > 0){
+        //     $images= array();
+        //     for ($i=0; $i < $request->imagenbr; $i++) { 
+        //         array_push($images ,$request->Images[$i] );
+        //     };
+    
+        //     foreach ($images as $image) {
+        //         $new_name = 'postImg-'.rand() . '.' . $image->getClientOriginalExtension();
+        //         $image->move(public_path('images/posts/'.$user->id),$new_name);
+        //         Image::create([
+        //             'post_id' => $post->id,
+        //             'user_id' => $user->id,
+        //             'name' => $new_name,
+        //             'type' => 'post', 
+        //         ]);
+        //     };
+        // };
+
+        // if($request->Viedos != null){
+        //     $video = $request->Viedos;
+    
+        //     $new_name = 'postVd-'.rand() . '.' . $video->getClientOriginalExtension();
+        //     $video->move(public_path('videos/posts/'.$user->id),$new_name);
+        //     Video::create([
+        //         'post_id' => $post->id,
+        //         'user_id' => $user->id,
+        //         'name' => $new_name,
+        //         'type' => 'post', 
+        //     ]);
+        // }
+
+        return response()->json($data);
     }
 
     /**

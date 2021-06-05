@@ -196,6 +196,7 @@ NOTE: This file contains the styling for responsive Template.
 		.iq-sub-card.iq-sub-card-big {display: block !important;}
 		.iq-sub-card.iq-sub-card-big div + div {margin-top: 10px;}
 		.iq-sub-dropdown.iq-sub-dropdown-large { width: 300px;}
+		.d-video{top: -345px !important;left: 95% !important;}
 	}
 	@media(max-width:479px) {
 		.display-1 { font-size: 2.0rem; font-weight: 500; }
@@ -234,5 +235,8 @@ NOTE: This file contains the styling for responsive Template.
 		.iq-top-navbar .iq-sub-dropdown.iq-user-dropdown{right: 0;}
 		.iq-birthday-block .d-flex {display: block !important; text-align: center; margin: 10px 0;}
 		.friend-info.ml-3 {margin: 10px 0 0 !important;}
+		.d-video{top: -180px !important;left: 90% !important;}
 	}
-	@media(max-width:359px) { }
+	@media(max-width:359px) {
+		.d-video{top: -125px !important;left: 90% !important;} 
+	}

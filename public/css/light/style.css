@@ -1168,3 +1168,44 @@ button.qty-btn { border: 1px solid var(--iq-border-light); background: var(--iq-
   border: 2px solid var(--iq-primary) !important;
   outline: none !important;
 }
+
+
+/* ----------------------------feelings---------------------------- */
+.feelings{
+  position: relative;
+  width: 97%;
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.feeling{
+  position: relative;
+  width: 48%;
+  height: 45px;
+  margin: 10px 5px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.feeling:hover{
+  background: rgba(128, 128, 128, 0.171);
+}
+.feelImg{
+  position: relative;
+  width: 20%;
+  text-align: center;
+}
+.feelSpan{
+  position: relative;
+  
+  width: 60%;
+  text-align: center;
+}
+.classActive{
+  background: rgba(128, 128, 128, 0.171) !important
+}
