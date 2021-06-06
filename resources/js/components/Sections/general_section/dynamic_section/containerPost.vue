@@ -14,12 +14,11 @@ export default {
     },    
     data() {
         return {
-            postId: 6,
             post: null
         };
-    },
+    }, 
     mounted() {
-        axios.post("/GetPost" , { id: this.postId })
+        axios.post("/GetPost" , { id: this.$route.query.postId })
             .then(res => {
                 console.log("this.post");
                 this.post = res.data;

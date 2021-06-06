@@ -232,85 +232,80 @@ class PostController extends Controller
      */
     public function edit(Request $request)
     {
-        // $user = User::findOrFail($request->id);
-        // $post = Post::findOrFail($request->id);
-        $images = Image::where('post_id',$request->id)->get();
-        // date_default_timezone_set('Africa/Casablanca');
-        // if($request->Statu == ""){
-        //     $request->Statu = " ";
-        // };
-        // if($request->Text == ""){
-        //     $request->Text = " ";
-        // };
-        // $post->update([
-        //     'type' => 'post',
-        //     'statu' => $request->Statu,
-        //     'text' => $request->Text,
-        // ]);
-
-        $oldimages= array();
-        for ($i=0; $i < $request->imgLength; $i++) { 
-            array_push($oldimages ,$request->image[$i] );
+        $post = Post::findOrFail($request->id);
+        date_default_timezone_set('Africa/Casablanca');
+        if($request->Statu == ""){
+            $request->Statu = " ";
         };
+        if($request->Text == ""){
+            $request->Text = " ";
+        };
+        $post->update([
+            'type' => 'post',
+            'statu' => $request->Statu,
+            'text' => $request->Text,
+        ]);
+        $files= array();
+        $oldimages= array();
+        $images = Image::where('post_id',$request->id)->get('name');
+        $video = Video::where('post_id',$request->id)->get('name');
 
-        $data = array(); 
-        if(count($images)>0){
-            foreach($images as $image){
-                $delete = false;
-                foreach($oldimages as $oldImg){
-                    if($oldImg == $image->name){
-                        // array_push($arr , $image->name);
-                        $delete = true;
-                    }
-                }
-                if($delete == false){ 
-                    $res=Image::find($image->id)->delete();
-                    if ($res){
-                        $data=[
-                        'status'=>'1',
-                        'msg'=>'success'
-                    ];
-                    }else{
-                        $data=[
-                        'status'=>'0',
-                        'msg'=>'fail'
-                    ];}
+        if($request->fileType == 'images'){
+            Video::where('post_id',$request->id)->delete();
+            
+            for ($i=0; $i < $request->imgLength; $i++) { 
+                array_push($oldimages ,$request->image[$i] );
+            };
+            
+            foreach($images as $old){
+                if(!in_array($old->name,$oldimages)){
+                    Image::where('name',$old->name)->delete();
+                    // echo $old->name;
                 }
             }
+
+          
+            for ($i=0; $i < $request->fileLength; $i++) { 
+                array_push($files ,$request->OurFile[$i] );
+            };
+            if(count($files) > 0){
+                foreach ($files as $image) {
+                    $new_name = 'postImg-'.rand() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('images/posts/'.auth()->user()->id),$new_name);
+                    Image::create([
+                        'post_id' => $post->id,
+                        'user_id' => auth()->user()->id,
+                        'name' => $new_name,
+                        'type' => 'post', 
+                    ]);
+                };
+            }
+        }else if($request->fileType == 'video'){
+            Image::where('post_id',$request->id)->delete();
+            if($request->video == ''){
+                if(count($video) == 0){
+                    $NewVideo = $request->OurFile[0];
+                    $new_name = 'postVd-'.rand() . '.' . $NewVideo->getClientOriginalExtension();
+                    $NewVideo->move(public_path('videos/posts/'.auth()->user()->id),$new_name);
+                    Video::create([
+                        'post_id' => $post->id,
+                        'user_id' => auth()->user()->id,
+                        'name' => $new_name,
+                        'type' => 'post', 
+                    ]);
+                }else{
+                    $NewVideo = $request->OurFile[0];
+                    $new_name = 'postVd-'.rand() . '.' . $NewVideo->getClientOriginalExtension();
+                    $NewVideo->move(public_path('videos/posts/'.auth()->user()->id),$new_name);
+                    $video->name = $new_name;
+                }
+            }
+        }else{
+            Image::where('post_id',$request->id)->delete();
+            Video::where('post_id',$request->id)->delete();
         }
-
-        // if($request->fileLength > 0){
-        //     $images= array();
-        //     for ($i=0; $i < $request->imagenbr; $i++) { 
-        //         array_push($images ,$request->Images[$i] );
-        //     };
-    
-        //     foreach ($images as $image) {
-        //         $new_name = 'postImg-'.rand() . '.' . $image->getClientOriginalExtension();
-        //         $image->move(public_path('images/posts/'.$user->id),$new_name);
-        //         Image::create([
-        //             'post_id' => $post->id,
-        //             'user_id' => $user->id,
-        //             'name' => $new_name,
-        //             'type' => 'post', 
-        //         ]);
-        //     };
-        // };
-
-        // if($request->Viedos != null){
-        //     $video = $request->Viedos;
-    
-        //     $new_name = 'postVd-'.rand() . '.' . $video->getClientOriginalExtension();
-        //     $video->move(public_path('videos/posts/'.$user->id),$new_name);
-        //     Video::create([
-        //         'post_id' => $post->id,
-        //         'user_id' => $user->id,
-        //         'name' => $new_name,
-        //         'type' => 'post', 
-        //     ]);
-        // }
-
-        return response()->json($data);
+        /* dd($request->fileType); */
+        return response()->json($request->id);
     }
 
     /**

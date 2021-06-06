@@ -8859,7 +8859,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      postId: 6,
       post: null
     };
   },
@@ -8867,7 +8866,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.post("/GetPost", {
-      id: this.postId
+      id: this.$route.query.postId
     }).then(function (res) {
       console.log("this.post");
       _this.post = res.data;
@@ -9005,17 +9004,135 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       post: null,
-      text: '',
+      text: "",
       NewFiles: [],
-      typeFiles: '',
+      typeFiles: "",
       NewImgs: [],
-      NewVd: '',
+      NewVd: "",
       postId: null,
-      accept: '',
+      accept: "",
       feelings: [{
         FeelImg: "https://img.icons8.com/color/48/000000/happy--v1.png",
         FeelTitle: "Happy",
@@ -9067,7 +9184,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
 
-      _this.testFiles(_this.post.postImgs, _this.NewImgs, _this.NewVd);
+      _this.testFiles(_this.post.postImgs, _this.NewImgs, _this.NewVd, _this.post.postVds);
 
       _this.text = _this.post.text;
 
@@ -9079,17 +9196,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     acceptFiles: function acceptFiles() {
-      console.log('accepte file');
+      console.log("accepte file");
 
       if (this.post.postImgs.length > 0 || this.NewImgs.length > 0) {
-        this.accept = 'image/*';
-        console.log('accepte image');
-      } else if (this.post.postVds != '') {
-        this.accept = 'video/*';
-        console.log('accepte video');
+        this.accept = "image/*";
+        console.log("accepte image");
+      } else if (this.post.postVds != "") {
+        this.accept = "video/*";
+        console.log("accepte video");
       } else {
-        this.accept = 'image/*|video/*';
-        console.log('accepte video et image');
+        this.accept = "image/*|video/*";
+        console.log("accepte video et image");
       }
     },
     removeImage: function removeImage(path, list) {
@@ -9097,7 +9214,7 @@ __webpack_require__.r(__webpack_exports__);
       var newPostImgs = [];
       var newFilesImgs = [];
 
-      if (list == 'old') {
+      if (list == "old") {
         for (var index = 0; index < this.post.postImgs.length; index++) {
           if (this.post.postImgs[index] != path) {
             newPostImgs.push(this.post.postImgs[index]);
@@ -9117,14 +9234,14 @@ __webpack_require__.r(__webpack_exports__);
         this.NewFiles = newFilesImgs;
       }
 
-      this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd);
+      this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd, this.post.postVds);
       this.acceptFiles();
     },
     removeVideo: function removeVideo() {
       this.NewFiles = [];
-      this.NewVd = '';
-      this.post.postVds = '';
-      this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd);
+      this.NewVd = "";
+      this.post.postVds = "";
+      this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd, this.post.postVds);
       this.acceptFiles();
     },
     addImages: function addImages(e) {
@@ -9134,12 +9251,12 @@ __webpack_require__.r(__webpack_exports__);
 
       if (file.type.substring(0, 5) == "image") {
         this.NewImgs.push(NewLink);
-        this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd);
+        this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd, this.post.postVds);
       } else {
         this.NewFiles = [];
-        this.post.postVds = '';
+        this.post.postVds = "";
         this.NewVd = NewLink;
-        this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd);
+        this.testFiles(this.post.postImgs, this.NewImgs, this.NewVd, this.post.postVds);
       }
 
       this.NewFiles.push(file);
@@ -9171,19 +9288,22 @@ __webpack_require__.r(__webpack_exports__);
         this.feelings[index].active = "";
       }
     },
-    testFiles: function testFiles(listImgOld, listImgNew, video) {
-      if (listImgOld.length == 0 && listImgNew.length == 0 && video == '') {
-        this.typeFiles = '';
-      } else if (video != '') {
-        this.typeFiles = 'video';
+    testFiles: function testFiles(listImgOld, listImgNew, Oldvideo, Newvideo) {
+      if (listImgOld.length == 0 && listImgNew.length == 0 && Oldvideo == "" && Newvideo == "") {
+        this.typeFiles = "";
+      } else if (Oldvideo != "" || Newvideo != "") {
+        this.typeFiles = "video";
       } else {
-        this.typeFiles = 'images';
+        this.typeFiles = "images";
       }
     },
     UpdatePost: function UpdatePost() {
+      var _this3 = this;
+
       if (this.text == "" && this.post.statu == "" && !this.NewFiles.length && !this.post.postImgs && this.post.postVds == "") {
-        document.getElementById("warning").style.display = 'block';
+        document.getElementById("warning").style.display = "block";
       } else {
+        // console.log(this.NewFiles);
         var data = new FormData();
         data.append("id", this.post.id);
         data.append("Statu", this.post.statu);
@@ -9196,20 +9316,24 @@ __webpack_require__.r(__webpack_exports__);
           data.append("image[" + i + "]", file);
         }
 
-        data.append('imgLength', this.post.postImgs.length);
+        data.append("imgLength", this.post.postImgs.length);
 
         for (var _i = 0; _i < this.NewFiles.length; _i++) {
           var _file = this.NewFiles[_i];
-          data.append("file[" + _i + "]", _file);
+          data.append("OurFile[" + _i + "]", _file);
         }
 
-        data.append('fileLength', this.NewFiles.length); // console.log(data);
-
+        data.append("fileLength", this.NewFiles.length);
+        data.append("fileType", this.typeFiles);
         axios.post("/update-post", data).then(function (res) {
-          console.log(res.data); // for (var value of res.config.data.entries()) {
-          //     console.log(value);
-          // }
-          // console.log(res.config.data)
+          console.log(res.data);
+
+          _this3.$router.push({
+            name: "post",
+            query: {
+              postId: res.data
+            }
+          });
         })["catch"](function (err) {
           console.log(err);
         });
@@ -20796,7 +20920,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.img-edit[data-v-5281f7ec] { \r\n    width: 100%;\r\n    height: 100%;\r\n    position: relative;\r\n    top: -25px;\n}\n.delete-btn[data-v-5281f7ec] { \r\n    position: relative;\r\n    top: 5px;\r\n    left: 108px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.delete:hover .delete-btn[data-v-5281f7ec] { \r\n    opacity: 1; \r\n    transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-5281f7ec] { \r\n    color: var(--iq-primary);\r\n    position: relative;\r\n    top: -2px;\n}\n.delete-images[data-v-5281f7ec] { \r\n    width: 250px;\r\n    height: 250px;\r\n    margin: 20px;\r\n    float: left;\n}\n.d-video[data-v-5281f7ec]{\r\n    position: relative;\r\n    top: -500px;\r\n    left: 95%;\r\n    background: var(--iq-dark-bg);\n}\n.inputfile[data-v-5281f7ec] {\r\n    width: 0.1px;\r\n    height: 0.1px;\r\n    opacity: 0;\r\n    overflow: hidden;\r\n    position: absolute;\r\n    display: none;\r\n    z-index: -1;\n}\n.labelfile[data-v-5281f7ec] {\r\n    padding: 30% 30%;\n}\n.inputfile[data-v-5281f7ec], .labelfile[data-v-5281f7ec] {\r\n    max-width: 1000%;\r\n    font-size: 1.15rem;\r\n    font-weight: 700;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    overflow: hidden;\n}\n.inputfile[data-v-5281f7ec], .labelfile svg[data-v-5281f7ec] {\r\n    width: 1em;\r\n    height: 1em;\r\n    vertical-align: middle;\r\n    fill: currentColor;\r\n    margin-top: -0.25em;\r\n    /* 4px */\r\n    margin-right: 0.25em;\r\n    /* 4px */\n}\n.inputfile[data-v-5281f7ec], .labelfile[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\n}\n.inputfile:focus .labelfile[data-v-5281f7ec],\r\n.inputfile.has-focus .labelfile[data-v-5281f7ec],\r\n.inputfile .labelfile[data-v-5281f7ec]:hover {\r\n    color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec], .labelfile figure[data-v-5281f7ec] {\r\n    width: 80px;\r\n    height: 80px;\r\n    border-radius: 50%;\r\n    background-color: var(--iq-primary);\r\n    display: block;\r\n    padding: 20px;\r\n    margin: 0 auto 10px;\n}\n.inputfile[data-v-5281f7ec]:focus , .labelfile figure[data-v-5281f7ec],\r\n.inputfile.has-focus[data-v-5281f7ec], .labelfile figure[data-v-5281f7ec],\r\n.inputfile[data-v-5281f7ec], .labelfile:hover figure[data-v-5281f7ec] {\r\n    background-color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec], .labelfile svg[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    fill: var(--iq-dark-bg);\n}\n.box[data-v-5281f7ec] {\r\n    position: relative;\r\n    height: 100%;\r\n    border: 1px dashed var(--iq-primary);\r\n    border-radius: 5px;\r\n    width: 100%;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.img-edit[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    position: relative;\r\n    top: -25px;\n}\n.delete-btn[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: 5px;\r\n    left: 108px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.delete:hover .delete-btn[data-v-5281f7ec] {\r\n    opacity: 1;\r\n    transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\r\n    position: relative;\r\n    top: -2px;\n}\n.delete-images[data-v-5281f7ec] {\r\n    width: 250px;\r\n    height: 250px;\r\n    margin: 20px;\r\n    float: left;\n}\n.d-video[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: -500px;\r\n    left: 95%;\r\n    background: var(--iq-dark-bg);\n}\n.inputfile[data-v-5281f7ec] {\r\n    width: 0.1px;\r\n    height: 0.1px;\r\n    opacity: 0;\r\n    overflow: hidden;\r\n    position: absolute;\r\n    display: none;\r\n    z-index: -1;\n}\n.labelfile[data-v-5281f7ec] {\r\n    padding: 30% 30%;\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile[data-v-5281f7ec] {\r\n    max-width: 1000%;\r\n    font-size: 1.15rem;\r\n    font-weight: 700;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    overflow: hidden;\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile svg[data-v-5281f7ec] {\r\n    width: 1em;\r\n    height: 1em;\r\n    vertical-align: middle;\r\n    fill: currentColor;\r\n    margin-top: -0.25em;\r\n    /* 4px */\r\n    margin-right: 0.25em;\r\n    /* 4px */\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\n}\n.inputfile:focus .labelfile[data-v-5281f7ec],\r\n.inputfile.has-focus .labelfile[data-v-5281f7ec],\r\n.inputfile .labelfile[data-v-5281f7ec]:hover {\r\n    color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile figure[data-v-5281f7ec] {\r\n    width: 80px;\r\n    height: 80px;\r\n    border-radius: 50%;\r\n    background-color: var(--iq-primary);\r\n    display: block;\r\n    padding: 20px;\r\n    margin: 0 auto 10px;\n}\n.inputfile[data-v-5281f7ec]:focus,\r\n.labelfile figure[data-v-5281f7ec],\r\n.inputfile.has-focus[data-v-5281f7ec],\r\n.labelfile figure[data-v-5281f7ec],\r\n.inputfile[data-v-5281f7ec],\r\n.labelfile:hover figure[data-v-5281f7ec] {\r\n    background-color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile svg[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    fill: var(--iq-dark-bg);\n}\n.box[data-v-5281f7ec] {\r\n    position: relative;\r\n    height: 100%;\r\n    border: 1px dashed var(--iq-primary);\r\n    border-radius: 5px;\r\n    width: 100%;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -71933,13 +72057,21 @@ var render = function() {
                   _vm._v(" "),
                   _vm.post.statu
                     ? _c("p", { staticClass: "mb-0 d-inline-block" }, [
-                        _vm._v(_vm._s(_vm.post.statu))
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.post.statu) +
+                            "\n                        "
+                        )
                       ])
                     : _vm._e(),
                   _vm._v(" "),
                   _vm.post.time
                     ? _c("p", { staticClass: "mb-0 text-primary" }, [
-                        _vm._v(_vm._s(_vm.post.time))
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.post.time) +
+                            "\n                        "
+                        )
                       ])
                     : _vm._e()
                 ]),
@@ -72061,7 +72193,7 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.NewVd == ""
+                  _vm.NewVd == "" && _vm.post.postVds == ""
                     ? _c("div", { staticClass: "delete-images" }, [
                         _c("div", { staticClass: "box" }, [
                           _c("form", { attrs: { id: "fileForm" } }, [
@@ -72121,7 +72253,7 @@ var render = function() {
                     "div",
                     { staticClass: "embed-responsive embed-responsive-16by9" },
                     [
-                      _c("button", { staticClass: "delete-btn" }, [
+                      _c("button", { staticClass: "delete-btn d-video" }, [
                         _c("i", {
                           staticClass: "ri-delete-bin-line",
                           on: {
@@ -72157,7 +72289,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("p", [
                           _vm._v(
-                            "Votre navigateur ne prend pas en charge les vidéos HTML5.\n                          Voici "
+                            "\n                            Votre navigateur ne prend pas en charge les\n                            vidéos HTML5. Voici\n                            "
                           ),
                           _c(
                             "a",
@@ -72172,7 +72304,7 @@ var render = function() {
                             },
                             [_vm._v("un lien pour télécharger la vidéo")]
                           ),
-                          _vm._v(".")
+                          _vm._v(".\n                        ")
                         ])
                       ])
                     ]
@@ -72208,12 +72340,12 @@ var render = function() {
                         _vm._v(" "),
                         _c("p", [
                           _vm._v(
-                            "Votre navigateur ne prend pas en charge les vidéos HTML5.\n                          Voici "
+                            "\n                            Votre navigateur ne prend pas en charge les\n                            vidéos HTML5. Voici\n                            "
                           ),
                           _c("a", { attrs: { href: _vm.NewVd } }, [
                             _vm._v("un lien pour télécharger la vidéo")
                           ]),
-                          _vm._v(".")
+                          _vm._v(".\n                        ")
                         ])
                       ])
                     ]
@@ -72249,9 +72381,9 @@ var render = function() {
                         _c("div", { staticClass: "feelSpan" }, [
                           _c("span", [
                             _vm._v(
-                              " \n                                  " +
+                              "\n                                    " +
                                 _vm._s(feeling.FeelTitle) +
-                                "\n                               "
+                                "\n                                "
                             )
                           ])
                         ])
@@ -72276,7 +72408,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Update")]
+              [_vm._v("\n                Update\n            ")]
             ),
             _vm._v(" "),
             _c(
@@ -72285,7 +72417,7 @@ var render = function() {
                 staticClass: "btn btn-danger ml-4 mb-4 mt-4",
                 attrs: { type: "button" }
               },
-              [_vm._v("Cancel")]
+              [_vm._v("\n                Cancel\n            ")]
             )
           ]),
           _vm._v(" "),
@@ -72328,7 +72460,9 @@ var staticRenderFns = [
       },
       [
         _c("strong", [_vm._v("The post ")]),
-        _vm._v(" must conatin a text, photos, video, or feelings\n            ")
+        _vm._v(
+          " must conatin a text, photos, video,\n            or feelings\n        "
+        )
       ]
     )
   }
