@@ -43,7 +43,7 @@
                </video>
             </div>
          </div>
-         <Comment :id="post.id"/>
+         <Comment :id="post.id" @unsave="updateSave"/>
       </div>
    </div>
 </template>
@@ -82,5 +82,10 @@ export default {
             },
          }
       },
+      methods:{
+         updateSave(data){
+            this.$emit('unsavePost',data);
+         }
+      }
 }
 </script>

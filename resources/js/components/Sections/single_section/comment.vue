@@ -93,7 +93,8 @@ export default {
                     time:"1 hour ago",
                 },
             },
-            saved:Boolean
+            saved:Boolean,
+            posts:null,
         }
     },
     mounted(){
@@ -120,6 +121,7 @@ export default {
                     .catch(err => {
                         console.log(err);
                     });
+                    this.$emit('unsave', true);
             }else{
                 axios
                     .post("/save-post", {id : this.id})
@@ -130,7 +132,9 @@ export default {
                         console.log(err);
                     });
             }
-            this.saved = !this.saved;
+            if(this.$route.name != "Saved"){
+                this.saved = !this.saved;
+            }
         }
     }
 }
