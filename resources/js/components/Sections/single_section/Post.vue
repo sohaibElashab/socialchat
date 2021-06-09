@@ -43,7 +43,7 @@
                </video>
             </div>
          </div>
-         <Comment/>
+         <Comment :id="post.id"/>
       </div>
    </div>
 </template>

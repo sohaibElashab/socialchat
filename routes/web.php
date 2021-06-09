@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +49,12 @@ Route::post('/LoadFriends', [App\Http\Controllers\FriendController::class, 'Load
 //Route::post('/FriendProfile', [App\Http\Controllers\FriendController::class, 'index']);
 
 //PostController
-Route::post('/create-post', [App\Http\Controllers\PostController::class, 'create']); 
-Route::post('/update-post', [App\Http\Controllers\PostController::class, 'edit']); 
-Route::post('/GetPost', [App\Http\Controllers\PostController::class, 'show']);
 Route::get('/GetPosts', [App\Http\Controllers\PostController::class, 'index']);
+Route::post('/GetPost', [App\Http\Controllers\PostController::class, 'show']);
+Route::post('/create-post', [App\Http\Controllers\PostController::class, 'create']); 
+Route::post('/update-post', [App\Http\Controllers\PostController::class, 'update']); 
+Route::post('/delete-post', [App\Http\Controllers\PostController::class, 'destroy']); 
+Route::post('/save-post', [App\Http\Controllers\PostController::class, 'save']); 
+Route::post('/unsave-post', [App\Http\Controllers\PostController::class, 'unsave']); 
+Route::post('/check-post', [App\Http\Controllers\PostController::class, 'check']); 
+Route::get('/posts-saved', [App\Http\Controllers\PostController::class, 'saved']); 

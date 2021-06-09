@@ -21,6 +21,7 @@ import Home from "./components/Pages/home.vue";
 import Profile from "./components/Pages/profile.vue";
 import signIn from "./components/Pages/signIn.vue";
 import signUp from "./components/Pages/signUp.vue";
+import Saved from "./components/Pages/postSave.vue";
 import profileEdit from "./components/Pages/profileEdit.vue";
 import profileImages from "./components/Pages/profileImages.vue";
 import profileVideos from "./components/Pages/profileVideos.vue";
@@ -111,6 +112,11 @@ const routes = [
         path: "/post",
         name: "post",
         component: post
+    },
+    {
+        path: "/Saved",
+        name: "Saved",
+        component: Saved
     },
     {
         path: "/postEdit",

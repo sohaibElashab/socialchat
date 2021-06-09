@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Image;
 use App\Models\Video;
+use App\Models\PostSave;
 use Auth;
 use DateTime as GlobalDateTime;
 use Illuminate\Support\Arr;
@@ -18,6 +19,61 @@ use function PHPUnit\Framework\isEmpty;
 
 class PostController extends Controller
 {
+    public function postget($post)
+    {        
+        $images = Image::get();
+        $videos = Video::get();
+        date_default_timezone_set('Africa/Casablanca');
+
+        $userImage = '';
+        $userName = '';
+        $userId = '';
+        $post->postImgs = array();
+        $post->postVds = '';
+
+        $user = User::where('id',$post->user_id)->first();
+        $imagesArray = array();
+        foreach($images as $image){
+            if($post->id == $image->post_id && $image->type == "post"){
+                array_push($imagesArray,$image->name);
+            }
+            if($user->id == $image->user_id && $image->type == "profile"){
+                $userImage = $image->name;
+                $userName = $user->name;
+                $userId = $user->id;
+            }
+        }
+        foreach($videos as $video){
+            if($post->id == $video->post_id){
+                $post->postVds = $video->name;
+            }
+        }
+        $datetime1 = new DateTime($post->time);
+        $datetime2 = new DateTime(date("Y-m-d H:i:s"));
+        $interval = $datetime1->diff($datetime2);
+        if((int)$interval->format('%y') > 0)
+            $post->time = $interval->format('%y y');
+        elseif((int)$interval->format('%m') > 0)
+            $post->time = $interval->format('%m m');
+        elseif((int)$interval->format('%d') > 0)
+            $post->time = $interval->format('%d d');
+        elseif((int)$interval->format('%h') > 0)
+            $post->time = $interval->format('%h H');
+        elseif((int)$interval->format('%i') > 0)
+            $post->time = $interval->format('%i min');
+        else
+            $post->time = 'just Now';
+        // array_push($time , $post->time);
+        $post->userImg = $userImage;
+        $post->userName = $userName;
+        $post->userId = $userId;
+        $post->postImgs = $imagesArray;
+        if($post->userId == auth()->user()->id){
+            $post->edit = true;
+        }else{
+            $post->edit = false;
+        };
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,55 +91,7 @@ class PostController extends Controller
         $userId = '';
         
         foreach($posts as $post){
-            $user = User::where('id',$post->user_id)->first();
-            $imagesArray = array();
-
-            foreach($images as $image){
-                if($post->id == $image->post_id && $image->type == "post"){
-                    array_push($imagesArray,$image->name);
-                }
-                if($user->id == $image->user_id && $image->type == "profile"){
-                    $userImage = $image->name;
-                    $userName = $user->name;
-                    $userId = $user->id;
-                }
-            }
-
-            foreach($videos as $video){
-                if($post->id == $video->post_id){
-                    $post->postVds = $video->name;
-                }
-            }
-
-            $datetime1 = new DateTime($post->time);
-            $datetime2 = new DateTime(date("Y-m-d H:i:s"));
-            $interval = $datetime1->diff($datetime2);
-
-            if((int)$interval->format('%y') > 0)
-                $post->time = $interval->format('%y y');
-            elseif((int)$interval->format('%m') > 0)
-                $post->time = $interval->format('%m m');
-            elseif((int)$interval->format('%d') > 0)
-                $post->time = $interval->format('%d d');
-            elseif((int)$interval->format('%h') > 0)
-                $post->time = $interval->format('%h H');
-            elseif((int)$interval->format('%i') > 0)
-                $post->time = $interval->format('%i min');
-            else
-                $post->time = 'just Now';
-
-
-            // array_push($time , $post->time);
-            $post->userImg = $userImage;
-            $post->userName = $userName;
-            $post->userId = $userId;
-            $post->postImgs = $imagesArray;
-
-            if($post->userId == auth()->user()->id){
-                $post->edit = true;
-            }else{
-                $post->edit = false;
-            }
+            $this->postget($post);
         };
 
         return response()->json($posts);
@@ -168,58 +176,7 @@ class PostController extends Controller
     {
         
         $post = Post::where('id',$request->id)->first();
-        $images = Image::get();
-        $videos = Video::get();
-        date_default_timezone_set('Africa/Casablanca');
-
-        $userImage = '';
-        $userName = '';
-        $userId = '';
-        $post->postImgs = array();
-        $post->postVds = '';
-
-        $user = User::where('id',$post->user_id)->first();
-        $imagesArray = array();
-        foreach($images as $image){
-            if($post->id == $image->post_id && $image->type == "post"){
-                array_push($imagesArray,$image->name);
-            }
-            if($user->id == $image->user_id && $image->type == "profile"){
-                $userImage = $image->name;
-                $userName = $user->name;
-                $userId = $user->id;
-            }
-        }
-        foreach($videos as $video){
-            if($post->id == $video->post_id){
-                $post->postVds = $video->name;
-            }
-        }
-        $datetime1 = new DateTime($post->time);
-        $datetime2 = new DateTime(date("Y-m-d H:i:s"));
-        $interval = $datetime1->diff($datetime2);
-        if((int)$interval->format('%y') > 0)
-            $post->time = $interval->format('%y y');
-        elseif((int)$interval->format('%m') > 0)
-            $post->time = $interval->format('%m m');
-        elseif((int)$interval->format('%d') > 0)
-            $post->time = $interval->format('%d d');
-        elseif((int)$interval->format('%h') > 0)
-            $post->time = $interval->format('%h H');
-        elseif((int)$interval->format('%i') > 0)
-            $post->time = $interval->format('%i min');
-        else
-            $post->time = 'just Now';
-        // array_push($time , $post->time);
-        $post->userImg = $userImage;
-        $post->userName = $userName;
-        $post->userId = $userId;
-        $post->postImgs = $imagesArray;
-        if($post->userId == auth()->user()->id){
-            $post->edit = true;
-        }else{
-            $post->edit = false;
-        };
+        $this->postget($post);
 
         return response()->json($post);
     }
@@ -230,7 +187,45 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function save(Request $request)
+    {
+        PostSave::create([
+            'post_id' => $request->id,
+            'user_id' => auth()->user()->id,
+        ]);
+    }
+    public function unsave(Request $request)
+    {
+        PostSave::where('user_id',auth()->user()->id)->where('post_id',$request->id)->delete();
+    }
+    public function check(Request $request)
+    {
+        $post = PostSave::where('post_id',$request->id)->get();
+        $save = false;
+        if(count($post) > 0){
+            $save = true;
+        }
+        return response()->json($save);
+
+    }
+    public function saved()
+    {
+        $PostSave = PostSave::where('user_id',auth()->user()->id)->get('post_id');
+        $posts = Post::whereIn('id',$PostSave)->get();
+        foreach($posts as $post){
+            $this->postget($post);
+        }
+        return response()->json($posts);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
         $post = Post::findOrFail($request->id);
         date_default_timezone_set('Africa/Casablanca');
@@ -309,25 +304,17 @@ class PostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Post::where('id',$request->id)->delete();
+        Image::where('post_id',$request->id)->delete();
+        Video::where('post_id',$request->id)->delete();
+        
+
     }
 }

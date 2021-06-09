@@ -25,15 +25,13 @@
                                 {{ post.time }}
                             </p>
                         </div>
-                        <div class="iq-card-post-toolbar">
+                        <div class="iq-card-post-toolbar" >
                             <span
                                 class="dropdown-toggle"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
                                 role="button"
+                                
                             >
-                                <i class="ri-delete-bin-line"></i>
+                                <i @click="deletePost()" class="ri-delete-bin-line"></i>
                             </span>
                         </div>
                     </div>
@@ -215,7 +213,8 @@
                 >
                     Update
                 </button>
-                <button type="button" class="btn btn-danger ml-4 mb-4 mt-4">
+                <button
+                    @click="CancelPost()" type="button" class="btn btn-danger ml-4 mb-4 mt-4">
                     Cancel
                 </button>
             </div>
@@ -481,6 +480,20 @@ export default {
                         console.log(err);
                     });
             }
+        },
+        CancelPost(){
+            this.$router.push({ name: "home" });
+        },
+        deletePost(){
+                axios
+                    .post("/delete-post", {id : this.post.id})
+                    .then(res => {
+                        console.log(res.data);
+                        this.$router.push({ name: "home" });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
         }
     }
 };

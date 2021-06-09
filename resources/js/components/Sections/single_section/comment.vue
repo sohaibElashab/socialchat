@@ -31,10 +31,10 @@
           </div>
           <div class="share-block d-flex align-items-center feather-icon mr-3">
              <div>
-                <a href="javascript:void();">
+                <span class="save" :class="{ active : saved }" @click="save()">
                    <i class="lar la-bookmark"></i>
                    <span class="ml-1">save</span>
-                </a>
+                </span>
              </div>
           </div>
         </div>
@@ -70,6 +70,11 @@
 
 <script>
 export default {
+    props:{
+        id:{
+            require:true,
+        }
+    },
     data() {
         return {
             comments: {
@@ -88,7 +93,57 @@ export default {
                     time:"1 hour ago",
                 },
             },
+            saved:Boolean
+        }
+    },
+    mounted(){
+        axios
+            .post("/check-post", {id : this.id})
+            .then(res => {
+                this.saved = res.data;
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    },
+    methods:{
+        save(){
+            console.log(this.id);
+            if(this.saved){
+                
+                axios
+                    .post("/unsave-post", {id : this.id})
+                    .then(res => {
+                        console.log(res.data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }else{
+                axios
+                    .post("/save-post", {id : this.id})
+                    .then(res => {
+                        console.log(res.data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+            this.saved = !this.saved;
         }
     }
 }
 </script>
+
+<style scoped>
+.save{
+    cursor: pointer;
+}
+.save:hover{
+    color: var(--iq-primary-hover);
+}
+.active{
+    color: var(--iq-primary-hover);
+}
+</style>
