@@ -6,7 +6,8 @@
                     <div class="col-sm-12">
                         <CreatePost />
                     </div>
-                    <div class="col-sm-12">
+                    <div class="col-sm-12" v-if="posts"
+                    >
                         <Post
                             v-for="(post , index) in posts"
                             :key="index"

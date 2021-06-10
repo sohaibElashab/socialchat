@@ -969,7 +969,7 @@ Profile Page
 ul.header-nav { position: absolute; left: auto; right: 0; top: auto; bottom: 20px; }
 ul.header-nav li { list-style: none; }
 ul.header-nav li  a { display: block; list-style: none; height: 40px; width: 40px; background: var(--iq-white); border-radius: 50%; line-height: 40px; text-align: center; color: var(--iq-primary); font-size: 18px; margin: 0 15px 0 0; }
-.profile-header .user-detail { position: absolute; left: 0; right: 0; top: auto; bottom: 110px; }
+.profile-header .user-detail {position: absolute;left: 0;right: 0;top: 30%;bottom: 110px;}
 .profile-header.profile-info .user-detail { bottom: 20px; }
 .profile-feed-items li { list-style: none; }
 .profile-feed-items li:last-child a { margin: 0; }

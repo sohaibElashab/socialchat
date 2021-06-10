@@ -4,39 +4,47 @@
             <div class="iq-card shadow-none">
                 <div class="iq-card-body p-0">
                     <div class="media-height p-3" v-if="friends">
-                        <div
-                            class="media align-items-center mb-4"
-                            v-for="friend in friends"
-                            :key="friend.id"
-                        >
+                        <!-- <router-link
+                            :to="{
+                                name: 'chat',
+                                query: { user: friend.id }
+                            }"
+                            tag="div"
+                        > -->
                             <div
-                                class="iq-profile-avatar"
-                                :class="friend.statu"
+                                class="media align-items-center mb-4"
+                                v-for="friend in friends"
+                                :key="friend.id"
                             >
-                                <img
-                                    class="rounded-circle avatar-50"
-                                    :src="
-                                        `images/user/${friend.profileimg.name}`
-                                    "
-                                    alt=""
-                                />
-                            </div>
-                            <div class="media-body ml-3">
-                                <h6 class="mb-0">
-                                    <!-- <a href="#">{{friend.name}}</a>:to="friend.href" -->
-                                    <router-link
-                                        :to="{
-                                            name: 'chat',
-                                            query: { user: friend.id }
-                                        }"
-                                        tag="a"
+                                <router-link
+                                    :to="{
+                                        name: 'chat',
+                                        query: { user: friend.id }
+                                    }"
+                                    tag="div" 
+                                    style="cursor: pointer;width: 100%;display: flex;">
+                                    <div
+                                        class="iq-profile-avatar"
+                                        :class="friend.statu"
                                     >
-                                        {{ friend.name }}
-                                    </router-link>
-                                </h6>
-                                <p class="mb-0">{{ friend.time }}</p>
+                                        <img
+                                            class="rounded-circle avatar-50"
+                                            :src="
+                                                `images/user/${friend.profileimg.name}`
+                                            "
+                                            alt=""
+                                        />
+                                    </div>
+                                    <div class="media-body ml-3">
+                                        <h6 class="mb-0">
+                                            <!-- <a href="#">{{friend.name}}</a>:to="friend.href" -->
+                                                {{ friend.name }}
+                                        </h6>
+                                        <p class="mb-0">{{ friend.time }}</p>
+                                    </div>
+                                </router-link>
                             </div>
-                        </div>
+                        <!-- </router-link> -->
                     </div>
                     <div class="right-sidebar-toggle bg-primary mt-3">
                         <i class="ri-arrow-left-line side-left-icon"></i>

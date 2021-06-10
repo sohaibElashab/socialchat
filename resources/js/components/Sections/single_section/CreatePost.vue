@@ -6,7 +6,7 @@
             <h4 class="card-title">Create Post</h4>
          </div>
       </div>
-      <div class="iq-card-body" data-toggle="modal" data-target="#post-modal">
+      <div class="iq-card-body" id="HeadPost" style="cursor: pointer;" @click="open">
          <div class="d-flex align-items-center">
             <div class="user-img" >
                <img :src="`images/user/${user.profileimg.name}`" alt="userimg" class="avatar-60 rounded-circle">
@@ -22,14 +22,119 @@
             <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="https://img.icons8.com/dusk/64/000000/like.png"  style="width: 24px;" alt="icon" class="img-fluid"> Feeling</li>
          </ul>
       </div>
-      <div class="modal fade" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="post-modalLabel" aria-hidden="true" style="display: none;">
+      <div id="BodyPost" class="mt-3" style="display : none" >
+         <div class="d-flex flex-column bd-highlight">
+            <div class="bd-highlight mb-2">
+               <div class="d-flex flex-wrap">
+                  <div class="media-support-user-img mr-3 ml-3">
+                     <img class="rounded-circle img-fluid" :src="`images/user/${user.profileimg.name}`" alt="">
+                  </div>
+                  <div class="media-support-info mt-2">
+                     <h5 class="mb-0 d-inline-block">{{user.name}}</h5>
+                     <p class="mb-0 text-primary" v-if="UserStatu">{{UserStatu}}</p>
+                  </div>
+                  <div class="iq-card-post-toolbar mr-4">
+                     <span class="dropdown-toggle" @click="close" role="button">
+                        <i data-dismiss="modal" class="ri-close-fill"></i>
+                     </span>
+                  </div>
+               </div>
+            </div>
+            <div class="bd-highlight justify-content-center mt-2">
+               <form class="post-text ml-3" action="javascript:void();">
+                  <VueEmoji ref="emoji" @input="onInput" height="100" class="emoji-div -create" />
+               </form>
+            </div>
+         </div> 
+         <hr>
+         <div v-if="postImgs.length > 0">
+            <div class="d-flex flex-column bd-highlight">
+               <div class="bd-highlight justify-content-center mt-2">
+                  <div class="add-images" v-for="(imgs , index) in postImgs" :key="index" >
+                     <button class="delete-btn" >
+                        <i class="ri-delete-bin-line" @click="removeFile(imgs.img)"></i>
+                     </button>
+                     <a href="javascript:void();" >
+                        <img :src="imgs.img" alt="post-image" class="img-add rounded">
+                     </a>
+                  </div>
+               </div>
+            </div> 
+            <hr>
+         </div> 
+         <div v-if="postVds">
+            <div class="d-flex flex-column bd-highlight">
+               <div class="bd-highlight justify-content-center mt-2">
+                  <div class="embed-responsive embed-responsive-16by9 add-video">
+                     <button class="delete-btn vd-btn" >
+                        <i class="ri-delete-bin-line" @click="removeFile(postVds)"></i>
+                     </button>
+                     <video controls >
+                        <source :src="postVds" type="video/mp4">
+                        <source :src="postVds" type="video/webm">
+                        <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
+                           Voici <a :href="postVds">un lien pour télécharger la vidéo</a>.</p>
+                     </video>
+                  </div>
+               </div>
+            </div> 
+            <hr>
+         </div> 
+         <ul class="d-flex flex-wrap align-items-center list-inline m-0 p-0">
+            <li class="col-md-12 mb-3">
+               <input type="file" name="addImg" id="addImg" @change="addImages" multiple accept="image/*" class="d-none" >
+               <label for="addImg" style="position: relative;width: 100%;">
+                  <div id="div-img" class="iq-bg-primary rounded p-2 pointer mr-3">
+                        <img src="images/small/07.png" alt="icon" class="img-fluid"> 
+                        Photo
+                  </div>
+               </label>
+            </li>
+            <li class="col-md-12 mb-3">
+               <input type="file" name="addvd" id="addvd" @change="addVd" accept="video/*" class="d-none" >
+               <label for="addvd" style="position: relative;width: 100%;">
+                  <div id="div-vd" class="iq-bg-primary rounded p-2 pointer mr-3">
+                        <img src="images/small/08.png" alt="icon" class="img-fluid"> 
+                        Video
+                  </div>
+               </label>
+            </li>
+            <li class="col-md-12 mb-3">
+               <div class="iq-bg-primary rounded p-2 pointer mr-3" @click="showFeelings()">
+                  <img src="https://img.icons8.com/dusk/64/000000/like.png"  style="width: 24px;" alt="icon" class="img-fluid"> 
+                  Feeling
+               </div>
+               <div class="collapse" :class="{ show: showFeeling }">
+                  <div class="feelings">
+                     <div :class="`feeling ${feeling.active}`" v-for="(feeling,index) in feelings" :key="index"  @click="SelectFeeling(index)">
+                           <div class="feelImg">
+                              <img :src="feeling.FeelImg" alt="feeling icon" style="width: 60%;">
+                           </div>
+                           <div class="feelSpan">
+                              <span> 
+                                 {{feeling.FeelTitle}}
+                              </span>
+                           </div>
+                     </div>
+                  </div>
+               </div>
+            </li>
+         </ul>
+         <button @click="createPost()" class="btn btn-primary d-block w-100 mt-3">Post</button>
+         <div id="warning" class="alert alert-warning mt-3" style="display:none;" role="alert" >
+            <strong>The post </strong> must conatin a text, photos, video, or feelings
+         </div>
+      </div>
+
+      <!-- aria-hidden="true" class="modal fade" style="display: none;" -->
+      <!-- class="modal fade show" style="display: block; padding-right: 8px;" aria-modal="true" -->
+      <!-- <div class="modal fade" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="post-modalLabel" aria-hidden="true" style="display: none;">
          <div class="modal-dialog" role="document">
             <div class="modal-content">
                <div class="modal-header">
                   <h5 class="modal-title" id="post-modalLabel">Create Post</h5>
                </div>
                <div class="modal-body">
-                  <!-- <form method="post" enctype="multipart/form-data" @submit="createPost"> -->
                      <div class="d-flex flex-column bd-highlight">
                         <div class="bd-highlight mb-2">
                               <div class="d-flex flex-wrap">
@@ -49,7 +154,6 @@
                         </div>
                         <div class="bd-highlight justify-content-center mt-2">
                            <form class="post-text ml-3" action="javascript:void();">
-                              <!-- <input type="text" class="form-control rounded" placeholder="Write something here..." style="border:none;"> -->
                               <VueEmoji ref="emoji" @input="onInput" height="100" class="emoji-div -create" />
                            </form>
                         </div>
@@ -132,12 +236,10 @@
                      <div id="warning" class="alert alert-warning mt-3" style="display:none;" role="alert" >
                         <strong>The post </strong> must conatin a text, photos, video, or feelings
                      </div>
-                     <!-- <div class="d-block w-100 mt-3 p-2" style="background-color: #e3342f;border-radius: 5px;text-align: center;color: white;"></div> -->
-                  <!-- </form> -->
                </div>
             </div>
          </div>
-      </div>
+      </div> -->
    </div>
 </template>
 
@@ -315,6 +417,14 @@ export default {
                });
             // document.getElementById("post-modal").style.display = 'none';
          }
+      },
+      open(){
+         document.getElementById("HeadPost").style.display = "none";
+         document.getElementById("BodyPost").style.display = "block";
+      },
+      close(){
+         document.getElementById("HeadPost").style.display = "block";
+         document.getElementById("BodyPost").style.display = "none";
       }
    },
    components: {

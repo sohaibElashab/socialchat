@@ -105,8 +105,36 @@
                                                 <h6>Posts</h6>
                                                 <p class="mb-0">6</p>
                                             </li>
-                                            <!--  <div v-if="user.status == 'friend'"> -->
-                                            <li
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iq-card">
+                        <div class="iq-card-body p-0">
+                            <div class="user-tabing">
+                                <div
+                                    class="d-flex align-items-center p-0 m-0 flex-column flex-md-row"
+                                >
+                                    <div class="col-md-8 col-sm-12 p-4" v-if="message == 'friend'">
+                                        <div>
+                                            <h4>You are friend with {{ user.name }}</h4>
+                                        </div>
+                                        <div>
+                                            <span>You can now see what {{ user.name }} is sharing, Send him a message and have fun</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-12 p-4" v-else>
+                                        <div>
+                                            <h4>Do you know {{ user.name }}?</h4>
+                                        </div>
+                                        <div>
+                                            <span>To see what she shares with friends, send her a friend request.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12 p-4">
+                                            <div
                                                 class="text-center pl-3"
                                                 v-if="message == 'cancel'"
                                             >
@@ -115,12 +143,12 @@
                                                     @click="DeleteRequest"
                                                 >
                                                     <i
-                                                        class="ri-check-line mr-1 text-white font-size-16"
+                                                        class="ri-user-shared-line mr-1 text-white font-size-16"
                                                     ></i>
                                                     Cancel request
                                                 </button>
-                                            </li>
-                                            <li
+                                            </div>
+                                            <div
                                                 class="text-center pl-3"
                                                 v-else-if="message == 'accept'"
                                             >
@@ -129,12 +157,12 @@
                                                     @click="AcceptRequest"
                                                 >
                                                     <i
-                                                        class="ri-check-line mr-1 text-white font-size-16"
+                                                        class="ri-user-follow-line mr-1 text-white font-size-16"
                                                     ></i>
                                                     Accept request
                                                 </button>
-                                            </li>
-                                            <li
+                                            </div>
+                                            <div
                                                 class="text-center pl-3"
                                                 v-else-if="message == ''"
                                             >
@@ -147,24 +175,34 @@
                                                     ></i
                                                     >Add Friend
                                                 </button>
-                                            </li>
-                                            <li
+                                            </div>
+                                            <div
                                                 class="text-center pl-3"
                                                 v-else-if="message == 'friend'"
                                             >
+                                                <router-link
+                                                    :to="{
+                                                        name: 'chat',
+                                                        query: { user: user.id }
+                                                    }"
+                                                    class="mr-3 btn btn-success rounded"
+                                                >
+                                                    <i
+                                                        class="ri-mail-send-line text-white font-size-16"
+                                                    ></i>
+                                                    Message
+                                                </router-link>
                                                 <button
                                                     class="mr-3 btn btn-danger rounded"
                                                     @click="RemoveFriend"
                                                 >
                                                     <i
-                                                        class="ri-check-line mr-1 text-white font-size-16"
+                                                        class="ri-user-unfollow-line mr-1 text-white font-size-16"
                                                     ></i>
-                                                    Unfriend
                                                 </button>
-                                            </li>
-                                            <!--  </div> -->
-                                        </ul>
+                                            </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

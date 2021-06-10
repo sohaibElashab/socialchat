@@ -6,14 +6,15 @@
             enctype="multipart/form-data"
         >
             <div class="chat-attagement d-flex">
-                <a
+                <label for="input"
                     ><i
                         class="fa fa-paperclip pr-3"
                         aria-hidden="true"
-                        @click="prof"
+                        
                     ></i
-                ></a>
+                ></label>
                 <input
+                    id="input"
                     ref="prof"
                     style="display:none;"
                     type="file"
@@ -21,6 +22,7 @@
                     @change="onProfileChange"
                 />
             </div>
+            <!-- <img :src="urlFile" alt=""> -->
             <!--   <input
                 type="text"
                 v-model="myText"
@@ -52,7 +54,8 @@ export default {
         return {
             myText: "",
             file: null,
-            name_img: null
+            name_img: null,
+            urlFile: null
         };
     },
     props: {
@@ -92,16 +95,15 @@ export default {
                 this.name_img = null;
             }
         },
-        prof() {
-            var p = this.$refs.prof;
-            p.click();
-        },
         onProfileChange(e) {
             var file = e.target.files[0];
             this.name_img = file;
-            //this.image = URL.createObjectURL(file);
-            //this.image_img = file;
-            console.log(this.name_img);
+            this.urlFile = URL.createObjectURL(file);
+            this.$emit('addFile',{
+                url : this.urlFile,
+                type : this.name_img.type.substring(0, 5)
+            });
+            this.$refs.prof.clear();
             this.clearTextarea();
         }
     },

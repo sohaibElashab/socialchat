@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="chat-head">
-            <!--class="tab-pane fade" id="chatbox1" role="tabpanel" -->
             <header
                 class="d-flex justify-content-between align-items-center bg-white pt-3 pr-3 pb-3"
             >
@@ -45,6 +44,18 @@
                     </a>
                 </div>
             </header>
+        </div>
+        <div class="file" v-if="isFile">
+            <button class="delete-btn" >
+                <i class="ri-delete-bin-line" @click="removeFile"></i>
+            </button>
+            <img :src="isFile" class="contentFile" alt="image upload" v-if="typeFile == 'image'">
+            <video controls class="contentFile" v-else>
+                <source :src="isFile" type="video/mp4">
+                <source :src="isFile" type="video/webm">
+                <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
+                    Voici <a :href="isFile">un lien pour télécharger la vidéo</a>.</p>
+            </video>
         </div>
         <div class="chat-content scroller" ref="feed">
             <div
@@ -108,7 +119,7 @@
                 </div>
             </div>
         </div>
-        <ChatForm @send="newMessage" :CurrentUser="CurrentUser" />
+        <ChatForm @addFile="newFile" @send="newMessage" :CurrentUser="CurrentUser" />
     </div>
 </template>
 
@@ -127,7 +138,9 @@ export default {
     data() {
         return {
             OtherUser: null,
-            ChatContents: null
+            ChatContents: null,
+            isFile : null,
+            typeFile: null
         };
     },
     mounted() {
@@ -293,6 +306,16 @@ export default {
                     this.scrollToBottom();
                 });
             }
+            this.isFile = null;
+            this.typeFile= null
+        },
+        newFile(file){
+            this.isFile = file.url;
+            this.typeFile = file.type;
+        },
+        removeFile(){
+            this.isFile = null;
+            this.typeFile= null
         }
     },
     watch: {
@@ -304,3 +327,41 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.file{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 70%;
+    background: var(--iq-light-info);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.file > .contentFile {
+    position: relative;
+    width: 90%;
+    height: 90%;
+}
+.delete-btn {     
+    position: absolute;
+    top: 8px;
+    right: 5px;
+    background: var(--iq-white);
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    opacity: 0;
+    z-index: 1;
+}
+.file:hover .delete-btn { 
+   opacity: 1; 
+   transition: all 0.45s ease 0s; 
+}
+.delete-btn > i { 
+   color: var(--iq-primary);
+}
+</style>
