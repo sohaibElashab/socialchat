@@ -169,9 +169,17 @@
                 </div>
             </li>
             <li class="nav-item dropdown">
-                <a href="#" class="search-toggle iq-waves-effect">
+                <a
+                    href="#"
+                    class="search-toggle iq-waves-effect"
+                    @click="removeDotMSG"
+                >
                     <i class="las la-inbox"></i>
-                    <span class="bg-danger dots"></span>
+                    <span
+                        class="bg-danger dots"
+                        id="redMSG"
+                        style="display:none;"
+                    ></span>
                 </a>
                 <div class="iq-sub-dropdown">
                     <div class="iq-card shadow-none m-0">
@@ -180,33 +188,39 @@
                                 <h5 class="mb-0 text-white">
                                     All Messages<small
                                         class="badge  badge-light float-right pt-1"
-                                        >5</small
+                                        >{{ msgCount }}</small
                                     >
                                 </h5>
                             </div>
-                            <a
-                                href="#"
-                                class="iq-sub-card"
+                            <router-link
                                 v-for="message in messages"
                                 :key="message.id"
+                                :to="{
+                                    name: 'chat',
+                                    query: { user: message.id }
+                                }"
+                                tag="a"
+                                class="iq-sub-card"
                             >
                                 <div class="media align-items-center">
                                     <div class="">
                                         <img
                                             class="avatar-40 rounded"
                                             :src="message.img"
-                                            alt=""
+                                            alt="profile"
                                         />
                                     </div>
                                     <div class="media-body ml-3">
-                                        <h6 class="mb-0 ">{{ message.H6 }}</h6>
-                                        <small
-                                            class="float-left font-size-12"
-                                            >{{ message.small }}</small
+                                        <h6 class="mb-0 ">
+                                            {{ message.name }}
+                                        </h6>
+                                        <small class="float-left font-size-12"
+                                            >{{ message.count }} unread
+                                            messages</small
                                         >
                                     </div>
                                 </div>
-                            </a>
+                            </router-link>
                             <div class="text-center">
                                 <router-link
                                     class="mr-3 btn text-primary"
@@ -250,6 +264,9 @@ export default {
             loadedReqs: false,
             friendReqs: null,
             isActive: false,
+            ALLmsg: null,
+            messages: null,
+            msgCount: null,
             Notifications: {
                 "1": {
                     id: 1,
@@ -278,32 +295,6 @@ export default {
                     H6: "New Mail from Fenny",
                     small: "3 days ago",
                     p: "Cyst Bni"
-                }
-            },
-            messages: {
-                "1": {
-                    id: 1,
-                    img: "images/user/01.jpg",
-                    H6: "Emma Watson Bni",
-                    small: "Just Now"
-                },
-                "2": {
-                    id: 2,
-                    img: "images/user/02.jpg",
-                    H6: "New customer is join",
-                    small: "5 days ago"
-                },
-                "3": {
-                    id: 3,
-                    img: "images/user/03.jpg",
-                    H6: "Two customer is left",
-                    small: "2 days ago"
-                },
-                "4": {
-                    id: 4,
-                    img: "images/user/04.jpg",
-                    H6: "New Mail from Fenny",
-                    small: "3 days ago"
                 }
             }
         };
@@ -354,6 +345,44 @@ export default {
                     });
                 }
             );
+
+            Echo.private(`sendText.${this.user.id}`).listen(
+                "SendTextEvent",
+                e => {
+                    if (e.message.user_id != this.$route.query.user) {
+                        document.getElementById("redMSG").style.display =
+                            "initial";
+                        console.log(e);
+                        this.msgCount += 1;
+                        var p = false;
+                        this.messages.forEach(m => {
+                            if (m.id == e.message.user_id) {
+                                m.count += 1;
+                                p = true;
+                            }
+                        });
+                        if (p == false) {
+                            axios
+                                .post("/UserProfile", {
+                                    id: e.message.user_id
+                                })
+                                .then(res => {
+                                    var user = res.data;
+                                    var mess = {
+                                        id: user.id,
+                                        name: user.name,
+                                        img:
+                                            "images/user/" +
+                                            user.profileimg.name,
+                                        count: 1
+                                    };
+                                    this.ALLmsg.unshift(mess);
+                                    this.messages = this.ALLmsg.slice(0, 4);
+                                });
+                        }
+                    }
+                }
+            );
         });
 
         axios.get("/LoadRequests").then(res => {
@@ -362,15 +391,26 @@ export default {
             this.friendReqs = this.allReqs.slice(0, 4);
             this.loadedReqs = true;
         });
-        EventBus.$on("user-update", this.updateUser);
 
-        
-        window.onload = function () {
+        axios.get("/UnreadMessages").then(res => {
+            console.log("unread");
+            console.log(res.data);
+            this.msgCount = res.data[1];
+            this.ALLmsg = res.data[0];
+            this.messages = this.ALLmsg.slice(0, 4);
+            if (this.msgCount > 0) {
+                document.getElementById("redMSG").style.display = "initial";
+            }
+        });
+        EventBus.$on("user-update", this.updateUser);
+        EventBus.$on("reload-uread", this.ReloadMSG);
+
+        window.onload = function() {
             if (sessionStorage.getItem("themeMode") !== null) {
                 sessionStorage.setItem("themeMode", false);
                 document.getElementById("swit").checked = false;
             }
-        }
+        };
         if (sessionStorage.getItem("themeMode") === null) {
             console.log("cree session");
             sessionStorage.setItem("themeMode", false);
@@ -384,8 +424,16 @@ export default {
         }
     },
     methods: {
-        aplaytheme(){
-            
+        ReloadMSG(data) {
+            axios.get("/UnreadMessages").then(res => {
+                console.log("unread");
+                console.log(res.data);
+                this.msgCount = res.data[1];
+                this.ALLmsg = res.data[0];
+                this.messages = this.ALLmsg.slice(0, 4);
+            });
+        },
+        aplaytheme() {
             var loading = document.getElementById("loading");
             var mode = (a, b, c) => {
                 this.modeTOmode(a, b, c).then(() => {
@@ -485,7 +533,6 @@ export default {
             sessionStorage.setItem("themeMode", reverse);
             console.log("after ", sessionStorage.getItem("themeMode"));
             this.aplaytheme();
-
         },
         async modeTOmode(href1, href2, href3) {
             console.log("mode");
@@ -526,6 +573,9 @@ export default {
         },
         removeDot() {
             document.getElementById("redREQ").style.display = "none";
+        },
+        removeDotMSG() {
+            document.getElementById("redMSG").style.display = "none";
         }
     }
 };

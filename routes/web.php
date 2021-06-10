@@ -58,3 +58,10 @@ Route::post('/save-post', [App\Http\Controllers\PostController::class, 'save']);
 Route::post('/unsave-post', [App\Http\Controllers\PostController::class, 'unsave']); 
 Route::post('/check-post', [App\Http\Controllers\PostController::class, 'check']); 
 Route::get('/posts-saved', [App\Http\Controllers\PostController::class, 'saved']); 
+
+//ChatController
+Route::get('/ChatList', [App\Http\Controllers\ChatController::class, 'ChatList']); 
+Route::post('/NewMessage', [App\Http\Controllers\ChatController::class, 'NewMessage']); 
+Route::post('/LoadMessages', [App\Http\Controllers\ChatController::class, 'LoadMessages']); 
+Route::get('/UnreadMessages', [App\Http\Controllers\ChatController::class, 'UnreadMessages']); 
+Route::post('/DeleteChat', [App\Http\Controllers\ChatController::class, 'DeleteChat']); 

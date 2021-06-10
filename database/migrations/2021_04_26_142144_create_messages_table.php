@@ -17,8 +17,10 @@ class CreateMessagesTable extends Migration
             $table->id();
             $table->unsignedInteger('chat_id');
             $table->unsignedInteger('user_id');
-            $table->text('text');
-            $table->dateTime('time');
+            $table->text('text')->nullable();
+            $table->string('image')->nullable();
+            $table->string('video')->nullable();
+            $table->string('time');
             $table->timestamps();
         });
     }

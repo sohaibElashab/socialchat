@@ -9,6 +9,8 @@ use App\Models\Image;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Events\OnlineFriendEvent;
+use App\Models\Online;
 
 class RegisterController extends Controller 
 {
@@ -109,6 +111,10 @@ class RegisterController extends Controller
        $date = date('Y-m-d H:i:s');
        $user->email_verified_at = $date;
        $user->save();
+       broadcast(new OnlineFriendEvent($user));
+       Online::create([
+           'user_id' => $user->id,
+       ]);
         return $user;
     }
 }

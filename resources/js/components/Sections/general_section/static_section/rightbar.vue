@@ -59,97 +59,10 @@ export default {
             friends: null,
             changed: false,
             DBfriends: null,
-            OnlineUser: null,
-            friendsLL: {
-                "1": {
-                    id: 1,
-                    statu: "status-online",
-                    href: "/",
-                    img: "images/user/01.jpg",
-                    name: "Anna Sthesia",
-                    time: "Just Now"
-                },
-                "2": {
-                    id: 2,
-                    statu: "status-online",
-                    href: "/",
-                    img: "images/user/02.jpg",
-                    name: "Paul Molive",
-                    time: "Just Now"
-                },
-                "3": {
-                    id: 3,
-                    statu: "status-online",
-                    href: "/",
-                    img: "images/user/03.jpg",
-                    name: "Anna Mull",
-                    time: "Just Now"
-                },
-                "4": {
-                    id: 4,
-                    statu: "status-online",
-                    href: "/",
-                    img: "images/user/04.jpg",
-                    name: "Paige Turner",
-                    time: "Just Now"
-                },
-                "5": {
-                    id: 5,
-                    statu: "status-away",
-                    href: "/",
-                    img: "images/user/11.jpg",
-                    name: "Bob Frapples",
-                    time: "Just Now"
-                },
-                "6": {
-                    id: 6,
-                    statu: "status-away",
-                    href: "/",
-                    img: "images/user/02.jpg",
-                    name: "Barb Ackue",
-                    time: "Just Now"
-                },
-                "7": {
-                    id: 7,
-                    statu: "status-away",
-                    href: "/",
-                    img: "images/user/03.jpg",
-                    name: "Greta Life",
-                    time: "Just Now"
-                },
-                "8": {
-                    id: 8,
-                    statu: "status-away",
-                    href: "/",
-                    img: "images/user/12.jpg",
-                    name: "Ira Membrit",
-                    time: "Just Now"
-                },
-                "9": {
-                    id: 9,
-                    statu: "status-offline",
-                    href: "/",
-                    img: "images/user/01.jpg",
-                    name: "Pete Sariya",
-                    time: "Just Now"
-                },
-                "10": {
-                    id: 10,
-                    statu: "status-offline",
-                    href: "/",
-                    img: "images/user/02.jpg",
-                    name: "Monty Carlo",
-                    time: "Just Now"
-                }
-            }
+            OnlineUser: null
         };
     },
     mounted() {
-        /* var ses = sessionStorage.getItem("OnlFriends");
-        console.log("session friends");
-        console.log(JSON.parse(ses));
-        this.friends = JSON.parse(ses); */
-
         axios.get("/profile").then(res => {
             this.OnlineUser = res.data;
             console.log("aa");
@@ -157,6 +70,13 @@ export default {
                 "AcceptRequestEvent",
                 e => {
                     console.log("bb");
+                    this.load();
+                }
+            );
+            Echo.private(`acceptRequest2.${this.OnlineUser.id}`).listen(
+                "AcceptRequestEvent2",
+                e => {
+                    console.log("bb2");
                     this.load();
                 }
             );
@@ -209,28 +129,7 @@ export default {
                         });
                         this.friends = this.DBfriends;
                     });
-                    /*      Echo.join("users").here(users => {
-                    console.log("changed");
-                    users.forEach(user => {
-                        if (this.checkFriend(user.id) != null) {
-                            console.log(user);
-                            var fr = this.checkFriend(user.id);
-                            var index = this.DBfriends.indexOf(fr);
-                            this.DBfriends[index].statu = "status-online";
-                            this.DBfriends[index].time = "Online";
-                        }
-                    });
-                    console.log("pp");
-                    console.log(this.DBfriends);
-                    this.friends = this.DBfriends;
-                    sessionStorage.clear();
 
-                    sessionStorage.setItem(
-                        "OnlFriends",
-                        JSON.stringify(this.friends)
-                    );
-                });
- */
                     Echo.private(`onlineFriend`).listen(
                         "OnlineFriendEvent",
                         e => {
@@ -239,12 +138,6 @@ export default {
                                 var index = this.friends.indexOf(fr);
                                 this.friends[index].statu = "status-online";
                                 this.friends[index].time = "Online";
-                                /* sessionStorage.clear();
-
-                        sessionStorage.setItem(
-                            "OnlFriends",
-                            JSON.stringify(this.friends)
-                        ); */
                             }
                         }
                     );
@@ -257,12 +150,6 @@ export default {
                                 var index = this.friends.indexOf(fr);
                                 this.friends[index].statu = "status-offline";
                                 this.friends[index].time = "Offline";
-                                /*    sessionStorage.clear();
-
-                            sessionStorage.setItem(
-                                "OnlFriends",
-                                JSON.stringify(this.friends)
-                            ); */
                             }
                         }
                     );

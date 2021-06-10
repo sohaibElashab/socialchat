@@ -25,11 +25,19 @@ Broadcast::channel('acceptRequest.{id}', function ($user, $id) {
     return Auth::check();
 });
 
+Broadcast::channel('acceptRequest2.{id}', function ($user, $id) {
+    return Auth::check();
+});
+
 Broadcast::channel('onlineFriend', function () {
     return Auth::check();
 });
 
 Broadcast::channel('offlineFriend', function () {
+    return Auth::check();
+});
+
+Broadcast::channel('sendText.{id}', function ($user, $id) {
     return Auth::check();
 });
 

@@ -34,20 +34,20 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 311:
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_627__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_648__) => {
 
 // ESM COMPAT FLAG
-__nested_webpack_require_627__.r(__webpack_exports__);
+__nested_webpack_require_648__.r(__webpack_exports__);
 
 // EXPORTS
-__nested_webpack_require_627__.d(__webpack_exports__, {
+__nested_webpack_require_648__.d(__webpack_exports__, {
   "default": () => /* binding */ module_Splide
 });
 
 // NAMESPACE OBJECT: ./src/js/constants/states.js
 var states_namespaceObject = {};
-__nested_webpack_require_627__.r(states_namespaceObject);
-__nested_webpack_require_627__.d(states_namespaceObject, {
+__nested_webpack_require_648__.r(states_namespaceObject);
+__nested_webpack_require_648__.d(states_namespaceObject, {
   "CREATED": () => CREATED,
   "DESTROYED": () => DESTROYED,
   "IDLE": () => IDLE,
@@ -5866,7 +5866,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_139193__(moduleId) {
+/******/ 	function __nested_webpack_require_142871__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		if(__webpack_module_cache__[moduleId]) {
 /******/ 			return __webpack_module_cache__[moduleId].exports;
@@ -5879,7 +5879,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_139193__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_142871__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -5889,9 +5889,9 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__nested_webpack_require_139193__.d = (exports, definition) => {
+/******/ 		__nested_webpack_require_142871__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
-/******/ 				if(__nested_webpack_require_139193__.o(definition, key) && !__nested_webpack_require_139193__.o(exports, key)) {
+/******/ 				if(__nested_webpack_require_142871__.o(definition, key) && !__nested_webpack_require_142871__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
@@ -5900,13 +5900,13 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__nested_webpack_require_139193__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__nested_webpack_require_142871__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__nested_webpack_require_139193__.r = (exports) => {
+/******/ 		__nested_webpack_require_142871__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
@@ -5918,7 +5918,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __nested_webpack_require_139193__(311);
+/******/ 	return __nested_webpack_require_142871__(311);
 /******/ })()
 ;
 });
@@ -9574,6 +9574,123 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -9583,75 +9700,40 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      ChatLists: {
-        "1": {
-          id: 1,
-          imgUserChat: "images/user/05.jpg",
-          Statu: "Find new friends",
-          NameUserChat: "Team Discussions",
-          txtChat: "Lorem Ipsum is",
-          numberMsg: "20",
-          TimeSend: "14:02"
-        },
-        "2": {
-          id: 2,
-          imgUserChat: "images/user/05.jpg",
-          Statu: "Find new friends",
-          NameUserChat: "Team Discussions",
-          txtChat: "Lorem Ipsum is",
-          numberMsg: "20",
-          TimeSend: "14:02"
-        },
-        "3": {
-          id: 3,
-          imgUserChat: "images/user/05.jpg",
-          Statu: "Find new friends",
-          NameUserChat: "Team Discussions",
-          txtChat: "Lorem Ipsum is",
-          numberMsg: "20",
-          TimeSend: "14:02"
-        },
-        "4": {
-          id: 4,
-          imgUserChat: "images/user/05.jpg",
-          Statu: "Find new friends",
-          NameUserChat: "Team Discussions",
-          txtChat: "Lorem Ipsum is",
-          numberMsg: "20",
-          TimeSend: "14:02"
-        }
-      },
-      ChatContents: {
-        "1": {
-          id: 1,
-          imgUserChat: "images/user/05.jpg",
-          txtChat: "How can we help? We're here for you! 😄",
-          TimeSend: "14:02",
-          MsgFor: ""
-        },
-        "2": {
-          id: 2,
-          imgUserChat: "images/user/05.jpg",
-          txtChat: "How can we help? We're here for you! 😄",
-          TimeSend: "14:02",
-          MsgFor: "chat-left"
-        },
-        "3": {
-          id: 3,
-          imgUserChat: "images/user/05.jpg",
-          txtChat: "How can we help? We're here for you! 😄",
-          TimeSend: "14:02",
-          MsgFor: ""
-        },
-        "4": {
-          id: 4,
-          imgUserChat: "images/user/05.jpg",
-          txtChat: "How can we help? We're here for you! 😄",
-          TimeSend: "14:02",
-          MsgFor: "chat-left"
-        }
-      }
+      id: "",
+      CurrentUser: null,
+      OtherUser: null,
+      loaded: false
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.id = this.$route.query.user;
+    axios.get("/profile").then(function (res) {
+      _this.CurrentUser = res.data;
+      _this.loaded = true;
+    });
+    this.loadOtherFriend();
+  },
+  methods: {
+    loadOtherFriend: function loadOtherFriend() {
+      var _this2 = this;
+
+      if (this.$route.query.user) {
+        axios.post("/UserProfile", {
+          id: this.$route.query.user
+        }).then(function (res) {
+          _this2.OtherUser = res.data;
+        });
+      }
+    }
+  },
+  watch: {
+    "$route.query.user": function $routeQueryUser() {
+      this.id = this.$route.query.user;
+      this.loadOtherFriend();
+    }
   }
 });
 
@@ -11369,11 +11451,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post("/profile-update", data).then(function (res) {
         console.log(res);
-        _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$emit("user-update", res.data);
-
-        _this2.$router.push({
-          name: "profile"
-        });
+        _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$emit("user-update", res.data); //this.$router.push({ name: "profile" });
       })["catch"](function (err) {
         var error = JSON.parse(err.request.response);
         _this2.name_err = error.errors.name ? error.errors.name[0] : "";
@@ -11815,7 +11893,8 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/profile").then(function (res) {
       _this.OnlineUser = res.data;
       Echo["private"]("acceptRequest.".concat(_this.Id)).listen("AcceptRequestEvent", function (e) {
-        document.getElementById("New").style.display = "initial";
+        // document.getElementById("New").style.display = "initial";
+        _this.LoadFriends();
       });
     });
   },
@@ -11828,8 +11907,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         console.log(res.data);
         _this2.friends = res.data;
-      });
-      document.getElementById("New").style.display = "none";
+      }); // document.getElementById("New").style.display = "none";
     }
   }
 });
@@ -13109,103 +13187,22 @@ __webpack_require__.r(__webpack_exports__);
       friends: null,
       changed: false,
       DBfriends: null,
-      OnlineUser: null,
-      friendsLL: {
-        "1": {
-          id: 1,
-          statu: "status-online",
-          href: "/",
-          img: "images/user/01.jpg",
-          name: "Anna Sthesia",
-          time: "Just Now"
-        },
-        "2": {
-          id: 2,
-          statu: "status-online",
-          href: "/",
-          img: "images/user/02.jpg",
-          name: "Paul Molive",
-          time: "Just Now"
-        },
-        "3": {
-          id: 3,
-          statu: "status-online",
-          href: "/",
-          img: "images/user/03.jpg",
-          name: "Anna Mull",
-          time: "Just Now"
-        },
-        "4": {
-          id: 4,
-          statu: "status-online",
-          href: "/",
-          img: "images/user/04.jpg",
-          name: "Paige Turner",
-          time: "Just Now"
-        },
-        "5": {
-          id: 5,
-          statu: "status-away",
-          href: "/",
-          img: "images/user/11.jpg",
-          name: "Bob Frapples",
-          time: "Just Now"
-        },
-        "6": {
-          id: 6,
-          statu: "status-away",
-          href: "/",
-          img: "images/user/02.jpg",
-          name: "Barb Ackue",
-          time: "Just Now"
-        },
-        "7": {
-          id: 7,
-          statu: "status-away",
-          href: "/",
-          img: "images/user/03.jpg",
-          name: "Greta Life",
-          time: "Just Now"
-        },
-        "8": {
-          id: 8,
-          statu: "status-away",
-          href: "/",
-          img: "images/user/12.jpg",
-          name: "Ira Membrit",
-          time: "Just Now"
-        },
-        "9": {
-          id: 9,
-          statu: "status-offline",
-          href: "/",
-          img: "images/user/01.jpg",
-          name: "Pete Sariya",
-          time: "Just Now"
-        },
-        "10": {
-          id: 10,
-          statu: "status-offline",
-          href: "/",
-          img: "images/user/02.jpg",
-          name: "Monty Carlo",
-          time: "Just Now"
-        }
-      }
+      OnlineUser: null
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    /* var ses = sessionStorage.getItem("OnlFriends");
-    console.log("session friends");
-    console.log(JSON.parse(ses));
-    this.friends = JSON.parse(ses); */
     axios.get("/profile").then(function (res) {
       _this.OnlineUser = res.data;
       console.log("aa");
       Echo["private"]("acceptRequest.".concat(_this.OnlineUser.id)).listen("AcceptRequestEvent", function (e) {
         console.log("bb");
+
+        _this.load();
+      });
+      Echo["private"]("acceptRequest2.".concat(_this.OnlineUser.id)).listen("AcceptRequestEvent2", function (e) {
+        console.log("bb2");
 
         _this.load();
       });
@@ -13262,28 +13259,6 @@ __webpack_require__.r(__webpack_exports__);
           });
           _this3.friends = _this3.DBfriends;
         });
-        /*      Echo.join("users").here(users => {
-        console.log("changed");
-        users.forEach(user => {
-            if (this.checkFriend(user.id) != null) {
-                console.log(user);
-                var fr = this.checkFriend(user.id);
-                var index = this.DBfriends.indexOf(fr);
-                this.DBfriends[index].statu = "status-online";
-                this.DBfriends[index].time = "Online";
-            }
-        });
-        console.log("pp");
-        console.log(this.DBfriends);
-        this.friends = this.DBfriends;
-        sessionStorage.clear();
-          sessionStorage.setItem(
-            "OnlFriends",
-            JSON.stringify(this.friends)
-        );
-        });
-        */
-
         Echo["private"]("onlineFriend").listen("OnlineFriendEvent", function (e) {
           if (_this3.checkOnlineFriend(e.user.id) != null) {
             var fr = _this3.checkOnlineFriend(e.user.id);
@@ -13292,11 +13267,6 @@ __webpack_require__.r(__webpack_exports__);
 
             _this3.friends[index].statu = "status-online";
             _this3.friends[index].time = "Online";
-            /* sessionStorage.clear();
-            sessionStorage.setItem(
-            "OnlFriends",
-            JSON.stringify(this.friends)
-            ); */
           }
         });
         Echo["private"]("offlineFriend").listen("OfflineFriendEvent", function (e) {
@@ -13307,11 +13277,6 @@ __webpack_require__.r(__webpack_exports__);
 
             _this3.friends[index].statu = "status-offline";
             _this3.friends[index].time = "Offline";
-            /*    sessionStorage.clear();
-            sessionStorage.setItem(
-            "OnlFriends",
-            JSON.stringify(this.friends)
-            ); */
           }
         });
       });
@@ -13564,20 +13529,89 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      myText: ""
+      myText: "",
+      file: null,
+      name_img: null
     };
+  },
+  props: {
+    CurrentUser: {
+      type: Object
+    }
   },
   methods: {
     onInput: function onInput(event) {
       //event.data contains the value of the textarea
-      console.log(event.data);
+      //console.log(event.data);
+      this.myText = event.data;
     },
     clearTextarea: function clearTextarea() {
       this.$refs.emoji.clear();
+    },
+    send: function send(e) {
+      e.preventDefault();
+
+      if (this.name_img != null && this.name_img.type.substring(0, 5) == "image") {
+        this.$emit("send", [this.name_img, "image"]);
+        this.clearTextarea();
+        this.name_img = null;
+        document.getElementById("fooorm").reset();
+      } else if (this.name_img != null && this.name_img.type.substring(0, 5) == "video") {
+        this.$emit("send", [this.name_img, "video"]);
+        this.clearTextarea();
+        this.name_img = null;
+      } else if (this.myText != "" && this.name_img == null) {
+        this.$emit("send", [this.myText, "text"]);
+        this.clearTextarea();
+        this.name_img = null;
+      }
+    },
+    prof: function prof() {
+      var p = this.$refs.prof;
+      p.click();
+    },
+    onProfileChange: function onProfileChange(e) {
+      var file = e.target.files[0];
+      this.name_img = file; //this.image = URL.createObjectURL(file);
+      //this.image_img = file;
+
+      console.log(this.name_img);
+      this.clearTextarea();
     }
   },
   components: {
@@ -13751,6 +13785,74 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _ChatForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChatForm */ "./resources/js/components/Sections/single_section/ChatForm.vue");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../event-bus */ "./resources/js/event-bus.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13799,18 +13901,221 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     ChatForm: _ChatForm__WEBPACK_IMPORTED_MODULE_0__.default
   },
   props: {
-    ChatLists: {
-      require: true,
+    CurrentUser: {
       type: Object
+    }
+  },
+  data: function data() {
+    return {
+      OtherUser: null,
+      ChatContents: null
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$emit("reload-uread", {
+      data: "z"
+    });
+
+    if (this.$route.query.user) {
+      this.loadOtherUser();
+      this.LoadMessages();
+      Echo["private"]("sendText.".concat(this.CurrentUser.id)).listen("SendTextEvent", function (e) {
+        console.log(e); //console.log(e.message);
+
+        if (e.message.user_id == _this.$route.query.user) {
+          var message = {
+            id: e.message.id,
+            txtChat: e.message.text,
+            vidChat: e.message.video,
+            imgChat: e.message.image,
+            TimeSend: e.message.time,
+            imgUserChat: "images/user/" + _this.OtherUser.profileimg.name,
+            MsgFor: "chat-left"
+          };
+
+          _this.ChatContents.push(message);
+        }
+
+        _this.scrollToBottom();
+      });
+    }
+  },
+  methods: {
+    deleteChat: function deleteChat() {
+      var _this2 = this;
+
+      axios.post("/DeleteChat", {
+        id: this.CurrentUser.id,
+        messages: this.ChatContents
+      }).then(function (res) {
+        console.log("deleted");
+        console.log(res.data);
+        _this2.ChatContents = [];
+        _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$emit("delete-chat", _this2.$route.query.user);
+
+        _this2.$router.push({
+          name: "chat"
+        });
+      });
     },
-    ChatContents: {
-      require: true,
-      type: Object
+    scrollToBottom: function scrollToBottom() {
+      var _this3 = this;
+
+      setTimeout(function () {
+        if (_this3.ChatContents && _this3.$refs.feed) {
+          _this3.$refs.feed.scrollTop = 99999;
+        }
+      }, 50);
+    },
+    LoadMessages: function LoadMessages() {
+      var _this4 = this;
+
+      axios.post("/LoadMessages", {
+        id: this.$route.query.user
+      }).then(function (res) {
+        console.log("messages");
+        console.log(res.data);
+        _this4.ChatContents = res.data;
+
+        _this4.scrollToBottom();
+      });
+    },
+    loadOtherUser: function loadOtherUser() {
+      var _this5 = this;
+
+      axios.post("/UserProfile", {
+        id: this.$route.query.user
+      }).then(function (res) {
+        _this5.OtherUser = res.data;
+      });
+    },
+    newMessage: function newMessage(text) {
+      var _this6 = this;
+
+      var d = new Date();
+      var time = d.getHours() + ":" + d.getMinutes();
+      console.log("text");
+
+      if (text[1] == "image") {
+        var img = URL.createObjectURL(text[0]);
+        var newT = {
+          txtChat: null,
+          imgChat: img,
+          vidChat: null,
+          imgUserChat: "images/user/" + this.CurrentUser.profileimg.name,
+          TimeSend: time
+        };
+        var data = new FormData();
+        data.append("id", this.OtherUser.id);
+        data.append("text", newT.txtChat);
+        data.append("image", text[0]);
+        data.append("video", newT.vidChat);
+        data.append("time", newT.TimeSend);
+        axios.post("/NewMessage", data).then(function (res) {
+          console.log("id");
+          console.log(res.data);
+          newT.id = res.data.id;
+
+          _this6.ChatContents.push(newT);
+
+          var txt = {
+            txtChat: "Sent an image",
+            TimeSend: time
+          };
+          _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$emit("last-text", txt);
+
+          _this6.scrollToBottom();
+        });
+      } else if (text[1] == "video") {
+        var vid = URL.createObjectURL(text[0]);
+        var newT = {
+          txtChat: null,
+          imgChat: null,
+          vidChat: vid,
+          imgUserChat: "images/user/" + this.CurrentUser.profileimg.name,
+          TimeSend: time
+        };
+
+        var _data = new FormData();
+
+        _data.append("id", this.OtherUser.id);
+
+        _data.append("text", newT.txtChat);
+
+        _data.append("image", newT.imgChat);
+
+        _data.append("video", text[0]);
+
+        _data.append("time", newT.TimeSend);
+
+        axios.post("/NewMessage", _data).then(function (res) {
+          //console.log(res);
+          newT.id = res.data.id;
+
+          _this6.ChatContents.push(newT);
+
+          var txt = {
+            txtChat: "Sent a video",
+            TimeSend: time
+          };
+          _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$emit("last-text", txt);
+
+          _this6.scrollToBottom();
+        });
+      } else if (text[1] == "text") {
+        var newT = {
+          txtChat: text[0],
+          imgChat: null,
+          vidChat: null,
+          imgUserChat: "images/user/" + this.CurrentUser.profileimg.name,
+          TimeSend: time
+        };
+
+        var _data2 = new FormData();
+
+        _data2.append("id", this.OtherUser.id);
+
+        _data2.append("text", newT.txtChat);
+
+        _data2.append("image", newT.imgChat);
+
+        _data2.append("video", newT.vidChat);
+
+        _data2.append("time", newT.TimeSend);
+
+        axios.post("/NewMessage", _data2).then(function (res) {
+          /* console.log("id");
+          console.log(res.data); */
+          newT.id = res.data.id;
+
+          _this6.ChatContents.push(newT);
+
+          var txt = {
+            txtChat: text[0],
+            TimeSend: time
+          };
+          _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$emit("last-text", txt);
+
+          _this6.scrollToBottom();
+        });
+      }
+    }
+  },
+  watch: {
+    "$route.query.user": function $routeQueryUser() {
+      this.loadOtherUser();
+      this.LoadMessages();
+      _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$emit("reload-uread", {
+        data: "z"
+      });
     }
   }
 });
@@ -14420,6 +14725,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -14437,6 +14756,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       loadedReqs: false,
       friendReqs: null,
       isActive: false,
+      ALLmsg: null,
+      messages: null,
+      msgCount: null,
       Notifications: {
         "1": {
           id: 1,
@@ -14465,32 +14787,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           H6: "New Mail from Fenny",
           small: "3 days ago",
           p: "Cyst Bni"
-        }
-      },
-      messages: {
-        "1": {
-          id: 1,
-          img: "images/user/01.jpg",
-          H6: "Emma Watson Bni",
-          small: "Just Now"
-        },
-        "2": {
-          id: 2,
-          img: "images/user/02.jpg",
-          H6: "New customer is join",
-          small: "5 days ago"
-        },
-        "3": {
-          id: 3,
-          img: "images/user/03.jpg",
-          H6: "Two customer is left",
-          small: "2 days ago"
-        },
-        "4": {
-          id: 4,
-          img: "images/user/04.jpg",
-          H6: "New Mail from Fenny",
-          small: "3 days ago"
         }
       }
     };
@@ -14540,6 +14836,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         });
       });
+      Echo["private"]("sendText.".concat(_this.user.id)).listen("SendTextEvent", function (e) {
+        if (e.message.user_id != _this.$route.query.user) {
+          document.getElementById("redMSG").style.display = "initial";
+          console.log(e);
+          _this.msgCount += 1;
+          var p = false;
+
+          _this.messages.forEach(function (m) {
+            if (m.id == e.message.user_id) {
+              m.count += 1;
+              p = true;
+            }
+          });
+
+          if (p == false) {
+            axios.post("/UserProfile", {
+              id: e.message.user_id
+            }).then(function (res) {
+              var user = res.data;
+              var mess = {
+                id: user.id,
+                name: user.name,
+                img: "images/user/" + user.profileimg.name,
+                count: 1
+              };
+
+              _this.ALLmsg.unshift(mess);
+
+              _this.messages = _this.ALLmsg.slice(0, 4);
+            });
+          }
+        }
+      });
     });
     axios.get("/LoadRequests").then(function (res) {
       console.log(res.data);
@@ -14547,7 +14876,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       _this.friendReqs = _this.allReqs.slice(0, 4);
       _this.loadedReqs = true;
     });
+    axios.get("/UnreadMessages").then(function (res) {
+      console.log("unread");
+      console.log(res.data);
+      _this.msgCount = res.data[1];
+      _this.ALLmsg = res.data[0];
+      _this.messages = _this.ALLmsg.slice(0, 4);
+
+      if (_this.msgCount > 0) {
+        document.getElementById("redMSG").style.display = "initial";
+      }
+    });
     _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$on("user-update", this.updateUser);
+    _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$on("reload-uread", this.ReloadMSG);
 
     window.onload = function () {
       if (sessionStorage.getItem("themeMode") !== null) {
@@ -14569,13 +14910,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
-    aplaytheme: function aplaytheme() {
+    ReloadMSG: function ReloadMSG(data) {
       var _this2 = this;
+
+      axios.get("/UnreadMessages").then(function (res) {
+        console.log("unread");
+        console.log(res.data);
+        _this2.msgCount = res.data[1];
+        _this2.ALLmsg = res.data[0];
+        _this2.messages = _this2.ALLmsg.slice(0, 4);
+      });
+    },
+    aplaytheme: function aplaytheme() {
+      var _this3 = this;
 
       var loading = document.getElementById("loading");
 
       var mode = function mode(a, b, c) {
-        _this2.modeTOmode(a, b, c).then(function () {
+        _this3.modeTOmode(a, b, c).then(function () {
           console.log("test");
           return true;
         });
@@ -14623,24 +14975,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     DeleteRequest: function DeleteRequest(id) {
-      var _this3 = this;
-
-      axios.post("/DeleteReq", {
-        id: id
-      }).then(function (res) {
-        console.log(res);
-        axios.get("/LoadRequests").then(function (res) {
-          console.log(res.data);
-          _this3.allReqs = res.data;
-          _this3.friendReqs = _this3.allReqs.slice(0, 4);
-          _this3.loadedReqs = true;
-        });
-      });
-    },
-    AcceptRequest: function AcceptRequest(id) {
       var _this4 = this;
 
-      axios.post("/AcceptRequest", {
+      axios.post("/DeleteReq", {
         id: id
       }).then(function (res) {
         console.log(res);
@@ -14649,6 +14986,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           _this4.allReqs = res.data;
           _this4.friendReqs = _this4.allReqs.slice(0, 4);
           _this4.loadedReqs = true;
+        });
+      });
+    },
+    AcceptRequest: function AcceptRequest(id) {
+      var _this5 = this;
+
+      axios.post("/AcceptRequest", {
+        id: id
+      }).then(function (res) {
+        console.log(res);
+        axios.get("/LoadRequests").then(function (res) {
+          console.log(res.data);
+          _this5.allReqs = res.data;
+          _this5.friendReqs = _this5.allReqs.slice(0, 4);
+          _this5.loadedReqs = true;
         });
       });
     },
@@ -14697,6 +15049,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     removeDot: function removeDot() {
       document.getElementById("redREQ").style.display = "none";
+    },
+    removeDotMSG: function removeDotMSG() {
+      document.getElementById("redMSG").style.display = "none";
     }
   }
 });
@@ -15392,36 +15747,37 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.LoadFriends();
     Echo["private"]("acceptRequest.".concat(this.Id)).listen("AcceptRequestEvent", function (e) {
-      document.getElementById("New").style.display = "initial";
+      _this.LoadFriends();
     });
-    Echo["private"]("acceptRequest.".concat(this.IdOnline)).listen("AcceptRequestEvent", function (e) {
-      document.getElementById("New").style.display = "initial";
+    Echo["private"]("acceptRequest2.".concat(this.Id)).listen("AcceptRequestEvent2", function (e) {
+      _this.LoadFriends();
     });
   },
   methods: {
     RemoveFriend: function RemoveFriend(id) {
-      var _this = this;
+      var _this2 = this;
 
       axios.post("/RemoveFriend", {
         id: id
       }).then(function (res) {
         console.log(res);
 
-        _this.LoadFriends();
+        _this2.LoadFriends();
       });
     },
     LoadFriends: function LoadFriends() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post("/LoadFriends", {
         id: this.Id
       }).then(function (res) {
         console.log(res.data);
-        _this2.FriendLists = res.data;
-      });
-      document.getElementById("New").style.display = "none";
+        _this3.FriendLists = res.data;
+      }); //document.getElementById("New").style.display = "none";
     }
   },
   watch: {
@@ -16114,6 +16470,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../event-bus */ "./resources/js/event-bus.js");
 //
 //
 //
@@ -16140,11 +16497,270 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    ChatLists: {
-      require: true,
+    CurrentUser: {
       type: Object
+    }
+  },
+  data: function data() {
+    return {
+      id: "",
+      OtherUser: null,
+      ChatLists: null,
+      ChatListss: [
+        /*{
+            id: 1,
+            imgUserChat: "images/user/05.jpg",
+            Statu: "Find new friends",
+            NameUserChat: "Team Discussions",
+            txtChat: "Lorem Ipsum is",
+            numberMsg: "20",
+            TimeSend: "14:02"
+        },
+        {
+            id: 2,
+            imgUserChat: "images/user/05.jpg",
+            Statu: "Find new friends",
+            NameUserChat: "Team Discussions",
+            txtChat: "Lorem Ipsum is",
+            numberMsg: "20",
+            TimeSend: "14:02"
+        },
+        {
+            id: 3,
+            imgUserChat: "images/user/05.jpg",
+            Statu: "Find new friends",
+            NameUserChat: "Team Discussions",
+            txtChat: "Lorem Ipsum is",
+            numberMsg: "20",
+            TimeSend: "14:02"
+        }  ,
+        {
+            id: 4,
+            imgUserChat: "images/user/05.jpg",
+            Statu: "Find new friends",
+            NameUserChat: "Team Discussions",
+            txtChat: "Lorem Ipsum is",
+            numberMsg: "20",
+            TimeSend: "14:02"
+        } */
+      ]
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    //this.loadList();
+    axios.get("/ChatList").then(function (res) {
+      console.log("list");
+      console.log(res.data);
+      _this.ChatLists = res.data;
+
+      if (_this.findUser(_this.$route.query.user) == null && _this.$route.query.user) {
+        _this.AddUserToList();
+      }
+
+      _this.ChatLists.forEach(function (u) {
+        if (u.id == _this.$route.query.user) {
+          var index = _this.ChatLists.indexOf(u);
+
+          _this.ChatLists[index].numberMsg = 0;
+        }
+      });
+
+      Echo["private"]("sendText.".concat(_this.CurrentUser.id)).listen("SendTextEvent", function (e) {
+        console.log(e); //console.log(e.message);
+
+        if (e.message.user_id != _this.$route.query.user) {
+          var p = false;
+
+          _this.ChatLists.forEach(function (u) {
+            if (u.id == e.message.user_id) {
+              var index = _this.ChatLists.indexOf(u);
+
+              _this.ChatLists[index].numberMsg += 1;
+              _this.ChatLists[index].TimeSend = e.message.time;
+
+              if (e.message.image != null) {
+                _this.ChatLists[index].txtChat = "Sent an image";
+              } else if (e.message.video != null) {
+                _this.ChatLists[index].txtChat = "Sent a video";
+              } else {
+                _this.ChatLists[index].txtChat = e.message.text;
+              }
+
+              p = true;
+            }
+          });
+
+          if (p == false) {
+            axios.post("/UserProfile", {
+              id: e.message.user_id
+            }).then(function (res) {
+              var user = res.data;
+              var txxt;
+
+              if (e.message.image != null) {
+                txxt = "Sent an image";
+              } else if (e.message.video != null) {
+                txxt = "Sent a video";
+              } else {
+                txxt = e.message.text;
+              }
+
+              var item = {
+                id: e.message.user_id,
+                imgUserChat: "images/user/" + user.profileimg.name,
+                NameUserChat: user.name,
+                txtChat: txxt,
+                numberMsg: 1,
+                TimeSend: e.message.time
+              };
+              console.log("item");
+              console.log(item);
+
+              _this.ChatLists.unshift(item);
+            });
+          }
+        }
+
+        if (e.message.user_id == _this.$route.query.user) {
+          _this.ChatLists.forEach(function (u) {
+            if (u.id == e.message.user_id) {
+              var index = _this.ChatLists.indexOf(u);
+
+              _this.ChatLists[index].TimeSend = e.message.time;
+
+              if (e.message.image != null) {
+                _this.ChatLists[index].txtChat = "Sent an image";
+              } else if (e.message.video != null) {
+                _this.ChatLists[index].txtChat = "Sent a video";
+              } else {
+                _this.ChatLists[index].txtChat = e.message.text;
+              } //this.ChatLists[index].txtChat = e.message.text;
+
+            }
+          });
+        }
+      });
+    });
+    _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$on("last-text", this.LastText);
+    _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$on("delete-chat", this.DeleteChat);
+  },
+  methods: {
+    DeleteChat: function DeleteChat(data) {
+      var item = this.findUser(data);
+      var index = this.ChatLists.indexOf(item);
+      this.ChatLists.splice(index, 1);
+    },
+    LastText: function LastText(data) {
+      var _this2 = this;
+
+      console.log(data);
+      this.ChatLists.forEach(function (u) {
+        if (u.id == _this2.$route.query.user) {
+          var index = _this2.ChatLists.indexOf(u);
+
+          _this2.ChatLists[index].TimeSend = data.TimeSend;
+          _this2.ChatLists[index].txtChat = data.txtChat;
+        }
+      });
+    },
+    loadList: function loadList() {
+      var _this3 = this;
+
+      axios.get("/ChatList").then(function (res) {
+        //console.log("list");
+        //console.log(res.data);
+        _this3.ChatLists = res.data;
+
+        if (_this3.findUser(_this3.$route.query.user) == null && _this3.$route.query.user) {
+          _this3.AddUserToList();
+        }
+      }); //ChatLists
+    },
+    findUser: function findUser(id) {
+      var p = null;
+      this.ChatLists.forEach(function (u) {
+        if (u.id == id) {
+          p = u;
+          return true;
+        }
+      });
+      return p;
+    },
+    AddUserToList: function AddUserToList() {
+      var _this4 = this;
+
+      axios.post("/UserProfile", {
+        id: this.$route.query.user
+      }).then(function (res) {
+        //console.log("unshift");
+        _this4.OtherUser = res.data;
+        var time = new Date();
+        var person = {
+          id: _this4.$route.query.user,
+          imgUserChat: "images/user/" + _this4.OtherUser.profileimg.name,
+          NameUserChat: _this4.OtherUser.name,
+          txtChat: "",
+          numberMsg: 0,
+          TimeSend: time.getHours() + ":" + time.getMinutes() // =>  30 // => 9
+
+        };
+
+        _this4.ChatLists.unshift(person);
+      });
+    }
+  },
+  watch: {
+    "$route.query.user": function $routeQueryUser() {
+      var _this5 = this;
+
+      if (this.findUser(this.$route.query.user) == null && this.$route.query.user) {
+        this.AddUserToList(); //console.log("changer id");
+      }
+
+      this.ChatLists.forEach(function (u) {
+        if (u.id == _this5.$route.query.user) {
+          var index = _this5.ChatLists.indexOf(u);
+
+          _this5.ChatLists[index].numberMsg = 0;
+          console.log("change to 0");
+        }
+      });
     }
   }
 });
@@ -21042,7 +21658,7 @@ var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_img_IconsetSmiles_png__WEBPACK_IMPORTED_MODULE_2__.default);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_img_IconsetSmiles_1x_png__WEBPACK_IMPORTED_MODULE_3__.default);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "span.emoji {\n    display: -moz-inline-box;\n    display: inline-block;\n    vertical-align: baseline;\n    *vertical-align: auto;\n    *zoom: 1;\n    *display: inline;\n    width: 1em;\n    height: 1em;\n    background-size: 1em;\n    background-repeat: no-repeat;\n    text-indent: -9999px;\n}\n\nspan.emoji-sizer {\n    line-height: 0.81em;\n    font-size: 1em;\n    margin: -2px 0;\n}\n\nspan.emoji-outer {\n    display: -moz-inline-box;\n    display: inline-block;\n    *display: inline;\n    height: 1em;\n    width: 1em;\n}\n\nspan.emoji-inner {\n    display: -moz-inline-box;\n    display: inline-block;\n    text-indent: -9999px;\n    width: 100%;\n    height: 100%;\n    vertical-align: baseline;\n    *vertical-align: auto;\n    *zoom: 1;\n}\n\nimg.emoji {\n    width: 1em;\n    height: 1em;\n}\n\n.emoji-wysiwyg-editor:empty:before {\n    content: attr(placeholder);\n    color: #9aa2ab;\n}\n\n.emoji-picker-container {\n    position: relative;\n}\n\n.emoji-picker-icon {\n    position: absolute;\n    right: 10px;\n    top: 5px;\n    font-size: 20px;\n    opacity: 0.7;\n    z-index: 100;\n    transition: none;\n    color: black;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n.emoji-picker-icon.parent-has-scroll {\n    right: 28px;\n}\n\n.emoji-picker-icon:hover {\n    opacity: 1;\n}\n\n/* Emoji area */\n\n.emoji-wysiwyg-editor:empty:before {\n    content: attr(placeholder);\n    color: #9aa2ab;\n}\n\n.emoji-wysiwyg-editor:active:before,\n.emoji-wysiwyg-editor:focus:before {\n    content: none;\n}\n\n.emoji-wysiwyg-editor {\n    padding: 6px;\n    padding-right: 35px;\n    margin-bottom: 0px;\n    min-height: 35px; /* 35 */\n    height: 30px;\n    max-height: 284px;\n    overflow: auto;\n    line-height: 17px;\n    border: 1px solid #d2dbe3;\n    border-radius: 2px;\n    box-shadow: none;\n    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;\n    -webkit-user-select: text;\n    word-wrap: break-word;\n}\n\n.emoji-wysiwyg-editor.parent-has-scroll {\n     padding-right: 40px;\n }\n\n.emoji-wysiwyg-editor.single-line-editor {\n    min-height: 35px;\n    height: inherit;\n}\n\n.emoji-wysiwyg-editor img {\n    width: 20px;\n    height: 20px;\n    vertical-align: middle;\n    margin: -3px 0 0 0;\n}\n\n.emoji-menu {\n    position: absolute;\n    z-index: 999;\n    width: 225px;\n    overflow: hidden;\n    border: 1px #dfdfdf solid;\n    border-radius: 3px;\n    overflow: hidden;\n    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);\n}\n\n.emoji-items-wrap1 {\n    background: #ffffff;\n    padding: 5px 2px 5px 5px;\n}\n\n.emoji-items-wrap1 .emoji-menu-tabs {\n    width: 100%;\n    margin-bottom: 8px;\n    margin-top: 3px;\n}\n\n.emoji-items-wrap1 .emoji-menu-tabs td {\n    text-align: center;\n    color: white;\n    line-height: 0;\n}\n\n.emoji-menu-tabs .emoji-menu-tab {\n    display: inline-block;\n    width: 24px;\n    height: 29px;\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\n    background-size: 42px 350px;\n    border: 0;\n}\n\n.is_1x .emoji-menu-tabs .emoji-menu-tab {\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n}\n\n.emoji-menu-tabs .icon-recent { background-position: -9px -306px; }\n\n.emoji-menu-tabs .icon-recent-selected { background-position: -9px -277px; }\n\n.emoji-menu-tabs .icon-smile { background-position: -9px -34px; }\n\n.emoji-menu-tabs .icon-smile-selected { background-position: -9px -5px; }\n\n.emoji-menu-tabs .icon-flower { background-position: -9px -145px; }\n\n.emoji-menu-tabs .icon-flower-selected { background-position: -9px -118px; }\n\n.emoji-menu-tabs .icon-bell { background-position: -9px -89px; }\n\n.emoji-menu-tabs .icon-bell-selected { background-position: -9px -61px; }\n\n.emoji-menu-tabs .icon-car { background-position: -9px -196px; }\n\n.emoji-menu-tabs .icon-car-selected { background-position: -9px -170px; }\n\n.emoji-menu-tabs .icon-grid { background-position: -9px -248px; }\n\n.emoji-menu-tabs .icon-grid-selected { background-position: -9px -222px; }\n\n.emoji-menu-tabs .icon-smile,\n.emoji-menu-tabs .icon-flower,\n.emoji-menu-tabs .icon-bell,\n.emoji-menu-tabs .icon-car,\n.emoji-menu-tabs .icon-grid {\n    opacity: 0.7;\n}\n\n.emoji-menu-tabs .icon-smile:hover,\n.emoji-menu-tabs .icon-flower:hover,\n.emoji-menu-tabs .icon-bell:hover,\n.emoji-menu-tabs .icon-car:hover,\n.emoji-menu-tabs .icon-grid:hover {\n    opacity: 1;\n}\n\n.emoji-menu .emoji-items-wrap {\n    position: relative;\n    height: 174px;\n}\n\n.emoji-menu .emoji-items {\n    padding-right: 8px;\n    outline: 0 !important;\n}\n\n.emoji-menu img {\n    width: 20px;\n    height: 20px;\n    vertical-align: middle;\n    border: 0 none;\n}\n\n.emoji-menu .emoji-items a {\n    margin: -1px 0 0 -1px;\n    padding: 5px;\n    display: block;\n    float: left;\n    border-radius: 2px;\n    border: 0;\n}\n\n.emoji-menu .emoji-items a:hover {\n    background-color: #edf2f5;\n}\n\n.emoji-menu:after {\n    content: ' ';\n    display: block;\n    clear: left;\n}\n\n.emoji-menu a .label {\n    display: none;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "span.emoji {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    vertical-align: baseline;\r\n    *vertical-align: auto;\r\n    *zoom: 1;\r\n    *display: inline;\r\n    width: 1em;\r\n    height: 1em;\r\n    background-size: 1em;\r\n    background-repeat: no-repeat;\r\n    text-indent: -9999px;\r\n}\r\n\r\nspan.emoji-sizer {\r\n    line-height: 0.81em;\r\n    font-size: 1em;\r\n    margin: -2px 0;\r\n}\r\n\r\nspan.emoji-outer {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    *display: inline;\r\n    height: 1em;\r\n    width: 1em;\r\n}\r\n\r\nspan.emoji-inner {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    text-indent: -9999px;\r\n    width: 100%;\r\n    height: 100%;\r\n    vertical-align: baseline;\r\n    *vertical-align: auto;\r\n    *zoom: 1;\r\n}\r\n\r\nimg.emoji {\r\n    width: 1em;\r\n    height: 1em;\r\n}\r\n\r\n.emoji-wysiwyg-editor:empty:before {\r\n    content: attr(placeholder);\r\n    color: #9aa2ab;\r\n}\r\n\r\n.emoji-picker-container {\r\n    position: relative;\r\n}\r\n\r\n.emoji-picker-icon {\r\n    position: absolute;\r\n    right: 10px;\r\n    top: 5px;\r\n    font-size: 20px;\r\n    opacity: 0.7;\r\n    z-index: 100;\r\n    transition: none;\r\n    color: black;\r\n    -moz-user-select: none;\r\n    -webkit-user-select: none;\r\n    -o-user-select: none;\r\n    -ms-user-select: none;\r\n        user-select: none;\r\n}\r\n\r\n.emoji-picker-icon.parent-has-scroll {\r\n    right: 28px;\r\n}\r\n\r\n.emoji-picker-icon:hover {\r\n    opacity: 1;\r\n}\r\n\r\n/* Emoji area */\r\n\r\n.emoji-wysiwyg-editor:empty:before {\r\n    content: attr(placeholder);\r\n    color: #9aa2ab;\r\n}\r\n\r\n.emoji-wysiwyg-editor:active:before,\r\n.emoji-wysiwyg-editor:focus:before {\r\n    content: none;\r\n}\r\n\r\n.emoji-wysiwyg-editor {\r\n    padding: 6px;\r\n    padding-right: 35px;\r\n    margin-bottom: 0px;\r\n    min-height: 35px; /* 35 */\r\n    height: 30px;\r\n    max-height: 284px;\r\n    overflow: auto;\r\n    line-height: 17px;\r\n    border: 1px solid #d2dbe3;\r\n    border-radius: 2px;\r\n    box-shadow: none;\r\n    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;\r\n    -webkit-user-select: text;\r\n    word-wrap: break-word;\r\n}\r\n\r\n.emoji-wysiwyg-editor.parent-has-scroll {\r\n     padding-right: 40px;\r\n }\r\n\r\n.emoji-wysiwyg-editor.single-line-editor {\r\n    min-height: 35px;\r\n    height: inherit;\r\n}\r\n\r\n.emoji-wysiwyg-editor img {\r\n    width: 20px;\r\n    height: 20px;\r\n    vertical-align: middle;\r\n    margin: -3px 0 0 0;\r\n}\r\n\r\n.emoji-menu {\r\n    position: absolute;\r\n    z-index: 999;\r\n    width: 225px;\r\n    overflow: hidden;\r\n    border: 1px #dfdfdf solid;\r\n    border-radius: 3px;\r\n    overflow: hidden;\r\n    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.emoji-items-wrap1 {\r\n    background: #ffffff;\r\n    padding: 5px 2px 5px 5px;\r\n}\r\n\r\n.emoji-items-wrap1 .emoji-menu-tabs {\r\n    width: 100%;\r\n    margin-bottom: 8px;\r\n    margin-top: 3px;\r\n}\r\n\r\n.emoji-items-wrap1 .emoji-menu-tabs td {\r\n    text-align: center;\r\n    color: white;\r\n    line-height: 0;\r\n}\r\n\r\n.emoji-menu-tabs .emoji-menu-tab {\r\n    display: inline-block;\r\n    width: 24px;\r\n    height: 29px;\r\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\r\n    background-size: 42px 350px;\r\n    border: 0;\r\n}\r\n\r\n.is_1x .emoji-menu-tabs .emoji-menu-tab {\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\r\n}\r\n\r\n.emoji-menu-tabs .icon-recent { background-position: -9px -306px; }\r\n\r\n.emoji-menu-tabs .icon-recent-selected { background-position: -9px -277px; }\r\n\r\n.emoji-menu-tabs .icon-smile { background-position: -9px -34px; }\r\n\r\n.emoji-menu-tabs .icon-smile-selected { background-position: -9px -5px; }\r\n\r\n.emoji-menu-tabs .icon-flower { background-position: -9px -145px; }\r\n\r\n.emoji-menu-tabs .icon-flower-selected { background-position: -9px -118px; }\r\n\r\n.emoji-menu-tabs .icon-bell { background-position: -9px -89px; }\r\n\r\n.emoji-menu-tabs .icon-bell-selected { background-position: -9px -61px; }\r\n\r\n.emoji-menu-tabs .icon-car { background-position: -9px -196px; }\r\n\r\n.emoji-menu-tabs .icon-car-selected { background-position: -9px -170px; }\r\n\r\n.emoji-menu-tabs .icon-grid { background-position: -9px -248px; }\r\n\r\n.emoji-menu-tabs .icon-grid-selected { background-position: -9px -222px; }\r\n\r\n.emoji-menu-tabs .icon-smile,\r\n.emoji-menu-tabs .icon-flower,\r\n.emoji-menu-tabs .icon-bell,\r\n.emoji-menu-tabs .icon-car,\r\n.emoji-menu-tabs .icon-grid {\r\n    opacity: 0.7;\r\n}\r\n\r\n.emoji-menu-tabs .icon-smile:hover,\r\n.emoji-menu-tabs .icon-flower:hover,\r\n.emoji-menu-tabs .icon-bell:hover,\r\n.emoji-menu-tabs .icon-car:hover,\r\n.emoji-menu-tabs .icon-grid:hover {\r\n    opacity: 1;\r\n}\r\n\r\n.emoji-menu .emoji-items-wrap {\r\n    position: relative;\r\n    height: 174px;\r\n}\r\n\r\n.emoji-menu .emoji-items {\r\n    padding-right: 8px;\r\n    outline: 0 !important;\r\n}\r\n\r\n.emoji-menu img {\r\n    width: 20px;\r\n    height: 20px;\r\n    vertical-align: middle;\r\n    border: 0 none;\r\n}\r\n\r\n.emoji-menu .emoji-items a {\r\n    margin: -1px 0 0 -1px;\r\n    padding: 5px;\r\n    display: block;\r\n    float: left;\r\n    border-radius: 2px;\r\n    border: 0;\r\n}\r\n\r\n.emoji-menu .emoji-items a:hover {\r\n    background-color: #edf2f5;\r\n}\r\n\r\n.emoji-menu:after {\r\n    content: ' ';\r\n    display: block;\r\n    clear: left;\r\n}\r\n\r\n.emoji-menu a .label {\r\n    display: none;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21066,7 +21682,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/** initial setup **/\n.nano {\n  position : relative;\n  width    : 100%;\n  height   : 100%;\n  overflow : hidden;\n}\n.nano > .nano-content {\n  position      : absolute;\n  overflow      : scroll;\n  overflow-x    : hidden;\n  top           : 0;\n  right         : 0;\n  bottom        : 0;\n  left          : 0;\n}\n.nano > .nano-content:focus {\n  outline: thin dotted;\n}\n.nano > .nano-content::-webkit-scrollbar {\n  display: none;\n}\n.has-scrollbar > .nano-content::-webkit-scrollbar {\n  display: block;\n}\n.nano > .nano-pane {\n  background : rgba(0,0,0,.25);\n  position   : absolute;\n  width      : 10px;\n  right      : 0;\n  top        : 0;\n  bottom     : 0;\n  visibility : hidden\\9; /* Target only IE7 and IE8 with this hack */\n  opacity    : .01;\n  transition            : .2s;\n  border-radius         : 5px;\n}\n.nano > .nano-pane > .nano-slider {\n  background: #444;\n  background: rgba(0,0,0,.5);\n  position              : relative;\n  margin                : 0 1px;\n  border-radius         : 3px;\n}\n.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {\n  visibility : visible\\9; /* Target only IE7 and IE8 with this hack */\n  opacity    : 0.99;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/** initial setup **/\r\n.nano {\r\n  position : relative;\r\n  width    : 100%;\r\n  height   : 100%;\r\n  overflow : hidden;\r\n}\r\n.nano > .nano-content {\r\n  position      : absolute;\r\n  overflow      : scroll;\r\n  overflow-x    : hidden;\r\n  top           : 0;\r\n  right         : 0;\r\n  bottom        : 0;\r\n  left          : 0;\r\n}\r\n.nano > .nano-content:focus {\r\n  outline: thin dotted;\r\n}\r\n.nano > .nano-content::-webkit-scrollbar {\r\n  display: none;\r\n}\r\n.has-scrollbar > .nano-content::-webkit-scrollbar {\r\n  display: block;\r\n}\r\n.nano > .nano-pane {\r\n  background : rgba(0,0,0,.25);\r\n  position   : absolute;\r\n  width      : 10px;\r\n  right      : 0;\r\n  top        : 0;\r\n  bottom     : 0;\r\n  visibility : hidden\\9; /* Target only IE7 and IE8 with this hack */\r\n  opacity    : .01;\r\n  transition            : .2s;\r\n  border-radius         : 5px;\r\n}\r\n.nano > .nano-pane > .nano-slider {\r\n  background: #444;\r\n  background: rgba(0,0,0,.5);\r\n  position              : relative;\r\n  margin                : 0 1px;\r\n  border-radius         : 3px;\r\n}\r\n.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {\r\n  visibility : visible\\9; /* Target only IE7 and IE8 with this hack */\r\n  opacity    : 0.99;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -59691,7 +60307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	var installedModules = {};
 /******/
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_669__(moduleId) {
+/******/ 	function __nested_webpack_require_692__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId]) {
@@ -59705,7 +60321,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_669__);
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_692__);
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
@@ -59716,20 +60332,20 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__nested_webpack_require_669__.m = modules;
+/******/ 	__nested_webpack_require_692__.m = modules;
 /******/
 /******/ 	// expose the module cache
-/******/ 	__nested_webpack_require_669__.c = installedModules;
+/******/ 	__nested_webpack_require_692__.c = installedModules;
 /******/
 /******/ 	// define getter function for harmony exports
-/******/ 	__nested_webpack_require_669__.d = function(exports, name, getter) {
-/******/ 		if(!__nested_webpack_require_669__.o(exports, name)) {
+/******/ 	__nested_webpack_require_692__.d = function(exports, name, getter) {
+/******/ 		if(!__nested_webpack_require_692__.o(exports, name)) {
 /******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
-/******/ 	__nested_webpack_require_669__.r = function(exports) {
+/******/ 	__nested_webpack_require_692__.r = function(exports) {
 /******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 		}
@@ -59741,35 +60357,35 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// mode & 2: merge all properties of value into the ns
 /******/ 	// mode & 4: return value when already ns object
 /******/ 	// mode & 8|1: behave like require
-/******/ 	__nested_webpack_require_669__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __nested_webpack_require_669__(value);
+/******/ 	__nested_webpack_require_692__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __nested_webpack_require_692__(value);
 /******/ 		if(mode & 8) return value;
 /******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
 /******/ 		var ns = Object.create(null);
-/******/ 		__nested_webpack_require_669__.r(ns);
+/******/ 		__nested_webpack_require_692__.r(ns);
 /******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __nested_webpack_require_669__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __nested_webpack_require_692__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
 /******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__nested_webpack_require_669__.n = function(module) {
+/******/ 	__nested_webpack_require_692__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
 /******/ 			function getDefault() { return module['default']; } :
 /******/ 			function getModuleExports() { return module; };
-/******/ 		__nested_webpack_require_669__.d(getter, 'a', getter);
+/******/ 		__nested_webpack_require_692__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
 /******/
 /******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__nested_webpack_require_669__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/ 	__nested_webpack_require_692__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__nested_webpack_require_669__.p = "";
+/******/ 	__nested_webpack_require_692__.p = "";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __nested_webpack_require_669__(__nested_webpack_require_669__.s = 2);
+/******/ 	return __nested_webpack_require_692__(__nested_webpack_require_692__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -60217,18 +60833,18 @@ exports.decode = decode;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __nested_webpack_require_19967__) {
+/***/ (function(module, exports, __nested_webpack_require_20516__) {
 
 // required so we don't have to do require('pusher').default etc.
-module.exports = __nested_webpack_require_19967__(3).default;
+module.exports = __nested_webpack_require_20516__(3).default;
 
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_20171__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_20728__) {
 
 "use strict";
-__nested_webpack_require_20171__.r(__webpack_exports__);
+__nested_webpack_require_20728__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./src/runtimes/web/dom/script_receiver_factory.ts
 var ScriptReceiverFactory = (function () {
@@ -62215,10 +62831,10 @@ var presence_channel_PresenceChannel = (function (_super) {
 /* harmony default export */ var presence_channel = (presence_channel_PresenceChannel);
 
 // EXTERNAL MODULE: ./node_modules/@stablelib/utf8/lib/utf8.js
-var utf8 = __nested_webpack_require_20171__(1);
+var utf8 = __nested_webpack_require_20728__(1);
 
 // EXTERNAL MODULE: ./node_modules/@stablelib/base64/lib/base64.js
-var base64 = __nested_webpack_require_20171__(0);
+var base64 = __nested_webpack_require_20728__(0);
 
 // CONCATENATED MODULE: ./src/core/channels/encrypted_channel.ts
 var encrypted_channel_extends = (undefined && undefined.__extends) || (function () {
@@ -72970,11 +73586,57 @@ var render = function() {
                       "div",
                       { staticClass: "col-lg-3 chat-data-left scroller" },
                       [
-                        _vm._m(0),
+                        _vm.CurrentUser
+                          ? _c(
+                              "div",
+                              { staticClass: "chat-search pt-3 pl-3" },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "d-flex align-items-center" },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "chat-profile mr-3" },
+                                      [
+                                        _c("img", {
+                                          staticClass: "avatar-60 ",
+                                          attrs: {
+                                            src:
+                                              "images/user/" +
+                                              _vm.CurrentUser.profileimg.name,
+                                            alt: "chat-user"
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "chat-caption" }, [
+                                      _c("h5", { staticClass: "mb-0" }, [
+                                        _vm._v(
+                                          "\n                                                    " +
+                                            _vm._s(_vm.CurrentUser.name) +
+                                            "\n                                                "
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._m(0)
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm._m(1),
+                                _vm._v(" "),
+                                _vm._m(2)
+                              ]
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
-                        _c("SliderChat", {
-                          attrs: { ChatLists: _vm.ChatLists }
-                        })
+                        _vm.loaded
+                          ? _c("SliderChat", {
+                              attrs: { CurrentUser: _vm.CurrentUser }
+                            })
+                          : _vm._e()
                       ],
                       1
                     ),
@@ -72987,11 +73649,49 @@ var render = function() {
                           "div",
                           { staticClass: "tab-content" },
                           [
-                            _vm._m(1),
-                            _vm._v(" "),
-                            _c("Conversation", {
-                              attrs: { ChatContents: _vm.ChatContents }
-                            })
+                            _vm.$route.query.user && _vm.loaded
+                              ? _c("Conversation", {
+                                  attrs: { CurrentUser: _vm.CurrentUser }
+                                })
+                              : _c(
+                                  "div",
+                                  {
+                                    staticClass: "tab-pane fade active show",
+                                    attrs: {
+                                      id: "default-block",
+                                      role: "tabpanel"
+                                    }
+                                  },
+                                  [
+                                    _c("div", { staticClass: "chat-start" }, [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "iq-start-icon text-primary"
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "ri-message-3-line"
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass: "btn bg-white mt-3",
+                                          staticStyle: { cursor: "default" }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Start\n                                                    Conversation!"
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ]
+                                )
                           ],
                           1
                         )
@@ -73012,116 +73712,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "chat-search pt-3 pl-3" }, [
-      _c("div", { staticClass: "d-flex align-items-center" }, [
-        _c("div", { staticClass: "chat-profile mr-3" }, [
-          _c("img", {
-            staticClass: "avatar-60 ",
-            attrs: { src: "images/user/1.jpg", alt: "chat-user" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "chat-caption" }, [
-          _c("h5", { staticClass: "mb-0" }, [_vm._v("Bni Jordan")]),
-          _vm._v(" "),
-          _c("p", { staticClass: "m-0" }, [_vm._v("Web Designer")])
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "close-btn-res p-3", attrs: { type: "submit" } },
-          [_c("i", { staticClass: "ri-close-fill" })]
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "scroller", attrs: { id: "user-detail-popup" } },
-        [
-          _c("div", { staticClass: "user-profile" }, [
-            _c(
-              "button",
-              { staticClass: "close-popup p-3", attrs: { type: "submit" } },
-              [_c("i", { staticClass: "ri-close-fill" })]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "user text-center mb-4" }, [
-              _c("a", { staticClass: "avatar m-0" }, [
-                _c("img", {
-                  attrs: { src: "images/user/1.jpg", alt: "avatar" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "user-name mt-4" }, [
-                _c("h4", [_vm._v("Bni Jordan")])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "user-desc" }, [
-                _c("p", [_vm._v("Web Designer")])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c("div", { staticClass: "user-detail text-left mt-4 pl-4 pr-4" }, [
-              _c("h5", { staticClass: "mt-4 mb-4" }, [_vm._v("About")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "It is long established fact that a reader will be distracted bt the reddable."
-                )
-              ]),
-              _vm._v(" "),
-              _c("h5", { staticClass: "mt-3 mb-3" }, [_vm._v("Status")]),
-              _vm._v(" "),
-              _c("ul", { staticClass: "user-status p-0" }, [
-                _c("li", { staticClass: "mb-1" }, [
-                  _c("i", {
-                    staticClass:
-                      "ri-checkbox-blank-circle-fill text-success pr-1"
-                  }),
-                  _c("span", [_vm._v("Online")])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "mb-1" }, [
-                  _c("i", {
-                    staticClass:
-                      "ri-checkbox-blank-circle-fill text-warning pr-1"
-                  }),
-                  _c("span", [_vm._v("Away")])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "mb-1" }, [
-                  _c("i", {
-                    staticClass:
-                      "ri-checkbox-blank-circle-fill text-danger pr-1"
-                  }),
-                  _c("span", [_vm._v("Do Not Disturb")])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "mb-1" }, [
-                  _c("i", {
-                    staticClass: "ri-checkbox-blank-circle-fill text-light pr-1"
-                  }),
-                  _c("span", [_vm._v("Offline")])
-                ])
-              ])
-            ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "chat-searchbar mt-4" }, [
-        _c("div", { staticClass: "form-group chat-search-data m-0" }, [
-          _c("input", {
-            staticClass: "form-control round",
-            attrs: { type: "text", id: "chat-search", placeholder: "Search" }
-          }),
-          _vm._v(" "),
-          _c("i", { staticClass: "ri-search-line" })
-        ])
-      ])
-    ])
+    return _c(
+      "button",
+      { staticClass: "close-btn-res p-3", attrs: { type: "submit" } },
+      [_c("i", { staticClass: "ri-close-fill" })]
+    )
   },
   function() {
     var _vm = this
@@ -73129,28 +73724,102 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      {
-        staticClass: "tab-pane fade active show",
-        attrs: { id: "default-block", role: "tabpanel" }
-      },
+      { staticClass: "scroller", attrs: { id: "user-detail-popup" } },
       [
-        _c("div", { staticClass: "chat-start" }, [
-          _c("span", { staticClass: "iq-start-icon text-primary" }, [
-            _c("i", { staticClass: "ri-message-3-line" })
-          ]),
-          _vm._v(" "),
+        _c("div", { staticClass: "user-profile" }, [
           _c(
             "button",
-            { staticClass: "btn bg-white mt-3", attrs: { id: "chat-start" } },
-            [
+            { staticClass: "close-popup p-3", attrs: { type: "submit" } },
+            [_c("i", { staticClass: "ri-close-fill" })]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "user text-center mb-4" }, [
+            _c("a", { staticClass: "avatar m-0" }, [
+              _c("img", { attrs: { src: "images/user/1.jpg", alt: "avatar" } })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "user-name mt-4" }, [
+              _c("h4", [_vm._v("Bni Jordan")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "user-desc" }, [
+              _c("p", [_vm._v("Web Designer")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "user-detail text-left mt-4 pl-4 pr-4" }, [
+            _c("h5", { staticClass: "mt-4 mb-4" }, [
               _vm._v(
-                "Start\r\n                                             Conversation!"
+                "\n                                                        About\n                                                    "
               )
-            ]
-          )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "\n                                                        It is long\n                                                        established fact\n                                                        that a reader will\n                                                        be distracted bt the\n                                                        reddable.\n                                                    "
+              )
+            ]),
+            _vm._v(" "),
+            _c("h5", { staticClass: "mt-3 mb-3" }, [
+              _vm._v(
+                "\n                                                        Status\n                                                    "
+              )
+            ]),
+            _vm._v(" "),
+            _c("ul", { staticClass: "user-status p-0" }, [
+              _c("li", { staticClass: "mb-1" }, [
+                _c("i", {
+                  staticClass: "ri-checkbox-blank-circle-fill text-success pr-1"
+                }),
+                _c("span", [_vm._v("Online")])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "mb-1" }, [
+                _c("i", {
+                  staticClass: "ri-checkbox-blank-circle-fill text-warning pr-1"
+                }),
+                _c("span", [_vm._v("Away")])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "mb-1" }, [
+                _c("i", {
+                  staticClass: "ri-checkbox-blank-circle-fill text-danger pr-1"
+                }),
+                _c("span", [
+                  _vm._v(
+                    "Do Not\n                                                                Disturb"
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "mb-1" }, [
+                _c("i", {
+                  staticClass: "ri-checkbox-blank-circle-fill text-light pr-1"
+                }),
+                _c("span", [_vm._v("Offline")])
+              ])
+            ])
+          ])
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "chat-searchbar mt-4" }, [
+      _c("div", { staticClass: "form-group chat-search-data m-0" }, [
+        _c("input", {
+          staticClass: "form-control round",
+          attrs: { type: "text", id: "chat-search", placeholder: "Search" }
+        }),
+        _vm._v(" "),
+        _c("i", { staticClass: "ri-search-line" })
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -77859,60 +78528,60 @@ var render = function() {
       "form",
       {
         staticClass: "d-flex align-items-center",
-        attrs: { action: "javascript:void(0);" }
+        attrs: { id: "fooorm", enctype: "multipart/form-data" }
       },
       [
-        _vm._m(0),
+        _c("div", { staticClass: "chat-attagement d-flex" }, [
+          _c("a", [
+            _c("i", {
+              staticClass: "fa fa-paperclip pr-3",
+              attrs: { "aria-hidden": "true" },
+              on: { click: _vm.prof }
+            })
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            ref: "prof",
+            staticStyle: { display: "none" },
+            attrs: {
+              type: "file",
+              accept: "image/*,video/mp4,video/x-m4v,video/*"
+            },
+            on: { change: _vm.onProfileChange }
+          })
+        ]),
         _vm._v(" "),
         _c("VueEmoji", {
           ref: "emoji",
           staticClass: "emoji-div",
-          attrs: { height: "65px", value: _vm.myText },
+          attrs: { height: "65px" },
           on: { input: _vm.onInput }
         }),
         _vm._v(" "),
-        _vm._m(1)
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary d-flex align-items-center p-2",
+            staticStyle: { "margin-left": "10px" },
+            on: { click: _vm.send }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-paper-plane-o",
+              attrs: { "aria-hidden": "true" }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "d-none d-lg-block ml-1" }, [
+              _vm._v("Send")
+            ])
+          ]
+        )
       ],
       1
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "chat-attagement d-flex" }, [
-      _c("a", { attrs: { href: "javascript:void();" } }, [
-        _c("i", {
-          staticClass: "fa fa-paperclip pr-3",
-          attrs: { "aria-hidden": "true" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-primary d-flex align-items-center p-2",
-        staticStyle: { "margin-left": "10px" },
-        attrs: { type: "submit" }
-      },
-      [
-        _c("i", {
-          staticClass: "fa fa-paper-plane-o",
-          attrs: { "aria-hidden": "true" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "d-none d-lg-block ml-1" }, [_vm._v("Send")])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -78183,16 +78852,84 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "tab-pane fade",
-      attrs: { id: "chatbox1", role: "tabpanel" }
-    },
     [
-      _vm._m(0),
+      _c("div", { staticClass: "chat-head" }, [
+        _c(
+          "header",
+          {
+            staticClass:
+              "d-flex justify-content-between align-items-center bg-white pt-3 pr-3 pb-3"
+          },
+          [
+            _vm.OtherUser
+              ? _c("div", { staticClass: "d-flex align-items-center" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "avatar chat-user-profile m-0 mr-3" },
+                    [
+                      _c("img", {
+                        staticClass: "avatar-50 ",
+                        attrs: {
+                          src: "images/user/" + _vm.OtherUser.profileimg.name,
+                          alt: "avatar"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm._m(1)
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "mb-0" }, [
+                    _vm._v(_vm._s(_vm.OtherUser.name))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "chat-user-detail-popup scroller" }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "chat-header-icons d-flex" },
+              [
+                _vm.OtherUser
+                  ? _c(
+                      "router-link",
+                      {
+                        staticClass: "iq-bg-primary",
+                        attrs: {
+                          to: {
+                            name: "profile",
+                            query: { user: _vm.OtherUser.id }
+                          },
+                          tag: "a"
+                        }
+                      },
+                      [_c("i", { staticClass: "ri-user-fill" })]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "iq-bg-primary",
+                    on: { click: _vm.deleteChat }
+                  },
+                  [_c("i", { staticClass: "ri-delete-bin-5-line" })]
+                )
+              ],
+              1
+            )
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "chat-content scroller" },
+        { ref: "feed", staticClass: "chat-content scroller" },
         _vm._l(_vm.ChatContents, function(ChatContent) {
           return _c(
             "div",
@@ -78216,9 +78953,57 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "chat-detail" }, [
-                _c("div", { staticClass: "chat-message" }, [
-                  _c("p", [_vm._v(_vm._s(ChatContent.txtChat))])
-                ])
+                ChatContent.txtChat != null
+                  ? _c("div", { staticClass: "chat-message" }, [
+                      _c("p", [_vm._v(_vm._s(ChatContent.txtChat))])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                ChatContent.imgChat != null
+                  ? _c("div", { staticClass: "chat-message" }, [
+                      _c("img", {
+                        staticStyle: { height: "300px", width: "300px" },
+                        attrs: { src: ChatContent.imgChat, alt: "post-image" }
+                      })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                ChatContent.vidChat != null
+                  ? _c("div", { staticClass: "chat-message" }, [
+                      _c(
+                        "video",
+                        {
+                          staticStyle: { height: "300px", width: "300px" },
+                          attrs: { controls: "" }
+                        },
+                        [
+                          _c("source", {
+                            attrs: {
+                              src: ChatContent.vidChat,
+                              type: "video/mp4"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("source", {
+                            attrs: {
+                              src: ChatContent.vidChat,
+                              type: "video/webm"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              "\n                            Votre navigateur ne prend pas en charge les\n                            vidéos HTML5. Voici\n                            "
+                            ),
+                            _c("a", { attrs: { href: ChatContent.vidChat } }, [
+                              _vm._v("un lien pour télécharger la vidéo")
+                            ]),
+                            _vm._v(".\n                        ")
+                          ])
+                        ]
+                      )
+                    ])
+                  : _vm._e()
               ])
             ]
           )
@@ -78226,7 +79011,10 @@ var render = function() {
         0
       ),
       _vm._v(" "),
-      _c("ChatForm")
+      _c("ChatForm", {
+        attrs: { CurrentUser: _vm.CurrentUser },
+        on: { send: _vm.newMessage }
+      })
     ],
     1
   )
@@ -78236,68 +79024,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "chat-head" }, [
-      _c(
-        "header",
-        {
-          staticClass:
-            "d-flex justify-content-between align-items-center bg-white pt-3 pr-3 pb-3"
-        },
-        [
-          _c("div", { staticClass: "d-flex align-items-center" }, [
-            _c("div", { staticClass: "sidebar-toggle" }, [
-              _c("i", { staticClass: "ri-menu-3-line" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "avatar chat-user-profile m-0 mr-3" }, [
-              _c("img", {
-                staticClass: "avatar-50 ",
-                attrs: { src: "images/user/05.jpg", alt: "avatar" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "avatar-status" }, [
-                _c("i", {
-                  staticClass: "ri-checkbox-blank-circle-fill text-success"
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("h5", { staticClass: "mb-0" }, [_vm._v("Team Discussions")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "chat-user-detail-popup scroller" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "chat-header-icons d-flex" }, [
-            _c(
-              "a",
-              {
-                staticClass: "iq-bg-primary",
-                attrs: { href: "javascript:void();" }
-              },
-              [_c("i", { staticClass: "ri-user-fill" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "iq-bg-primary",
-                attrs: { href: "javascript:void();" }
-              },
-              [_c("i", { staticClass: "ri-vidicon-2-fill" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "iq-bg-primary",
-                attrs: { href: "javascript:void();" }
-              },
-              [_c("i", { staticClass: "ri-delete-bin-5-line" })]
-            )
-          ])
-        ]
-      )
+    return _c("div", { staticClass: "sidebar-toggle" }, [
+      _c("i", { staticClass: "ri-menu-3-line" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "avatar-status" }, [
+      _c("i", { staticClass: "ri-checkbox-blank-circle-fill text-success" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "iq-bg-primary", attrs: { href: "javascript:void();" } },
+      [_c("i", { staticClass: "ri-vidicon-2-fill" })]
+    )
   }
 ]
 render._withStripped = true
@@ -79287,7 +80034,23 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item dropdown" }, [
-          _vm._m(2),
+          _c(
+            "a",
+            {
+              staticClass: "search-toggle iq-waves-effect",
+              attrs: { href: "#" },
+              on: { click: _vm.removeDotMSG }
+            },
+            [
+              _c("i", { staticClass: "las la-inbox" }),
+              _vm._v(" "),
+              _c("span", {
+                staticClass: "bg-danger dots",
+                staticStyle: { display: "none" },
+                attrs: { id: "redMSG" }
+              })
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
@@ -79295,34 +80058,58 @@ var render = function() {
                 "div",
                 { staticClass: "iq-card-body p-0 " },
                 [
-                  _vm._m(3),
+                  _c("div", { staticClass: "bg-primary p-3" }, [
+                    _c("h5", { staticClass: "mb-0 text-white" }, [
+                      _vm._v("\n                                All Messages"),
+                      _c(
+                        "small",
+                        { staticClass: "badge  badge-light float-right pt-1" },
+                        [_vm._v(_vm._s(_vm.msgCount))]
+                      )
+                    ])
+                  ]),
                   _vm._v(" "),
                   _vm._l(_vm.messages, function(message) {
                     return _c(
-                      "a",
+                      "router-link",
                       {
                         key: message.id,
                         staticClass: "iq-sub-card",
-                        attrs: { href: "#" }
+                        attrs: {
+                          to: {
+                            name: "chat",
+                            query: { user: message.id }
+                          },
+                          tag: "a"
+                        }
                       },
                       [
                         _c("div", { staticClass: "media align-items-center" }, [
                           _c("div", {}, [
                             _c("img", {
                               staticClass: "avatar-40 rounded",
-                              attrs: { src: message.img, alt: "" }
+                              attrs: { src: message.img, alt: "profile" }
                             })
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "media-body ml-3" }, [
                             _c("h6", { staticClass: "mb-0 " }, [
-                              _vm._v(_vm._s(message.H6))
+                              _vm._v(
+                                "\n                                        " +
+                                  _vm._s(message.name) +
+                                  "\n                                    "
+                              )
                             ]),
                             _vm._v(" "),
                             _c(
                               "small",
                               { staticClass: "float-left font-size-12" },
-                              [_vm._v(_vm._s(message.small))]
+                              [
+                                _vm._v(
+                                  _vm._s(message.count) +
+                                    " unread\n                                        messages"
+                                )
+                              ]
                             )
                           ])
                         ])
@@ -79400,33 +80187,6 @@ var staticRenderFns = [
         _vm._v("\n                                All Notifications"),
         _c("small", { staticClass: "badge  badge-light float-right pt-1" }, [
           _vm._v("4")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "search-toggle iq-waves-effect", attrs: { href: "#" } },
-      [
-        _c("i", { staticClass: "las la-inbox" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "bg-danger dots" })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "bg-primary p-3" }, [
-      _c("h5", { staticClass: "mb-0 text-white" }, [
-        _vm._v("\n                                All Messages"),
-        _c("small", { staticClass: "badge  badge-light float-right pt-1" }, [
-          _vm._v("5")
         ])
       ])
     ])
@@ -81439,63 +82199,103 @@ var render = function() {
   return _c("div", { staticClass: "chat-sidebar-channel scroller mt-4 pl-3" }, [
     _c("h5", { staticClass: "mt-3" }, [_vm._v("Direct Message")]),
     _vm._v(" "),
-    _c(
-      "ul",
-      { staticClass: "iq-chat-ui nav flex-column nav-pills" },
-      _vm._l(_vm.ChatLists, function(ChatList, index) {
-        return _c("li", { key: index }, [
-          _c("a", { attrs: { "data-toggle": "pill", href: "#chatbox1" } }, [
-            _c("div", { staticClass: "d-flex align-items-center" }, [
-              _c("div", { staticClass: "avatar mr-2" }, [
-                _c("img", {
-                  staticClass: "avatar-50 ",
-                  attrs: { src: ChatList.imgUserChat, alt: "chatuserimage" }
-                }),
-                _vm._v(" "),
-                _vm._m(0, true)
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "chat-sidebar-name" }, [
-                _c("h6", { staticClass: "mb-0" }, [
-                  _vm._v(_vm._s(ChatList.NameUserChat))
-                ]),
-                _vm._v(" "),
-                _c("span", [_vm._v(_vm._s(ChatList.txtChat))])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "chat-meta float-right text-center mt-2 mr-1" },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "chat-msg-counter bg-primary text-white" },
-                    [_vm._v(_vm._s(ChatList.numberMsg))]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "text-nowrap" }, [
-                    _vm._v(_vm._s(ChatList.TimeSend))
-                  ])
-                ]
-              )
-            ])
-          ])
-        ])
-      }),
-      0
-    )
+    _vm.ChatLists
+      ? _c(
+          "ul",
+          { staticClass: "iq-chat-ui nav flex-column nav-pills" },
+          _vm._l(_vm.ChatLists, function(ChatList, index) {
+            return _c(
+              "li",
+              { key: index },
+              [
+                _c(
+                  "router-link",
+                  {
+                    class: ChatList.id == _vm.$route.query.user ? "active" : "",
+                    attrs: {
+                      to: {
+                        name: "chat",
+                        query: { user: ChatList.id }
+                      },
+                      id: "pp" + ChatList.id,
+                      tag: "a"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "d-flex align-items-center" }, [
+                      _c("div", { staticClass: "avatar mr-2" }, [
+                        _c("img", {
+                          staticClass: "avatar-50 ",
+                          attrs: {
+                            src: ChatList.imgUserChat,
+                            alt: "chatuserimage"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "avatar-status" }, [
+                          _c("i", {
+                            staticClass:
+                              "ri-checkbox-blank-circle-fill text-success"
+                          })
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "chat-sidebar-name" }, [
+                        _c("h6", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(ChatList.NameUserChat) +
+                              "\n                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        ChatList.txtChat != null
+                          ? _c("span", [_vm._v(_vm._s(ChatList.txtChat))])
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "chat-meta float-right text-center mt-2 mr-1"
+                        },
+                        [
+                          ChatList.numberMsg > 0
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "chat-msg-counter bg-primary text-white"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(ChatList.numberMsg) +
+                                      "\n                        "
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "text-nowrap" }, [
+                            _vm._v(_vm._s(ChatList.TimeSend))
+                          ])
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          }),
+          0
+        )
+      : _vm._e()
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "avatar-status" }, [
-      _c("i", { staticClass: "ri-checkbox-blank-circle-fill text-success" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

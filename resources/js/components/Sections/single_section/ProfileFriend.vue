@@ -146,13 +146,13 @@ export default {
         Echo.private(`acceptRequest.${this.Id}`).listen(
             "AcceptRequestEvent",
             e => {
-                document.getElementById("New").style.display = "initial";
+                this.LoadFriends();
             }
         );
-        Echo.private(`acceptRequest.${this.IdOnline}`).listen(
-            "AcceptRequestEvent",
+        Echo.private(`acceptRequest2.${this.Id}`).listen(
+            "AcceptRequestEvent2",
             e => {
-                document.getElementById("New").style.display = "initial";
+                this.LoadFriends();
             }
         );
     },
@@ -176,7 +176,7 @@ export default {
                     console.log(res.data);
                     this.FriendLists = res.data;
                 });
-            document.getElementById("New").style.display = "none";
+            //document.getElementById("New").style.display = "none";
         }
     },
     watch: {

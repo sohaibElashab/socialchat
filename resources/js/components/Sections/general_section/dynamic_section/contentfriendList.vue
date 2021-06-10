@@ -96,7 +96,8 @@ export default {
             Echo.private(`acceptRequest.${this.Id}`).listen(
                 "AcceptRequestEvent",
                 e => {
-                    document.getElementById("New").style.display = "initial";
+                    // document.getElementById("New").style.display = "initial";
+                    this.LoadFriends();
                 }
             );
         });
@@ -111,7 +112,7 @@ export default {
                     console.log(res.data);
                     this.friends = res.data;
                 });
-            document.getElementById("New").style.display = "none";
+            // document.getElementById("New").style.display = "none";
         }
     }
 };
