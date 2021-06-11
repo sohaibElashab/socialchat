@@ -65,3 +65,4 @@ Route::post('/NewMessage', [App\Http\Controllers\ChatController::class, 'NewMess
 Route::post('/LoadMessages', [App\Http\Controllers\ChatController::class, 'LoadMessages']); 
 Route::get('/UnreadMessages', [App\Http\Controllers\ChatController::class, 'UnreadMessages']); 
 Route::post('/DeleteChat', [App\Http\Controllers\ChatController::class, 'DeleteChat']); 
+Route::post('/ChatSearch', [App\Http\Controllers\ChatController::class, 'ChatSearch']); 

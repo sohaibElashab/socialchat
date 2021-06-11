@@ -286,16 +286,36 @@ class ChatController extends Controller
             if($messageCount == 0){
                 Chat::where('id',$chatID->chat_id)->delete();
                 ChatUser::where('chat_id',$chatID->chat_id)->delete();
-            }
-
-           
+            }  
         }
-
-       
-
-        //return $messageCount;
     }
 
 
+    public function Friends($id)
+    {
+        $friends = Friend::where('user_id',$id)->orWhere('friend_id',$id)->get();
+        $new = collect();
+        foreach ($friends as $key => $friend) {
+            if($friend->user_id != $id){
+                $new->add($friend->user_id);
+            } elseif ($friend->friend_id != $id) {
+                $new->add($friend->friend_id);
+            }
+        }
+        $new = $new->unique();
+        $friends = User::whereIn('id',$new)->get('id');
+
+        return $friends;
+    }
+
+    public function ChatSearch(Request $request)
+    {
+        $friends=$this->Friends(auth()->user()->id);
+        $users = User::where('name','like','%'.$request->value.'%')->whereIn('id',$friends)->get();
+        foreach ($users as  $user) {
+            $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+        }
+        return response()->json($users);
+    }
 
 }

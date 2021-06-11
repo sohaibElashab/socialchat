@@ -14,11 +14,11 @@
                             alt="avatar"
                             class="avatar-50 "
                         />
-                        <span class="avatar-status"
+                        <!--   <span class="avatar-status"
                             ><i
                                 class="ri-checkbox-blank-circle-fill text-success"
                             ></i
-                        ></span>
+                        ></span> -->
                     </div>
                     <h5 class="mb-0">{{ OtherUser.name }}</h5>
                 </div>
@@ -46,15 +46,23 @@
             </header>
         </div>
         <div class="file" v-if="isFile">
-            <button class="delete-btn" >
+            <button class="delete-btn">
                 <i class="ri-delete-bin-line" @click="removeFile"></i>
             </button>
-            <img :src="isFile" class="contentFile" alt="image upload" v-if="typeFile == 'image'">
+            <img
+                :src="isFile"
+                class="contentFile"
+                alt="image upload"
+                v-if="typeFile == 'image'"
+            />
             <video controls class="contentFile" v-else>
-                <source :src="isFile" type="video/mp4">
-                <source :src="isFile" type="video/webm">
-                <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
-                    Voici <a :href="isFile">un lien pour télécharger la vidéo</a>.</p>
+                <source :src="isFile" type="video/mp4" />
+                <source :src="isFile" type="video/webm" />
+                <p>
+                    Votre navigateur ne prend pas en charge les vidéos HTML5.
+                    Voici
+                    <a :href="isFile">un lien pour télécharger la vidéo</a>.
+                </p>
             </video>
         </div>
         <div class="chat-content scroller" ref="feed">
@@ -119,7 +127,11 @@
                 </div>
             </div>
         </div>
-        <ChatForm @addFile="newFile" @send="newMessage" :CurrentUser="CurrentUser" />
+        <ChatForm
+            @addFile="newFile"
+            @send="newMessage"
+            :CurrentUser="CurrentUser"
+        />
     </div>
 </template>
 
@@ -139,7 +151,7 @@ export default {
         return {
             OtherUser: null,
             ChatContents: null,
-            isFile : null,
+            isFile: null,
             typeFile: null
         };
     },
@@ -307,15 +319,16 @@ export default {
                 });
             }
             this.isFile = null;
-            this.typeFile= null
+            this.typeFile = null;
         },
-        newFile(file){
+        newFile(file) {
             this.isFile = file.url;
             this.typeFile = file.type;
         },
-        removeFile(){
+        removeFile() {
             this.isFile = null;
-            this.typeFile= null
+            this.typeFile = null;
+            EventBus.$emit("reset-form", true);
         }
     },
     watch: {
@@ -329,7 +342,7 @@ export default {
 </script>
 
 <style scoped>
-.file{
+.file {
     position: absolute;
     z-index: 1;
     width: 100%;
@@ -344,7 +357,7 @@ export default {
     width: 90%;
     height: 90%;
 }
-.delete-btn {     
+.delete-btn {
     position: absolute;
     top: 8px;
     right: 5px;
@@ -357,11 +370,11 @@ export default {
     opacity: 0;
     z-index: 1;
 }
-.file:hover .delete-btn { 
-   opacity: 1; 
-   transition: all 0.45s ease 0s; 
+.file:hover .delete-btn {
+    opacity: 1;
+    transition: all 0.45s ease 0s;
 }
-.delete-btn > i { 
-   color: var(--iq-primary);
+.delete-btn > i {
+    color: var(--iq-primary);
 }
 </style>

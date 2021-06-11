@@ -7,11 +7,7 @@
         >
             <div class="chat-attagement d-flex">
                 <label for="input"
-                    ><i
-                        class="fa fa-paperclip pr-3"
-                        aria-hidden="true"
-                        
-                    ></i
+                    ><i class="fa fa-paperclip pr-3" aria-hidden="true"></i
                 ></label>
                 <input
                     id="input"
@@ -22,19 +18,67 @@
                     @change="onProfileChange"
                 />
             </div>
-            <!-- <img :src="urlFile" alt=""> -->
-            <!--   <input
-                type="text"
-                v-model="myText"
-                class="form-control mr-3"
-                placeholder="Type your message"
-            /> -->
-            <VueEmoji
+
+            <!-- <VueEmoji
                 ref="emoji"
                 @input="onInput"
                 height="65px"
                 class="emoji-div"
-            /><!--  :value="myText"-->
+            /> -->
+
+            <div class="wrapper">
+                <textarea
+                    class="regular-input"
+                    placeholder="Message..."
+                    v-model="input"
+                ></textarea>
+
+                <emoji-picker @emoji="append" :search="search">
+                    <div
+                        class="emoji-invoker"
+                        slot="emoji-invoker"
+                        slot-scope="{ events: { click: clickEvent } }"
+                        @click.stop="clickEvent"
+                    >
+                        <svg
+                            height="24"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"
+                            />
+                        </svg>
+                    </div>
+                    <div slot="emoji-picker" slot-scope="{ emojis, insert }">
+                        <div class="emoji-picker">
+                            <div class="emoji-picker__search">
+                                <input type="text" v-model="search" v-focus />
+                            </div>
+                            <div>
+                                <div
+                                    v-for="(emojiGroup, category) in emojis"
+                                    :key="category"
+                                >
+                                    <h5 style="color:white">{{ category }}</h5>
+                                    <div class="emojis">
+                                        <span
+                                            v-for="(emoji,
+                                            emojiName) in emojiGroup"
+                                            :key="emojiName"
+                                            @click="insert(emoji)"
+                                            :title="emojiName"
+                                            >{{ emoji }}</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </emoji-picker>
+            </div>
             <button
                 class="btn btn-primary d-flex align-items-center p-2"
                 style=" margin-left: 10px; "
@@ -49,13 +93,17 @@
 
 <script>
 import VueEmoji from "emoji-vue";
+import EventBus from "../../../event-bus";
+import EmojiPicker from "vue-emoji-picker";
 export default {
     data() {
         return {
             myText: "",
             file: null,
             name_img: null,
-            urlFile: null
+            urlFile: null,
+            input: "",
+            search: ""
         };
     },
     props: {
@@ -63,14 +111,18 @@ export default {
             type: Object
         }
     },
+    mounted() {
+        EventBus.$on("reset-form", this.resetForm);
+    },
     methods: {
-        onInput(event) {
-            //event.data contains the value of the textarea
-            //console.log(event.data);
-            this.myText = event.data;
+        append(emoji) {
+            this.input += emoji;
+        },
+        resetForm(data) {
+            document.getElementById("fooorm").reset();
         },
         clearTextarea() {
-            this.$refs.emoji.clear();
+            this.input = "";
         },
         send(e) {
             e.preventDefault();
@@ -89,8 +141,8 @@ export default {
                 this.$emit("send", [this.name_img, "video"]);
                 this.clearTextarea();
                 this.name_img = null;
-            } else if (this.myText != "" && this.name_img == null) {
-                this.$emit("send", [this.myText, "text"]);
+            } else if (this.input != "" && this.name_img == null) {
+                this.$emit("send", [this.input, "text"]);
                 this.clearTextarea();
                 this.name_img = null;
             }
@@ -99,16 +151,144 @@ export default {
             var file = e.target.files[0];
             this.name_img = file;
             this.urlFile = URL.createObjectURL(file);
-            this.$emit('addFile',{
-                url : this.urlFile,
-                type : this.name_img.type.substring(0, 5)
+            this.$emit("addFile", {
+                url: this.urlFile,
+                type: this.name_img.type.substring(0, 5)
             });
             this.$refs.prof.clear();
             this.clearTextarea();
         }
     },
     components: {
-        VueEmoji
+        VueEmoji,
+        EmojiPicker
+    },
+    directives: {
+        focus: {
+            inserted(el) {
+                el.focus();
+            }
+        }
     }
 };
 </script>
+
+<style scoped>
+.wrapper {
+    position: relative;
+}
+.regular-input {
+    padding: 0.25rem 1rem;
+    border-radius: 3px;
+    border: 1px solid white;
+    width: 37rem;
+    height: 2.4rem;
+    outline: none;
+    resize: none;
+    background: transparent;
+    font-size: 16px;
+    color: var(--iq-dark-body-text);
+    overflow: hidden;
+}
+
+@media (min-width: 375px) {
+    .regular-input {
+        max-width: 16rem;
+    }
+}
+@media (min-width: 360px) {
+    .regular-input {
+        max-width: 15rem;
+    }
+}
+@media (min-width: 768px) {
+    .regular-input {
+        max-width: 37rem;
+    }
+}
+@media (min-width: 1024px) {
+    .regular-input {
+        max-width: 34rem;
+    }
+}
+@media (min-width: 1200px) {
+    .regular-input {
+        max-width: 37rem;
+    }
+}
+
+.regular-input:focus {
+    /* --iq-primary-hover */
+    border: 1px solid var(--iq-primary-hover);
+}
+
+.emoji-invoker {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.emoji-invoker:hover {
+    transform: scale(1.1);
+}
+.emoji-invoker > svg {
+    fill: #b1c6d0;
+}
+
+.emoji-picker {
+    position: absolute;
+    top: -20rem;
+    right: 0.5rem;
+    font-family: Montserrat;
+    border: 1px solid #ccc;
+    width: 15rem;
+    height: 20rem;
+    overflow: scroll;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    background: var(--iq-dark-body-text);
+    box-shadow: 1px 1px 8px #c7dbe6;
+    z-index: 11;
+}
+.emoji-picker__search {
+    display: flex;
+}
+.emoji-picker__search > input {
+    flex: 1;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    outline: none;
+    background: transparent;
+}
+.emoji-picker h5 {
+    margin-bottom: 0;
+    color: #b1b1b1;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    cursor: default;
+}
+.emoji-picker .emojis {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.emoji-picker .emojis:after {
+    content: "";
+    flex: auto;
+}
+.emoji-picker .emojis span {
+    padding: 0.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.emoji-picker .emojis span:hover {
+    background: #ececec;
+    cursor: pointer;
+}
+</style>

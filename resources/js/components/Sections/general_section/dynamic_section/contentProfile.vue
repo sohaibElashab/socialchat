@@ -6,9 +6,14 @@
                     <div class="iq-card">
                         <div class="iq-card-body profile-page p-0">
                             <div class="profile-header">
-                                <div class="cover-container" style="height: 250px;">
+                                <div
+                                    class="cover-container"
+                                    style="height: 250px;"
+                                >
                                     <img
-                                        :src="`images/user/${user.coverimg.name}`"
+                                        :src="
+                                            `images/user/${user.coverimg.name}`
+                                        "
                                         alt="profile-bg"
                                         style="position: relative; width: 100%; height: 100%;"
                                         class="rounded img-fluid"
@@ -111,98 +116,111 @@
                             </div>
                         </div>
                     </div>
-                    <div class="iq-card">
+                    <div class="iq-card" v-if="message != 'current'">
                         <div class="iq-card-body p-0">
                             <div class="user-tabing">
                                 <div
                                     class="d-flex align-items-center p-0 m-0 flex-column flex-md-row"
                                 >
-                                    <div class="col-md-8 col-sm-12 p-4" v-if="message == 'friend'">
+                                    <div
+                                        class="col-md-8 col-sm-12 p-4"
+                                        v-if="message == 'friend'"
+                                    >
                                         <div>
-                                            <h4>You are friend with {{ user.name }}</h4>
+                                            <h4>
+                                                You are friend with
+                                                {{ user.name }}
+                                            </h4>
                                         </div>
                                         <div>
-                                            <span>You can now see what {{ user.name }} is sharing, Send him a message and have fun</span>
+                                            <span
+                                                >You can now see what
+                                                {{ user.name }} is sharing, Send
+                                                him a message and have fun</span
+                                            >
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-12 p-4" v-else>
                                         <div>
-                                            <h4>Do you know {{ user.name }}?</h4>
+                                            <h4>
+                                                Do you know {{ user.name }}?
+                                            </h4>
                                         </div>
                                         <div>
-                                            <span>To see what she shares with friends, send her a friend request.</span>
+                                            <span
+                                                >To see what she shares with
+                                                friends, send her a friend
+                                                request.</span
+                                            >
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-12 p-4">
-                                            <div
-                                                class="text-center pl-3"
-                                                v-if="message == 'cancel'"
+                                        <div
+                                            class="text-center pl-3"
+                                            v-if="message == 'cancel'"
+                                        >
+                                            <button
+                                                class="mr-3 btn btn-danger rounded"
+                                                @click="DeleteRequest"
                                             >
-                                                <button
-                                                    class="mr-3 btn btn-danger rounded"
-                                                    @click="DeleteRequest"
-                                                >
-                                                    <i
-                                                        class="ri-user-shared-line mr-1 text-white font-size-16"
-                                                    ></i>
-                                                    Cancel request
-                                                </button>
-                                            </div>
-                                            <div
-                                                class="text-center pl-3"
-                                                v-else-if="message == 'accept'"
+                                                <i
+                                                    class="ri-user-shared-line mr-1 text-white font-size-16"
+                                                ></i>
+                                                Cancel request
+                                            </button>
+                                        </div>
+                                        <div
+                                            class="text-center pl-3"
+                                            v-else-if="message == 'accept'"
+                                        >
+                                            <button
+                                                class="mr-3 btn btn-primary rounded"
+                                                @click="AcceptRequest"
                                             >
-                                                <button
-                                                    class="mr-3 btn btn-primary rounded"
-                                                    @click="AcceptRequest"
-                                                >
-                                                    <i
-                                                        class="ri-user-follow-line mr-1 text-white font-size-16"
-                                                    ></i>
-                                                    Accept request
-                                                </button>
-                                            </div>
-                                            <div
-                                                class="text-center pl-3"
-                                                v-else-if="message == ''"
+                                                <i
+                                                    class="ri-user-follow-line mr-1 text-white font-size-16"
+                                                ></i>
+                                                Accept request
+                                            </button>
+                                        </div>
+                                        <div
+                                            class="text-center pl-3"
+                                            v-else-if="message == ''"
+                                        >
+                                            <button
+                                                class="mr-3 btn btn-primary rounded"
+                                                @click="sendRequest"
                                             >
-                                                <button
-                                                    class="mr-3 btn btn-primary rounded"
-                                                    @click="sendRequest"
-                                                >
-                                                    <i
-                                                        class="ri-user-add-line"
-                                                    ></i
-                                                    >Add Friend
-                                                </button>
-                                            </div>
-                                            <div
-                                                class="text-center pl-3"
-                                                v-else-if="message == 'friend'"
+                                                <i class="ri-user-add-line"></i
+                                                >Add Friend
+                                            </button>
+                                        </div>
+                                        <div
+                                            class="text-center pl-3"
+                                            v-else-if="message == 'friend'"
+                                        >
+                                            <router-link
+                                                :to="{
+                                                    name: 'chat',
+                                                    query: { user: user.id }
+                                                }"
+                                                class="mr-3 btn btn-success rounded"
                                             >
-                                                <router-link
-                                                    :to="{
-                                                        name: 'chat',
-                                                        query: { user: user.id }
-                                                    }"
-                                                    class="mr-3 btn btn-success rounded"
-                                                >
-                                                    <i
-                                                        class="ri-mail-send-line text-white font-size-16"
-                                                    ></i>
-                                                    Message
-                                                </router-link>
-                                                <button
-                                                    class="mr-3 btn btn-danger rounded"
-                                                    @click="RemoveFriend"
-                                                >
-                                                    <i
-                                                        class="ri-user-unfollow-line mr-1 text-white font-size-16"
-                                                    ></i>
-                                                </button>
-                                            </div>
+                                                <i
+                                                    class="ri-mail-send-line text-white font-size-16"
+                                                ></i>
+                                                Message
+                                            </router-link>
+                                            <button
+                                                class="mr-3 btn btn-danger rounded"
+                                                @click="RemoveFriend"
+                                            >
+                                                <i
+                                                    class="ri-user-unfollow-line mr-1 text-white font-size-16"
+                                                ></i>
+                                            </button>
+                                        </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

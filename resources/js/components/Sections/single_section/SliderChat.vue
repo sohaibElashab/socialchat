@@ -1,7 +1,10 @@
 <template>
     <div class="chat-sidebar-channel scroller mt-4 pl-3">
         <h5 class="mt-3">Direct Message</h5>
-        <ul class="iq-chat-ui nav flex-column nav-pills" v-if="ChatLists">
+        <ul
+            class="iq-chat-ui nav flex-column nav-pills"
+            v-if="ChatLists != null && ChatLists.length > 0"
+        >
             <li v-for="(ChatList, index) in ChatLists" :key="index">
                 <!-- <a   href="#chatbox1"> -->
                 <router-link
@@ -52,6 +55,47 @@
                 <!-- </a> -->
             </li>
         </ul>
+        <h6 class="d-flex align-items-center pt-2" v-else>You have no chats</h6>
+        <!--  -->
+        <h5 class="mt-3">Friends</h5>
+        <ul
+            class="iq-chat-ui nav flex-column nav-pills"
+            v-if="friends != null && friends.length > 0"
+        >
+            <li v-for="friend in friends" :key="friend.id">
+                <router-link
+                    :to="{
+                        name: 'chat',
+                        query: { user: friend.id }
+                    }"
+                    tag="a"
+                >
+                    <div class="d-flex align-items-center">
+                        <div class="avatar mr-2">
+                            <img
+                                :src="`images/user/${friend.profileimg.name}`"
+                                alt="chatuserimage"
+                                class="avatar-50 "
+                            />
+                            <!--   <span class="avatar-status"
+                                ><i
+                                    class="ri-checkbox-blank-circle-fill text-success"
+                                ></i
+                            ></span> -->
+                        </div>
+                        <div class="chat-sidebar-name">
+                            <h6 class="mb-0">
+                                {{ friend.name }}
+                            </h6>
+                        </div>
+                    </div>
+                </router-link>
+                <!-- </a> -->
+            </li>
+        </ul>
+        <h6 class="d-flex align-items-center pt-2" v-else>
+            Start making new friends
+        </h6>
     </div>
 </template>
 
@@ -68,44 +112,7 @@ export default {
             id: "",
             OtherUser: null,
             ChatLists: null,
-            ChatListss: [
-                /*{
-                    id: 1,
-                    imgUserChat: "images/user/05.jpg",
-                    Statu: "Find new friends",
-                    NameUserChat: "Team Discussions",
-                    txtChat: "Lorem Ipsum is",
-                    numberMsg: "20",
-                    TimeSend: "14:02"
-                },
-                {
-                    id: 2,
-                    imgUserChat: "images/user/05.jpg",
-                    Statu: "Find new friends",
-                    NameUserChat: "Team Discussions",
-                    txtChat: "Lorem Ipsum is",
-                    numberMsg: "20",
-                    TimeSend: "14:02"
-                },
-                {
-                    id: 3,
-                    imgUserChat: "images/user/05.jpg",
-                    Statu: "Find new friends",
-                    NameUserChat: "Team Discussions",
-                    txtChat: "Lorem Ipsum is",
-                    numberMsg: "20",
-                    TimeSend: "14:02"
-                }  ,
-                {
-                    id: 4,
-                    imgUserChat: "images/user/05.jpg",
-                    Statu: "Find new friends",
-                    NameUserChat: "Team Discussions",
-                    txtChat: "Lorem Ipsum is",
-                    numberMsg: "20",
-                    TimeSend: "14:02"
-                } */
-            ]
+            friends: null
         };
     },
     mounted() {
@@ -206,8 +213,19 @@ export default {
         });
         EventBus.$on("last-text", this.LastText);
         EventBus.$on("delete-chat", this.DeleteChat);
+        this.loadFriends();
     },
     methods: {
+        loadFriends() {
+            axios
+                .post("/LoadFriends", {
+                    id: null
+                })
+                .then(res => {
+                    //console.log(res.data);
+                    this.friends = res.data;
+                });
+        },
         DeleteChat(data) {
             var item = this.findUser(data);
             var index = this.ChatLists.indexOf(item);

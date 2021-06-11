@@ -34,20 +34,20 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 311:
-/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_627__) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __nested_webpack_require_648__) => {
 
 // ESM COMPAT FLAG
-__nested_webpack_require_627__.r(__webpack_exports__);
+__nested_webpack_require_648__.r(__webpack_exports__);
 
 // EXPORTS
-__nested_webpack_require_627__.d(__webpack_exports__, {
+__nested_webpack_require_648__.d(__webpack_exports__, {
   "default": () => /* binding */ module_Splide
 });
 
 // NAMESPACE OBJECT: ./src/js/constants/states.js
 var states_namespaceObject = {};
-__nested_webpack_require_627__.r(states_namespaceObject);
-__nested_webpack_require_627__.d(states_namespaceObject, {
+__nested_webpack_require_648__.r(states_namespaceObject);
+__nested_webpack_require_648__.d(states_namespaceObject, {
   "CREATED": () => CREATED,
   "DESTROYED": () => DESTROYED,
   "IDLE": () => IDLE,
@@ -5866,7 +5866,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_139193__(moduleId) {
+/******/ 	function __nested_webpack_require_142871__(moduleId) {
 /******/ 		// Check if module is in cache
 /******/ 		if(__webpack_module_cache__[moduleId]) {
 /******/ 			return __webpack_module_cache__[moduleId].exports;
@@ -5879,7 +5879,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_139193__);
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_142871__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -5889,9 +5889,9 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
-/******/ 		__nested_webpack_require_139193__.d = (exports, definition) => {
+/******/ 		__nested_webpack_require_142871__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
-/******/ 				if(__nested_webpack_require_139193__.o(definition, key) && !__nested_webpack_require_139193__.o(exports, key)) {
+/******/ 				if(__nested_webpack_require_142871__.o(definition, key) && !__nested_webpack_require_142871__.o(exports, key)) {
 /******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 				}
 /******/ 			}
@@ -5900,13 +5900,13 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__nested_webpack_require_139193__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__nested_webpack_require_142871__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
-/******/ 		__nested_webpack_require_139193__.r = (exports) => {
+/******/ 		__nested_webpack_require_142871__.r = (exports) => {
 /******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 			}
@@ -5918,7 +5918,7 @@ var module_Splide = /*#__PURE__*/function (_Core) {
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __nested_webpack_require_139193__(311);
+/******/ 	return __nested_webpack_require_142871__(311);
 /******/ })()
 ;
 });
@@ -9691,6 +9691,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -9703,7 +9750,9 @@ __webpack_require__.r(__webpack_exports__);
       id: "",
       CurrentUser: null,
       OtherUser: null,
-      loaded: false
+      loaded: false,
+      value: "",
+      results: []
     };
   },
   mounted: function mounted() {
@@ -9717,16 +9766,39 @@ __webpack_require__.r(__webpack_exports__);
     this.loadOtherFriend();
   },
   methods: {
-    loadOtherFriend: function loadOtherFriend() {
+    search: function search() {
       var _this2 = this;
+
+      if (this.value === "") {
+        this.results = [];
+      } else {
+        axios.post("/ChatSearch", {
+          value: this.value
+        }).then(function (response) {
+          console.log(response.data);
+          _this2.results = response.data;
+        });
+      }
+    },
+    loadOtherFriend: function loadOtherFriend() {
+      var _this3 = this;
 
       if (this.$route.query.user) {
         axios.post("/UserProfile", {
           id: this.$route.query.user
         }).then(function (res) {
-          _this2.OtherUser = res.data;
+          _this3.OtherUser = res.data;
         });
       }
+    },
+    space: function space(e) {
+      if (this.value === "") {
+        e.preventDefault();
+      }
+    },
+    vide: function vide() {
+      this.value = "";
+      this.results = [];
     }
   },
   watch: {
@@ -10064,6 +10136,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _single_section_ProfileImages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../single_section/ProfileImages */ "./resources/js/components/Sections/single_section/ProfileImages.vue");
 /* harmony import */ var _single_section_CreatePost__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../single_section/CreatePost */ "./resources/js/components/Sections/single_section/CreatePost.vue");
 /* harmony import */ var _single_section_Post__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../single_section/Post */ "./resources/js/components/Sections/single_section/Post.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13560,6 +13650,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var emoji_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! emoji-vue */ "./node_modules/emoji-vue/index.js");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../event-bus */ "./resources/js/event-bus.js");
+/* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-emoji-picker */ "./node_modules/vue-emoji-picker/dist-module/main.js");
+/* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_emoji_picker__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13610,13 +13747,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       myText: "",
       file: null,
       name_img: null,
-      urlFile: null
+      urlFile: null,
+      input: "",
+      search: ""
     };
   },
   props: {
@@ -13624,14 +13765,18 @@ __webpack_require__.r(__webpack_exports__);
       type: Object
     }
   },
+  mounted: function mounted() {
+    _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$on("reset-form", this.resetForm);
+  },
   methods: {
-    onInput: function onInput(event) {
-      //event.data contains the value of the textarea
-      //console.log(event.data);
-      this.myText = event.data;
+    append: function append(emoji) {
+      this.input += emoji;
+    },
+    resetForm: function resetForm(data) {
+      document.getElementById("fooorm").reset();
     },
     clearTextarea: function clearTextarea() {
-      this.$refs.emoji.clear();
+      this.input = "";
     },
     send: function send(e) {
       e.preventDefault();
@@ -13645,8 +13790,8 @@ __webpack_require__.r(__webpack_exports__);
         this.$emit("send", [this.name_img, "video"]);
         this.clearTextarea();
         this.name_img = null;
-      } else if (this.myText != "" && this.name_img == null) {
-        this.$emit("send", [this.myText, "text"]);
+      } else if (this.input != "" && this.name_img == null) {
+        this.$emit("send", [this.input, "text"]);
         this.clearTextarea();
         this.name_img = null;
       }
@@ -13655,7 +13800,7 @@ __webpack_require__.r(__webpack_exports__);
       var file = e.target.files[0];
       this.name_img = file;
       this.urlFile = URL.createObjectURL(file);
-      this.$emit('addFile', {
+      this.$emit("addFile", {
         url: this.urlFile,
         type: this.name_img.type.substring(0, 5)
       });
@@ -13664,7 +13809,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
-    VueEmoji: emoji_vue__WEBPACK_IMPORTED_MODULE_0__.default
+    VueEmoji: emoji_vue__WEBPACK_IMPORTED_MODULE_0__.default,
+    EmojiPicker: (vue_emoji_picker__WEBPACK_IMPORTED_MODULE_2___default())
+  },
+  directives: {
+    focus: {
+      inserted: function inserted(el) {
+        el.focus();
+      }
+    }
   }
 });
 
@@ -13835,6 +13988,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _ChatForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChatForm */ "./resources/js/components/Sections/single_section/ChatForm.vue");
 /* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../event-bus */ "./resources/js/event-bus.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -14180,6 +14345,7 @@ __webpack_require__.r(__webpack_exports__);
     removeFile: function removeFile() {
       this.isFile = null;
       this.typeFile = null;
+      _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$emit("reset-form", true);
     }
   },
   watch: {
@@ -16711,6 +16877,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -16723,44 +16933,7 @@ __webpack_require__.r(__webpack_exports__);
       id: "",
       OtherUser: null,
       ChatLists: null,
-      ChatListss: [
-        /*{
-            id: 1,
-            imgUserChat: "images/user/05.jpg",
-            Statu: "Find new friends",
-            NameUserChat: "Team Discussions",
-            txtChat: "Lorem Ipsum is",
-            numberMsg: "20",
-            TimeSend: "14:02"
-        },
-        {
-            id: 2,
-            imgUserChat: "images/user/05.jpg",
-            Statu: "Find new friends",
-            NameUserChat: "Team Discussions",
-            txtChat: "Lorem Ipsum is",
-            numberMsg: "20",
-            TimeSend: "14:02"
-        },
-        {
-            id: 3,
-            imgUserChat: "images/user/05.jpg",
-            Statu: "Find new friends",
-            NameUserChat: "Team Discussions",
-            txtChat: "Lorem Ipsum is",
-            numberMsg: "20",
-            TimeSend: "14:02"
-        }  ,
-        {
-            id: 4,
-            imgUserChat: "images/user/05.jpg",
-            Statu: "Find new friends",
-            NameUserChat: "Team Discussions",
-            txtChat: "Lorem Ipsum is",
-            numberMsg: "20",
-            TimeSend: "14:02"
-        } */
-      ]
+      friends: null
     };
   },
   mounted: function mounted() {
@@ -16862,36 +17035,47 @@ __webpack_require__.r(__webpack_exports__);
     });
     _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$on("last-text", this.LastText);
     _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$on("delete-chat", this.DeleteChat);
+    this.loadFriends();
   },
   methods: {
+    loadFriends: function loadFriends() {
+      var _this2 = this;
+
+      axios.post("/LoadFriends", {
+        id: null
+      }).then(function (res) {
+        //console.log(res.data);
+        _this2.friends = res.data;
+      });
+    },
     DeleteChat: function DeleteChat(data) {
       var item = this.findUser(data);
       var index = this.ChatLists.indexOf(item);
       this.ChatLists.splice(index, 1);
     },
     LastText: function LastText(data) {
-      var _this2 = this;
+      var _this3 = this;
 
       console.log(data);
       this.ChatLists.forEach(function (u) {
-        if (u.id == _this2.$route.query.user) {
-          var index = _this2.ChatLists.indexOf(u);
+        if (u.id == _this3.$route.query.user) {
+          var index = _this3.ChatLists.indexOf(u);
 
-          _this2.ChatLists[index].TimeSend = data.TimeSend;
-          _this2.ChatLists[index].txtChat = data.txtChat;
+          _this3.ChatLists[index].TimeSend = data.TimeSend;
+          _this3.ChatLists[index].txtChat = data.txtChat;
         }
       });
     },
     loadList: function loadList() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get("/ChatList").then(function (res) {
         //console.log("list");
         //console.log(res.data);
-        _this3.ChatLists = res.data;
+        _this4.ChatLists = res.data;
 
-        if (_this3.findUser(_this3.$route.query.user) == null && _this3.$route.query.user) {
-          _this3.AddUserToList();
+        if (_this4.findUser(_this4.$route.query.user) == null && _this4.$route.query.user) {
+          _this4.AddUserToList();
         }
       }); //ChatLists
     },
@@ -16906,41 +17090,41 @@ __webpack_require__.r(__webpack_exports__);
       return p;
     },
     AddUserToList: function AddUserToList() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.post("/UserProfile", {
         id: this.$route.query.user
       }).then(function (res) {
         //console.log("unshift");
-        _this4.OtherUser = res.data;
+        _this5.OtherUser = res.data;
         var time = new Date();
         var person = {
-          id: _this4.$route.query.user,
-          imgUserChat: "images/user/" + _this4.OtherUser.profileimg.name,
-          NameUserChat: _this4.OtherUser.name,
+          id: _this5.$route.query.user,
+          imgUserChat: "images/user/" + _this5.OtherUser.profileimg.name,
+          NameUserChat: _this5.OtherUser.name,
           txtChat: "",
           numberMsg: 0,
           TimeSend: time.getHours() + ":" + time.getMinutes() // =>  30 // => 9
 
         };
 
-        _this4.ChatLists.unshift(person);
+        _this5.ChatLists.unshift(person);
       });
     }
   },
   watch: {
     "$route.query.user": function $routeQueryUser() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.findUser(this.$route.query.user) == null && this.$route.query.user) {
         this.AddUserToList(); //console.log("changer id");
       }
 
       this.ChatLists.forEach(function (u) {
-        if (u.id == _this5.$route.query.user) {
-          var index = _this5.ChatLists.indexOf(u);
+        if (u.id == _this6.$route.query.user) {
+          var index = _this6.ChatLists.indexOf(u);
 
-          _this5.ChatLists[index].numberMsg = 0;
+          _this6.ChatLists[index].numberMsg = 0;
           console.log("change to 0");
         }
       });
@@ -21841,7 +22025,7 @@ var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_img_IconsetSmiles_png__WEBPACK_IMPORTED_MODULE_2__.default);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_1___default()(_img_IconsetSmiles_1x_png__WEBPACK_IMPORTED_MODULE_3__.default);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "span.emoji {\n    display: -moz-inline-box;\n    display: inline-block;\n    vertical-align: baseline;\n    *vertical-align: auto;\n    *zoom: 1;\n    *display: inline;\n    width: 1em;\n    height: 1em;\n    background-size: 1em;\n    background-repeat: no-repeat;\n    text-indent: -9999px;\n}\n\nspan.emoji-sizer {\n    line-height: 0.81em;\n    font-size: 1em;\n    margin: -2px 0;\n}\n\nspan.emoji-outer {\n    display: -moz-inline-box;\n    display: inline-block;\n    *display: inline;\n    height: 1em;\n    width: 1em;\n}\n\nspan.emoji-inner {\n    display: -moz-inline-box;\n    display: inline-block;\n    text-indent: -9999px;\n    width: 100%;\n    height: 100%;\n    vertical-align: baseline;\n    *vertical-align: auto;\n    *zoom: 1;\n}\n\nimg.emoji {\n    width: 1em;\n    height: 1em;\n}\n\n.emoji-wysiwyg-editor:empty:before {\n    content: attr(placeholder);\n    color: #9aa2ab;\n}\n\n.emoji-picker-container {\n    position: relative;\n}\n\n.emoji-picker-icon {\n    position: absolute;\n    right: 10px;\n    top: 5px;\n    font-size: 20px;\n    opacity: 0.7;\n    z-index: 100;\n    transition: none;\n    color: black;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n.emoji-picker-icon.parent-has-scroll {\n    right: 28px;\n}\n\n.emoji-picker-icon:hover {\n    opacity: 1;\n}\n\n/* Emoji area */\n\n.emoji-wysiwyg-editor:empty:before {\n    content: attr(placeholder);\n    color: #9aa2ab;\n}\n\n.emoji-wysiwyg-editor:active:before,\n.emoji-wysiwyg-editor:focus:before {\n    content: none;\n}\n\n.emoji-wysiwyg-editor {\n    padding: 6px;\n    padding-right: 35px;\n    margin-bottom: 0px;\n    min-height: 35px; /* 35 */\n    height: 30px;\n    max-height: 284px;\n    overflow: auto;\n    line-height: 17px;\n    border: 1px solid #d2dbe3;\n    border-radius: 2px;\n    box-shadow: none;\n    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;\n    -webkit-user-select: text;\n    word-wrap: break-word;\n}\n\n.emoji-wysiwyg-editor.parent-has-scroll {\n     padding-right: 40px;\n }\n\n.emoji-wysiwyg-editor.single-line-editor {\n    min-height: 35px;\n    height: inherit;\n}\n\n.emoji-wysiwyg-editor img {\n    width: 20px;\n    height: 20px;\n    vertical-align: middle;\n    margin: -3px 0 0 0;\n}\n\n.emoji-menu {\n    position: absolute;\n    z-index: 999;\n    width: 225px;\n    overflow: hidden;\n    border: 1px #dfdfdf solid;\n    border-radius: 3px;\n    overflow: hidden;\n    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);\n}\n\n.emoji-items-wrap1 {\n    background: #ffffff;\n    padding: 5px 2px 5px 5px;\n}\n\n.emoji-items-wrap1 .emoji-menu-tabs {\n    width: 100%;\n    margin-bottom: 8px;\n    margin-top: 3px;\n}\n\n.emoji-items-wrap1 .emoji-menu-tabs td {\n    text-align: center;\n    color: white;\n    line-height: 0;\n}\n\n.emoji-menu-tabs .emoji-menu-tab {\n    display: inline-block;\n    width: 24px;\n    height: 29px;\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\n    background-size: 42px 350px;\n    border: 0;\n}\n\n.is_1x .emoji-menu-tabs .emoji-menu-tab {\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n}\n\n.emoji-menu-tabs .icon-recent { background-position: -9px -306px; }\n\n.emoji-menu-tabs .icon-recent-selected { background-position: -9px -277px; }\n\n.emoji-menu-tabs .icon-smile { background-position: -9px -34px; }\n\n.emoji-menu-tabs .icon-smile-selected { background-position: -9px -5px; }\n\n.emoji-menu-tabs .icon-flower { background-position: -9px -145px; }\n\n.emoji-menu-tabs .icon-flower-selected { background-position: -9px -118px; }\n\n.emoji-menu-tabs .icon-bell { background-position: -9px -89px; }\n\n.emoji-menu-tabs .icon-bell-selected { background-position: -9px -61px; }\n\n.emoji-menu-tabs .icon-car { background-position: -9px -196px; }\n\n.emoji-menu-tabs .icon-car-selected { background-position: -9px -170px; }\n\n.emoji-menu-tabs .icon-grid { background-position: -9px -248px; }\n\n.emoji-menu-tabs .icon-grid-selected { background-position: -9px -222px; }\n\n.emoji-menu-tabs .icon-smile,\n.emoji-menu-tabs .icon-flower,\n.emoji-menu-tabs .icon-bell,\n.emoji-menu-tabs .icon-car,\n.emoji-menu-tabs .icon-grid {\n    opacity: 0.7;\n}\n\n.emoji-menu-tabs .icon-smile:hover,\n.emoji-menu-tabs .icon-flower:hover,\n.emoji-menu-tabs .icon-bell:hover,\n.emoji-menu-tabs .icon-car:hover,\n.emoji-menu-tabs .icon-grid:hover {\n    opacity: 1;\n}\n\n.emoji-menu .emoji-items-wrap {\n    position: relative;\n    height: 174px;\n}\n\n.emoji-menu .emoji-items {\n    padding-right: 8px;\n    outline: 0 !important;\n}\n\n.emoji-menu img {\n    width: 20px;\n    height: 20px;\n    vertical-align: middle;\n    border: 0 none;\n}\n\n.emoji-menu .emoji-items a {\n    margin: -1px 0 0 -1px;\n    padding: 5px;\n    display: block;\n    float: left;\n    border-radius: 2px;\n    border: 0;\n}\n\n.emoji-menu .emoji-items a:hover {\n    background-color: #edf2f5;\n}\n\n.emoji-menu:after {\n    content: ' ';\n    display: block;\n    clear: left;\n}\n\n.emoji-menu a .label {\n    display: none;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "span.emoji {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    vertical-align: baseline;\r\n    *vertical-align: auto;\r\n    *zoom: 1;\r\n    *display: inline;\r\n    width: 1em;\r\n    height: 1em;\r\n    background-size: 1em;\r\n    background-repeat: no-repeat;\r\n    text-indent: -9999px;\r\n}\r\n\r\nspan.emoji-sizer {\r\n    line-height: 0.81em;\r\n    font-size: 1em;\r\n    margin: -2px 0;\r\n}\r\n\r\nspan.emoji-outer {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    *display: inline;\r\n    height: 1em;\r\n    width: 1em;\r\n}\r\n\r\nspan.emoji-inner {\r\n    display: -moz-inline-box;\r\n    display: inline-block;\r\n    text-indent: -9999px;\r\n    width: 100%;\r\n    height: 100%;\r\n    vertical-align: baseline;\r\n    *vertical-align: auto;\r\n    *zoom: 1;\r\n}\r\n\r\nimg.emoji {\r\n    width: 1em;\r\n    height: 1em;\r\n}\r\n\r\n.emoji-wysiwyg-editor:empty:before {\r\n    content: attr(placeholder);\r\n    color: #9aa2ab;\r\n}\r\n\r\n.emoji-picker-container {\r\n    position: relative;\r\n}\r\n\r\n.emoji-picker-icon {\r\n    position: absolute;\r\n    right: 10px;\r\n    top: 5px;\r\n    font-size: 20px;\r\n    opacity: 0.7;\r\n    z-index: 100;\r\n    transition: none;\r\n    color: black;\r\n    -moz-user-select: none;\r\n    -webkit-user-select: none;\r\n    -o-user-select: none;\r\n    -ms-user-select: none;\r\n        user-select: none;\r\n}\r\n\r\n.emoji-picker-icon.parent-has-scroll {\r\n    right: 28px;\r\n}\r\n\r\n.emoji-picker-icon:hover {\r\n    opacity: 1;\r\n}\r\n\r\n/* Emoji area */\r\n\r\n.emoji-wysiwyg-editor:empty:before {\r\n    content: attr(placeholder);\r\n    color: #9aa2ab;\r\n}\r\n\r\n.emoji-wysiwyg-editor:active:before,\r\n.emoji-wysiwyg-editor:focus:before {\r\n    content: none;\r\n}\r\n\r\n.emoji-wysiwyg-editor {\r\n    padding: 6px;\r\n    padding-right: 35px;\r\n    margin-bottom: 0px;\r\n    min-height: 35px; /* 35 */\r\n    height: 30px;\r\n    max-height: 284px;\r\n    overflow: auto;\r\n    line-height: 17px;\r\n    border: 1px solid #d2dbe3;\r\n    border-radius: 2px;\r\n    box-shadow: none;\r\n    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;\r\n    -webkit-user-select: text;\r\n    word-wrap: break-word;\r\n}\r\n\r\n.emoji-wysiwyg-editor.parent-has-scroll {\r\n     padding-right: 40px;\r\n }\r\n\r\n.emoji-wysiwyg-editor.single-line-editor {\r\n    min-height: 35px;\r\n    height: inherit;\r\n}\r\n\r\n.emoji-wysiwyg-editor img {\r\n    width: 20px;\r\n    height: 20px;\r\n    vertical-align: middle;\r\n    margin: -3px 0 0 0;\r\n}\r\n\r\n.emoji-menu {\r\n    position: absolute;\r\n    z-index: 999;\r\n    width: 225px;\r\n    overflow: hidden;\r\n    border: 1px #dfdfdf solid;\r\n    border-radius: 3px;\r\n    overflow: hidden;\r\n    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.emoji-items-wrap1 {\r\n    background: #ffffff;\r\n    padding: 5px 2px 5px 5px;\r\n}\r\n\r\n.emoji-items-wrap1 .emoji-menu-tabs {\r\n    width: 100%;\r\n    margin-bottom: 8px;\r\n    margin-top: 3px;\r\n}\r\n\r\n.emoji-items-wrap1 .emoji-menu-tabs td {\r\n    text-align: center;\r\n    color: white;\r\n    line-height: 0;\r\n}\r\n\r\n.emoji-menu-tabs .emoji-menu-tab {\r\n    display: inline-block;\r\n    width: 24px;\r\n    height: 29px;\r\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\r\n    background-size: 42px 350px;\r\n    border: 0;\r\n}\r\n\r\n.is_1x .emoji-menu-tabs .emoji-menu-tab {\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\r\n}\r\n\r\n.emoji-menu-tabs .icon-recent { background-position: -9px -306px; }\r\n\r\n.emoji-menu-tabs .icon-recent-selected { background-position: -9px -277px; }\r\n\r\n.emoji-menu-tabs .icon-smile { background-position: -9px -34px; }\r\n\r\n.emoji-menu-tabs .icon-smile-selected { background-position: -9px -5px; }\r\n\r\n.emoji-menu-tabs .icon-flower { background-position: -9px -145px; }\r\n\r\n.emoji-menu-tabs .icon-flower-selected { background-position: -9px -118px; }\r\n\r\n.emoji-menu-tabs .icon-bell { background-position: -9px -89px; }\r\n\r\n.emoji-menu-tabs .icon-bell-selected { background-position: -9px -61px; }\r\n\r\n.emoji-menu-tabs .icon-car { background-position: -9px -196px; }\r\n\r\n.emoji-menu-tabs .icon-car-selected { background-position: -9px -170px; }\r\n\r\n.emoji-menu-tabs .icon-grid { background-position: -9px -248px; }\r\n\r\n.emoji-menu-tabs .icon-grid-selected { background-position: -9px -222px; }\r\n\r\n.emoji-menu-tabs .icon-smile,\r\n.emoji-menu-tabs .icon-flower,\r\n.emoji-menu-tabs .icon-bell,\r\n.emoji-menu-tabs .icon-car,\r\n.emoji-menu-tabs .icon-grid {\r\n    opacity: 0.7;\r\n}\r\n\r\n.emoji-menu-tabs .icon-smile:hover,\r\n.emoji-menu-tabs .icon-flower:hover,\r\n.emoji-menu-tabs .icon-bell:hover,\r\n.emoji-menu-tabs .icon-car:hover,\r\n.emoji-menu-tabs .icon-grid:hover {\r\n    opacity: 1;\r\n}\r\n\r\n.emoji-menu .emoji-items-wrap {\r\n    position: relative;\r\n    height: 174px;\r\n}\r\n\r\n.emoji-menu .emoji-items {\r\n    padding-right: 8px;\r\n    outline: 0 !important;\r\n}\r\n\r\n.emoji-menu img {\r\n    width: 20px;\r\n    height: 20px;\r\n    vertical-align: middle;\r\n    border: 0 none;\r\n}\r\n\r\n.emoji-menu .emoji-items a {\r\n    margin: -1px 0 0 -1px;\r\n    padding: 5px;\r\n    display: block;\r\n    float: left;\r\n    border-radius: 2px;\r\n    border: 0;\r\n}\r\n\r\n.emoji-menu .emoji-items a:hover {\r\n    background-color: #edf2f5;\r\n}\r\n\r\n.emoji-menu:after {\r\n    content: ' ';\r\n    display: block;\r\n    clear: left;\r\n}\r\n\r\n.emoji-menu a .label {\r\n    display: none;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21865,7 +22049,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/** initial setup **/\n.nano {\n  position : relative;\n  width    : 100%;\n  height   : 100%;\n  overflow : hidden;\n}\n.nano > .nano-content {\n  position      : absolute;\n  overflow      : scroll;\n  overflow-x    : hidden;\n  top           : 0;\n  right         : 0;\n  bottom        : 0;\n  left          : 0;\n}\n.nano > .nano-content:focus {\n  outline: thin dotted;\n}\n.nano > .nano-content::-webkit-scrollbar {\n  display: none;\n}\n.has-scrollbar > .nano-content::-webkit-scrollbar {\n  display: block;\n}\n.nano > .nano-pane {\n  background : rgba(0,0,0,.25);\n  position   : absolute;\n  width      : 10px;\n  right      : 0;\n  top        : 0;\n  bottom     : 0;\n  visibility : hidden\\9; /* Target only IE7 and IE8 with this hack */\n  opacity    : .01;\n  transition            : .2s;\n  border-radius         : 5px;\n}\n.nano > .nano-pane > .nano-slider {\n  background: #444;\n  background: rgba(0,0,0,.5);\n  position              : relative;\n  margin                : 0 1px;\n  border-radius         : 3px;\n}\n.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {\n  visibility : visible\\9; /* Target only IE7 and IE8 with this hack */\n  opacity    : 0.99;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/** initial setup **/\r\n.nano {\r\n  position : relative;\r\n  width    : 100%;\r\n  height   : 100%;\r\n  overflow : hidden;\r\n}\r\n.nano > .nano-content {\r\n  position      : absolute;\r\n  overflow      : scroll;\r\n  overflow-x    : hidden;\r\n  top           : 0;\r\n  right         : 0;\r\n  bottom        : 0;\r\n  left          : 0;\r\n}\r\n.nano > .nano-content:focus {\r\n  outline: thin dotted;\r\n}\r\n.nano > .nano-content::-webkit-scrollbar {\r\n  display: none;\r\n}\r\n.has-scrollbar > .nano-content::-webkit-scrollbar {\r\n  display: block;\r\n}\r\n.nano > .nano-pane {\r\n  background : rgba(0,0,0,.25);\r\n  position   : absolute;\r\n  width      : 10px;\r\n  right      : 0;\r\n  top        : 0;\r\n  bottom     : 0;\r\n  visibility : hidden\\9; /* Target only IE7 and IE8 with this hack */\r\n  opacity    : .01;\r\n  transition            : .2s;\r\n  border-radius         : 5px;\r\n}\r\n.nano > .nano-pane > .nano-slider {\r\n  background: #444;\r\n  background: rgba(0,0,0,.5);\r\n  position              : relative;\r\n  margin                : 0 1px;\r\n  border-radius         : 3px;\r\n}\r\n.nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {\r\n  visibility : visible\\9; /* Target only IE7 and IE8 with this hack */\r\n  opacity    : 0.99;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21920,6 +22104,54 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.img-edit[data-v-5281f7ec] {\r\n    
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n#ser[data-v-204f4f50] {\r\n    position: absolute;\r\n    width: 100%;\r\n    background-color: var(--iq-dark-box);\r\n    color: var(--iq-dark-title-text);\n}\n#pp[data-v-204f4f50] {\r\n    padding: 10px;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper[data-v-70f134e7] {\r\n    position: relative;\n}\n.regular-input[data-v-70f134e7] {\r\n    padding: 0.25rem 1rem;\r\n    border-radius: 3px;\r\n    border: 1px solid white;\r\n    width: 37rem;\r\n    height: 2.4rem;\r\n    outline: none;\r\n    resize: none;\r\n    background: transparent;\r\n    font-size: 16px;\r\n    color: var(--iq-dark-body-text);\r\n    overflow: hidden;\n}\n@media (min-width: 375px) {\n.regular-input[data-v-70f134e7] {\r\n        max-width: 16rem;\n}\n}\n@media (min-width: 360px) {\n.regular-input[data-v-70f134e7] {\r\n        max-width: 15rem;\n}\n}\n@media (min-width: 768px) {\n.regular-input[data-v-70f134e7] {\r\n        max-width: 37rem;\n}\n}\n@media (min-width: 1024px) {\n.regular-input[data-v-70f134e7] {\r\n        max-width: 34rem;\n}\n}\n@media (min-width: 1200px) {\n.regular-input[data-v-70f134e7] {\r\n        max-width: 37rem;\n}\n}\n.regular-input[data-v-70f134e7]:focus {\r\n    /* --iq-primary-hover */\r\n    border: 1px solid var(--iq-primary-hover);\n}\n.emoji-invoker[data-v-70f134e7] {\r\n    position: absolute;\r\n    top: 0.5rem;\r\n    right: 0.5rem;\r\n    width: 1.5rem;\r\n    height: 1.5rem;\r\n    border-radius: 50%;\r\n    cursor: pointer;\r\n    transition: all 0.2s;\n}\n.emoji-invoker[data-v-70f134e7]:hover {\r\n    transform: scale(1.1);\n}\n.emoji-invoker > svg[data-v-70f134e7] {\r\n    fill: #b1c6d0;\n}\n.emoji-picker[data-v-70f134e7] {\r\n    position: absolute;\r\n    top: -20rem;\r\n    right: 0.5rem;\r\n    font-family: Montserrat;\r\n    border: 1px solid #ccc;\r\n    width: 15rem;\r\n    height: 20rem;\r\n    overflow: scroll;\r\n    padding: 1rem;\r\n    box-sizing: border-box;\r\n    border-radius: 0.5rem;\r\n    background: var(--iq-dark-body-text);\r\n    box-shadow: 1px 1px 8px #c7dbe6;\r\n    z-index: 11;\n}\n.emoji-picker__search[data-v-70f134e7] {\r\n    display: flex;\n}\n.emoji-picker__search > input[data-v-70f134e7] {\r\n    flex: 1;\r\n    border-radius: 5px;\r\n    border: 1px solid #ccc;\r\n    padding: 0.5rem 1rem;\r\n    outline: none;\r\n    background: transparent;\n}\n.emoji-picker h5[data-v-70f134e7] {\r\n    margin-bottom: 0;\r\n    color: #b1b1b1;\r\n    text-transform: uppercase;\r\n    font-size: 0.8rem;\r\n    cursor: default;\n}\n.emoji-picker .emojis[data-v-70f134e7] {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: space-between;\n}\n.emoji-picker .emojis[data-v-70f134e7]:after {\r\n    content: \"\";\r\n    flex: auto;\n}\n.emoji-picker .emojis span[data-v-70f134e7] {\r\n    padding: 0.2rem;\r\n    cursor: pointer;\r\n    border-radius: 5px;\n}\n.emoji-picker .emojis span[data-v-70f134e7]:hover {\r\n    background: #ececec;\r\n    cursor: pointer;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css&":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css& ***!
@@ -21961,7 +22193,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.file[data-v-be92a7a4]{\r\n    position: absolute;\r\n    z-index: 1;\r\n    width: 100%;\r\n    height: 70%;\r\n    background: var(--iq-light-info);\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\n}\n.file > .contentFile[data-v-be92a7a4] {\r\n    position: relative;\r\n    width: 90%;\r\n    height: 90%;\n}\n.delete-btn[data-v-be92a7a4] {     \r\n    position: absolute;\r\n    top: 8px;\r\n    right: 5px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.file:hover .delete-btn[data-v-be92a7a4] { \r\n   opacity: 1; \r\n   transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-be92a7a4] { \r\n   color: var(--iq-primary);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.file[data-v-be92a7a4] {\r\n    position: absolute;\r\n    z-index: 1;\r\n    width: 100%;\r\n    height: 70%;\r\n    background: var(--iq-light-info);\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\n}\n.file > .contentFile[data-v-be92a7a4] {\r\n    position: relative;\r\n    width: 90%;\r\n    height: 90%;\n}\n.delete-btn[data-v-be92a7a4] {\r\n    position: absolute;\r\n    top: 8px;\r\n    right: 5px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.file:hover .delete-btn[data-v-be92a7a4] {\r\n    opacity: 1;\r\n    transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-be92a7a4] {\r\n    color: var(--iq-primary);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -60514,7 +60746,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	var installedModules = {};
 /******/
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_669__(moduleId) {
+/******/ 	function __nested_webpack_require_692__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId]) {
@@ -60528,7 +60760,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_669__);
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_692__);
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
@@ -60539,20 +60771,20 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__nested_webpack_require_669__.m = modules;
+/******/ 	__nested_webpack_require_692__.m = modules;
 /******/
 /******/ 	// expose the module cache
-/******/ 	__nested_webpack_require_669__.c = installedModules;
+/******/ 	__nested_webpack_require_692__.c = installedModules;
 /******/
 /******/ 	// define getter function for harmony exports
-/******/ 	__nested_webpack_require_669__.d = function(exports, name, getter) {
-/******/ 		if(!__nested_webpack_require_669__.o(exports, name)) {
+/******/ 	__nested_webpack_require_692__.d = function(exports, name, getter) {
+/******/ 		if(!__nested_webpack_require_692__.o(exports, name)) {
 /******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
-/******/ 	__nested_webpack_require_669__.r = function(exports) {
+/******/ 	__nested_webpack_require_692__.r = function(exports) {
 /******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
 /******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
 /******/ 		}
@@ -60564,35 +60796,35 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// mode & 2: merge all properties of value into the ns
 /******/ 	// mode & 4: return value when already ns object
 /******/ 	// mode & 8|1: behave like require
-/******/ 	__nested_webpack_require_669__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __nested_webpack_require_669__(value);
+/******/ 	__nested_webpack_require_692__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __nested_webpack_require_692__(value);
 /******/ 		if(mode & 8) return value;
 /******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
 /******/ 		var ns = Object.create(null);
-/******/ 		__nested_webpack_require_669__.r(ns);
+/******/ 		__nested_webpack_require_692__.r(ns);
 /******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __nested_webpack_require_669__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __nested_webpack_require_692__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
 /******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__nested_webpack_require_669__.n = function(module) {
+/******/ 	__nested_webpack_require_692__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
 /******/ 			function getDefault() { return module['default']; } :
 /******/ 			function getModuleExports() { return module; };
-/******/ 		__nested_webpack_require_669__.d(getter, 'a', getter);
+/******/ 		__nested_webpack_require_692__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
 /******/
 /******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__nested_webpack_require_669__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/ 	__nested_webpack_require_692__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__nested_webpack_require_669__.p = "";
+/******/ 	__nested_webpack_require_692__.p = "";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __nested_webpack_require_669__(__nested_webpack_require_669__.s = 2);
+/******/ 	return __nested_webpack_require_692__(__nested_webpack_require_692__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -61040,18 +61272,18 @@ exports.decode = decode;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __nested_webpack_require_19967__) {
+/***/ (function(module, exports, __nested_webpack_require_20516__) {
 
 // required so we don't have to do require('pusher').default etc.
-module.exports = __nested_webpack_require_19967__(3).default;
+module.exports = __nested_webpack_require_20516__(3).default;
 
 
 /***/ }),
 /* 3 */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_20171__) {
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_20728__) {
 
 "use strict";
-__nested_webpack_require_20171__.r(__webpack_exports__);
+__nested_webpack_require_20728__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./src/runtimes/web/dom/script_receiver_factory.ts
 var ScriptReceiverFactory = (function () {
@@ -63038,10 +63270,10 @@ var presence_channel_PresenceChannel = (function (_super) {
 /* harmony default export */ var presence_channel = (presence_channel_PresenceChannel);
 
 // EXTERNAL MODULE: ./node_modules/@stablelib/utf8/lib/utf8.js
-var utf8 = __nested_webpack_require_20171__(1);
+var utf8 = __nested_webpack_require_20728__(1);
 
 // EXTERNAL MODULE: ./node_modules/@stablelib/base64/lib/base64.js
-var base64 = __nested_webpack_require_20171__(0);
+var base64 = __nested_webpack_require_20728__(0);
 
 // CONCATENATED MODULE: ./src/core/channels/encrypted_channel.ts
 var encrypted_channel_extends = (undefined && undefined.__extends) || (function () {
@@ -67647,6 +67879,17 @@ return Tether;
 
 /***/ }),
 
+/***/ "./node_modules/vue-emoji-picker/dist-module/main.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vue-emoji-picker/dist-module/main.js ***!
+  \***********************************************************/
+/***/ (function(module) {
+
+!function(e,o){ true?module.exports=o():0}(this,function(){return function(e){function o(a){if(t[a])return t[a].exports;var n=t[a]={i:a,l:!1,exports:{}};return e[a].call(n.exports,n,n.exports,o),n.l=!0,n.exports}var t={};return o.m=e,o.c=t,o.i=function(e){return e},o.d=function(e,t,a){o.o(e,t)||Object.defineProperty(e,t,{configurable:!1,enumerable:!0,get:a})},o.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return o.d(t,"a",t),t},o.o=function(e,o){return Object.prototype.hasOwnProperty.call(e,o)},o.p="/dist-module/",o(o.s=3)}([function(e,o,t){var a=t(4)(t(1),t(5),null,null,null);e.exports=a.exports},function(e,o,t){"use strict";Object.defineProperty(o,"__esModule",{value:!0});var a=t(2),n=function(e){return e&&e.__esModule?e:{default:e}}(a);o.default={props:{search:{type:String,required:!1,default:""},emojiTable:{type:Object,required:!1,default:function(){return n.default}}},data:function(){return{display:{x:0,y:0,visible:!1}}},computed:{emojis:function(){if(this.search){var e={};for(var o in this.emojiTable){e[o]={};for(var t in this.emojiTable[o])new RegExp(".*"+this.search+".*").test(t)&&(e[o][t]=this.emojiTable[o][t]);0===Object.keys(e[o]).length&&delete e[o]}return e}return this.emojiTable}},methods:{insert:function(e){this.$emit("emoji",e)},toggle:function(e){this.display.visible=!this.display.visible,this.display.x=e.clientX,this.display.y=e.clientY},hide:function(){this.display.visible=!1},escape:function(e){!0===this.display.visible&&27===e.keyCode&&(this.display.visible=!1)}},directives:{"click-outside":{bind:function(e,o,t){if("function"==typeof o.value){var a=o.modifiers.bubble,n=function(t){(a||!e.contains(t.target)&&e!==t.target)&&o.value(t)};e.__vueClickOutside__=n,document.addEventListener("click",n)}},unbind:function(e,o){document.removeEventListener("click",e.__vueClickOutside__),e.__vueClickOutside__=null}}},mounted:function(){document.addEventListener("keyup",this.escape)},destroyed:function(){document.removeEventListener("keyup",this.escape)}}},function(e,o,t){"use strict";Object.defineProperty(o,"__esModule",{value:!0}),o.default={"Frequently used":{thumbs_up:"👍","-1":"👎",sob:"😭",confused:"😕",neutral_face:"😐",blush:"😊",heart_eyes:"😍"},People:{smile:"😄",smiley:"😃",grinning:"😀",blush:"😊",wink:"😉",heart_eyes:"😍",kissing_heart:"😘",kissing_closed_eyes:"😚",kissing:"😗",kissing_smiling_eyes:"😙",stuck_out_tongue_winking_eye:"😜",stuck_out_tongue_closed_eyes:"😝",stuck_out_tongue:"😛",flushed:"😳",grin:"😁",pensive:"😔",relieved:"😌",unamused:"😒",disappointed:"😞",persevere:"😣",cry:"😢",joy:"😂",sob:"😭",sleepy:"😪",disappointed_relieved:"😥",cold_sweat:"😰",sweat_smile:"😅",sweat:"😓",weary:"😩",tired_face:"😫",fearful:"😨",scream:"😱",angry:"😠",rage:"😡",triumph:"😤",confounded:"😖",laughing:"😆",yum:"😋",mask:"😷",sunglasses:"😎",sleeping:"😴",dizzy_face:"😵",astonished:"😲",worried:"😟",frowning:"😦",anguished:"😧",imp:"👿",open_mouth:"😮",grimacing:"😬",neutral_face:"😐",confused:"😕",hushed:"😯",smirk:"😏",expressionless:"😑",man_with_gua_pi_mao:"👲",man_with_turban:"👳",cop:"👮",construction_worker:"👷",guardsman:"💂",baby:"👶",boy:"👦",girl:"👧",man:"👨",woman:"👩",older_man:"👴",older_woman:"👵",person_with_blond_hair:"👱",angel:"👼",princess:"👸",smiley_cat:"😺",smile_cat:"😸",heart_eyes_cat:"😻",kissing_cat:"😽",smirk_cat:"😼",scream_cat:"🙀",crying_cat_face:"😿",joy_cat:"😹",pouting_cat:"😾",japanese_ogre:"👹",japanese_goblin:"👺",see_no_evil:"🙈",hear_no_evil:"🙉",speak_no_evil:"🙊",skull:"💀",alien:"👽",hankey:"💩",fire:"🔥",sparkles:"✨",star2:"🌟",dizzy:"💫",boom:"💥",anger:"💢",sweat_drops:"💦",droplet:"💧",zzz:"💤",dash:"💨",ear:"👂",eyes:"👀",nose:"👃",tongue:"👅",lips:"👄",thumbs_up:"👍","-1":"👎",ok_hand:"👌",facepunch:"👊",fist:"✊",wave:"👋",hand:"✋",open_hands:"👐",point_up_2:"👆",point_down:"👇",point_right:"👉",point_left:"👈",raised_hands:"🙌",pray:"🙏",clap:"👏",muscle:"💪",walking:"🚶",runner:"🏃",dancer:"💃",couple:"👫",family:"👪",couplekiss:"💏",couple_with_heart:"💑",dancers:"👯",ok_woman:"🙆",no_good:"🙅",information_desk_person:"💁",raising_hand:"🙋",massage:"💆",haircut:"💇",nail_care:"💅",bride_with_veil:"👰",person_with_pouting_face:"🙎",person_frowning:"🙍",bow:"🙇",tophat:"🎩",crown:"👑",womans_hat:"👒",athletic_shoe:"👟",mans_shoe:"👞",sandal:"👡",high_heel:"👠",boot:"👢",shirt:"👕",necktie:"👔",womans_clothes:"👚",dress:"👗",running_shirt_with_sash:"🎽",jeans:"👖",kimono:"👘",bikini:"👙",briefcase:"💼",handbag:"👜",pouch:"👝",purse:"👛",eyeglasses:"👓",ribbon:"🎀",closed_umbrella:"🌂",lipstick:"💄",yellow_heart:"💛",blue_heart:"💙",purple_heart:"💜",green_heart:"💚",broken_heart:"💔",heartpulse:"💗",heartbeat:"💓",two_hearts:"💕",sparkling_heart:"💖",revolving_hearts:"💞",cupid:"💘",love_letter:"💌",kiss:"💋",ring:"💍",gem:"💎",bust_in_silhouette:"👤",speech_balloon:"💬",footprints:"👣"},Nature:{dog:"🐶",wolf:"🐺",cat:"🐱",mouse:"🐭",hamster:"🐹",rabbit:"🐰",frog:"🐸",tiger:"🐯",koala:"🐨",bear:"🐻",pig:"🐷",pig_nose:"🐽",cow:"🐮",boar:"🐗",monkey_face:"🐵",monkey:"🐒",horse:"🐴",sheep:"🐑",elephant:"🐘",panda_face:"🐼",penguin:"🐧",bird:"🐦",baby_chick:"🐤",hatched_chick:"🐥",hatching_chick:"🐣",chicken:"🐔",snake:"🐍",turtle:"🐢",bug:"🐛",bee:"🐝",ant:"🐜",beetle:"🐞",snail:"🐌",octopus:"🐙",shell:"🐚",tropical_fish:"🐠",fish:"🐟",dolphin:"🐬",whale:"🐳",racehorse:"🐎",dragon_face:"🐲",blowfish:"🐡",camel:"🐫",poodle:"🐩",feet:"🐾",bouquet:"💐",cherry_blossom:"🌸",tulip:"🌷",four_leaf_clover:"🍀",rose:"🌹",sunflower:"🌻",hibiscus:"🌺",maple_leaf:"🍁",leaves:"🍃",fallen_leaf:"🍂",herb:"🌿",ear_of_rice:"🌾",mushroom:"🍄",cactus:"🌵",palm_tree:"🌴",chestnut:"🌰",seedling:"🌱",blossom:"🌼",new_moon:"🌑",first_quarter_moon:"🌓",moon:"🌔",full_moon:"🌕",first_quarter_moon_with_face:"🌛",crescent_moon:"🌙",earth_asia:"🌏",volcano:"🌋",milky_way:"🌌",stars:"🌠",partly_sunny:"⛅",snowman:"⛄",cyclone:"🌀",foggy:"🌁",rainbow:"🌈",ocean:"🌊"},Objects:{bamboo:"🎍",gift_heart:"💝",dolls:"🎎",school_satchel:"🎒",mortar_board:"🎓",flags:"🎏",fireworks:"🎆",sparkler:"🎇",wind_chime:"🎐",rice_scene:"🎑",jack_o_lantern:"🎃",ghost:"👻",santa:"🎅",christmas_tree:"🎄",gift:"🎁",tanabata_tree:"🎋",tada:"🎉",confetti_ball:"🎊",balloon:"🎈",crossed_flags:"🎌",crystal_ball:"🔮",movie_camera:"🎥",camera:"📷",video_camera:"📹",vhs:"📼",cd:"💿",dvd:"📀",minidisc:"💽",floppy_disk:"💾",computer:"💻",iphone:"📱",telephone_receiver:"📞",pager:"📟",fax:"📠",satellite:"📡",tv:"📺",radio:"📻",loud_sound:"🔊",bell:"🔔",loudspeaker:"📢",mega:"📣",hourglass_flowing_sand:"⏳",hourglass:"⌛",alarm_clock:"⏰",watch:"⌚",unlock:"🔓",lock:"🔒",lock_with_ink_pen:"🔏",closed_lock_with_key:"🔐",key:"🔑",mag_right:"🔎",bulb:"💡",flashlight:"🔦",electric_plug:"🔌",battery:"🔋",mag:"🔍",bath:"🛀",toilet:"🚽",wrench:"🔧",nut_and_bolt:"🔩",hammer:"🔨",door:"🚪",smoking:"🚬",bomb:"💣",gun:"🔫",hocho:"🔪",pill:"💊",syringe:"💉",moneybag:"💰",yen:"💴",dollar:"💵",credit_card:"💳",money_with_wings:"💸",calling:"📲","e-mail":"📧",inbox_tray:"📥",outbox_tray:"📤",envelope_with_arrow:"📩",incoming_envelope:"📨",mailbox:"📫",mailbox_closed:"📪",postbox:"📮",package:"📦",memo:"📝",page_facing_up:"📄",page_with_curl:"📃",bookmark_tabs:"📑",bar_chart:"📊",chart_with_upwards_trend:"📈",chart_with_downwards_trend:"📉",scroll:"📜",clipboard:"📋",date:"📅",calendar:"📆",card_index:"📇",file_folder:"📁",open_file_folder:"📂",pushpin:"📌",paperclip:"📎",straight_ruler:"📏",triangular_ruler:"📐",closed_book:"📕",green_book:"📗",blue_book:"📘",orange_book:"📙",notebook:"📓",notebook_with_decorative_cover:"📔",ledger:"📒",books:"📚",book:"📖",bookmark:"🔖",name_badge:"📛",newspaper:"📰",art:"🎨",clapper:"🎬",microphone:"🎤",headphones:"🎧",musical_score:"🎼",musical_note:"🎵",notes:"🎶",musical_keyboard:"🎹",violin:"🎻",trumpet:"🎺",saxophone:"🎷",guitar:"🎸",space_invader:"👾",video_game:"🎮",black_joker:"🃏",flower_playing_cards:"🎴",mahjong:"🀄",game_die:"🎲",dart:"🎯",football:"🏈",basketball:"🏀",soccer:"⚽",baseball:"⚾",tennis:"🎾","8ball":"🎱",bowling:"🎳",golf:"⛳",checkered_flag:"🏁",trophy:"🏆",ski:"🎿",snowboarder:"🏂",swimmer:"🏊",surfer:"🏄",fishing_pole_and_fish:"🎣",tea:"🍵",sake:"🍶",beer:"🍺",beers:"🍻",cocktail:"🍸",tropical_drink:"🍹",wine_glass:"🍷",fork_and_knife:"🍴",pizza:"🍕",hamburger:"🍔",fries:"🍟",poultry_leg:"🍗",meat_on_bone:"🍖",spaghetti:"🍝",curry:"🍛",fried_shrimp:"🍤",bento:"🍱",sushi:"🍣",fish_cake:"🍥",rice_ball:"🍙",rice_cracker:"🍘",rice:"🍚",ramen:"🍜",stew:"🍲",oden:"🍢",dango:"🍡",egg:"🍳",bread:"🍞",doughnut:"🍩",custard:"🍮",icecream:"🍦",ice_cream:"🍨",shaved_ice:"🍧",birthday:"🎂",cake:"🍰",cookie:"🍪",chocolate_bar:"🍫",candy:"🍬",lollipop:"🍭",honey_pot:"🍯",apple:"🍎",green_apple:"🍏",tangerine:"🍊",cherries:"🍒",grapes:"🍇",watermelon:"🍉",strawberry:"🍓",peach:"🍑",melon:"🍈",banana:"🍌",pineapple:"🍍",sweet_potato:"🍠",eggplant:"🍆",tomato:"🍅",corn:"🌽"},Places:{house:"🏠",house_with_garden:"🏡",school:"🏫",office:"🏢",post_office:"🏣",hospital:"🏥",bank:"🏦",convenience_store:"🏪",love_hotel:"🏩",hotel:"🏨",wedding:"💒",church:"⛪",department_store:"🏬",city_sunrise:"🌇",city_sunset:"🌆",japanese_castle:"🏯",european_castle:"🏰",tent:"⛺",factory:"🏭",tokyo_tower:"🗼",japan:"🗾",mount_fuji:"🗻",sunrise_over_mountains:"🌄",sunrise:"🌅",night_with_stars:"🌃",statue_of_liberty:"🗽",bridge_at_night:"🌉",carousel_horse:"🎠",ferris_wheel:"🎡",fountain:"⛲",roller_coaster:"🎢",ship:"🚢",boat:"⛵",speedboat:"🚤",rocket:"🚀",seat:"💺",station:"🚉",bullettrain_side:"🚄",bullettrain_front:"🚅",metro:"🚇",railway_car:"🚃",bus:"🚌",blue_car:"🚙",car:"🚗",taxi:"🚕",truck:"🚚",rotating_light:"🚨",police_car:"🚓",fire_engine:"🚒",ambulance:"🚑",bike:"🚲",barber:"💈",busstop:"🚏",ticket:"🎫",traffic_light:"🚥",construction:"🚧",beginner:"🔰",fuelpump:"⛽",izakaya_lantern:"🏮",slot_machine:"🎰",moyai:"🗿",circus_tent:"🎪",performing_arts:"🎭",round_pushpin:"📍",triangular_flag_on_post:"🚩"},Symbols:{keycap_ten:"🔟",1234:"🔢",symbols:"🔣",capital_abcd:"🔠",abcd:"🔡",abc:"🔤",arrow_up_small:"🔼",arrow_down_small:"🔽",rewind:"⏪",fast_forward:"⏩",arrow_double_up:"⏫",arrow_double_down:"⏬",ok:"🆗",new:"🆕",up:"🆙",cool:"🆒",free:"🆓",ng:"🆖",signal_strength:"📶",cinema:"🎦",koko:"🈁",u6307:"🈯",u7a7a:"🈳",u6e80:"🈵",u5408:"🈴",u7981:"🈲",ideograph_advantage:"🉐",u5272:"🈹",u55b6:"🈺",u6709:"🈶",u7121:"🈚",restroom:"🚻",mens:"🚹",womens:"🚺",baby_symbol:"🚼",wc:"🚾",no_smoking:"🚭",u7533:"🈸",accept:"🉑",cl:"🆑",sos:"🆘",id:"🆔",no_entry_sign:"🚫",underage:"🔞",no_entry:"⛔",negative_squared_cross_mark:"❎",white_check_mark:"✅",heart_decoration:"💟",vs:"🆚",vibration_mode:"📳",mobile_phone_off:"📴",ab:"🆎",diamond_shape_with_a_dot_inside:"💠",ophiuchus:"⛎",six_pointed_star:"🔯",atm:"🏧",chart:"💹",heavy_dollar_sign:"💲",currency_exchange:"💱",x:"❌",exclamation:"❗",question:"❓",grey_exclamation:"❕",grey_question:"❔",o:"⭕",top:"🔝",end:"🔚",back:"🔙",on:"🔛",soon:"🔜",arrows_clockwise:"🔃",clock12:"🕛",clock1:"🕐",clock2:"🕑",clock3:"🕒",clock4:"🕓",clock5:"🕔",clock6:"🕕",clock7:"🕖",clock8:"🕗",clock9:"🕘",clock10:"🕙",clock11:"🕚",heavy_plus_sign:"➕",heavy_minus_sign:"➖",heavy_division_sign:"➗",white_flower:"💮",100:"💯",radio_button:"🔘",link:"🔗",curly_loop:"➰",trident:"🔱",small_red_triangle:"🔺",black_square_button:"🔲",white_square_button:"🔳",red_circle:"🔴",large_blue_circle:"🔵",small_red_triangle_down:"🔻",white_large_square:"⬜",black_large_square:"⬛",large_orange_diamond:"🔶",large_blue_diamond:"🔷",small_orange_diamond:"🔸",small_blue_diamond:"🔹"}}},function(e,o,t){"use strict";Object.defineProperty(o,"__esModule",{value:!0}),o.EmojiPickerPlugin=o.EmojiPicker=void 0;var a=t(0),n=function(e){return e&&e.__esModule?e:{default:e}}(a),i={install:function(e){arguments.length>1&&void 0!==arguments[1]&&arguments[1];e.component("emoji-picker",n.default)}};"undefined"!=typeof window&&(window.EmojiPicker=i),o.EmojiPicker=n.default,o.EmojiPickerPlugin=i,o.default=n.default},function(e,o){e.exports=function(e,o,t,a,n){var i,r=e=e||{},s=typeof e.default;"object"!==s&&"function"!==s||(i=e,r=e.default);var l="function"==typeof r?r.options:r;o&&(l.render=o.render,l.staticRenderFns=o.staticRenderFns),a&&(l._scopeId=a);var _;if(n?(_=function(e){e=e||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,e||"undefined"==typeof __VUE_SSR_CONTEXT__||(e=__VUE_SSR_CONTEXT__),t&&t.call(this,e),e&&e._registeredComponents&&e._registeredComponents.add(n)},l._ssrRegister=_):t&&(_=t),_){var c=l.functional,u=c?l.render:l.beforeCreate;c?l.render=function(e,o){return _.call(o),u(e,o)}:l.beforeCreate=u?[].concat(u,_):[_]}return{esModule:i,exports:r,options:l}}},function(e,o){e.exports={render:function(){var e=this,o=e.$createElement,t=e._self._c||o;return t("div",[e._t("emoji-invoker",null,{events:{click:function(o){return e.toggle(o)}}}),e._v(" "),e.display.visible?t("div",{directives:[{name:"click-outside",rawName:"v-click-outside",value:e.hide,expression:"hide"}]},[e._t("emoji-picker",null,{emojis:e.emojis,insert:e.insert,display:e.display})],2):e._e()],2)},staticRenderFns:[]}}])});
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@splidejs/vue-splide/src/js/components/Splide.vue":
 /*!************************************************************************!*\
   !*** ./node_modules/@splidejs/vue-splide/src/js/components/Splide.vue ***!
@@ -68840,23 +69083,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _contentChat_vue_vue_type_template_id_204f4f50___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./contentChat.vue?vue&type=template&id=204f4f50& */ "./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50&");
+/* harmony import */ var _contentChat_vue_vue_type_template_id_204f4f50_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./contentChat.vue?vue&type=template&id=204f4f50&scoped=true& */ "./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50&scoped=true&");
 /* harmony import */ var _contentChat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./contentChat.vue?vue&type=script&lang=js& */ "./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _contentChat_vue_vue_type_style_index_0_id_204f4f50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css& */ "./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(
   _contentChat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _contentChat_vue_vue_type_template_id_204f4f50___WEBPACK_IMPORTED_MODULE_0__.render,
-  _contentChat_vue_vue_type_template_id_204f4f50___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _contentChat_vue_vue_type_template_id_204f4f50_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _contentChat_vue_vue_type_template_id_204f4f50_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "204f4f50",
   null
   
 )
@@ -69542,23 +69787,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _ChatForm_vue_vue_type_template_id_70f134e7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChatForm.vue?vue&type=template&id=70f134e7& */ "./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7&");
+/* harmony import */ var _ChatForm_vue_vue_type_template_id_70f134e7_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChatForm.vue?vue&type=template&id=70f134e7&scoped=true& */ "./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7&scoped=true&");
 /* harmony import */ var _ChatForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChatForm.vue?vue&type=script&lang=js& */ "./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ChatForm_vue_vue_type_style_index_0_id_70f134e7_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css& */ "./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(
   _ChatForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _ChatForm_vue_vue_type_template_id_70f134e7___WEBPACK_IMPORTED_MODULE_0__.render,
-  _ChatForm_vue_vue_type_template_id_70f134e7___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _ChatForm_vue_vue_type_template_id_70f134e7_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ChatForm_vue_vue_type_template_id_70f134e7_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "70f134e7",
   null
   
 )
@@ -71615,19 +71862,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50&":
-/*!*************************************************************************************************************************!*\
-  !*** ./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50& ***!
-  \*************************************************************************************************************************/
+/***/ "./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50&scoped=true&":
+/*!*************************************************************************************************************************************!*\
+  !*** ./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50&scoped=true& ***!
+  \*************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_template_id_204f4f50___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_template_id_204f4f50___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_template_id_204f4f50_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_template_id_204f4f50_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_template_id_204f4f50___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./contentChat.vue?vue&type=template&id=204f4f50& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_template_id_204f4f50_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./contentChat.vue?vue&type=template&id=204f4f50&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50&scoped=true&");
 
 
 /***/ }),
@@ -71921,19 +72168,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7&":
-/*!*****************************************************************************************************!*\
-  !*** ./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7& ***!
-  \*****************************************************************************************************/
+/***/ "./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7&scoped=true& ***!
+  \*****************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_template_id_70f134e7___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_template_id_70f134e7___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_template_id_70f134e7_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_template_id_70f134e7_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_template_id_70f134e7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChatForm.vue?vue&type=template&id=70f134e7& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_template_id_70f134e7_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChatForm.vue?vue&type=template&id=70f134e7&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7&scoped=true&");
 
 
 /***/ }),
@@ -72273,6 +72520,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_containerPostEdit_vue_vue_type_style_index_0_id_5281f7ec_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_containerPostEdit_vue_vue_type_style_index_0_id_5281f7ec_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
 /* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_containerPostEdit_vue_vue_type_style_index_0_id_5281f7ec_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_containerPostEdit_vue_vue_type_style_index_0_id_5281f7ec_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_style_index_0_id_204f4f50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-style-loader/index.js!../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css& */ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_style_index_0_id_204f4f50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_style_index_0_id_204f4f50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_style_index_0_id_204f4f50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_contentChat_vue_vue_type_style_index_0_id_204f4f50_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************!*\
+  !*** ./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_style_index_0_id_70f134e7_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-style-loader/index.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css& */ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_style_index_0_id_70f134e7_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_style_index_0_id_70f134e7_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_style_index_0_id_70f134e7_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_style_index_0_id_70f134e7_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
 
 
@@ -73781,10 +74062,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50&":
-/*!****************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50& ***!
-  \****************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=template&id=204f4f50&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -73853,7 +74134,137 @@ var render = function() {
                                 _vm._v(" "),
                                 _vm._m(1),
                                 _vm._v(" "),
-                                _vm._m(2)
+                                _c(
+                                  "div",
+                                  { staticClass: "chat-searchbar mt-4" },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "form-group chat-search-data m-0"
+                                      },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.value,
+                                              expression: "value"
+                                            }
+                                          ],
+                                          staticClass: "form-control round",
+                                          attrs: {
+                                            type: "text",
+                                            id: "chat-search",
+                                            placeholder: "Search friends"
+                                          },
+                                          domProps: { value: _vm.value },
+                                          on: {
+                                            keyup: _vm.search,
+                                            keydown: function($event) {
+                                              if (
+                                                !$event.type.indexOf("key") &&
+                                                _vm._k(
+                                                  $event.keyCode,
+                                                  "space",
+                                                  32,
+                                                  $event.key,
+                                                  [" ", "Spacebar"]
+                                                )
+                                              ) {
+                                                return null
+                                              }
+                                              return _vm.space($event)
+                                            },
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.value = $event.target.value
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("i", {
+                                          staticClass: "ri-search-line"
+                                        }),
+                                        _vm._v(" "),
+                                        _vm.results.length != 0
+                                          ? _c(
+                                              "div",
+                                              { attrs: { id: "ser" } },
+                                              [
+                                                _c(
+                                                  "ul",
+                                                  _vm._l(_vm.results, function(
+                                                    result
+                                                  ) {
+                                                    return _c(
+                                                      "li",
+                                                      { key: result.id },
+                                                      [
+                                                        _c(
+                                                          "router-link",
+                                                          {
+                                                            attrs: {
+                                                              to: {
+                                                                name: "chat",
+                                                                query: {
+                                                                  user:
+                                                                    result.id
+                                                                }
+                                                              },
+                                                              tag: "a",
+                                                              id: "pp"
+                                                            },
+                                                            nativeOn: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.vide()
+                                                              }
+                                                            }
+                                                          },
+                                                          [
+                                                            _c("div", {}, [
+                                                              _c("img", {
+                                                                staticClass:
+                                                                  "avatar-40 rounded",
+                                                                attrs: {
+                                                                  src:
+                                                                    "images/user/" +
+                                                                    result
+                                                                      .profileimg
+                                                                      .name,
+                                                                  alt: "pp"
+                                                                }
+                                                              })
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("span", [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  result.name
+                                                                )
+                                                              )
+                                                            ])
+                                                          ]
+                                                        )
+                                                      ],
+                                                      1
+                                                    )
+                                                  }),
+                                                  0
+                                                )
+                                              ]
+                                            )
+                                          : _vm._e()
+                                      ]
+                                    )
+                                  ]
+                                )
                               ]
                             )
                           : _vm._e(),
@@ -74031,21 +74442,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "chat-searchbar mt-4" }, [
-      _c("div", { staticClass: "form-group chat-search-data m-0" }, [
-        _c("input", {
-          staticClass: "form-control round",
-          attrs: { type: "text", id: "chat-search", placeholder: "Search" }
-        }),
-        _vm._v(" "),
-        _c("i", { staticClass: "ri-search-line" })
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -74655,171 +75051,190 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "iq-card" }, [
-                  _c("div", { staticClass: "iq-card-body p-0" }, [
-                    _c("div", { staticClass: "user-tabing" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "d-flex align-items-center p-0 m-0 flex-column flex-md-row"
-                        },
-                        [
-                          _vm.message == "friend"
-                            ? _c(
+                _vm.message != "current"
+                  ? _c("div", { staticClass: "iq-card" }, [
+                      _c("div", { staticClass: "iq-card-body p-0" }, [
+                        _c("div", { staticClass: "user-tabing" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "d-flex align-items-center p-0 m-0 flex-column flex-md-row"
+                            },
+                            [
+                              _vm.message == "friend"
+                                ? _c(
+                                    "div",
+                                    { staticClass: "col-md-8 col-sm-12 p-4" },
+                                    [
+                                      _c("div", [
+                                        _c("h4", [
+                                          _vm._v(
+                                            "\n                                            You are friend with\n                                            " +
+                                              _vm._s(_vm.user.name) +
+                                              "\n                                        "
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", [
+                                        _c("span", [
+                                          _vm._v(
+                                            "You can now see what\n                                            " +
+                                              _vm._s(_vm.user.name) +
+                                              " is sharing, Send\n                                            him a message and have fun"
+                                          )
+                                        ])
+                                      ])
+                                    ]
+                                  )
+                                : _c(
+                                    "div",
+                                    { staticClass: "col-md-8 col-12 p-4" },
+                                    [
+                                      _c("div", [
+                                        _c("h4", [
+                                          _vm._v(
+                                            "\n                                            Do you know " +
+                                              _vm._s(_vm.user.name) +
+                                              "?\n                                        "
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm._m(1)
+                                    ]
+                                  ),
+                              _vm._v(" "),
+                              _c(
                                 "div",
-                                { staticClass: "col-md-8 col-sm-12 p-4" },
+                                { staticClass: "col-md-4 col-12 p-4" },
                                 [
-                                  _c("div", [
-                                    _c("h4", [
-                                      _vm._v(
-                                        "You are friend with " +
-                                          _vm._s(_vm.user.name)
+                                  _vm.message == "cancel"
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "text-center pl-3" },
+                                        [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "mr-3 btn btn-danger rounded",
+                                              on: { click: _vm.DeleteRequest }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "ri-user-shared-line mr-1 text-white font-size-16"
+                                              }),
+                                              _vm._v(
+                                                "\n                                            Cancel request\n                                        "
+                                              )
+                                            ]
+                                          )
+                                        ]
                                       )
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", [
-                                    _c("span", [
-                                      _vm._v(
-                                        "You can now see what " +
-                                          _vm._s(_vm.user.name) +
-                                          " is sharing, Send him a message and have fun"
+                                    : _vm.message == "accept"
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "text-center pl-3" },
+                                        [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "mr-3 btn btn-primary rounded",
+                                              on: { click: _vm.AcceptRequest }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "ri-user-follow-line mr-1 text-white font-size-16"
+                                              }),
+                                              _vm._v(
+                                                "\n                                            Accept request\n                                        "
+                                              )
+                                            ]
+                                          )
+                                        ]
                                       )
-                                    ])
-                                  ])
+                                    : _vm.message == ""
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "text-center pl-3" },
+                                        [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "mr-3 btn btn-primary rounded",
+                                              on: { click: _vm.sendRequest }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "ri-user-add-line"
+                                              }),
+                                              _vm._v(
+                                                "Add Friend\n                                        "
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    : _vm.message == "friend"
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "text-center pl-3" },
+                                        [
+                                          _c(
+                                            "router-link",
+                                            {
+                                              staticClass:
+                                                "mr-3 btn btn-success rounded",
+                                              attrs: {
+                                                to: {
+                                                  name: "chat",
+                                                  query: { user: _vm.user.id }
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "ri-mail-send-line text-white font-size-16"
+                                              }),
+                                              _vm._v(
+                                                "\n                                            Message\n                                        "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "mr-3 btn btn-danger rounded",
+                                              on: { click: _vm.RemoveFriend }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "ri-user-unfollow-line mr-1 text-white font-size-16"
+                                              })
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    : _vm._e()
                                 ]
                               )
-                            : _c(
-                                "div",
-                                { staticClass: "col-md-8 col-12 p-4" },
-                                [
-                                  _c("div", [
-                                    _c("h4", [
-                                      _vm._v(
-                                        "Do you know " +
-                                          _vm._s(_vm.user.name) +
-                                          "?"
-                                      )
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm._m(1)
-                                ]
-                              ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-4 col-12 p-4" }, [
-                            _vm.message == "cancel"
-                              ? _c("div", { staticClass: "text-center pl-3" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "mr-3 btn btn-danger rounded",
-                                      on: { click: _vm.DeleteRequest }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass:
-                                          "ri-user-shared-line mr-1 text-white font-size-16"
-                                      }),
-                                      _vm._v(
-                                        "\n                                                Cancel request\n                                            "
-                                      )
-                                    ]
-                                  )
-                                ])
-                              : _vm.message == "accept"
-                              ? _c("div", { staticClass: "text-center pl-3" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "mr-3 btn btn-primary rounded",
-                                      on: { click: _vm.AcceptRequest }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass:
-                                          "ri-user-follow-line mr-1 text-white font-size-16"
-                                      }),
-                                      _vm._v(
-                                        "\n                                                Accept request\n                                            "
-                                      )
-                                    ]
-                                  )
-                                ])
-                              : _vm.message == ""
-                              ? _c("div", { staticClass: "text-center pl-3" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "mr-3 btn btn-primary rounded",
-                                      on: { click: _vm.sendRequest }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "ri-user-add-line"
-                                      }),
-                                      _vm._v(
-                                        "Add Friend\n                                            "
-                                      )
-                                    ]
-                                  )
-                                ])
-                              : _vm.message == "friend"
-                              ? _c(
-                                  "div",
-                                  { staticClass: "text-center pl-3" },
-                                  [
-                                    _c(
-                                      "router-link",
-                                      {
-                                        staticClass:
-                                          "mr-3 btn btn-success rounded",
-                                        attrs: {
-                                          to: {
-                                            name: "chat",
-                                            query: { user: _vm.user.id }
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("i", {
-                                          staticClass:
-                                            "ri-mail-send-line text-white font-size-16"
-                                        }),
-                                        _vm._v(
-                                          "\n                                                Message\n                                            "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "mr-3 btn btn-danger rounded",
-                                        on: { click: _vm.RemoveFriend }
-                                      },
-                                      [
-                                        _c("i", {
-                                          staticClass:
-                                            "ri-user-unfollow-line mr-1 text-white font-size-16"
-                                        })
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                )
-                              : _vm._e()
-                          ])
-                        ]
-                      )
+                            ]
+                          )
+                        ])
+                      ])
                     ])
-                  ])
-                ]),
+                  : _vm._e(),
                 _vm._v(" "),
                 _vm._m(2)
               ]),
@@ -75129,7 +75544,7 @@ var staticRenderFns = [
     return _c("div", [
       _c("span", [
         _vm._v(
-          "To see what she shares with friends, send her a friend request."
+          "To see what she shares with\n                                            friends, send her a friend\n                                            request."
         )
       ])
     ])
@@ -78812,10 +79227,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7&":
-/*!********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7& ***!
-  \********************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=template&id=70f134e7&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -78851,12 +79266,151 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("VueEmoji", {
-          ref: "emoji",
-          staticClass: "emoji-div",
-          attrs: { height: "65px" },
-          on: { input: _vm.onInput }
-        }),
+        _c(
+          "div",
+          { staticClass: "wrapper" },
+          [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.input,
+                  expression: "input"
+                }
+              ],
+              staticClass: "regular-input",
+              attrs: { placeholder: "Message..." },
+              domProps: { value: _vm.input },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.input = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("emoji-picker", {
+              attrs: { search: _vm.search },
+              on: { emoji: _vm.append },
+              scopedSlots: _vm._u([
+                {
+                  key: "emoji-invoker",
+                  fn: function(ref) {
+                    var clickEvent = ref.events.click
+                    return _c(
+                      "div",
+                      {
+                        staticClass: "emoji-invoker",
+                        on: {
+                          click: function($event) {
+                            $event.stopPropagation()
+                            return clickEvent($event)
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            attrs: {
+                              height: "24",
+                              viewBox: "0 0 24 24",
+                              width: "24",
+                              xmlns: "http://www.w3.org/2000/svg"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: { d: "M0 0h24v24H0z", fill: "none" }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  }
+                },
+                {
+                  key: "emoji-picker",
+                  fn: function(ref) {
+                    var emojis = ref.emojis
+                    var insert = ref.insert
+                    return _c("div", {}, [
+                      _c("div", { staticClass: "emoji-picker" }, [
+                        _c("div", { staticClass: "emoji-picker__search" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.search,
+                                expression: "search"
+                              },
+                              { name: "focus", rawName: "v-focus" }
+                            ],
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.search },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.search = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          _vm._l(emojis, function(emojiGroup, category) {
+                            return _c("div", { key: category }, [
+                              _c("h5", { staticStyle: { color: "white" } }, [
+                                _vm._v(_vm._s(category))
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "emojis" },
+                                _vm._l(emojiGroup, function(emoji, emojiName) {
+                                  return _c(
+                                    "span",
+                                    {
+                                      key: emojiName,
+                                      attrs: { title: emojiName },
+                                      on: {
+                                        click: function($event) {
+                                          return insert(emoji)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(emoji))]
+                                  )
+                                }),
+                                0
+                              )
+                            ])
+                          }),
+                          0
+                        )
+                      ])
+                    ])
+                  }
+                }
+              ])
+            })
+          ],
+          1
+        ),
         _vm._v(" "),
         _c(
           "button",
@@ -78876,8 +79430,7 @@ var render = function() {
             ])
           ]
         )
-      ],
-      1
+      ]
     )
   ])
 }
@@ -79187,9 +79740,7 @@ var render = function() {
                           src: "images/user/" + _vm.OtherUser.profileimg.name,
                           alt: "avatar"
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(1)
+                      })
                     ]
                   ),
                   _vm._v(" "),
@@ -79222,7 +79773,7 @@ var render = function() {
                     )
                   : _vm._e(),
                 _vm._v(" "),
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "a",
@@ -79267,12 +79818,12 @@ var render = function() {
                     _vm._v(" "),
                     _c("p", [
                       _vm._v(
-                        "Votre navigateur ne prend pas en charge les vidéos HTML5.\n                Voici "
+                        "\n                Votre navigateur ne prend pas en charge les vidéos HTML5.\n                Voici\n                "
                       ),
                       _c("a", { attrs: { href: _vm.isFile } }, [
                         _vm._v("un lien pour télécharger la vidéo")
                       ]),
-                      _vm._v(".")
+                      _vm._v(".\n            ")
                     ])
                   ]
                 )
@@ -79378,14 +79929,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "sidebar-toggle" }, [
       _c("i", { staticClass: "ri-menu-3-line" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "avatar-status" }, [
-      _c("i", { staticClass: "ri-checkbox-blank-circle-fill text-success" })
     ])
   },
   function() {
@@ -82458,7 +83001,7 @@ var render = function() {
   return _c("div", { staticClass: "chat-sidebar-channel scroller mt-4 pl-3" }, [
     _c("h5", { staticClass: "mt-3" }, [_vm._v("Direct Message")]),
     _vm._v(" "),
-    _vm.ChatLists
+    _vm.ChatLists != null && _vm.ChatLists.length > 0
       ? _c(
           "ul",
           { staticClass: "iq-chat-ui nav flex-column nav-pills" },
@@ -82551,7 +83094,65 @@ var render = function() {
           }),
           0
         )
-      : _vm._e()
+      : _c("h6", { staticClass: "d-flex align-items-center pt-2" }, [
+          _vm._v("You have no chats")
+        ]),
+    _vm._v(" "),
+    _c("h5", { staticClass: "mt-3" }, [_vm._v("Friends")]),
+    _vm._v(" "),
+    _vm.friends != null && _vm.friends.length > 0
+      ? _c(
+          "ul",
+          { staticClass: "iq-chat-ui nav flex-column nav-pills" },
+          _vm._l(_vm.friends, function(friend) {
+            return _c(
+              "li",
+              { key: friend.id },
+              [
+                _c(
+                  "router-link",
+                  {
+                    attrs: {
+                      to: {
+                        name: "chat",
+                        query: { user: friend.id }
+                      },
+                      tag: "a"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "d-flex align-items-center" }, [
+                      _c("div", { staticClass: "avatar mr-2" }, [
+                        _c("img", {
+                          staticClass: "avatar-50 ",
+                          attrs: {
+                            src: "images/user/" + friend.profileimg.name,
+                            alt: "chatuserimage"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "chat-sidebar-name" }, [
+                        _c("h6", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(friend.name) +
+                              "\n                        "
+                          )
+                        ])
+                      ])
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          }),
+          0
+        )
+      : _c("h6", { staticClass: "d-flex align-items-center pt-2" }, [
+          _vm._v("\n        Start making new friends\n    ")
+        ])
   ])
 }
 var staticRenderFns = []
@@ -86124,6 +86725,48 @@ if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(/*! !../../../../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
 var update = add("63a5f02d", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(/*! !!../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/general_section/dynamic_section/contentChat.vue?vue&type=style&index=0&id=204f4f50&scoped=true&lang=css&");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.id, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(/*! !../../../../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
+var update = add("0d9a5641", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/ChatForm.vue?vue&type=style&index=0&id=70f134e7&scoped=true&lang=css&");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.id, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(/*! !../../../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
+var update = add("657a79a7", content, false, {});
 // Hot Module Replacement
 if(false) {}
 

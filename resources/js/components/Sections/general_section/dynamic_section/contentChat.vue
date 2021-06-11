@@ -139,11 +139,58 @@
                                                         type="text"
                                                         class="form-control round"
                                                         id="chat-search"
-                                                        placeholder="Search"
+                                                        placeholder="Search friends"
+                                                        v-model="value"
+                                                        @keyup="search"
+                                                        @keydown.space="space"
                                                     />
                                                     <i
                                                         class="ri-search-line"
                                                     ></i>
+                                                    <div
+                                                        id="ser"
+                                                        v-if="
+                                                            results.length != 0
+                                                        "
+                                                    >
+                                                        <ul>
+                                                            <li
+                                                                v-for="result in results"
+                                                                :key="result.id"
+                                                            >
+                                                                <router-link
+                                                                    :to="{
+                                                                        name:
+                                                                            'chat',
+                                                                        query: {
+                                                                            user:
+                                                                                result.id
+                                                                        }
+                                                                    }"
+                                                                    v-on:click.native="
+                                                                        vide()
+                                                                    "
+                                                                    tag="a"
+                                                                    id="pp"
+                                                                >
+                                                                    <div
+                                                                        class=""
+                                                                    >
+                                                                        <img
+                                                                            class="avatar-40 rounded"
+                                                                            :src="
+                                                                                `images/user/${result.profileimg.name}`
+                                                                            "
+                                                                            alt="pp"
+                                                                        />
+                                                                    </div>
+                                                                    <span>{{
+                                                                        result.name
+                                                                    }}</span>
+                                                                </router-link>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -209,7 +256,9 @@ export default {
             id: "",
             CurrentUser: null,
             OtherUser: null,
-            loaded: false
+            loaded: false,
+            value: "",
+            results: []
         };
     },
     mounted() {
@@ -221,6 +270,20 @@ export default {
         this.loadOtherFriend();
     },
     methods: {
+        search() {
+            if (this.value === "") {
+                this.results = [];
+            } else {
+                axios
+                    .post("/ChatSearch", {
+                        value: this.value
+                    })
+                    .then(response => {
+                        console.log(response.data);
+                        this.results = response.data;
+                    });
+            }
+        },
         loadOtherFriend() {
             if (this.$route.query.user) {
                 axios
@@ -231,6 +294,15 @@ export default {
                         this.OtherUser = res.data;
                     });
             }
+        },
+        space(e) {
+            if (this.value === "") {
+                e.preventDefault();
+            }
+        },
+        vide() {
+            this.value = "";
+            this.results = [];
         }
     },
     watch: {
@@ -241,3 +313,16 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+#ser {
+    position: absolute;
+    width: 100%;
+    background-color: var(--iq-dark-box);
+    color: var(--iq-dark-title-text);
+}
+
+#pp {
+    padding: 10px;
+}
+</style>
