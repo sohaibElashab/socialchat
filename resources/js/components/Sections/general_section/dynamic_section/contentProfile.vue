@@ -411,10 +411,6 @@
                                                         index) in FriendLists"
                                                         :key="index"
                                                     >
-                                                        <!--params: {
-                                                                        id:
-                                                                            FriendList.id
-                                                                    },  -->
                                                         <div v-if="index < 9">
                                                             <router-link
                                                                 :to="{
@@ -576,9 +572,6 @@ export default {
     },
     methods: {
         load() {
-            /*   var id = sessionStorage.getItem("id");
-            console.log("profile content");
-            console.log(sessionStorage.getItem("id")); */
             axios
                 .post("/UserProfile", {
                     id: this.$route.query.user
@@ -601,18 +594,19 @@ export default {
                         }
                     );
 
-                    Echo.private(`sendRequest.${this.user.id}`).listen(
+                    /*  Echo.private(`sendRequest.${this.user.id}`).listen(
                         "SendRequestEvent",
                         e => {
-                            console.log(e.user);
-                            console.log("accept");
+                            // console.log(e.user);
+                            //console.log("accept");
+                            this.message = "accept";
                         }
-                    );
+                    ); */
 
                     Echo.private(`acceptRequest.${this.user.id}`).listen(
                         "AcceptRequestEvent",
                         e => {
-                            console.log(e.user.name);
+                            //console.log(e.user.name);
                             if (this.user.status == "friend") {
                                 this.message = "friend";
                             }

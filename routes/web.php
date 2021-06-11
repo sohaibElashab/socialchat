@@ -46,7 +46,7 @@ Route::get('/LoadRequests', [App\Http\Controllers\FriendController::class, 'Load
 Route::post('/AcceptRequest', [App\Http\Controllers\FriendController::class, 'AcceptRequest']);
 Route::post('/RemoveFriend', [App\Http\Controllers\FriendController::class, 'RemoveFriend']);
 Route::post('/LoadFriends', [App\Http\Controllers\FriendController::class, 'LoadFriends']);
-//Route::post('/FriendProfile', [App\Http\Controllers\FriendController::class, 'index']);
+Route::post('/FriendsInCommon', [App\Http\Controllers\FriendController::class, 'FriendsInCommon']);
 
 //PostController
 Route::get('/GetPosts', [App\Http\Controllers\PostController::class, 'index']);

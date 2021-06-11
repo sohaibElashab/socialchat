@@ -1,13 +1,6 @@
 <template>
     <div id="content-page" class="content-page">
-        <div class="container">
-            <span
-                class="badge badge-primary"
-                style="cursor:pointer;display:none;"
-                @click="LoadFriends"
-                id="New"
-                >New friends</span
-            >
+        <div class="container" v-if="friends != null && friends.length > 0">
             <div class="row">
                 <div
                     class="col-md-6"
@@ -68,6 +61,30 @@
                                                     Visit profile
                                                 </button>
                                             </router-link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" v-else>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="iq-card">
+                        <div class="iq-card-body profile-page p-0">
+                            <div class="profile-header-image">
+                                <div class="profile-info p-4">
+                                    <div class="user-detail">
+                                        <div
+                                            class="d-flex flex-wrap justify-content-between align-items-start"
+                                        >
+                                            <h6>
+                                                Start making some friends so
+                                                they show up in here
+                                            </h6>
                                         </div>
                                     </div>
                                 </div>

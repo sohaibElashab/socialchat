@@ -9450,6 +9450,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -10613,10 +10638,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -10721,9 +10742,6 @@ __webpack_require__.r(__webpack_exports__);
     load: function load() {
       var _this = this;
 
-      /*   var id = sessionStorage.getItem("id");
-      console.log("profile content");
-      console.log(sessionStorage.getItem("id")); */
       axios.post("/UserProfile", {
         id: this.$route.query.user
       }).then(function (res) {
@@ -10743,13 +10761,17 @@ __webpack_require__.r(__webpack_exports__);
             _this.message = "";
           }
         });
-        Echo["private"]("sendRequest.".concat(_this.user.id)).listen("SendRequestEvent", function (e) {
-          console.log(e.user);
-          console.log("accept");
-        });
-        Echo["private"]("acceptRequest.".concat(_this.user.id)).listen("AcceptRequestEvent", function (e) {
-          console.log(e.user.name);
+        /*  Echo.private(`sendRequest.${this.user.id}`).listen(
+            "SendRequestEvent",
+            e => {
+                // console.log(e.user);
+                //console.log("accept");
+                this.message = "accept";
+            }
+        ); */
 
+        Echo["private"]("acceptRequest.".concat(_this.user.id)).listen("AcceptRequestEvent", function (e) {
+          //console.log(e.user.name);
           if (_this.user.status == "friend") {
             _this.message = "friend";
           }
@@ -11898,6 +11920,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -11926,6 +12006,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13088,6 +13185,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -13256,6 +13365,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15088,6 +15210,60 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -16076,6 +16252,412 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     Id: {
@@ -16092,7 +16674,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      FriendLists: null
+      FriendLists: null,
+      InCommon: null,
+      Others: null
     };
   },
   mounted: function mounted() {
@@ -16105,28 +16689,78 @@ __webpack_require__.r(__webpack_exports__);
     Echo["private"]("acceptRequest2.".concat(this.Id)).listen("AcceptRequestEvent2", function (e) {
       _this.LoadFriends();
     });
+    Echo["private"]("acceptRequest.".concat(this.IdOnline)).listen("AcceptRequestEvent", function (e) {
+      _this.LoadFriends();
+    });
+    Echo["private"]("acceptRequest2.".concat(this.IdOnline)).listen("AcceptRequestEvent2", function (e) {
+      _this.LoadFriends();
+    });
+    Echo["private"]("sendRequest.".concat(this.IdOnline)).listen("SendRequestEvent", function (e) {
+      //console.log(e.user);
+      _this.LoadFriends();
+    });
   },
   methods: {
-    RemoveFriend: function RemoveFriend(id) {
+    DeleteRequest: function DeleteRequest(id) {
       var _this2 = this;
+
+      axios.post("/DeleteRequest", {
+        id: id
+      }).then(function (res) {
+        //console.log(res);
+        _this2.LoadFriends();
+      });
+    },
+    AcceptRequest: function AcceptRequest(id) {
+      var _this3 = this;
+
+      axios.post("/AcceptRequest", {
+        id: id
+      }).then(function (res) {
+        // console.log(res);
+        _this3.LoadFriends();
+      });
+    },
+    sendRequest: function sendRequest(id) {
+      var _this4 = this;
+
+      axios.post("/SendRequest", {
+        id: id
+      }).then(function (res) {
+        //console.log(res.data);
+        _this4.LoadFriends();
+      });
+    },
+    RemoveFriend: function RemoveFriend(id) {
+      var _this5 = this;
 
       axios.post("/RemoveFriend", {
         id: id
       }).then(function (res) {
-        console.log(res);
-
-        _this2.LoadFriends();
+        // console.log(res);
+        _this5.LoadFriends();
       });
     },
     LoadFriends: function LoadFriends() {
-      var _this3 = this;
+      var _this6 = this;
 
       axios.post("/LoadFriends", {
         id: this.Id
       }).then(function (res) {
-        console.log(res.data);
-        _this3.FriendLists = res.data;
-      }); //document.getElementById("New").style.display = "none";
+        //console.log(res.data);
+        _this6.FriendLists = res.data;
+      });
+
+      if (this.status != "current") {
+        axios.post("/FriendsInCommon", {
+          id: this.Id
+        }).then(function (res) {
+          // console.log(res.data);
+          _this6.InCommon = res.data[0];
+          _this6.Others = res.data[1];
+        });
+      } //document.getElementById("New").style.display = "none";
+
     }
   },
   watch: {
@@ -74042,20 +74676,58 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container mt-5 pt-5" },
-    _vm._l(_vm.posts, function(post, index) {
-      return _c("Post", {
-        key: index,
-        attrs: { post: post },
-        on: { unsavePost: _vm.newPost }
-      })
-    }),
-    1
-  )
+  return _vm.posts != null && _vm.posts.length > 0
+    ? _c(
+        "div",
+        { staticClass: "container mt-5 pt-5" },
+        _vm._l(_vm.posts, function(post, index) {
+          return _c("Post", {
+            key: index,
+            attrs: { post: post },
+            on: { unsavePost: _vm.newPost }
+          })
+        }),
+        1
+      )
+    : _c("div", { staticClass: "content-page" }, [_vm._m(0)])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container " }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "iq-card" }, [
+            _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
+              _c("div", { staticClass: "profile-header-image" }, [
+                _c("div", { staticClass: "profile-info p-4" }, [
+                  _c("div", { staticClass: "user-detail" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "d-flex flex-wrap justify-content-between align-items-start"
+                      },
+                      [
+                        _c("h6", [
+                          _vm._v(
+                            "\n                                            You have no saved posts\n                                        "
+                          )
+                        ])
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -77149,103 +77821,121 @@ var render = function() {
     "div",
     { staticClass: "content-page", attrs: { id: "content-page" } },
     [
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "row" },
-          _vm._l(_vm.videos, function(video) {
-            return _c(
+      _vm.videos != null && _vm.videos.length > 0
+        ? _c("div", { staticClass: "container" }, [
+            _c(
               "div",
-              { key: video.id, staticClass: "col-md-6 col-lg-4 mb-3" },
-              [
-                _c(
+              { staticClass: "row" },
+              _vm._l(_vm.videos, function(video) {
+                return _c(
                   "div",
-                  {
-                    staticClass: "user-images position-relative overflow-hidden"
-                  },
+                  { key: video.id, staticClass: "col-md-6 col-lg-4 mb-3" },
                   [
                     _c(
                       "div",
                       {
-                        staticClass: "embed-responsive embed-responsive-16by9"
+                        staticClass:
+                          "user-images position-relative overflow-hidden"
                       },
                       [
-                        _c("iframe", {
-                          staticClass: "embed-responsive-item",
-                          attrs: {
-                            src: "videos/" + video.name,
-                            allowfullscreen: ""
-                          }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "image-hover-data" }, [
-                      _c("div", { staticClass: "product-elements-icon" }, [
                         _c(
-                          "ul",
+                          "div",
                           {
                             staticClass:
-                              "d-flex align-items-center m-0 p-0 list-inline"
+                              "embed-responsive embed-responsive-16by9"
                           },
                           [
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "pr-3 text-white",
-                                  attrs: { href: "#" }
-                                },
-                                [
-                                  _vm._v(" " + _vm._s(video.NbrJaime) + " "),
-                                  _c("i", { staticClass: "ri-thumb-up-line" })
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "pr-3 text-white",
-                                  attrs: { href: "#" }
-                                },
-                                [
-                                  _vm._v(" " + _vm._s(video.NbrComment) + " "),
-                                  _c("i", { staticClass: "ri-chat-3-line" })
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "pr-3 text-white",
-                                  attrs: { href: "#" }
-                                },
-                                [
-                                  _vm._v(" " + _vm._s(video.NbrPartage) + " "),
-                                  _c("i", {
-                                    staticClass: "ri-share-forward-line"
-                                  })
-                                ]
-                              )
-                            ])
+                            _c("iframe", {
+                              staticClass: "embed-responsive-item",
+                              attrs: {
+                                src: "videos/" + video.name,
+                                allowfullscreen: ""
+                              }
+                            })
                           ]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(0, true)
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "image-hover-data" }, [
+                          _c("div", { staticClass: "product-elements-icon" }, [
+                            _c(
+                              "ul",
+                              {
+                                staticClass:
+                                  "d-flex align-items-center m-0 p-0 list-inline"
+                              },
+                              [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "pr-3 text-white",
+                                      attrs: { href: "#" }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(video.NbrJaime) +
+                                          "\n                                        "
+                                      ),
+                                      _c("i", {
+                                        staticClass: "ri-thumb-up-line"
+                                      })
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "pr-3 text-white",
+                                      attrs: { href: "#" }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(video.NbrComment) +
+                                          "\n                                        "
+                                      ),
+                                      _c("i", { staticClass: "ri-chat-3-line" })
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "pr-3 text-white",
+                                      attrs: { href: "#" }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(video.NbrPartage) +
+                                          "\n                                        "
+                                      ),
+                                      _c("i", {
+                                        staticClass: "ri-share-forward-line"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(0, true)
+                      ]
+                    )
                   ]
                 )
-              ]
+              }),
+              0
             )
-          }),
-          0
-        )
-      ])
+          ])
+        : _c("div", { staticClass: "container" }, [_vm._m(1)])
     ]
   )
 }
@@ -77268,6 +77958,39 @@ var staticRenderFns = [
       },
       [_c("i", { staticClass: "ri-edit-2-fill" })]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "iq-card" }, [
+          _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
+            _c("div", { staticClass: "profile-header-image" }, [
+              _c("div", { staticClass: "profile-info p-4" }, [
+                _c("div", { staticClass: "user-detail" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "d-flex flex-wrap justify-content-between align-items-start"
+                    },
+                    [
+                      _c("h6", [
+                        _vm._v(
+                          "\n                                            You have no videos\n                                        "
+                        )
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -77296,130 +78019,168 @@ var render = function() {
     "div",
     { staticClass: "content-page", attrs: { id: "content-page" } },
     [
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "span",
-          {
-            staticClass: "badge badge-primary",
-            staticStyle: { cursor: "pointer", display: "none" },
-            attrs: { id: "New" },
-            on: { click: _vm.LoadFriends }
-          },
-          [_vm._v("New friends")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "row" },
-          _vm._l(_vm.friends, function(friend) {
-            return _c("div", { key: friend.id, staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "iq-card" }, [
-                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-                  _c("div", { staticClass: "profile-header-image" }, [
-                    _c("div", { staticClass: "cover-container" }, [
-                      _c("img", {
-                        staticClass: "rounded img-fluid w-100",
-                        attrs: {
-                          src: "images/user/" + friend.coverimg.name,
-                          alt: "profile-bg"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "profile-info p-4" }, [
-                      _c("div", { staticClass: "user-detail" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "d-flex flex-wrap justify-content-between align-items-start"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "profile-detail d-flex" },
-                              [
-                                _c("div", { staticClass: "profile-img pr-4" }, [
-                                  _c("img", {
-                                    staticClass: "avatar-130 img-fluid",
-                                    attrs: {
-                                      src:
-                                        "images/user/" + friend.profileimg.name,
-                                      alt: "profile-img"
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "user-data-block" }, [
-                                  _c("h4", {}, [
-                                    _vm._v(
-                                      "\n                                                    " +
-                                        _vm._s(friend.name) +
-                                        "\n                                                "
-                                    )
-                                  ]),
+      _vm.friends != null && _vm.friends.length > 0
+        ? _c("div", { staticClass: "container" }, [
+            _c(
+              "div",
+              { staticClass: "row" },
+              _vm._l(_vm.friends, function(friend) {
+                return _c("div", { key: friend.id, staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "iq-card" }, [
+                    _c(
+                      "div",
+                      { staticClass: "iq-card-body profile-page p-0" },
+                      [
+                        _c("div", { staticClass: "profile-header-image" }, [
+                          _c("div", { staticClass: "cover-container" }, [
+                            _c("img", {
+                              staticClass: "rounded img-fluid w-100",
+                              attrs: {
+                                src: "images/user/" + friend.coverimg.name,
+                                alt: "profile-bg"
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "profile-info p-4" }, [
+                            _c("div", { staticClass: "user-detail" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "d-flex flex-wrap justify-content-between align-items-start"
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "profile-detail d-flex" },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "profile-img pr-4" },
+                                        [
+                                          _c("img", {
+                                            staticClass: "avatar-130 img-fluid",
+                                            attrs: {
+                                              src:
+                                                "images/user/" +
+                                                friend.profileimg.name,
+                                              alt: "profile-img"
+                                            }
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "user-data-block" },
+                                        [
+                                          _c("h4", {}, [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(friend.name) +
+                                                "\n                                                "
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("h6", [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(friend.interested) +
+                                                "\n                                                "
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("p", [
+                                            _vm._v(
+                                              "\n                                                    " +
+                                                _vm._s(friend.about) +
+                                                "\n                                                "
+                                            )
+                                          ])
+                                        ]
+                                      )
+                                    ]
+                                  ),
                                   _vm._v(" "),
-                                  _c("h6", [
-                                    _vm._v(
-                                      "\n                                                    " +
-                                        _vm._s(friend.interested) +
-                                        "\n                                                "
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(
-                                      "\n                                                    " +
-                                        _vm._s(friend.about) +
-                                        "\n                                                "
-                                    )
-                                  ])
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "router-link",
-                              {
-                                attrs: {
-                                  to: {
-                                    name: "profile",
-                                    query: {
-                                      user: friend.id
-                                    }
-                                  },
-                                  tag: "a"
-                                }
-                              },
-                              [
-                                _c(
-                                  "button",
-                                  { staticClass: "btn btn-primary" },
-                                  [
-                                    _vm._v(
-                                      "\n                                                Visit profile\n                                            "
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        )
-                      ])
-                    ])
+                                  _c(
+                                    "router-link",
+                                    {
+                                      attrs: {
+                                        to: {
+                                          name: "profile",
+                                          query: {
+                                            user: friend.id
+                                          }
+                                        },
+                                        tag: "a"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "button",
+                                        { staticClass: "btn btn-primary" },
+                                        [
+                                          _vm._v(
+                                            "\n                                                Visit profile\n                                            "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          ])
+                        ])
+                      ]
+                    )
                   ])
                 ])
-              ])
-            ])
-          }),
-          0
-        )
-      ])
+              }),
+              0
+            )
+          ])
+        : _c("div", { staticClass: "container" }, [_vm._m(0)])
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "iq-card" }, [
+          _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
+            _c("div", { staticClass: "profile-header-image" }, [
+              _c("div", { staticClass: "profile-info p-4" }, [
+                _c("div", { staticClass: "user-detail" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "d-flex flex-wrap justify-content-between align-items-start"
+                    },
+                    [
+                      _c("h6", [
+                        _vm._v(
+                          "\n                                            Start making some friends so\n                                            they show up in here\n                                        "
+                        )
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -78652,108 +79413,113 @@ var render = function() {
             _c("div", { staticClass: "iq-card" }, [
               _vm._m(0),
               _vm._v(" "),
-              _c("div", { staticClass: "iq-card-body" }, [
-                _c(
-                  "ul",
-                  { staticClass: "request-list list-inline m-0 p-0" },
-                  [
-                    _vm._l(_vm.friendRqs, function(friendRq) {
-                      return _c(
-                        "li",
-                        {
-                          key: friendRq.id,
-                          staticClass: "d-flex align-items-center"
-                        },
-                        [
-                          _c("div", { staticClass: "user-img img-fluid" }, [
-                            _c("img", {
-                              staticClass: "rounded-circle avatar-40",
-                              attrs: {
-                                src: "images/user/" + friendRq.profileimg.name,
-                                alt: "story-img"
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "media-support-info ml-3" },
+              _vm.friendRqs != null && _vm.friendRqs.length > 0
+                ? _c("div", { staticClass: "iq-card-body" }, [
+                    _c(
+                      "ul",
+                      { staticClass: "request-list list-inline m-0 p-0" },
+                      [
+                        _vm._l(_vm.friendRqs, function(friendRq) {
+                          return _c(
+                            "li",
+                            {
+                              key: friendRq.id,
+                              staticClass: "d-flex align-items-center"
+                            },
                             [
-                              _c("h6", [_vm._v(_vm._s(friendRq.name))]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "mb-0" }, [
-                                _vm._v(
-                                  "\n                                        " +
-                                    _vm._s(friendRq.FriendCount) +
-                                    " friends\n                                    "
-                                )
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "d-flex align-items-center" },
-                            [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "mr-3 btn btn-primary rounded",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.AcceptRequest(friendRq.id)
-                                    }
+                              _c("div", { staticClass: "user-img img-fluid" }, [
+                                _c("img", {
+                                  staticClass: "rounded-circle avatar-40",
+                                  attrs: {
+                                    src:
+                                      "images/user/" + friendRq.profileimg.name,
+                                    alt: "story-img"
                                   }
-                                },
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "media-support-info ml-3" },
                                 [
-                                  _vm._v(
-                                    "\n                                        Confirm\n                                    "
-                                  )
+                                  _c("h6", [_vm._v(_vm._s(friendRq.name))]),
+                                  _vm._v(" "),
+                                  _c("p", { staticClass: "mb-0" }, [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(friendRq.FriendCount) +
+                                        " friends\n                                    "
+                                    )
+                                  ])
                                 ]
                               ),
                               _vm._v(" "),
                               _c(
-                                "button",
-                                {
-                                  staticClass: "mr-3 btn btn-secondary rounded",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.DeleteRequest(friendRq.id)
-                                    }
-                                  }
-                                },
+                                "div",
+                                { staticClass: "d-flex align-items-center" },
                                 [
-                                  _vm._v(
-                                    "\n                                        Delete Request\n                                    "
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "mr-3 btn btn-primary rounded",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.AcceptRequest(friendRq.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        Confirm\n                                    "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "mr-3 btn btn-secondary rounded",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.DeleteRequest(friendRq.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        Delete Request\n                                    "
+                                      )
+                                    ]
                                   )
                                 ]
                               )
                             ]
                           )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    _vm.show
-                      ? _c("li", { staticClass: "d-block text-center" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-request",
-                              on: { click: _vm.loadAll }
-                            },
-                            [_vm._v("View More Request")]
-                          )
-                        ])
-                      : _vm._e()
-                  ],
-                  2
-                )
-              ])
+                        }),
+                        _vm._v(" "),
+                        _vm.show
+                          ? _c("li", { staticClass: "d-block text-center" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-request",
+                                  on: { click: _vm.loadAll }
+                                },
+                                [_vm._v("View More Request")]
+                              )
+                            ])
+                          : _vm._e()
+                      ],
+                      2
+                    )
+                  ])
+                : _c("div", { staticClass: "iq-card-body" }, [_vm._m(1)])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "iq-card" }, [
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "iq-card-body" }, [
                 _c(
@@ -78786,7 +79552,7 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
-                        _vm._m(2, true)
+                        _vm._m(3, true)
                       ]
                     )
                   }),
@@ -78818,6 +79584,18 @@ var staticRenderFns = [
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "request-list list-inline m-0 p-0" }, [
+      _c("div", { staticClass: "d-flex align-items-center" }, [
+        _c("div", { staticClass: "d-flex align-items-center" }, [
+          _c("h6", [_vm._v("You have no friend requests")])
+        ])
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -78964,9 +79742,9 @@ var render = function() {
     [
       _c("div", { staticClass: "right-sidebar-panel p-0" }, [
         _c("div", { staticClass: "iq-card shadow-none" }, [
-          _c("div", { staticClass: "iq-card-body p-0" }, [
-            _vm.friends
-              ? _c(
+          _vm.friends != null && _vm.friends.length > 0
+            ? _c("div", { staticClass: "iq-card-body p-0" }, [
+                _c(
                   "div",
                   { staticClass: "media-height p-3" },
                   _vm._l(_vm.friends, function(friend) {
@@ -78978,71 +79756,101 @@ var render = function() {
                       },
                       [
                         _c(
-                          "router-link",
+                          "div",
                           {
-                            staticStyle: {
-                              cursor: "pointer",
-                              width: "100%",
-                              display: "flex"
-                            },
-                            attrs: {
-                              to: {
-                                name: "chat",
-                                query: { user: friend.id }
-                              },
-                              tag: "div"
-                            }
+                            staticClass: "iq-profile-avatar",
+                            class: friend.statu
                           },
                           [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "iq-profile-avatar",
-                                class: friend.statu
-                              },
-                              [
-                                _c("img", {
-                                  staticClass: "rounded-circle avatar-50",
-                                  attrs: {
-                                    src:
-                                      "images/user/" + friend.profileimg.name,
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "media-body ml-3" }, [
-                              _c("h6", { staticClass: "mb-0" }, [
-                                _vm._v(
-                                  "\n                                            " +
-                                    _vm._s(friend.name) +
-                                    "\n                                    "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "mb-0" }, [
-                                _vm._v(_vm._s(friend.time))
-                              ])
-                            ])
+                            _c("img", {
+                              staticClass: "rounded-circle avatar-50",
+                              attrs: {
+                                src: "images/user/" + friend.profileimg.name,
+                                alt: ""
+                              }
+                            })
                           ]
-                        )
-                      ],
-                      1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "media-body ml-3" }, [
+                          _c(
+                            "h6",
+                            { staticClass: "mb-0" },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  attrs: {
+                                    to: {
+                                      name: "chat",
+                                      query: { user: friend.id }
+                                    },
+                                    tag: "a"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(friend.name) +
+                                      "\n                                "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "mb-0" }, [
+                            _vm._v(_vm._s(friend.time))
+                          ])
+                        ])
+                      ]
                     )
                   }),
                   0
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm._m(0)
-          ])
+                ),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            : _c("div", { staticClass: "iq-card-body p-0" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2)
+              ])
         ])
       ])
     ]
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "right-sidebar-toggle bg-primary mt-3" }, [
+      _c("i", { staticClass: "ri-arrow-left-line side-left-icon" }),
+      _vm._v(" "),
+      _c("i", { staticClass: "ri-arrow-right-line side-right-icon" }, [
+        _c("span", { staticClass: "ml-3 d-inline-block" }, [
+          _vm._v("Close Menu")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "media-height p-3" }, [
+      _c("div", { staticClass: "media align-items-center mb-4" }, [
+        _c("h6", [
+          _vm._v(
+            "\n                            Start making some friends so they show up in\n                            here\n                        "
+          )
+        ])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -80600,7 +81408,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown iq-sub-dropdown-large" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
-              _vm.loadedReqs
+              _vm.allReqs != null && _vm.allReqs.length > 0
                 ? _c(
                     "div",
                     { staticClass: "iq-card-body p-0 " },
@@ -80752,13 +81560,37 @@ var render = function() {
                     ],
                     2
                   )
-                : _vm._e()
+                : _c("div", { staticClass: "iq-card-body p-0 " }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "text-center" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "mr-3 btn text-primary",
+                            attrs: { to: "/friendRequest", tag: "a", exact: "" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                People you may know\n                            "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ])
             ])
           ])
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item" }, [
-          _vm._m(0),
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
@@ -80766,7 +81598,7 @@ var render = function() {
                 "div",
                 { staticClass: "iq-card-body p-0 " },
                 [
-                  _vm._m(1),
+                  _vm._m(3),
                   _vm._v(" "),
                   _vm._l(_vm.Notifications, function(notification) {
                     return _c(
@@ -80856,91 +81688,125 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
-              _c(
-                "div",
-                { staticClass: "iq-card-body p-0 " },
-                [
-                  _c("div", { staticClass: "bg-primary p-3" }, [
-                    _c("h5", { staticClass: "mb-0 text-white" }, [
-                      _vm._v("\n                                All Messages"),
-                      _c(
-                        "small",
-                        { staticClass: "badge  badge-light float-right pt-1" },
-                        [_vm._v(_vm._s(_vm.msgCount))]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.messages, function(message) {
-                    return _c(
-                      "router-link",
-                      {
-                        key: message.id,
-                        staticClass: "iq-sub-card",
-                        attrs: {
-                          to: {
-                            name: "chat",
-                            query: { user: message.id }
+              _vm.messages != null && _vm.messages.length > 0
+                ? _c(
+                    "div",
+                    { staticClass: "iq-card-body p-0 " },
+                    [
+                      _c("div", { staticClass: "bg-primary p-3" }, [
+                        _c("h5", { staticClass: "mb-0 text-white" }, [
+                          _vm._v(
+                            "\n                                All Messages"
+                          ),
+                          _c(
+                            "small",
+                            {
+                              staticClass: "badge  badge-light float-right pt-1"
+                            },
+                            [_vm._v(_vm._s(_vm.msgCount))]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.messages, function(message) {
+                        return _c(
+                          "router-link",
+                          {
+                            key: message.id,
+                            staticClass: "iq-sub-card",
+                            attrs: {
+                              to: {
+                                name: "chat",
+                                query: { user: message.id }
+                              },
+                              tag: "a"
+                            }
                           },
-                          tag: "a"
-                        }
-                      },
-                      [
-                        _c("div", { staticClass: "media align-items-center" }, [
-                          _c("div", {}, [
-                            _c("img", {
-                              staticClass: "avatar-40 rounded",
-                              attrs: { src: message.img, alt: "profile" }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "media-body ml-3" }, [
-                            _c("h6", { staticClass: "mb-0 " }, [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(message.name) +
-                                  "\n                                    "
-                              )
-                            ]),
-                            _vm._v(" "),
+                          [
                             _c(
-                              "small",
-                              { staticClass: "float-left font-size-12" },
+                              "div",
+                              { staticClass: "media align-items-center" },
                               [
-                                _vm._v(
-                                  _vm._s(message.count) +
-                                    " unread\n                                        messages"
-                                )
+                                _c("div", {}, [
+                                  _c("img", {
+                                    staticClass: "avatar-40 rounded",
+                                    attrs: { src: message.img, alt: "profile" }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "media-body ml-3" }, [
+                                  _c("h6", { staticClass: "mb-0 " }, [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(message.name) +
+                                        "\n                                    "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "small",
+                                    { staticClass: "float-left font-size-12" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(message.count) +
+                                          " unread\n                                        messages"
+                                      )
+                                    ]
+                                  )
+                                ])
                               ]
                             )
-                          ])
-                        ])
-                      ]
-                    )
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "text-center" },
-                    [
+                          ]
+                        )
+                      }),
+                      _vm._v(" "),
                       _c(
-                        "router-link",
-                        {
-                          staticClass: "mr-3 btn text-primary",
-                          attrs: { to: "/chat", tag: "a", exact: "" }
-                        },
+                        "div",
+                        { staticClass: "text-center" },
                         [
-                          _vm._v(
-                            "\n                                View More Messages\n                            "
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "mr-3 btn text-primary",
+                              attrs: { to: "/chat", tag: "a", exact: "" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                View More Messages\n                            "
+                              )
+                            ]
                           )
-                        ]
+                        ],
+                        1
                       )
                     ],
-                    1
+                    2
                   )
-                ],
-                2
-              )
+                : _c("div", { staticClass: "iq-card-body p-0 " }, [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "text-center" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "mr-3 btn text-primary",
+                            attrs: { to: "/chat", tag: "a", exact: "" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Go to chat\n                            "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ])
             ])
           ])
         ]),
@@ -80970,6 +81836,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "bg-primary p-3" }, [
+      _c("h5", { staticClass: "mb-0 text-white" }, [
+        _vm._v(
+          "\n                                Friend Request\n                            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iq-friend-request" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between"
+        },
+        [
+          _c("div", { staticClass: "d-flex align-items-center" }, [
+            _c("h6", [_vm._v("You have no friend requests")])
+          ])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "a",
       { staticClass: "search-toggle iq-waves-effect", attrs: { href: "#" } },
@@ -80990,6 +81887,28 @@ var staticRenderFns = [
         _c("small", { staticClass: "badge  badge-light float-right pt-1" }, [
           _vm._v("4")
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "bg-primary p-3" }, [
+      _c("h5", { staticClass: "mb-0 text-white" }, [
+        _vm._v(
+          "\n                                All Messages\n                            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "iq-sub-card" }, [
+      _c("div", { staticClass: "media align-items-center" }, [
+        _c("h6", [_vm._v("You have no messages")])
       ])
     ])
   }
@@ -81833,38 +82752,778 @@ var render = function() {
         _c("div", { staticClass: "iq-card-body" }, [
           _c("h2", [_vm._v("Friends")]),
           _vm._v(" "),
-          _c("div", { staticClass: "friend-list-tab mt-2" }, [
-            _c("div", { staticClass: "tab-content" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "tab-pane fade active show",
-                  attrs: { id: "all-friends", role: "tabpanel" }
-                },
-                [
-                  _c("div", { staticClass: "iq-card-body p-0" }, [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "badge badge-primary",
-                        staticStyle: { cursor: "pointer", display: "none" },
-                        attrs: { id: "New" },
-                        on: { click: _vm.LoadFriends }
-                      },
-                      [_vm._v("New friends")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "row" },
-                      _vm._l(_vm.FriendLists, function(FriendList) {
-                        return _c(
+          _vm.FriendLists != null &&
+          _vm.FriendLists.length > 0 &&
+          _vm.status == "current"
+            ? _c("div", { staticClass: "friend-list-tab mt-2" }, [
+                _c("div", { staticClass: "tab-content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade active show",
+                      attrs: { id: "all-friends", role: "tabpanel" }
+                    },
+                    [
+                      _c("div", { staticClass: "iq-card-body p-0" }, [
+                        _c(
                           "div",
-                          {
-                            key: FriendList.id,
-                            staticClass: "col-md-6 col-lg-6 mb-3"
-                          },
-                          [
+                          { staticClass: "row" },
+                          _vm._l(_vm.FriendLists, function(FriendList) {
+                            return _c(
+                              "div",
+                              {
+                                key: FriendList.id,
+                                staticClass: "col-md-6 col-lg-6 mb-3"
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "iq-friendlist-block" },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "d-flex align-items-center justify-content-between"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "d-flex align-items-center"
+                                          },
+                                          [
+                                            _c(
+                                              "router-link",
+                                              {
+                                                attrs: {
+                                                  to: {
+                                                    name: "profile",
+                                                    query: {
+                                                      user: FriendList.id
+                                                    }
+                                                  },
+                                                  tag: "a"
+                                                }
+                                              },
+                                              [
+                                                _c("a", [
+                                                  _c("img", {
+                                                    staticStyle: {
+                                                      width: "150px",
+                                                      height: "150px"
+                                                    },
+                                                    attrs: {
+                                                      src:
+                                                        "images/user/" +
+                                                        FriendList.profileimg
+                                                          .name,
+                                                      alt: "profile-img"
+                                                    }
+                                                  })
+                                                ])
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "friend-info ml-3"
+                                              },
+                                              [
+                                                _c("h5", [
+                                                  _vm._v(
+                                                    "\n                                                        " +
+                                                      _vm._s(FriendList.name) +
+                                                      "\n                                                    "
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "p",
+                                                  { staticClass: "mb-0" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                        " +
+                                                        _vm._s(
+                                                          FriendList.FriendCount
+                                                        ) +
+                                                        "\n                                                        friends\n                                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "iq-card-header-toolbar d-flex align-items-center"
+                                          },
+                                          [
+                                            _vm.status == "current"
+                                              ? _c("div", [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mr-2 btn btn-danger",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.RemoveFriend(
+                                                            FriendList.id
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "ri-check-line mr-1 text-white font-size-16"
+                                                      }),
+                                                      _vm._v(
+                                                        "\n                                                        Unfriend\n                                                    "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              : _vm._e()
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            : _vm.FriendLists != null &&
+              _vm.FriendLists.length > 0 &&
+              _vm.status != "current"
+            ? _c("div", { staticClass: "friend-list-tab mt-2" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "tab-content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade active show",
+                      attrs: { id: "all-friends", role: "tabpanel" }
+                    },
+                    [
+                      _c("div", { staticClass: "iq-card-body p-0" }, [
+                        _c(
+                          "div",
+                          { staticClass: "row" },
+                          _vm._l(_vm.FriendLists, function(FriendList) {
+                            return _c(
+                              "div",
+                              {
+                                key: FriendList.id,
+                                staticClass: "col-md-6 col-lg-6 mb-3"
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "iq-friendlist-block" },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "d-flex align-items-center justify-content-between"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "d-flex align-items-center"
+                                          },
+                                          [
+                                            _c(
+                                              "router-link",
+                                              {
+                                                attrs: {
+                                                  to: {
+                                                    name: "profile",
+                                                    query: {
+                                                      user: FriendList.id
+                                                    }
+                                                  },
+                                                  tag: "a"
+                                                }
+                                              },
+                                              [
+                                                _c("a", [
+                                                  _c("img", {
+                                                    staticStyle: {
+                                                      width: "150px",
+                                                      height: "150px"
+                                                    },
+                                                    attrs: {
+                                                      src:
+                                                        "images/user/" +
+                                                        FriendList.profileimg
+                                                          .name,
+                                                      alt: "profile-img"
+                                                    }
+                                                  })
+                                                ])
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "friend-info ml-3"
+                                              },
+                                              [
+                                                _c("h5", [
+                                                  _vm._v(
+                                                    "\n                                                        " +
+                                                      _vm._s(FriendList.name) +
+                                                      "\n                                                    "
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "p",
+                                                  { staticClass: "mb-0" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                        " +
+                                                        _vm._s(
+                                                          FriendList.FriendCount
+                                                        ) +
+                                                        "\n                                                        friends\n                                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "iq-card-header-toolbar d-flex align-items-center"
+                                          },
+                                          [
+                                            FriendList.button == "remove"
+                                              ? _c("div", [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mr-2 btn btn-danger",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.RemoveFriend(
+                                                            FriendList.id
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "ri-check-line mr-1 text-white font-size-16"
+                                                      }),
+                                                      _vm._v(
+                                                        "\n                                                        Unfriend\n                                                    "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              : FriendList.button == "add"
+                                              ? _c("div", [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mr-2 btn btn-primary",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.sendRequest(
+                                                            FriendList.id
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "ri-user-add-line"
+                                                      }),
+                                                      _vm._v(
+                                                        "\n                                                        Add friend\n                                                    "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              : FriendList.button == "accept"
+                                              ? _c("div", [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mr-3 btn btn-primary rounded",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.AcceptRequest(
+                                                            FriendList.id
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "ri-user-follow-line mr-1 text-white font-size-16"
+                                                      }),
+                                                      _vm._v(
+                                                        "\n                                                        Accept request\n                                                    "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              : FriendList.button == "cancel"
+                                              ? _c("div", [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mr-3 btn btn-danger rounded",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.DeleteRequest(
+                                                            FriendList.id
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "ri-user-shared-line mr-1 text-white font-size-16"
+                                                      }),
+                                                      _vm._v(
+                                                        "\n                                                        Cancel request\n                                                    "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              : _vm._e()
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade",
+                      attrs: { id: "recently-add", role: "tabpanel" }
+                    },
+                    [
+                      _c("div", { staticClass: "iq-card-body p-0" }, [
+                        _c(
+                          "div",
+                          { staticClass: "row" },
+                          _vm._l(_vm.InCommon, function(FriendList) {
+                            return _c(
+                              "div",
+                              {
+                                key: FriendList.id,
+                                staticClass: "col-md-6 col-lg-6 mb-3"
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "iq-friendlist-block" },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "d-flex align-items-center justify-content-between"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "d-flex align-items-center"
+                                          },
+                                          [
+                                            _c(
+                                              "router-link",
+                                              {
+                                                attrs: {
+                                                  to: {
+                                                    name: "profile",
+                                                    query: {
+                                                      user: FriendList.id
+                                                    }
+                                                  },
+                                                  tag: "a"
+                                                }
+                                              },
+                                              [
+                                                _c("a", [
+                                                  _c("img", {
+                                                    staticStyle: {
+                                                      width: "150px",
+                                                      height: "150px"
+                                                    },
+                                                    attrs: {
+                                                      src:
+                                                        "images/user/" +
+                                                        FriendList.profileimg
+                                                          .name,
+                                                      alt: "profile-img"
+                                                    }
+                                                  })
+                                                ])
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "friend-info ml-3"
+                                              },
+                                              [
+                                                _c("h5", [
+                                                  _vm._v(
+                                                    "\n                                                        " +
+                                                      _vm._s(FriendList.name) +
+                                                      "\n                                                    "
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "p",
+                                                  { staticClass: "mb-0" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                        " +
+                                                        _vm._s(
+                                                          FriendList.FriendCount
+                                                        ) +
+                                                        "\n                                                        friends\n                                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "iq-card-header-toolbar d-flex align-items-center"
+                                          },
+                                          [
+                                            _c("div", [
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "mr-2 btn btn-danger",
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.RemoveFriend(
+                                                        FriendList.id
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "ri-check-line mr-1 text-white font-size-16"
+                                                  }),
+                                                  _vm._v(
+                                                    "\n                                                        Unfriend\n                                                    "
+                                                  )
+                                                ]
+                                              )
+                                            ])
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade",
+                      attrs: { id: "closefriends", role: "tabpanel" }
+                    },
+                    [
+                      _c("div", { staticClass: "iq-card-body p-0" }, [
+                        _c(
+                          "div",
+                          { staticClass: "row" },
+                          _vm._l(_vm.Others, function(FriendList) {
+                            return _c(
+                              "div",
+                              {
+                                key: FriendList.id,
+                                staticClass: "col-md-6 col-lg-6 mb-3"
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "iq-friendlist-block" },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "d-flex align-items-center justify-content-between"
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "d-flex align-items-center"
+                                          },
+                                          [
+                                            _c(
+                                              "router-link",
+                                              {
+                                                attrs: {
+                                                  to: {
+                                                    name: "profile",
+                                                    query: {
+                                                      user: FriendList.id
+                                                    }
+                                                  },
+                                                  tag: "a"
+                                                }
+                                              },
+                                              [
+                                                _c("a", [
+                                                  _c("img", {
+                                                    staticStyle: {
+                                                      width: "150px",
+                                                      height: "150px"
+                                                    },
+                                                    attrs: {
+                                                      src:
+                                                        "images/user/" +
+                                                        FriendList.profileimg
+                                                          .name,
+                                                      alt: "profile-img"
+                                                    }
+                                                  })
+                                                ])
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass: "friend-info ml-3"
+                                              },
+                                              [
+                                                _c("h5", [
+                                                  _vm._v(
+                                                    "\n                                                        " +
+                                                      _vm._s(FriendList.name) +
+                                                      "\n                                                    "
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "p",
+                                                  { staticClass: "mb-0" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                        " +
+                                                        _vm._s(
+                                                          FriendList.FriendCount
+                                                        ) +
+                                                        "\n                                                        friends\n                                                    "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "iq-card-header-toolbar d-flex align-items-center"
+                                          },
+                                          [
+                                            FriendList.button == "accept"
+                                              ? _c("div", [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mr-3 btn btn-primary rounded",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.AcceptRequest(
+                                                            FriendList.id
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "ri-user-follow-line mr-1 text-white font-size-16"
+                                                      }),
+                                                      _vm._v(
+                                                        "\n                                                        Accept request\n                                                    "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              : FriendList.button == "cancel"
+                                              ? _c("div", [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mr-3 btn btn-danger rounded",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.DeleteRequest(
+                                                            FriendList.id
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "ri-user-shared-line mr-1 text-white font-size-16"
+                                                      }),
+                                                      _vm._v(
+                                                        "\n                                                        Cancel request\n                                                    "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                              : _c("div", [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mr-2 btn btn-primary",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.sendRequest(
+                                                            FriendList.id
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "ri-user-add-line"
+                                                      }),
+                                                      _vm._v(
+                                                        "\n                                                        Add friend\n                                                    "
+                                                      )
+                                                    ]
+                                                  )
+                                                ])
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            : _c("div", { staticClass: "friend-list-tab mt-2" }, [
+                _c("div", { staticClass: "tab-content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane fade active show",
+                      attrs: { id: "all-friends", role: "tabpanel" }
+                    },
+                    [
+                      _c("div", { staticClass: "iq-card-body p-0" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-6 col-lg-6 mb-3" }, [
                             _c("div", { staticClass: "iq-friendlist-block" }, [
                               _c(
                                 "div",
@@ -81876,120 +83535,86 @@ var render = function() {
                                   _c(
                                     "div",
                                     {
-                                      staticClass: "d-flex align-items-center"
-                                    },
-                                    [
-                                      _c(
-                                        "router-link",
-                                        {
-                                          attrs: {
-                                            to: {
-                                              name: "profile",
-                                              query: {
-                                                user: FriendList.id
-                                              }
-                                            },
-                                            tag: "a"
-                                          }
-                                        },
-                                        [
-                                          _c("a", [
-                                            _c("img", {
-                                              staticStyle: {
-                                                width: "150px",
-                                                height: "150px"
-                                              },
-                                              attrs: {
-                                                src:
-                                                  "images/user/" +
-                                                  FriendList.profileimg.name,
-                                                alt: "profile-img"
-                                              }
-                                            })
-                                          ])
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "friend-info ml-3" },
-                                        [
-                                          _c("h5", [
-                                            _vm._v(
-                                              "\n                                                        " +
-                                                _vm._s(FriendList.name) +
-                                                "\n                                                    "
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("p", { staticClass: "mb-0" }, [
-                                            _vm._v(
-                                              "\n                                                        " +
-                                                _vm._s(FriendList.FriendCount) +
-                                                "\n                                                        friends\n                                                    "
-                                            )
-                                          ])
-                                        ]
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
                                       staticClass:
                                         "iq-card-header-toolbar d-flex align-items-center"
                                     },
                                     [
                                       _vm.status == "current"
                                         ? _c("div", [
-                                            _c(
-                                              "button",
-                                              {
-                                                staticClass:
-                                                  "mr-2 btn btn-danger",
-                                                on: {
-                                                  click: function($event) {
-                                                    return _vm.RemoveFriend(
-                                                      FriendList.id
-                                                    )
-                                                  }
-                                                }
-                                              },
-                                              [
-                                                _c("i", {
-                                                  staticClass:
-                                                    "ri-check-line mr-1 text-white font-size-16"
-                                                }),
-                                                _vm._v(
-                                                  "\n                                                        Unfriend\n                                                    "
-                                                )
-                                              ]
+                                            _vm._v(
+                                              "\n                                                    Start making some\n                                                    friends so they show up\n                                                    in here\n                                                "
                                             )
                                           ])
-                                        : _vm._e()
+                                        : _c("div", [
+                                            _vm._v(
+                                              "\n                                                    Send them friend a\n                                                    request and be their\n                                                    first friend\n                                                "
+                                            )
+                                          ])
                                     ]
                                   )
                                 ]
                               )
                             ])
-                          ]
-                        )
-                      }),
-                      0
-                    )
-                  ])
-                ]
-              )
-            ])
-          ])
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ])
         ])
       ])
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      {
+        staticClass:
+          "nav nav-pills d-flex align-items-center justify-content-left friend-list-items p-0 mb-2"
+      },
+      [
+        _c("li", [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active",
+              attrs: { "data-toggle": "pill", href: "#all-friends" }
+            },
+            [_vm._v("All Friends")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: { "data-toggle": "pill", href: "#recently-add" }
+            },
+            [_vm._v("Friends In Common")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: { "data-toggle": "pill", href: "#closefriends" }
+            },
+            [_vm._v("Other friends")]
+          )
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 

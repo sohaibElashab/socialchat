@@ -2,49 +2,62 @@
     <div class="right-sidebar-mini" style="z-index: ">
         <div class="right-sidebar-panel p-0">
             <div class="iq-card shadow-none">
-                <div class="iq-card-body p-0">
-                    <div class="media-height p-3" v-if="friends">
-                        <!-- <router-link
-                            :to="{
-                                name: 'chat',
-                                query: { user: friend.id }
-                            }"
-                            tag="div"
-                        > -->
+                <div
+                    class="iq-card-body p-0"
+                    v-if="friends != null && friends.length > 0"
+                >
+                    <div class="media-height p-3">
+                        <div
+                            class="media align-items-center mb-4"
+                            v-for="friend in friends"
+                            :key="friend.id"
+                        >
                             <div
-                                class="media align-items-center mb-4"
-                                v-for="friend in friends"
-                                :key="friend.id"
+                                class="iq-profile-avatar"
+                                :class="friend.statu"
                             >
-                                <router-link
-                                    :to="{
-                                        name: 'chat',
-                                        query: { user: friend.id }
-                                    }"
-                                    tag="div" 
-                                    style="cursor: pointer;width: 100%;display: flex;">
-                                    <div
-                                        class="iq-profile-avatar"
-                                        :class="friend.statu"
-                                    >
-                                        <img
-                                            class="rounded-circle avatar-50"
-                                            :src="
-                                                `images/user/${friend.profileimg.name}`
-                                            "
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div class="media-body ml-3">
-                                        <h6 class="mb-0">
-                                            <!-- <a href="#">{{friend.name}}</a>:to="friend.href" -->
-                                                {{ friend.name }}
-                                        </h6>
-                                        <p class="mb-0">{{ friend.time }}</p>
-                                    </div>
-                                </router-link>
+                                <img
+                                    class="rounded-circle avatar-50"
+                                    :src="
+                                        `images/user/${friend.profileimg.name}`
+                                    "
+                                    alt=""
+                                />
                             </div>
-                        <!-- </router-link> -->
+                            <div class="media-body ml-3">
+                                <h6 class="mb-0">
+                                    <!-- <a href="#">{{friend.name}}</a>:to="friend.href" -->
+                                    <router-link
+                                        :to="{
+                                            name: 'chat',
+                                            query: { user: friend.id }
+                                        }"
+                                        tag="a"
+                                    >
+                                        {{ friend.name }}
+                                    </router-link>
+                                </h6>
+                                <p class="mb-0">{{ friend.time }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-sidebar-toggle bg-primary mt-3">
+                        <i class="ri-arrow-left-line side-left-icon"></i>
+                        <i class="ri-arrow-right-line side-right-icon"
+                            ><span class="ml-3 d-inline-block"
+                                >Close Menu</span
+                            ></i
+                        >
+                    </div>
+                </div>
+                <div class="iq-card-body p-0" v-else>
+                    <div class="media-height p-3">
+                        <div class="media align-items-center mb-4">
+                            <h6>
+                                Start making some friends so they show up in
+                                here
+                            </h6>
+                        </div>
                     </div>
                     <div class="right-sidebar-toggle bg-primary mt-3">
                         <i class="ri-arrow-left-line side-left-icon"></i>

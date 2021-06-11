@@ -13,7 +13,10 @@
                                 </h4>
                             </div>
                         </div>
-                        <div class="iq-card-body">
+                        <div
+                            class="iq-card-body"
+                            v-if="friendRqs != null && friendRqs.length > 0"
+                        >
                             <ul class="request-list list-inline m-0 p-0">
                                 <li
                                     class="d-flex align-items-center"
@@ -56,6 +59,15 @@
                                     >
                                 </li>
                             </ul>
+                        </div>
+                        <div class="iq-card-body" v-else>
+                            <div class="request-list list-inline m-0 p-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <h6>You have no friend requests</h6>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="iq-card">

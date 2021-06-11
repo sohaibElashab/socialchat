@@ -151,6 +151,7 @@ class FriendController extends Controller
         }
         $new = $new->unique();
         $friends = User::whereIn('id',$new)->get();
+
         foreach ($friends as  $user) {
             $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
             $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
@@ -159,7 +160,40 @@ class FriendController extends Controller
             $user->time = "Offline";
         }
 
+        $authID = auth()->user()->id;
+
+        $authFriends = $this->Getfriends($authID);
+        $From = $this->ReqFrom();
+        $To = $this->ReqTo();
+
+        foreach ($friends as $f) {
+            if($authFriends->contains($f)){
+                $f->button = "remove";
+            }else{
+                $f->button = "add";
+            }
+            if($From->contains('user_from',$f->id)){
+                $f->button = "accept";
+            }
+            if($To->contains('user_to',$f->id)){
+                $f->button = "cancel";
+            }
+
+        }
+
         return response()->json($friends);
+    }
+
+    public function ReqTo()
+    {
+        $id = auth()->user()->id;
+        return FriendRequest::where('user_from',$id)->where('status','sent')->get('user_to');
+    }
+    
+    public function ReqFrom()
+    {
+        $id = auth()->user()->id;
+        return FriendRequest::where('user_to',$id)->where('status','sent')->get('user_from');
     }
 
 
@@ -178,6 +212,65 @@ class FriendController extends Controller
         $friends = User::whereIn('id',$new)->get();
 
         return $friends->count();
+    }
+
+
+    public function Getfriends($id)
+    {   
+        $friends = Friend::where('user_id',$id)->orWhere('friend_id',$id)->get();
+        $new = collect();
+        foreach ($friends as $key => $friend) {
+            if($friend->user_id != $id){
+                $new->add($friend->user_id);
+            } elseif ($friend->friend_id != $id) {
+                $new->add($friend->friend_id);
+            }
+        }
+        $new = $new->unique();
+        $friends = User::whereIn('id',$new)->get();
+        foreach ($friends as  $user) {
+            $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+            $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
+            $user->FriendCount = $this->FriendCount($user->id);
+            $user->statu = "status-offline";
+            $user->time = "Offline";
+        }
+
+        return $friends;
+    }
+
+    public function FriendsInCommon(Request $request)
+    {
+        $authID = auth()->user()->id;
+        $userID = $request->id;
+
+        $authFriends = $this->Getfriends($authID);
+        $userFriends = $this->Getfriends($userID);
+
+        $common = collect();
+        $other = collect();
+
+        foreach ($userFriends as $friend) {
+            if($authFriends->contains($friend)){
+                $common->add($friend);
+            }else{
+                $other->add($friend);
+            }
+        }
+
+        $From = $this->ReqFrom();
+        $To = $this->ReqTo();
+
+        foreach ($other as $o) {
+            if($From->contains('user_from',$o->id)){
+                $o->button = "accept";
+            }
+            if($To->contains('user_to',$o->id)){
+                $o->button = "cancel";
+            }
+        }
+
+        return response()->json([$common,$other]);
     }
 
 

@@ -45,7 +45,10 @@
                 </a>
                 <div class="iq-sub-dropdown iq-sub-dropdown-large">
                     <div class="iq-card shadow-none m-0">
-                        <div class="iq-card-body p-0 " v-if="loadedReqs">
+                        <div
+                            class="iq-card-body p-0 "
+                            v-if="allReqs != null && allReqs.length > 0"
+                        >
                             <div class="bg-primary p-3">
                                 <h5 class="mb-0 text-white">
                                     Friend Request<small
@@ -106,6 +109,32 @@
                                     exact=""
                                 >
                                     View More Request
+                                </router-link>
+                            </div>
+                        </div>
+                        <div class="iq-card-body p-0 " v-else>
+                            <div class="bg-primary p-3">
+                                <h5 class="mb-0 text-white">
+                                    Friend Request
+                                </h5>
+                            </div>
+                            <div class="iq-friend-request">
+                                <div
+                                    class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between"
+                                >
+                                    <div class="d-flex align-items-center">
+                                        <h6>You have no friend requests</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <router-link
+                                    class="mr-3 btn text-primary"
+                                    to="/friendRequest"
+                                    tag="a"
+                                    exact=""
+                                >
+                                    People you may know
                                 </router-link>
                             </div>
                         </div>
@@ -183,7 +212,10 @@
                 </a>
                 <div class="iq-sub-dropdown">
                     <div class="iq-card shadow-none m-0">
-                        <div class="iq-card-body p-0 ">
+                        <div
+                            class="iq-card-body p-0 "
+                            v-if="messages != null && messages.length > 0"
+                        >
                             <div class="bg-primary p-3">
                                 <h5 class="mb-0 text-white">
                                     All Messages<small
@@ -229,6 +261,28 @@
                                     exact=""
                                 >
                                     View More Messages
+                                </router-link>
+                            </div>
+                        </div>
+                        <div class="iq-card-body p-0 " v-else>
+                            <div class="bg-primary p-3">
+                                <h5 class="mb-0 text-white">
+                                    All Messages
+                                </h5>
+                            </div>
+                            <div class="iq-sub-card">
+                                <div class="media align-items-center">
+                                    <h6>You have no messages</h6>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <router-link
+                                    class="mr-3 btn text-primary"
+                                    to="/chat"
+                                    tag="a"
+                                    exact=""
+                                >
+                                    Go to chat
                                 </router-link>
                             </div>
                         </div>
