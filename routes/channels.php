@@ -41,3 +41,7 @@ Broadcast::channel('sendText.{id}', function ($user, $id) {
     return Auth::check();
 });
 
+Broadcast::channel('newPost', function () {
+	return Auth::check(); 
+}); 
+

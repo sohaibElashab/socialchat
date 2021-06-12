@@ -1,482 +1,723 @@
 <template>
-
-   <div id="post-modal-data" class="iq-card iq-card-block iq-card-stretch" v-if="user">
-      <div class="iq-card-header d-flex justify-content-between">
-         <div class="iq-header-title">
-            <h4 class="card-title">Create Post</h4>
-         </div>
-      </div>
-      <div class="iq-card-body" id="HeadPost" style="cursor: pointer;" @click="open">
-         <div class="d-flex align-items-center">
-            <div class="user-img" >
-               <img :src="`images/user/${user.profileimg.name}`" alt="userimg" class="avatar-60 rounded-circle">
+    <div
+        id="post-modal-data"
+        class="iq-card iq-card-block iq-card-stretch"
+        v-if="user"
+    >
+        <div class="iq-card-header d-flex justify-content-between">
+            <div class="iq-header-title">
+                <h4 class="card-title">Create Post</h4>
             </div>
-            <form class="post-text ml-3 w-100" action="javascript:void();">
-               <input type="text" class="form-control rounded" placeholder="Write something here..." style="border:none;">
-            </form>
-         </div>
-         <hr>
-         <ul class="post-opt-block d-flex align-items-center list-inline m-0 p-0">
-            <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/07.png" alt="icon" class="img-fluid"> Photo</li>
-            <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="images/small/08.png" alt="icon" class="img-fluid"> Video</li>
-            <li class="iq-bg-primary rounded p-2 pointer mr-3"><a href="#"></a><img src="https://img.icons8.com/dusk/64/000000/like.png"  style="width: 24px;" alt="icon" class="img-fluid"> Feeling</li>
-         </ul>
-      </div>
-      <div id="BodyPost" class="mt-3" style="display : none" >
-         <div class="d-flex flex-column bd-highlight">
-            <div class="bd-highlight mb-2">
-               <div class="d-flex flex-wrap">
-                  <div class="media-support-user-img mr-3 ml-3">
-                     <img class="rounded-circle img-fluid" :src="`images/user/${user.profileimg.name}`" alt="">
-                  </div>
-                  <div class="media-support-info mt-2">
-                     <h5 class="mb-0 d-inline-block">{{user.name}}</h5>
-                     <p class="mb-0 text-primary" v-if="UserStatu">{{UserStatu}}</p>
-                  </div>
-                  <div class="iq-card-post-toolbar mr-4">
-                     <span class="dropdown-toggle" @click="close" role="button">
-                        <i data-dismiss="modal" class="ri-close-fill"></i>
-                     </span>
-                  </div>
-               </div>
+        </div>
+        <div
+            class="iq-card-body"
+            id="HeadPost"
+            style="cursor: pointer;"
+            @click="open"
+        >
+            <div class="d-flex align-items-center">
+                <div class="user-img">
+                    <img
+                        :src="`images/user/${user.profileimg.name}`"
+                        alt="userimg"
+                        class="avatar-60 rounded-circle"
+                    />
+                </div>
+                <form class="post-text ml-3 w-100" action="javascript:void();">
+                    <input
+                        type="text"
+                        class="form-control rounded"
+                        placeholder="Write something here..."
+                        style="border:none;"
+                    />
+                </form>
             </div>
-            <div class="bd-highlight justify-content-center mt-2">
-               <form class="post-text ml-3" action="javascript:void();">
-                  <VueEmoji ref="emoji" @input="onInput" height="100" class="emoji-div -create" />
-               </form>
-            </div>
-         </div> 
-         <hr>
-         <div v-if="postImgs.length > 0">
+            <hr />
+            <ul
+                class="post-opt-block d-flex align-items-center list-inline m-0 p-0"
+            >
+                <li class="iq-bg-primary rounded p-2 pointer mr-3">
+                    <a href="#"></a
+                    ><img
+                        src="images/small/07.png"
+                        alt="icon"
+                        class="img-fluid"
+                    />
+                    Photo
+                </li>
+                <li class="iq-bg-primary rounded p-2 pointer mr-3">
+                    <a href="#"></a
+                    ><img
+                        src="images/small/08.png"
+                        alt="icon"
+                        class="img-fluid"
+                    />
+                    Video
+                </li>
+                <li class="iq-bg-primary rounded p-2 pointer mr-3">
+                    <a href="#"></a
+                    ><img
+                        src="https://img.icons8.com/dusk/64/000000/like.png"
+                        style="width: 24px;"
+                        alt="icon"
+                        class="img-fluid"
+                    />
+                    Feeling
+                </li>
+            </ul>
+        </div>
+        <div id="BodyPost" class="mt-3" style="display : none">
             <div class="d-flex flex-column bd-highlight">
-               <div class="bd-highlight justify-content-center mt-2">
-                  <div class="add-images" v-for="(imgs , index) in postImgs" :key="index" >
-                     <button class="delete-btn" >
-                        <i class="ri-delete-bin-line" @click="removeFile(imgs.img)"></i>
-                     </button>
-                     <a href="javascript:void();" >
-                        <img :src="imgs.img" alt="post-image" class="img-add rounded">
-                     </a>
-                  </div>
-               </div>
-            </div> 
-            <hr>
-         </div> 
-         <div v-if="postVds">
-            <div class="d-flex flex-column bd-highlight">
-               <div class="bd-highlight justify-content-center mt-2">
-                  <div class="embed-responsive embed-responsive-16by9 add-video">
-                     <button class="delete-btn vd-btn" >
-                        <i class="ri-delete-bin-line" @click="removeFile(postVds)"></i>
-                     </button>
-                     <video controls >
-                        <source :src="postVds" type="video/mp4">
-                        <source :src="postVds" type="video/webm">
-                        <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
-                           Voici <a :href="postVds">un lien pour télécharger la vidéo</a>.</p>
-                     </video>
-                  </div>
-               </div>
-            </div> 
-            <hr>
-         </div> 
-         <ul class="d-flex flex-wrap align-items-center list-inline m-0 p-0">
-            <li class="col-md-12 mb-3">
-               <input type="file" name="addImg" id="addImg" @change="addImages" multiple accept="image/*" class="d-none" >
-               <label for="addImg" style="position: relative;width: 100%;">
-                  <div id="div-img" class="iq-bg-primary rounded p-2 pointer mr-3">
-                        <img src="images/small/07.png" alt="icon" class="img-fluid"> 
-                        Photo
-                  </div>
-               </label>
-            </li>
-            <li class="col-md-12 mb-3">
-               <input type="file" name="addvd" id="addvd" @change="addVd" accept="video/*" class="d-none" >
-               <label for="addvd" style="position: relative;width: 100%;">
-                  <div id="div-vd" class="iq-bg-primary rounded p-2 pointer mr-3">
-                        <img src="images/small/08.png" alt="icon" class="img-fluid"> 
-                        Video
-                  </div>
-               </label>
-            </li>
-            <li class="col-md-12 mb-3">
-               <div class="iq-bg-primary rounded p-2 pointer mr-3" @click="showFeelings()">
-                  <img src="https://img.icons8.com/dusk/64/000000/like.png"  style="width: 24px;" alt="icon" class="img-fluid"> 
-                  Feeling
-               </div>
-               <div class="collapse" :class="{ show: showFeeling }">
-                  <div class="feelings">
-                     <div :class="`feeling ${feeling.active}`" v-for="(feeling,index) in feelings" :key="index"  @click="SelectFeeling(index)">
-                           <div class="feelImg">
-                              <img :src="feeling.FeelImg" alt="feeling icon" style="width: 60%;">
-                           </div>
-                           <div class="feelSpan">
-                              <span> 
-                                 {{feeling.FeelTitle}}
-                              </span>
-                           </div>
-                     </div>
-                  </div>
-               </div>
-            </li>
-         </ul>
-         <button @click="createPost()" class="btn btn-primary d-block w-100 mt-3">Post</button>
-         <div id="warning" class="alert alert-warning mt-3" style="display:none;" role="alert" >
-            <strong>The post </strong> must conatin a text, photos, video, or feelings
-         </div>
-      </div>
+                <div class="bd-highlight mb-2">
+                    <div class="d-flex flex-wrap">
+                        <div class="media-support-user-img mr-3 ml-3">
+                            <img
+                                class="rounded-circle img-fluid"
+                                :src="`images/user/${user.profileimg.name}`"
+                                alt=""
+                            />
+                        </div>
+                        <div class="media-support-info mt-2">
+                            <h5 class="mb-0 d-inline-block">{{ user.name }}</h5>
+                            <p class="mb-0 text-primary" v-if="UserStatu">
+                                {{ UserStatu }}
+                            </p>
+                        </div>
+                        <div class="iq-card-post-toolbar mr-4">
+                            <span
+                                class="dropdown-toggle"
+                                @click="close"
+                                role="button"
+                            >
+                                <i
+                                    data-dismiss="modal"
+                                    class="ri-close-fill"
+                                ></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bd-highlight justify-content-center mt-2">
+                    <form class="post-text ml-3" action="javascript:void();">
+                        <!-- <VueEmoji
+                            ref="emoji"
+                            @input="onInput"
+                            height="100"
+                            class="emoji-div -create"
+                        /> -->
+                        <div class="wrapper">
+                            <textarea
+                                class="regular-input"
+                                placeholder="Message..."
+                                v-model="myText"
+                            ></textarea>
 
-      <!-- aria-hidden="true" class="modal fade" style="display: none;" -->
-      <!-- class="modal fade show" style="display: block; padding-right: 8px;" aria-modal="true" -->
-      <!-- <div class="modal fade" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="post-modalLabel" aria-hidden="true" style="display: none;">
-         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <h5 class="modal-title" id="post-modalLabel">Create Post</h5>
-               </div>
-               <div class="modal-body">
-                     <div class="d-flex flex-column bd-highlight">
-                        <div class="bd-highlight mb-2">
-                              <div class="d-flex flex-wrap">
-                              <div class="media-support-user-img mr-3">
-                                 <img class="rounded-circle img-fluid" :src="`images/user/${user.profileimg.name}`" alt="">
-                              </div>
-                              <div class="media-support-info mt-2">
-                                 <h5 class="mb-0 d-inline-block">{{user.name}}</h5>
-                                 <p class="mb-0 text-primary" v-if="UserStatu">{{UserStatu}}</p>
-                              </div>
-                              <div class="iq-card-post-toolbar">
-                                 <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                                    <i data-dismiss="modal" class="ri-close-fill"></i>
-                                 </span>
-                              </div>
-                           </div>
+                            <emoji-picker @emoji="append" :search="search">
+                                <div
+                                    class="emoji-invoker"
+                                    slot="emoji-invoker"
+                                    slot-scope="{
+                                        events: { click: clickEvent }
+                                    }"
+                                    @click.stop="clickEvent"
+                                >
+                                    <svg
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        width="24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"
+                                        />
+                                    </svg>
+                                </div>
+                                <div
+                                    slot="emoji-picker"
+                                    slot-scope="{ emojis, insert }"
+                                >
+                                    <div class="emoji-picker">
+                                        <div class="emoji-picker__search">
+                                            <input
+                                                type="text"
+                                                v-model="search"
+                                                v-focus
+                                            />
+                                        </div>
+                                        <div>
+                                            <div
+                                                v-for="(emojiGroup,
+                                                category) in emojis"
+                                                :key="category"
+                                            >
+                                                <h5 style="color:white">
+                                                    {{ category }}
+                                                </h5>
+                                                <div class="emojis">
+                                                    <span
+                                                        v-for="(emoji,
+                                                        emojiName) in emojiGroup"
+                                                        :key="emojiName"
+                                                        @click="insert(emoji)"
+                                                        :title="emojiName"
+                                                        >{{ emoji }}</span
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </emoji-picker>
                         </div>
-                        <div class="bd-highlight justify-content-center mt-2">
-                           <form class="post-text ml-3" action="javascript:void();">
-                              <VueEmoji ref="emoji" @input="onInput" height="100" class="emoji-div -create" />
-                           </form>
-                        </div>
-                     </div> 
-                     <hr>
-                     <div v-if="postImgs.length > 0">
-                        <div class="d-flex flex-column bd-highlight">
-                           <div class="bd-highlight justify-content-center mt-2">
-                              <div class="add-images" v-for="(imgs , index) in postImgs" :key="index" >
-                                 <button class="delete-btn" >
-                                    <i class="ri-delete-bin-line" @click="removeFile(imgs.img)"></i>
-                                 </button>
-                                 <a href="javascript:void();" >
-                                    <img :src="imgs.img" alt="post-image" class="img-add rounded">
-                                 </a>
-                              </div>
-                           </div>
-                        </div> 
-                        <hr>
-                     </div> 
-                     <div v-if="postVds">
-                        <div class="d-flex flex-column bd-highlight">
-                           <div class="bd-highlight justify-content-center mt-2">
-                              <div class="embed-responsive embed-responsive-16by9 add-video">
-                                 <button class="delete-btn vd-btn" >
-                                    <i class="ri-delete-bin-line" @click="removeFile(postVds)"></i>
-                                 </button>
-                                 <video controls >
-                                    <source :src="postVds" type="video/mp4">
-                                    <source :src="postVds" type="video/webm">
-                                    <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
-                                       Voici <a :href="postVds">un lien pour télécharger la vidéo</a>.</p>
-                                 </video>
-                              </div>
-                           </div>
-                        </div> 
-                        <hr>
-                     </div> 
-                     <ul class="d-flex flex-wrap align-items-center list-inline m-0 p-0">
-                        <li class="col-md-12 mb-3">
-                           <input type="file" name="addImg" id="addImg" @change="addImages" multiple accept="image/*" class="d-none" >
-                           <label for="addImg" style="position: relative;width: 100%;">
-                              <div id="div-img" class="iq-bg-primary rounded p-2 pointer mr-3">
-                                    <img src="images/small/07.png" alt="icon" class="img-fluid"> 
-                                    Photo
-                              </div>
-                           </label>
-                        </li>
-                        <li class="col-md-12 mb-3">
-                           <input type="file" name="addvd" id="addvd" @change="addVd" accept="video/*" class="d-none" >
-                           <label for="addvd" style="position: relative;width: 100%;">
-                              <div id="div-vd" class="iq-bg-primary rounded p-2 pointer mr-3">
-                                    <img src="images/small/08.png" alt="icon" class="img-fluid"> 
-                                    Video
-                              </div>
-                           </label>
-                        </li>
-                        <li class="col-md-12 mb-3">
-                           <div class="iq-bg-primary rounded p-2 pointer mr-3" @click="showFeelings()">
-                              <img src="https://img.icons8.com/dusk/64/000000/like.png"  style="width: 24px;" alt="icon" class="img-fluid"> 
-                              Feeling
-                           </div>
-                           <div class="collapse" :class="{ show: showFeeling }">
-                              <div class="feelings">
-                                 <div :class="`feeling ${feeling.active}`" v-for="(feeling,index) in feelings" :key="index"  @click="SelectFeeling(index)">
-                                       <div class="feelImg">
-                                          <img :src="feeling.FeelImg" alt="feeling icon" style="width: 60%;">
-                                       </div>
-                                       <div class="feelSpan">
-                                          <span> 
-                                             {{feeling.FeelTitle}}
-                                          </span>
-                                       </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </li>
-                     </ul>
-                     <button @click="createPost()" class="btn btn-primary d-block w-100 mt-3">Post</button>
-                     <div id="warning" class="alert alert-warning mt-3" style="display:none;" role="alert" >
-                        <strong>The post </strong> must conatin a text, photos, video, or feelings
-                     </div>
-               </div>
+                    </form>
+                </div>
             </div>
-         </div>
-      </div> -->
-   </div>
+            <hr />
+            <div v-if="postImgs.length > 0">
+                <div class="d-flex flex-column bd-highlight">
+                    <div class="bd-highlight justify-content-center mt-2">
+                        <div
+                            class="add-images"
+                            v-for="(imgs, index) in postImgs"
+                            :key="index"
+                        >
+                            <button class="delete-btn">
+                                <i
+                                    class="ri-delete-bin-line"
+                                    @click="removeFile(imgs.img)"
+                                ></i>
+                            </button>
+                            <a href="javascript:void();">
+                                <img
+                                    :src="imgs.img"
+                                    alt="post-image"
+                                    class="img-add rounded"
+                                />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div v-if="postVds">
+                <div class="d-flex flex-column bd-highlight">
+                    <div class="bd-highlight justify-content-center mt-2">
+                        <div
+                            class="embed-responsive embed-responsive-16by9 add-video"
+                        >
+                            <button class="delete-btn vd-btn">
+                                <i
+                                    class="ri-delete-bin-line"
+                                    @click="removeFile(postVds)"
+                                ></i>
+                            </button>
+                            <video controls>
+                                <source :src="postVds" type="video/mp4" />
+                                <source :src="postVds" type="video/webm" />
+                                <p>
+                                    Votre navigateur ne prend pas en charge les
+                                    vidéos HTML5. Voici
+                                    <a :href="postVds"
+                                        >un lien pour télécharger la vidéo</a
+                                    >.
+                                </p>
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <ul class="d-flex flex-wrap align-items-center list-inline m-0 p-0">
+                <li class="col-md-12 mb-3">
+                    <input
+                        type="file"
+                        name="addImg"
+                        id="addImg"
+                        @change="addImages"
+                        multiple
+                        accept="image/*"
+                        class="d-none"
+                    />
+                    <label for="addImg" style="position: relative;width: 100%;">
+                        <div
+                            id="div-img"
+                            class="iq-bg-primary rounded p-2 pointer mr-3"
+                        >
+                            <img
+                                src="images/small/07.png"
+                                alt="icon"
+                                class="img-fluid"
+                            />
+                            Photo
+                        </div>
+                    </label>
+                </li>
+                <li class="col-md-12 mb-3">
+                    <input
+                        type="file"
+                        name="addvd"
+                        id="addvd"
+                        @change="addVd"
+                        accept="video/*"
+                        class="d-none"
+                    />
+                    <label for="addvd" style="position: relative;width: 100%;">
+                        <div
+                            id="div-vd"
+                            class="iq-bg-primary rounded p-2 pointer mr-3"
+                        >
+                            <img
+                                src="images/small/08.png"
+                                alt="icon"
+                                class="img-fluid"
+                            />
+                            Video
+                        </div>
+                    </label>
+                </li>
+                <li class="col-md-12 mb-3">
+                    <div
+                        class="iq-bg-primary rounded p-2 pointer mr-3"
+                        @click="showFeelings()"
+                    >
+                        <img
+                            src="https://img.icons8.com/dusk/64/000000/like.png"
+                            style="width: 24px;"
+                            alt="icon"
+                            class="img-fluid"
+                        />
+                        Feeling
+                    </div>
+                    <div class="collapse" :class="{ show: showFeeling }">
+                        <div class="feelings">
+                            <div
+                                :class="`feeling ${feeling.active}`"
+                                v-for="(feeling, index) in feelings"
+                                :key="index"
+                                @click="SelectFeeling(index)"
+                            >
+                                <div class="feelImg">
+                                    <img
+                                        :src="feeling.FeelImg"
+                                        alt="feeling icon"
+                                        style="width: 60%;"
+                                    />
+                                </div>
+                                <div class="feelSpan">
+                                    <span>
+                                        {{ feeling.FeelTitle }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <button
+                @click="createPost()"
+                class="btn btn-primary d-block w-100 mt-3"
+            >
+                Post
+            </button>
+            <div
+                id="warning"
+                class="alert alert-warning mt-3"
+                style="display:none;"
+                role="alert"
+            >
+                <strong>The post </strong> must conatin a text, photos, video,
+                or feelings
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-import VueEmoji from 'emoji-vue'
+import VueEmoji from "emoji-vue";
+import EmojiPicker from "vue-emoji-picker";
 export default {
-   data(){
-      return{
-         user:null,
-         myText: "",
-         UserStatu: "",
-         image: null,
-         Images: [],
-         fruits : ["Banana","Orange","Apple","Mango"],
-         Videos: null,
-         showFeeling: false,
-         feelings: [
-            {
-               FeelImg: "https://img.icons8.com/color/48/000000/happy--v1.png",
-               FeelTitle: "Happy",
-               active: ""
-            },
-            {
-               FeelImg: "https://img.icons8.com/fluent/48/000000/sad.png",
-               FeelTitle: "Sad",
-               active: ""
-            },
-            {
-               FeelImg: "https://img.icons8.com/color/64/000000/in-love--v1.png",
-               FeelTitle: "Loved",
-               active: ""
-            },
-            {
-               FeelImg: "https://img.icons8.com/color/48/000000/angry.png",
-               FeelTitle: "Angry",
-               active: ""
-            },
-            {
-               FeelImg: "https://img.icons8.com/fluent/48/000000/crazy.png",
-               FeelTitle: "Crazy",
-               active: ""
-            },
-            {
-               FeelImg: "https://img.icons8.com/emoji/48/000000/drooling-face-emoji.png",
-               FeelTitle: "Hungry",
-               active: ""
-            },
-            {
-               FeelImg: "https://img.icons8.com/emoji/48/000000/sleeping-face.png",
-               FeelTitle: "Sleepy",
-               active: ""
-            },
-            {
-               FeelImg: "https://img.icons8.com/color/48/000000/bored.png",
-               FeelTitle: "Bored",
-               active: ""
-            },
-         ],
-         postImgs: [],
-         postVds: ""
-      }
-   },
-   methods: {
-      SelectFeeling(index){
-         var bl = false;
-         this.feelings.forEach(element => {
-            if(element == this.feelings[index]){
+    data() {
+        return {
+            user: null,
+            myText: "",
+            UserStatu: "",
+            image: null,
+            Images: [],
+            Videos: null,
+            showFeeling: false,
+            feelings: [
+                {
+                    FeelImg:
+                        "https://img.icons8.com/color/48/000000/happy--v1.png",
+                    FeelTitle: "Happy",
+                    active: ""
+                },
+                {
+                    FeelImg: "https://img.icons8.com/fluent/48/000000/sad.png",
+                    FeelTitle: "Sad",
+                    active: ""
+                },
+                {
+                    FeelImg:
+                        "https://img.icons8.com/color/64/000000/in-love--v1.png",
+                    FeelTitle: "Loved",
+                    active: ""
+                },
+                {
+                    FeelImg: "https://img.icons8.com/color/48/000000/angry.png",
+                    FeelTitle: "Angry",
+                    active: ""
+                },
+                {
+                    FeelImg:
+                        "https://img.icons8.com/fluent/48/000000/crazy.png",
+                    FeelTitle: "Crazy",
+                    active: ""
+                },
+                {
+                    FeelImg:
+                        "https://img.icons8.com/emoji/48/000000/drooling-face-emoji.png",
+                    FeelTitle: "Hungry",
+                    active: ""
+                },
+                {
+                    FeelImg:
+                        "https://img.icons8.com/emoji/48/000000/sleeping-face.png",
+                    FeelTitle: "Sleepy",
+                    active: ""
+                },
+                {
+                    FeelImg: "https://img.icons8.com/color/48/000000/bored.png",
+                    FeelTitle: "Bored",
+                    active: ""
+                }
+            ],
+            postImgs: [],
+            postVds: "",
+            search: ""
+        };
+    },
+    methods: {
+        append(emoji) {
+            this.myText += emoji;
+        },
+        SelectFeeling(index) {
+            var bl = false;
+            this.feelings.forEach(element => {
+                if (element == this.feelings[index]) {
+                    if (this.feelings[index].active == "") {
+                        bl = true;
+                    } else {
+                        bl = false;
+                    }
+                } else {
+                    element.active = "";
+                    this.UserStatu = "";
+                }
+            });
 
-               if(this.feelings[index].active == ""){
-                  bl = true
-               }else{
-                  bl = false
-               }
-
+            if (bl) {
+                this.UserStatu = "is feeling " + this.feelings[index].FeelTitle;
+                this.feelings[index].active = "classActive";
+            } else {
+                this.UserStatu = "";
+                this.feelings[index].active = "";
             }
-            else{
-               element.active = ""
-               this.UserStatu = ""
+        },
+        onInput(event) {
+            //event.data contains the value of the textarea
+            // console.log(event.data);
+            this.myText = event.data;
+        },
+        clearTextarea() {
+            this.$refs.emoji.clear();
+        },
+        showFeelings() {
+            this.showFeeling = !this.showFeeling;
+        },
+        removeFile(path) {
+            //console.log("removeFile");
+            if (this.postImgs.length > 0) {
+                var newPostImgs = [];
+                for (let index = 0; index < this.postImgs.length; index++) {
+                    if (this.postImgs[index].img == path) {
+                        this.postImgs.splice(index, 1);
+                        this.Images.splice(index, 1);
+                    }
+                }
+            } else {
+                this.postVds = "";
+                this.Videos = null;
             }
-         });
-
-         if(bl){
-            this.UserStatu = "is feeling "+this.feelings[index].FeelTitle
-            this.feelings[index].active = "classActive"
-         }else{
-            this.UserStatu = ""
-            this.feelings[index].active = ""
-         }
-      },
-      onInput(event) {
-          //event.data contains the value of the textarea
-         console.log(event.data)
-         this.myText = event.data
-      },
-      clearTextarea(){
-         this.$refs.emoji.clear()
-      },
-      showFeelings() {
-         this.showFeeling = !this.showFeeling;
-      },
-      removeFile(path) {
-         console.log("removeFile")
-         if(this.postImgs.length > 0){
-            var newPostImgs = []
-            for (let index = 0; index < this.postImgs.length; index++) {
-               if(this.postImgs[index].img == path){
-                  this.postImgs.splice(index,1);
-                  this.Images.splice(index,1);
-               }
+            this.disabled();
+        },
+        addImages(e) {
+            const file = e.target.files[0];
+            var NewImage = URL.createObjectURL(file);
+            this.postImgs.push({ img: NewImage });
+            this.image = file;
+            this.Images.push(this.image);
+            this.disabled();
+        },
+        addVd(e) {
+            const file = e.target.files[0];
+            var NewVd = URL.createObjectURL(file);
+            this.postVds = NewVd;
+            this.Videos = file;
+            this.disabled();
+        },
+        disabled() {
+            if (this.postImgs.length > 0) {
+                document
+                    .getElementById("addvd")
+                    .setAttribute("disabled", "disabled");
+                document
+                    .getElementById("div-vd")
+                    .classList.add("classDisabled");
+            } else if (this.postVds != "") {
+                document
+                    .getElementById("addImg")
+                    .setAttribute("disabled", "disabled");
+                document
+                    .getElementById("div-img")
+                    .classList.add("classDisabled");
+            } else {
+                document.getElementById("addImg").removeAttribute("disabled");
+                document.getElementById("addvd").removeAttribute("disabled");
+                document
+                    .getElementById("div-img")
+                    .classList.remove("classDisabled");
+                document
+                    .getElementById("div-vd")
+                    .classList.remove("classDisabled");
             }
-         }else{
-            this.postVds = ""
-            this.Videos = null
-         }
-         this.disabled();
-      },
-      addImages(e){
-         const file = e.target.files[0];
-         var NewImage = URL.createObjectURL(file);
-         this.postImgs.push({ img : NewImage });
-         this.image = file;
-         this.Images.push(this.image);
-         this.disabled();
-      },
-      addVd(e){
-         const file = e.target.files[0];
-         var NewVd = URL.createObjectURL(file);
-         this.postVds = NewVd;
-         this.Videos = file;
-         this.disabled();
-      },
-      disabled(){
-         if(this.postImgs.length > 0 ){
-            	document.getElementById("addvd").setAttribute('disabled','disabled');
-            	document.getElementById("div-vd").classList.add('classDisabled');
+        },
+        createPost() {
+            if (
+                this.myText == "" &&
+                this.UserStatu == "" &&
+                !this.Images.length &&
+                this.Videos == null
+            ) {
+                document.getElementById("warning").style.display = "block";
+            } else {
+                let data = new FormData();
+                data.append("Statu", this.UserStatu);
+                data.append("Text", this.myText);
+                data.append("Video", this.Videos);
 
-         }else if(this.postVds != ""){
-            	document.getElementById("addImg").setAttribute('disabled','disabled');
-            	document.getElementById("div-img").classList.add('classDisabled');
-         }else{
-            	document.getElementById("addImg").removeAttribute('disabled');
-            	document.getElementById("addvd").removeAttribute('disabled');
-            	document.getElementById("div-img").classList.remove('classDisabled');
-            	document.getElementById("div-vd").classList.remove('classDisabled');
-         }
-      },
-      createPost(){
-         if(this.myText == "" && this.UserStatu=="" && !this.Images.length && this.Videos == null){
-            document.getElementById("warning").style.display = 'block';
-         }else{
-            let data = new FormData()
-            data.append("Statu", this.UserStatu);
-            data.append("Text", this.myText);
-            data.append("Viedos", this.Videos);
+                for (let i = 0; i < this.Images.length; i++) {
+                    let file = this.Images[i];
+                    data.append("Images[" + i + "]", file);
+                }
 
-     	       for (let i = 0; i < this.Images.length; i++) {
-        	       let file = this.Images[i];
-        	       data.append("Images[" + i + "]", file);
-      	   }
-            
-            data.append('imagenbr' ,this.Images.length)
+                data.append("imagenbr", this.Images.length);
 
-            axios
-               .post("/create-post", data)
-               .then(res => {
-                  console.log(res);
-                  for (var value of res.config.data.entries()) {
-                     console.log(value);
-                  }
+                axios
+                    .post("/create-post", data)
+                    .then(res => {
+                        // console.log(res);
+                        this.myText = "";
+                        this.UserStatu = "";
+                        this.postImgs = [];
+                        this.Images = [];
+                        this.Videos = null;
+                        this.$emit("newPost", res.data);
+                        this.close();
 
-                  // console.log(res.config.data)
-               })
-               .catch(err => {
-                  console.log(err);
-               });
-            // document.getElementById("post-modal").style.display = 'none';
-         }
-      },
-      open(){
-         document.getElementById("HeadPost").style.display = "none";
-         document.getElementById("BodyPost").style.display = "block";
-      },
-      close(){
-         document.getElementById("HeadPost").style.display = "block";
-         document.getElementById("BodyPost").style.display = "none";
-      }
-   },
-   components: {
-      VueEmoji
-   },
-   mounted(){
-      axios.get("/profile").then(res => {
-         this.user = res.data;
-      });
-   }
-}
+                        // console.log(res.config.data)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+                // document.getElementById("post-modal").style.display = 'none';
+            }
+        },
+        open() {
+            document.getElementById("HeadPost").style.display = "none";
+            document.getElementById("BodyPost").style.display = "block";
+        },
+        close() {
+            document.getElementById("HeadPost").style.display = "block";
+            document.getElementById("BodyPost").style.display = "none";
+        }
+    },
+    components: {
+        VueEmoji,
+        EmojiPicker
+    },
+    directives: {
+        focus: {
+            inserted(el) {
+                el.focus();
+            }
+        }
+    },
+    mounted() {
+        axios.get("/profile").then(res => {
+            this.user = res.data;
+        });
+    }
+};
 </script>
 
 <style scoped>
-.img-add { 
-   width: 100%;
-   height: 100%;
-   position: relative;
-   top: -25px;
+.wrapper {
+    position: relative;
 }
-.delete-btn { 
-   position: relative;
-   top: 5px;
-   left: 150px;
-   background: var(--iq-white);
-   height: 25px;
-   width: 25px;
-   text-align: center;
-   border: none;
-   border-radius: 5px;
-   opacity: 0;
-   z-index: 1;
+.regular-input {
+    padding: 0.25rem 1rem;
+    border-radius: 3px;
+    border: 1px solid white;
+    width: 37rem;
+    height: 10rem;
+    outline: none;
+    resize: none;
+    background: transparent;
+    font-size: 16px;
+    color: var(--iq-dark-body-text);
+    overflow: hidden;
 }
-.add-images:hover .delete-btn ,
-.add-video:hover .delete-btn { 
-   opacity: 1; 
-   transition: all 0.45s ease 0s; 
+
+@media (min-width: 375px) {
+    .regular-input {
+        max-width: 16rem;
+    }
 }
-.delete-btn > i { 
-   color: var(--iq-primary);
+@media (min-width: 360px) {
+    .regular-input {
+        max-width: 15rem;
+    }
 }
-.vd-btn{
-   position: absolute;
-    left: 90%
+@media (min-width: 768px) {
+    .regular-input {
+        max-width: 37rem;
+    }
 }
-.add-images { 
-   width: 180px;
-   height: 180px;
-   margin: 10px;
-   float: left;
+@media (min-width: 1024px) {
+    .regular-input {
+        max-width: 34rem;
+    }
 }
-.classDisabled{
-   color: grey !important
+@media (min-width: 1200px) {
+    .regular-input {
+        max-width: 37rem;
+    }
+}
+
+.regular-input:focus {
+    /* --iq-primary-hover */
+    border: 1px solid var(--iq-primary-hover);
+}
+
+.emoji-invoker {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.emoji-invoker:hover {
+    transform: scale(1.1);
+}
+.emoji-invoker > svg {
+    fill: #b1c6d0;
+}
+
+.emoji-picker {
+    position: absolute;
+    top: 3rem;
+    right: 0.5rem;
+    font-family: Montserrat;
+    border: 1px solid #ccc;
+    width: 15rem;
+    height: 20rem;
+    overflow: scroll;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    background: var(--iq-dark-body-text);
+    box-shadow: 1px 1px 8px #c7dbe6;
+    z-index: 11;
+}
+.emoji-picker__search {
+    display: flex;
+}
+.emoji-picker__search > input {
+    flex: 1;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    outline: none;
+    background: transparent;
+}
+.emoji-picker h5 {
+    margin-bottom: 0;
+    color: #b1b1b1;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    cursor: default;
+}
+.emoji-picker .emojis {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.emoji-picker .emojis:after {
+    content: "";
+    flex: auto;
+}
+.emoji-picker .emojis span {
+    padding: 0.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.emoji-picker .emojis span:hover {
+    background: #ececec;
+    cursor: pointer;
+}
+.img-add {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: -25px;
+}
+.delete-btn {
+    position: relative;
+    top: 5px;
+    left: 150px;
+    background: var(--iq-white);
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    opacity: 0;
+    z-index: 1;
+}
+.add-images:hover .delete-btn,
+.add-video:hover .delete-btn {
+    opacity: 1;
+    transition: all 0.45s ease 0s;
+}
+.delete-btn > i {
+    color: var(--iq-primary);
+}
+.vd-btn {
+    position: absolute;
+    left: 90%;
+}
+.add-images {
+    width: 180px;
+    height: 180px;
+    margin: 10px;
+    float: left;
+}
+.classDisabled {
+    color: grey !important;
 }
 </style>

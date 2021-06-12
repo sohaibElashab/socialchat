@@ -58,6 +58,7 @@ Route::post('/save-post', [App\Http\Controllers\PostController::class, 'save']);
 Route::post('/unsave-post', [App\Http\Controllers\PostController::class, 'unsave']); 
 Route::post('/check-post', [App\Http\Controllers\PostController::class, 'check']); 
 Route::get('/posts-saved', [App\Http\Controllers\PostController::class, 'saved']); 
+Route::post('/UserPosts', [App\Http\Controllers\PostController::class, 'UserPosts']);
 
 //ChatController
 Route::get('/ChatList', [App\Http\Controllers\ChatController::class, 'ChatList']); 

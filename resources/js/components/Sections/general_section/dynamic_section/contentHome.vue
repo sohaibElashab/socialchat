@@ -1,15 +1,20 @@
 <template>
-    <div id="content-page" class="content-page">
+    <div id="content-page" class="content-page" ref="home">
         <div class="container">
+            <div class="row" id="newP" style="display:none" @click="LoadNew">
+                <div class="col-12 new">
+                    <i class="ri-arrow-up-circle-line"></i>
+                    <span>New Posts</span>
+                </div>
+            </div>
             <div class="row rowHome">
                 <div class="col-lg-8 row m-0 p-0">
                     <div class="col-sm-12">
-                        <CreatePost />
+                        <CreatePost @newPost="newPost" />
                     </div>
-                    <div class="col-sm-12" v-if="posts"
-                    >
+                    <div class="col-sm-12" v-if="posts">
                         <Post
-                            v-for="(post , index) in posts"
+                            v-for="(post, index) in posts"
                             :key="index"
                             :post="post"
                         />
@@ -42,16 +47,82 @@ export default {
     },
     data() {
         return {
-            posts: null
+            posts: null,
+            friends: null,
+            NewPosts: []
         };
     },
     mounted() {
-        axios.get("/GetPosts")
+        axios.get("/GetPosts").then(res => {
+            console.log("this.posts");
+            this.posts = res.data;
+            console.log(res.data);
+        });
+
+        axios
+            .post("/LoadFriends", {
+                id: null
+            })
             .then(res => {
-                console.log("this.posts");
-                this.posts = res.data;
-                console.log(res.data);
+                this.friends = res.data;
+            });
+
+        Echo.private(`newPost`).listen("NewPostEvent", e => {
+            if (this.checkFriend(e.post.user_id) != null) {
+                console.log(e.post.user_id);
+                this.NewPosts.unshift(e.post);
+                document.getElementById("newP").style.display = "initial";
+            }
         });
     },
+    methods: {
+        LoadNew() {
+            this.NewPosts.forEach(element => {
+                this.newPost(element);
+            });
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            document.getElementById("newP").style.display = "none";
+        },
+        newPost(data) {
+            this.posts.unshift(data);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        },
+        checkFriend(id) {
+            var p = null;
+
+            this.friends.forEach(friend => {
+                console.log(friend);
+                if (friend.id == id) {
+                    p = friend;
+                    return true;
+                }
+            });
+            return p;
+        }
+    }
 };
 </script>
+
+<style scoped>
+.new {
+    position: fixed;
+    z-index: 1;
+    width: 140px;
+    left: 40%;
+    height: 40px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.new > span {
+    font-size: 15px;
+    position: relative;
+    top: 3px;
+}
+.new > i {
+    font-size: 20px;
+    position: relative;
+    top: 2px;
+}
+</style>

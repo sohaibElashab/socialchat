@@ -583,6 +583,13 @@ export default {
                 this.LoadFriends();
             }
         );
+        Echo.private(`cancelRequest.${this.IdOnline}`).listen(
+            "CancelRequestEvent",
+            e => {
+                //console.log(e.user);
+                this.LoadFriends();
+            }
+        );
     },
     methods: {
         DeleteRequest(id) {

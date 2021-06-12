@@ -14,6 +14,8 @@ use Auth;
 use DateTime as GlobalDateTime;
 use Illuminate\Support\Arr;
 use PhpParser\Node\Expr\Cast\Array_;
+use App\Events\NewPostEvent;
+use App\Models\Friend;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -73,29 +75,55 @@ class PostController extends Controller
         }else{
             $post->edit = false;
         };
+        return $post;
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
-    public function index()
+     */ 
+    public function index() 
     {
-        $posts = Post::where('type','post')->orderBy('time', 'DESC')->get();
-        $images = Image::get();
-        $videos = Video::get();
-        date_default_timezone_set('Africa/Casablanca');
-
-        $userImage = '';
-        $userName = '';
-        $userId = '';
+        $fr = $this->Friends(auth()->user()->id);
+        $fr->add(auth()->user()->id);
+        $posts = Post::where('type','post')->whereIn('user_id',$fr)->orderBy('time', 'DESC')->get();
         
         foreach($posts as $post){
-            $this->postget($post);
+            //$this->postget($post);
+           $post = $this->postget($post);
         };
 
         return response()->json($posts);
+    }
 
+    public function UserPosts(Request $request) 
+    {
+        $id = $request->id;
+        $posts = Post::where('type','post')->where('user_id',$id)->orderBy('time', 'DESC')->get();
+        
+        foreach($posts as $post){
+            //$this->postget($post);
+           $post = $this->postget($post);
+        };
+
+        return response()->json($posts);
+    }
+
+    public function Friends($id)
+    {
+        $friends = Friend::where('user_id',$id)->orWhere('friend_id',$id)->get();
+        $new = collect();
+        foreach ($friends as $key => $friend) {
+            if($friend->user_id != $id){
+                $new->add($friend->user_id);
+            } elseif ($friend->friend_id != $id) {
+                $new->add($friend->friend_id);
+            }
+        }
+        $new = $new->unique();
+        $friends = User::whereIn('id',$new)->get('id');
+
+        return $friends;
     }
 
     /**
@@ -139,8 +167,8 @@ class PostController extends Controller
             };
         };
 
-        if($request->Viedos != null){
-            $video = $request->Viedos;
+        if($request->Video != "null"){
+            $video = $request->Video;
     
             $new_name = 'postVd-'.rand() . '.' . $video->getClientOriginalExtension();
             $video->move(public_path('videos/posts/'.$user->id),$new_name);
@@ -150,9 +178,11 @@ class PostController extends Controller
                 'name' => $new_name,
                 'type' => 'post', 
             ]);
-        }
+        };
 
-        return response()->json($request->Images);   
+        broadcast(new NewPostEvent($post));
+
+        return response()->json($this->postget($post));   
     }
 
     /**
@@ -246,8 +276,8 @@ class PostController extends Controller
         $video = Video::where('post_id',$request->id)->get('name');
 
         if($request->fileType == 'images'){
+            unlink('videos/posts/'.auth()->user()->id.'/'.$video->name);
             Video::where('post_id',$request->id)->delete();
-            
             for ($i=0; $i < $request->imgLength; $i++) { 
                 array_push($oldimages ,$request->image[$i] );
             };
@@ -256,6 +286,7 @@ class PostController extends Controller
                 if(!in_array($old->name,$oldimages)){
                     Image::where('name',$old->name)->delete();
                     // echo $old->name;
+                    unlink('images/posts/'.auth()->user()->id.'/'.$old->name);
                 }
             }
 
@@ -276,7 +307,11 @@ class PostController extends Controller
                 };
             }
         }else if($request->fileType == 'video'){
-            Image::where('post_id',$request->id)->delete();
+           // Image::where('post_id',$request->id)->delete();
+            foreach($images as $old){
+                Image::where('name',$old->name)->delete();
+                unlink('images/posts/'.auth()->user()->id.'/'.$old->name);
+            }  
             if($request->video == ''){
                 if(count($video) == 0){
                     $NewVideo = $request->OurFile[0];
@@ -292,11 +327,17 @@ class PostController extends Controller
                     $NewVideo = $request->OurFile[0];
                     $new_name = 'postVd-'.rand() . '.' . $NewVideo->getClientOriginalExtension();
                     $NewVideo->move(public_path('videos/posts/'.auth()->user()->id),$new_name);
+                    unlink('videos/posts/'.auth()->user()->id.'/'.$video->name);
                     $video->name = $new_name;
+                    
                 }
             }
         }else{
-            Image::where('post_id',$request->id)->delete();
+            foreach($images as $old){
+                Image::where('name',$old->name)->delete();
+                unlink('images/posts/'.auth()->user()->id.'/'.$old->name);
+            }        
+            unlink('videos/posts/'.auth()->user()->id.'/'.$video->name);
             Video::where('post_id',$request->id)->delete();
         }
         /* dd($request->fileType); */
@@ -311,10 +352,20 @@ class PostController extends Controller
      */
     public function destroy(Request $request)
     {
-        Post::where('id',$request->id)->delete();
-        Image::where('post_id',$request->id)->delete();
-        Video::where('post_id',$request->id)->delete();
         
-
+        $images = Image::where('post_id',$request->id)->get('name');
+        $video = Video::where('post_id',$request->id)->get('name');
+        foreach($images as $old){
+            if($old){
+                unlink('images/posts/'.auth()->user()->id.'/'.$old->name);
+            }
+            Image::where('name',$old->name)->delete();
+        }        
+        if(count($video) >0){
+          dd($video);
+            unlink('videos/posts/'.auth()->user()->id.'/'.$video->name);
+            Video::where('post_id',$request->id)->delete();
+        }
+        Post::where('id',$request->id)->delete();
     }
 }

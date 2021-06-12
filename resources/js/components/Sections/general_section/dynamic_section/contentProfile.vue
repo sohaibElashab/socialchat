@@ -446,7 +446,9 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-8">
-                                        <CreatePost />
+                                        <CreatePost
+                                            v-if="user.status == 'current'"
+                                        />
                                         <Post
                                             v-for="post in posts"
                                             :key="post.id"
@@ -499,7 +501,8 @@ export default {
             FriendLists: null,
             loaded: false,
             images: [],
-            posts: {
+            posts: null,
+            postss: {
                 "1": {
                     id: 1,
                     userImg: "images/user/01.jpg",
@@ -569,8 +572,18 @@ export default {
         this.load();
         this.imagesLoad();
         this.friendLoad();
+        this.LoadPosts();
     },
     methods: {
+        LoadPosts() {
+            axios
+                .post("/UserPosts", {
+                    id: this.$route.query.user
+                })
+                .then(res => {
+                    this.posts = res.data;
+                });
+        },
         load() {
             axios
                 .post("/UserProfile", {
@@ -584,7 +597,7 @@ export default {
                     } else {
                         this.message = "";
                     }
-                    Echo.private(`cancelRequest.${this.user.id}`).listen(
+                    /*  Echo.private(`cancelRequest.${this.user.id}`).listen(
                         "CancelRequestEvent",
                         e => {
                             console.log(e.user.name);
@@ -592,7 +605,7 @@ export default {
                                 this.message = "";
                             }
                         }
-                    );
+                    ); */
 
                     /*  Echo.private(`sendRequest.${this.user.id}`).listen(
                         "SendRequestEvent",
@@ -603,7 +616,7 @@ export default {
                         }
                     ); */
 
-                    Echo.private(`acceptRequest.${this.user.id}`).listen(
+                    /* Echo.private(`acceptRequest.${this.user.id}`).listen(
                         "AcceptRequestEvent",
                         e => {
                             //console.log(e.user.name);
@@ -611,7 +624,7 @@ export default {
                                 this.message = "friend";
                             }
                         }
-                    );
+                    ); */
                 });
 
             axios.get("/profile").then(res => {
@@ -630,8 +643,9 @@ export default {
                 Echo.private(`sendRequest.${this.OnlineUser.id}`).listen(
                     "SendRequestEvent",
                     e => {
-                        //console.log(e.user);
-                        this.message = "accept";
+                        if (this.$route.query.user == e.user.id) {
+                            this.message = "accept";
+                        }
                     }
                 );
 
@@ -718,6 +732,7 @@ export default {
             this.load();
             this.friendLoad();
             this.imagesLoad();
+            this.LoadPosts();
         }
     }
 };
