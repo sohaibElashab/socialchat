@@ -362,8 +362,7 @@ class PostController extends Controller
             Image::where('name',$old->name)->delete();
         }        
         if(count($video) >0){
-          dd($video);
-            unlink('videos/posts/'.auth()->user()->id.'/'.$video->name);
+            unlink('videos/posts/'.auth()->user()->id.'/'.$video[0]->name);
             Video::where('post_id',$request->id)->delete();
         }
         Post::where('id',$request->id)->delete();

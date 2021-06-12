@@ -425,11 +425,6 @@ export default {
                 this.feelings[index].active = "";
             }
         },
-        onInput(event) {
-            //event.data contains the value of the textarea
-            // console.log(event.data);
-            this.myText = event.data;
-        },
         clearTextarea() {
             this.$refs.emoji.clear();
         },
@@ -523,6 +518,7 @@ export default {
                         this.postImgs = [];
                         this.Images = [];
                         this.Videos = null;
+                        this.disabled();
                         this.$emit("newPost", res.data);
                         this.close();
 

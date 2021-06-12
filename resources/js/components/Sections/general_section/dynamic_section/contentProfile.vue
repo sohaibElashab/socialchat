@@ -363,20 +363,25 @@
                                                 >
                                                     <li
                                                         class="col-md-4 col-6 pl-2 pr-0 pb-3"
-                                                        v-for="image in images"
+                                                        v-for="image in introImages"
                                                         :key="image.id"
                                                     >
-                                                        <a
+                                                        <router-link
+                                                            tag="a"
+                                                            :to="{
+                                                                name: 'post',
+                                                                query: { postId: image.post_id }
+                                                            }"
                                                             href="javascript:void();"
                                                         >
                                                             <img
                                                                 :src="
-                                                                    image.name
+                                                                    `images/posts/${user.id}/${image.name}`
                                                                 "
                                                                 alt="gallary-image"
                                                                 class="img-fluid"
                                                             />
-                                                        </a>
+                                                        </router-link>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -469,7 +474,7 @@
                             v-if="loaded"
                         />
                         <!-- photo galery -->
-                        <ProfileImages :UserId="user.id" />
+                        <ProfileImages :images="images" :id="user.id" /> 
                     </div>
                 </div>
             </div>
@@ -501,67 +506,8 @@ export default {
             FriendLists: null,
             loaded: false,
             images: [],
+            introImages: [],
             posts: null,
-            postss: {
-                "1": {
-                    id: 1,
-                    userImg: "images/user/01.jpg",
-                    userName: "Anna Sthesia",
-                    statu: "Add New Post",
-                    time: "Just Now",
-                    text:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
-                    postImgs: [
-                        { img: "images/page-img/p1.jpg" },
-                        { img: "images/page-img/p2.jpg" },
-                        { img: "images/page-img/p3.jpg" }
-                    ],
-                    postVds: []
-                },
-                "2": {
-                    id: 2,
-                    userImg: "images/user/03.jpg",
-                    userName: "Barb Ackue",
-                    statu: "Added New Image in a Post",
-                    time: "1 hour ago",
-                    text:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
-                    postImgs: [{ img: "images/page-img/p4.jpg" }],
-                    postVds: []
-                },
-                "3": {
-                    id: 3,
-                    userImg: "images/user/04.jpg",
-                    userName: "Ira Membrit",
-                    statu: "Update her Status",
-                    time: "6 hour ago",
-                    text:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
-                    postImgs: {},
-                    postVds: []
-                },
-                "4": {
-                    id: 4,
-                    userImg: "images/user/01.jpg",
-                    userName: "Bni Cyst",
-                    statu: "Changed Profile Picture",
-                    time: "3 day ago",
-                    text: "",
-                    postImgs: [{ img: "images/page-img/p5.jpg" }],
-                    postVds: []
-                },
-                "5": {
-                    id: 5,
-                    userImg: "images/user/02.jpg",
-                    userName: "Paige Turner",
-                    statu: "Added New Video in his Timeline",
-                    time: "1 day ago",
-                    text:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
-                    postImgs: {},
-                    postVds: [{ vd: "images/page-img/vd.mp4" }]
-                }
-            }
         };
     },
     mounted() {
@@ -706,10 +652,16 @@ export default {
                 });
         },
         imagesLoad() {
-            axios.post("/ProfileImages", { id: this.UserId }).then(res => {
-                this.images = res.data;
+            axios.post("/ProfileImages" , { id: this.$route.query.user })
+                .then(res => {
+                    this.images = res.data;
+                    this.images.forEach(element => {
+                        if(element.type == 'post'){
+                            this.introImages.push(element);
+                        }                        
+                    });
+                    this.introImages = this.introImages.slice(0, 9);
             });
-            console.log("yay");
         },
         friendLoad() {
             axios

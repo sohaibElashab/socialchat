@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Image;
 use App\Models\Video;
-use Auth;
-use Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Mail\Forgot;
 use App\Mail\Verify;
 use Illuminate\Support\Facades\Mail;
@@ -256,7 +256,7 @@ class ProfilController extends Controller
     {
         
         $userId = auth()->user()->id;
-        $Paths = Image::where('user_id',$userId)->get('name');
+        $Paths = Image::where('user_id',$userId)->get();
         foreach ($Paths as $key => $path) {
             $path->NbrJaime = "30";
             $path->NbrComment = "40";
@@ -269,7 +269,7 @@ class ProfilController extends Controller
     {
         
         $userId = auth()->user()->id;
-        $Paths = Video::where('user_id',$userId)->get('name');
+        $Paths = Video::where('user_id',$userId)->get();
         foreach ($Paths as $key => $path) {
             $path->NbrJaime = "30";
             $path->NbrComment = "40";
@@ -283,7 +283,7 @@ class ProfilController extends Controller
     {
         
         $userId = $request->id;
-        $Paths = Image::where('user_id',$userId)->get('name');
+        $Paths = Image::where('user_id',$userId)->get();
         foreach ($Paths as $key => $path) {
             $path->NbrJaime = "30";
             $path->NbrComment = "40";

@@ -27,7 +27,6 @@ import profileImages from "./components/Pages/profileImages.vue";
 import profileVideos from "./components/Pages/profileVideos.vue";
 import notification from "./components/Pages/notification.vue";
 import friendRequest from "./components/Pages/friendRequest.vue";
-import friendProfile from "./components/Pages/friendProfile.vue";
 import friendList from "./components/Pages/friendList.vue";
 import chat from "./components/Pages/chat.vue";
 import resetPassword from "./components/Pages/resetPassword.vue";
@@ -86,12 +85,6 @@ const routes = [
         path: "/friendRequest",
         name: "friendReque",
         component: friendRequest
-    },
-    {
-        path: "/friendProfile",
-        name: "friendProfile",
-        component: friendProfile,
-        props: true
     },
     {
         path: "/friendList",

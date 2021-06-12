@@ -18,9 +18,17 @@
                                         :key="index"
                                     >
                                         <div class="user-images position-relative overflow-hidden">
-                                            <a href="#">
+                                            <a href="#" v-if="image.type != 'post'">
                                                 <img
                                                     :src="`images/user/${image.name}`"
+                                                    class="rounded"
+                                                    alt="Responsive image"
+                                                    style="width: 224px ; height: 200px;"
+                                                />
+                                            </a>
+                                            <a href="#" v-else>
+                                                <img
+                                                    :src="`images/posts/${id}/${image.name}`"
                                                     class="rounded"
                                                     alt="Responsive image"
                                                     style="width: 224px ; height: 200px;"
@@ -76,20 +84,12 @@
 <script>
 export default {
     props: {
-        UserId: {
+        images: {
             require: true
+        },
+        id:{
+            require: true            
         }
-    },
-    data() {
-        return{
-            images : []
-        }
-    },    
-    mounted() {
-        axios.post("/ProfileImages" , { id: this.UserId })
-            .then(res => {
-                this.images = res.data;
-        });
     }
 };
 </script>
