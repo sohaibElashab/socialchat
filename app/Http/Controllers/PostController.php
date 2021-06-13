@@ -44,6 +44,9 @@ class PostController extends Controller
                 $userName = $user->name;
                 $userId = $user->id;
             }
+            if($user->id == $image->user_id && $image->type == "cover"){
+                $userCover = $image->name;
+            }
         }
         foreach($videos as $video){
             if($post->id == $video->post_id){
@@ -67,6 +70,7 @@ class PostController extends Controller
             $post->time = 'just Now';
         // array_push($time , $post->time);
         $post->userImg = $userImage;
+        $post->userCover = $userCover;
         $post->userName = $userName;
         $post->userId = $userId;
         $post->postImgs = $imagesArray;
@@ -74,7 +78,12 @@ class PostController extends Controller
             $post->edit = true;
         }else{
             $post->edit = false;
-        };
+        }
+
+        if ($post->type == "create" || $post->type == "cover" || $post->type == "profile") {
+            $post->edit = false;
+        }
+
         return $post;
     }
     /**
@@ -86,8 +95,8 @@ class PostController extends Controller
     {
         $fr = $this->Friends(auth()->user()->id);
         $fr->add(auth()->user()->id);
-        $posts = Post::where('type','post')->whereIn('user_id',$fr)->orderBy('time', 'DESC')->get();
-        
+        $posts = Post::whereIn('user_id',$fr)->orderBy('time', 'DESC')->get();
+        //where('type','post')->
         foreach($posts as $post){
             //$this->postget($post);
            $post = $this->postget($post);
@@ -99,8 +108,8 @@ class PostController extends Controller
     public function UserPosts(Request $request) 
     {
         $id = $request->id;
-        $posts = Post::where('type','post')->where('user_id',$id)->orderBy('time', 'DESC')->get();
-        
+        $posts = Post::where('user_id',$id)->orderBy('time', 'DESC')->get();
+        //where('type','post')->
         foreach($posts as $post){
             //$this->postget($post);
            $post = $this->postget($post);
@@ -224,10 +233,12 @@ class PostController extends Controller
             'user_id' => auth()->user()->id,
         ]);
     }
+
     public function unsave(Request $request)
     {
         PostSave::where('user_id',auth()->user()->id)->where('post_id',$request->id)->delete();
     }
+
     public function check(Request $request)
     {
         $post = PostSave::where('post_id',$request->id)->get();
@@ -255,7 +266,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $post = Post::findOrFail($request->id);
         date_default_timezone_set('Africa/Casablanca');
@@ -276,8 +287,11 @@ class PostController extends Controller
         $video = Video::where('post_id',$request->id)->get('name');
 
         if($request->fileType == 'images'){
-            unlink('videos/posts/'.auth()->user()->id.'/'.$video->name);
-            Video::where('post_id',$request->id)->delete();
+            if(count($video) > 0){
+                unlink('videos/posts/'.auth()->user()->id.'/'.$video[0]->name);
+                Video::where('post_id',$request->id)->delete();
+            }
+            
             for ($i=0; $i < $request->imgLength; $i++) { 
                 array_push($oldimages ,$request->image[$i] );
             };
@@ -336,9 +350,12 @@ class PostController extends Controller
             foreach($images as $old){
                 Image::where('name',$old->name)->delete();
                 unlink('images/posts/'.auth()->user()->id.'/'.$old->name);
-            }        
-            unlink('videos/posts/'.auth()->user()->id.'/'.$video->name);
-            Video::where('post_id',$request->id)->delete();
+            }   
+            if(count($video) > 0){
+                unlink('videos/posts/'.auth()->user()->id.'/'.$video[0]->name);
+                Video::where('post_id',$request->id)->delete();
+            }     
+          
         }
         /* dd($request->fileType); */
         return response()->json($request->id);

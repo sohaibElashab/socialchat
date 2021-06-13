@@ -110,6 +110,24 @@
                     </video>
                 </div>
             </div>
+            <div class="user-post" v-if="post.type == 'profile'">
+                <div class="user-post text-center mt-3">
+                    <img
+                        :src="`images/user/${post.userImg}`"
+                        alt="post-image"
+                        class="img-fluid rounded w-100 "
+                    />
+                </div>
+            </div>
+            <div class="user-post" v-if="post.type == 'cover'">
+                <div class="user-post text-center mt-3">
+                    <img
+                        :src="`images/user/${post.userCover}`"
+                        alt="post-image"
+                        class="img-fluid rounded w-100 "
+                    />
+                </div>
+            </div>
             <Comment :id="post.id" @unsave="updateSave" />
         </div>
     </div>

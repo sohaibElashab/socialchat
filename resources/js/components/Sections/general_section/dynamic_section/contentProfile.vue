@@ -104,11 +104,15 @@
                                         >
                                             <li class="text-center pl-3">
                                                 <h6>Friends</h6>
-                                                <p class="mb-0">206</p>
+                                                <p class="mb-0">
+                                                    {{ user.FriendCount }}
+                                                </p>
                                             </li>
                                             <li class="text-center pl-3">
                                                 <h6>Posts</h6>
-                                                <p class="mb-0">6</p>
+                                                <p class="mb-0">
+                                                    {{ user.PostCount }}
+                                                </p>
                                             </li>
                                         </ul>
                                     </div>
@@ -116,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="iq-card" v-if="message != 'current'">
+                    <div class="iq-card" v-if="user.status != 'current'">
                         <div class="iq-card-body p-0">
                             <div class="user-tabing">
                                 <div
@@ -294,7 +298,13 @@
                                                         <div
                                                             class="event-post position-relative"
                                                         >
-                                                            <p>
+                                                            <p
+                                                                v-if="
+                                                                    user.adress &&
+                                                                        user.adress !=
+                                                                            'null'
+                                                                "
+                                                            >
                                                                 <i
                                                                     class="las la-home"
                                                                 ></i>
@@ -370,7 +380,10 @@
                                                             tag="a"
                                                             :to="{
                                                                 name: 'post',
-                                                                query: { postId: image.post_id }
+                                                                query: {
+                                                                    postId:
+                                                                        image.post_id
+                                                                }
                                                             }"
                                                             href="javascript:void();"
                                                         >
@@ -452,6 +465,7 @@
                                     </div>
                                     <div class="col-lg-8">
                                         <CreatePost
+                                            @newPost="newPost"
                                             v-if="user.status == 'current'"
                                         />
                                         <Post
@@ -474,7 +488,7 @@
                             v-if="loaded"
                         />
                         <!-- photo galery -->
-                        <ProfileImages :images="images" :id="user.id" /> 
+                        <ProfileImages :images="images" :id="user.id" />
                     </div>
                 </div>
             </div>
@@ -507,7 +521,7 @@ export default {
             loaded: false,
             images: [],
             introImages: [],
-            posts: null,
+            posts: []
         };
     },
     mounted() {
@@ -521,6 +535,11 @@ export default {
         this.LoadPosts();
     },
     methods: {
+        newPost(data) {
+            this.posts.unshift(data);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            this.imagesLoad();
+        },
         LoadPosts() {
             axios
                 .post("/UserPosts", {
@@ -543,7 +562,7 @@ export default {
                     } else {
                         this.message = "";
                     }
-                    /*  Echo.private(`cancelRequest.${this.user.id}`).listen(
+                    Echo.private(`cancelRequest.${this.user.id}`).listen(
                         "CancelRequestEvent",
                         e => {
                             console.log(e.user.name);
@@ -551,7 +570,7 @@ export default {
                                 this.message = "";
                             }
                         }
-                    ); */
+                    );
 
                     /*  Echo.private(`sendRequest.${this.user.id}`).listen(
                         "SendRequestEvent",
@@ -562,7 +581,7 @@ export default {
                         }
                     ); */
 
-                    /* Echo.private(`acceptRequest.${this.user.id}`).listen(
+                    Echo.private(`acceptRequest.${this.user.id}`).listen(
                         "AcceptRequestEvent",
                         e => {
                             //console.log(e.user.name);
@@ -570,7 +589,7 @@ export default {
                                 this.message = "friend";
                             }
                         }
-                    ); */
+                    );
                 });
 
             axios.get("/profile").then(res => {
@@ -652,16 +671,17 @@ export default {
                 });
         },
         imagesLoad() {
-            axios.post("/ProfileImages" , { id: this.$route.query.user })
+            axios
+                .post("/ProfileImages", { id: this.$route.query.user })
                 .then(res => {
                     this.images = res.data;
                     this.images.forEach(element => {
-                        if(element.type == 'post'){
+                        if (element.type == "post") {
                             this.introImages.push(element);
-                        }                        
+                        }
                     });
                     this.introImages = this.introImages.slice(0, 9);
-            });
+                });
         },
         friendLoad() {
             axios

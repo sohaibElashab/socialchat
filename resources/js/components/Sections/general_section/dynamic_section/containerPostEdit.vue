@@ -25,24 +25,90 @@
                                 {{ post.time }}
                             </p>
                         </div>
-                        <div class="iq-card-post-toolbar" >
-                            <span
-                                class="dropdown-toggle"
-                                role="button"
-                                
-                            >
-                                <i @click="deletePost()" class="ri-delete-bin-line"></i>
+                        <div class="iq-card-post-toolbar">
+                            <span class="dropdown-toggle" role="button">
+                                <i
+                                    @click="deletePost()"
+                                    class="ri-delete-bin-line"
+                                ></i>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="mt-3" v-if="post.text">
-                    <textarea
+                    <!--  <textarea
                         name=""
                         class="form-control"
                         v-model="text"
                         id="textarea"
-                    ></textarea>
+                    ></textarea> -->
+
+                    <div class="wrapper">
+                        <textarea
+                            class="form-control"
+                            placeholder="Message..."
+                            v-model="text"
+                            id="textarea"
+                        ></textarea>
+
+                        <emoji-picker @emoji="append" :search="search">
+                            <div
+                                class="emoji-invoker"
+                                slot="emoji-invoker"
+                                slot-scope="{ events: { click: clickEvent } }"
+                                @click.stop="clickEvent"
+                            >
+                                <svg
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"
+                                    />
+                                </svg>
+                            </div>
+                            <div
+                                slot="emoji-picker"
+                                slot-scope="{ emojis, insert }"
+                            >
+                                <div class="emoji-picker">
+                                    <div class="emoji-picker__search">
+                                        <input
+                                            type="text"
+                                            v-model="search"
+                                            v-focus
+                                        />
+                                    </div>
+                                    <div>
+                                        <div
+                                            v-for="(emojiGroup,
+                                            category) in emojis"
+                                            :key="category"
+                                        >
+                                            <h5 style="color:white">
+                                                {{ category }}
+                                            </h5>
+                                            <div class="emojis">
+                                                <span
+                                                    v-for="(emoji,
+                                                    emojiName) in emojiGroup"
+                                                    :key="emojiName"
+                                                    @click="insert(emoji)"
+                                                    :title="emojiName"
+                                                    >{{ emoji }}</span
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </emoji-picker>
+                    </div>
+
+                    <!-- fff -->
                 </div>
                 <div class="user-post" style="text-align: -webkit-center;">
                     <div class="user-post text-center">
@@ -214,7 +280,10 @@
                     Update
                 </button>
                 <button
-                    @click="CancelPost()" type="button" class="btn btn-danger ml-4 mb-4 mt-4">
+                    @click="CancelPost()"
+                    type="button"
+                    class="btn btn-danger ml-4 mb-4 mt-4"
+                >
                     Cancel
                 </button>
             </div>
@@ -232,7 +301,18 @@
 </template>
 
 <script>
+import EmojiPicker from "vue-emoji-picker";
 export default {
+    components: {
+        EmojiPicker
+    },
+    directives: {
+        focus: {
+            inserted(el) {
+                el.focus();
+            }
+        }
+    },
     data() {
         return {
             post: null,
@@ -289,7 +369,8 @@ export default {
                     FeelTitle: "Bored",
                     active: ""
                 }
-            ]
+            ],
+            search: ""
         };
     },
     mounted() {
@@ -315,6 +396,9 @@ export default {
         });
     },
     methods: {
+        append(emoji) {
+            this.text += emoji;
+        },
         acceptFiles() {
             console.log("accepte file");
             if (this.post.postImgs.length > 0 || this.NewImgs.length > 0) {
@@ -469,31 +553,34 @@ export default {
                 data.append("fileLength", this.NewFiles.length);
                 data.append("fileType", this.typeFiles);
 
-                
                 axios
                     .post("/update-post", data)
                     .then(res => {
                         console.log(res.data);
-                        this.$router.push({ name: "post" ,query: {postId:res.data}});
+                        this.$router.push({
+                            name: "post",
+                            query: { postId: res.data }
+                        });
                     })
                     .catch(err => {
                         console.log(err);
                     });
             }
         },
-        CancelPost(){
+        CancelPost() {
             this.$router.push({ name: "home" });
         },
-        deletePost(){
-                axios
-                    .post("/delete-post", {id : this.post.id})
-                    .then(res => {
-                        console.log(res.data);
-                        this.$router.push({ name: "home" });
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+        deletePost() {
+            axios
+                .post("/delete-post", { id: this.post.id })
+                .then(res => {
+                    console.log(res.data);
+                    //this.$router.push({ name: "home" });
+                    this.$router.back();
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     }
 };
@@ -620,5 +707,123 @@ export default {
     border: 1px dashed var(--iq-primary);
     border-radius: 5px;
     width: 100%;
+}
+/* emojie style */
+.wrapper {
+    position: relative;
+}
+.regular-input {
+    padding: 0.25rem 1rem;
+    border-radius: 3px;
+    border: 1px solid white;
+    width: 37rem;
+    height: 2.4rem;
+    outline: none;
+    resize: none;
+    background: transparent;
+    font-size: 16px;
+    color: var(--iq-dark-body-text);
+    overflow: hidden;
+}
+
+@media (min-width: 375px) {
+    .regular-input {
+        max-width: 16rem;
+    }
+}
+@media (min-width: 360px) {
+    .regular-input {
+        max-width: 15rem;
+    }
+}
+@media (min-width: 768px) {
+    .regular-input {
+        max-width: 37rem;
+    }
+}
+@media (min-width: 1024px) {
+    .regular-input {
+        max-width: 34rem;
+    }
+}
+@media (min-width: 1200px) {
+    .regular-input {
+        max-width: 37rem;
+    }
+}
+
+.regular-input:focus {
+    /* --iq-primary-hover */
+    border: 1px solid var(--iq-primary-hover);
+}
+
+.emoji-invoker {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.emoji-invoker:hover {
+    transform: scale(1.1);
+}
+.emoji-invoker > svg {
+    fill: #b1c6d0;
+}
+
+.emoji-picker {
+    position: absolute;
+    top: 2rem;
+    right: 0.5rem;
+    font-family: Montserrat;
+    border: 1px solid #ccc;
+    width: 15rem;
+    height: 20rem;
+    overflow: scroll;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    background: var(--iq-dark-body-text);
+    box-shadow: 1px 1px 8px #c7dbe6;
+    z-index: 11;
+}
+.emoji-picker__search {
+    display: flex;
+}
+.emoji-picker__search > input {
+    flex: 1;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    outline: none;
+    background: transparent;
+}
+.emoji-picker h5 {
+    margin-bottom: 0;
+    color: #b1b1b1;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    cursor: default;
+}
+.emoji-picker .emojis {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.emoji-picker .emojis:after {
+    content: "";
+    flex: auto;
+}
+.emoji-picker .emojis span {
+    padding: 0.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.emoji-picker .emojis span:hover {
+    background: #ececec;
+    cursor: pointer;
 }
 </style>

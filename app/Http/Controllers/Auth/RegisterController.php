@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Events\OnlineFriendEvent;
 use App\Models\Online;
+use App\Models\Post;
 
 class RegisterController extends Controller 
 {
@@ -71,6 +72,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        date_default_timezone_set('Africa/Casablanca');
         $user = User::create([
             'name' => $data['name'], 
             'email' => $data['email'],
@@ -79,10 +81,35 @@ class RegisterController extends Controller
             'birth_date' => $data['birthdate'],
             'gender' => $data['gender'],
         ]);
+        $date = date('Y-m-d H:i:s');
+        $date2 = date('Y-m-d H:i:s',time() + 1);
+        $date3 = date('Y-m-d H:i:s',time() + 2);
+        $post = Post::create([
+                'user_id' => $user->id,
+                'type' => 'create',
+                'statu' => "Created account",
+                'text' => $user->name." has created a new SocialChat account.",
+                'time' => $date,
+            ]);
+        $postC = Post::create([
+                'user_id' => $user->id,
+                'type' => 'cover',
+                'statu' => "Changed cover picture",
+                'text' => "",
+                'time' => $date2,
+            ]);
+        $postP = Post::create([
+                'user_id' => $user->id,
+                'type' => 'profile',
+                'statu' => "Changed profile picture",
+                'text' => "",
+                'time' => $date3,
+            ]);
+           
         $BGpics = array("bg1.jpg","bg2.jpg","bg3.jpg","bg4.jpg","bg5.jpg","bg6.jpg","bg7.jpg","bg8.jpg","bg9.jpg");
         $Bpic = array_rand($BGpics,1);
         Image::create([
-            'post_id' => 0,
+            'post_id' => $postC->id,
             'user_id' => $user->id,
             'name' => 'BG/'.$BGpics[$Bpic],
             'type' => 'cover', 
@@ -92,7 +119,7 @@ class RegisterController extends Controller
            $femalePics = array("female1.jpg","female2.jpg","female3.jpg","female4.jpg","female5.jpg","female6.jpg","female7.jpg","female8.jpg");
            $Fpic = array_rand($femalePics,1);
            Image::create([
-               'post_id' => 0,
+               'post_id' => $postP->id,
                'user_id' => $user->id,
                'name' => 'FemalePic/'.$femalePics[$Fpic],
                'type' => 'profile',
@@ -102,13 +129,13 @@ class RegisterController extends Controller
             $malePics = array("male1.jpg","male2.jpg","male3.jpg","male4.jpg","male5.jpg","male6.jpg","male7.jpg","male8.jpg");
             $Mpic = array_rand($malePics,1);
            Image::create([
-               'post_id' => 0,
+               'post_id' => $postP->id,
                'user_id' => $user->id,
                'name' => 'MalePic/'.$malePics[$Mpic],
                'type' => 'profile',
            ]);
        }
-       $date = date('Y-m-d H:i:s');
+       
        $user->email_verified_at = $date;
        $user->save();
        broadcast(new OnlineFriendEvent($user));

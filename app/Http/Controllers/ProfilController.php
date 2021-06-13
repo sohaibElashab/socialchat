@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\FriendRequest;
 use App\Models\Friend;
 use App\Events\OfflineFriendEvent;
-use App\Models\Online;
+use App\Models\Online; 
+use App\Models\Post;
+use App\Events\NewPostEvent;
  
 class ProfilController extends Controller
 { 
@@ -42,6 +44,23 @@ class ProfilController extends Controller
         return response()->json($user);
     }
 
+    public function Getfriends($id)
+    {
+        $friends = Friend::where('user_id',$id)->orWhere('friend_id',$id)->get();
+        $new = collect();
+        foreach ($friends as $key => $friend) {
+            if($friend->user_id != $id){
+                $new->add($friend->user_id);
+            } elseif ($friend->friend_id != $id) {
+                $new->add($friend->friend_id);
+            }
+        }
+        $new = $new->unique();
+        $friends = User::whereIn('id',$new)->get();
+
+        return $friends;
+    }
+
     public function UserProfile(Request $request) 
     {
         if($request->id == auth()->user()->id){
@@ -50,28 +69,14 @@ class ProfilController extends Controller
             $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
             $user->status = "current";
             $user->message = "current";
+            $user->FriendCount = count($this->Getfriends(auth()->user()->id));
+            $user->PostCount = Post::where('user_id',auth()->user()->id)->count();
             return response()->json($user);
         }else{
             $user = User::where('id',$request->id)->first();
-
-            function Getfriends($id)
-            {
-                $friends = Friend::where('user_id',$id)->orWhere('friend_id',$id)->get();
-                $new = collect();
-                foreach ($friends as $key => $friend) {
-                    if($friend->user_id != $id){
-                        $new->add($friend->user_id);
-                    } elseif ($friend->friend_id != $id) {
-                        $new->add($friend->friend_id);
-                    }
-                }
-                $new = $new->unique();
-                $friends = User::whereIn('id',$new)->get();
-
-                return $friends;
-            }
-
-            $friends = Getfriends(auth()->user()->id);
+            $user->FriendCount = count($this->Getfriends($user->id));
+            $user->PostCount = Post::where('user_id',$user->id)->count();
+            $friends = $this->Getfriends(auth()->user()->id);
             if($friends->contains($user)){
                 $user->message = "friend";
             } 
@@ -140,6 +145,20 @@ class ProfilController extends Controller
             $image->move(public_path('images/user/'.$user->id.'/profile'),$new_name);
             $profile->update(['name' => $user->id.'/profile/'. $new_name]);
             $user->profile = $profile->name;
+            $post = Post::create([
+                'user_id' => $user->id,
+                'type' => 'profile',
+                'statu' => "Changed profile picture",
+                'text' => "",
+                'time' => date("Y-m-d H:i:s"),
+            ]);
+            Image::create([
+                'post_id' => $post->id,
+                'user_id' => $user->id,
+                'name' => $profile->name,
+                'type' => 'profile', 
+            ]); 
+            broadcast(new NewPostEvent($post)); 
         }
         if($request->cover != "null"){
             $cover = Image::where('user_id',$user->id)->where('type','cover')->first();
@@ -147,6 +166,20 @@ class ProfilController extends Controller
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/user/'.$user->id.'/cover'),$new_name);
             $cover->update(['name' => $user->id.'/cover/'. $new_name]);
+            $post = Post::create([
+                'user_id' => $user->id,
+                'type' => 'cover',
+                'statu' => "Changed cover picture",
+                'text' => "",
+                'time' => date("Y-m-d H:i:s"),
+            ]);
+            Image::create([
+                'post_id' => $post->id,
+                'user_id' => $user->id,
+                'name' => $cover->name,
+                'type' => 'cover', 
+            ]); 
+            broadcast(new NewPostEvent($post));
         }
 
         return response()->json($user);    
