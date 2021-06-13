@@ -220,35 +220,6 @@ class PostController extends Controller
         return response()->json($post);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function save(Request $request)
-    {
-        PostSave::create([
-            'post_id' => $request->id,
-            'user_id' => auth()->user()->id,
-        ]);
-    }
-
-    public function unsave(Request $request)
-    {
-        PostSave::where('user_id',auth()->user()->id)->where('post_id',$request->id)->delete();
-    }
-
-    public function check(Request $request)
-    {
-        $post = PostSave::where('post_id',$request->id)->get();
-        $save = false;
-        if(count($post) > 0){
-            $save = true;
-        }
-        return response()->json($save);
-
-    }
     public function saved()
     {
         $PostSave = PostSave::where('user_id',auth()->user()->id)->get('post_id');
@@ -258,6 +229,12 @@ class PostController extends Controller
         }
         return response()->json($posts);
     }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 
     /**
      * Update the specified resource in storage.

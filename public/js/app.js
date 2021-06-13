@@ -13151,16 +13151,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     id: {
@@ -13186,7 +13176,11 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       saved: Boolean,
-      posts: null
+      liked: Boolean,
+      posts: null,
+      like: null,
+      comment: null,
+      share: null
     };
   },
   mounted: function mounted() {
@@ -13195,10 +13189,23 @@ __webpack_require__.r(__webpack_exports__);
     axios.post("/check-post", {
       id: this.id
     }).then(function (res) {
-      _this.saved = res.data;
+      console.log("get check");
+      console.log(res.data);
+      _this.saved = res.data.save;
+      _this.liked = res.data.like;
     })["catch"](function (err) {
       console.log(err);
     });
+    axios.post("/get-numbers", {
+      id: this.id
+    }).then(function (res) {
+      _this.like = res.data.likes;
+      _this.comment = res.data.comments;
+      _this.share = res.data.shares;
+    })["catch"](function (err) {
+      console.log(err);
+    });
+    this.changeclass(this.liked, null, this.saved);
   },
   methods: {
     save: function save() {
@@ -13226,6 +13233,59 @@ __webpack_require__.r(__webpack_exports__);
       if (this.$route.name != "Saved") {
         this.saved = !this.saved;
       }
+
+      this.changeclass(null, null, this.saved);
+    },
+    isLike: function isLike() {
+      var _this2 = this;
+
+      if (this.liked) {
+        axios.post("/unlike-post", {
+          id: this.id
+        }).then(function (res) {
+          console.log(res.data);
+          _this2.like = res.data.likes;
+          _this2.comment = res.data.comments;
+          _this2.share = res.data.shares;
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      } else {
+        axios.post("/like-post", {
+          id: this.id
+        }).then(function (res) {
+          console.log(res.data);
+          _this2.like = res.data.likes;
+          _this2.comment = res.data.comments;
+          _this2.share = res.data.shares;
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      }
+
+      this.liked = !this.liked;
+      this.changeclass(this.liked, null, null);
+    },
+    changeclass: function changeclass(l, c, s) {
+      if (l != null) {
+        if (l) {
+          this.addremove('Ilike', "ri-heart-line", "ri-heart-fill");
+        } else {
+          this.addremove('Ilike', "ri-heart-fill", "ri-heart-line");
+        }
+      }
+
+      if (s != null) {
+        if (s) {
+          this.addremove('Ishare', "ri-bookmark-line", "ri-bookmark-fill");
+        } else {
+          this.addremove('Ishare', "ri-bookmark-fill", "ri-bookmark-line");
+        }
+      }
+    },
+    addremove: function addremove(id, r, a) {
+      document.getElementById(id).classList.remove(r);
+      document.getElementById(id).classList.add(a);
     }
   }
 });
@@ -22132,7 +22192,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.save[data-v-75f13304]{\r\n    cursor: pointer;\n}\n.save[data-v-75f13304]:hover{\r\n    color: var(--iq-primary-hover);\n}\n.active[data-v-75f13304]{\r\n    color: var(--iq-primary-hover);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.desactive[data-v-75f13304]{\r\n    cursor: pointer;\n}\n.desactive[data-v-75f13304]:hover{\r\n    color: var(--iq-primary-hover);\n}\n.save[data-v-75f13304]{\r\n    color: var(--iq-primary-hover);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -78486,7 +78546,53 @@ var render = function() {
       "div",
       { staticClass: "d-flex justify-content-between align-items-center" },
       [
-        _vm._m(0),
+        _c(
+          "div",
+          {
+            staticClass:
+              "like-block position-relative d-flex align-items-center"
+          },
+          [
+            _c("div", { staticClass: "total-like-block ml-2 mr-3" }, [
+              _c(
+                "span",
+                {
+                  class: { save: _vm.liked },
+                  attrs: { role: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.isLike()
+                    }
+                  }
+                },
+                [
+                  _c("i", {
+                    staticClass: "ri-heart-line",
+                    attrs: { id: "Ilike" }
+                  }),
+                  _vm._v(" "),
+                  _vm._v(
+                    "\n                 " + _vm._s(_vm.like) + "\n            "
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "total-like-block ml-2 mr-3" }, [
+              _c("span", [
+                _c("i", { staticClass: "lar la-comments" }),
+                _vm._v(" " + _vm._s(_vm.comment) + "\n            ")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "total-like-block ml-2 mr-3" }, [
+              _c("span", [
+                _c("i", { staticClass: "las la-share" }),
+                _vm._v(" " + _vm._s(_vm.share))
+              ])
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c(
           "div",
@@ -78499,8 +78605,8 @@ var render = function() {
               _c(
                 "span",
                 {
-                  staticClass: "save",
-                  class: { active: _vm.saved },
+                  staticClass: "desactive",
+                  class: { save: _vm.saved },
                   on: {
                     click: function($event) {
                       return _vm.save()
@@ -78508,7 +78614,10 @@ var render = function() {
                   }
                 },
                 [
-                  _c("i", { staticClass: "lar la-bookmark" }),
+                  _c("i", {
+                    staticClass: "ri-bookmark-line",
+                    attrs: { id: "Ishare" }
+                  }),
                   _vm._v(" "),
                   _c("span", { staticClass: "ml-1" }, [_vm._v("save")])
                 ]
@@ -78564,72 +78673,10 @@ var render = function() {
       0
     ),
     _vm._v(" "),
-    _vm._m(1)
+    _vm._m(0)
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "like-block position-relative d-flex align-items-center" },
-      [
-        _c("div", { staticClass: "d-flex align-items-center" }, [
-          _c("div", { staticClass: "like-data" }, [
-            _c("div", { staticClass: "dropdown" }, [
-              _c(
-                "span",
-                {
-                  staticClass: "dropdown-toggle",
-                  attrs: {
-                    "data-toggle": "dropdown",
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false",
-                    role: "button"
-                  }
-                },
-                [_c("i", { staticClass: "lar la-heart" })]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "total-like-block ml-2 mr-3" }, [
-            _c("div", { staticClass: "dropdown" }, [
-              _c(
-                "span",
-                {
-                  attrs: {
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false",
-                    role: "button"
-                  }
-                },
-                [_vm._v("\n                  140\n                  ")]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "total-like-block ml-2 mr-3" }, [
-          _c("span", [
-            _c("i", { staticClass: "lar la-comments" }),
-            _vm._v(" 20\n            ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "total-like-block ml-2 mr-3" }, [
-          _c("a", { attrs: { href: "javascript:void();" } }, [
-            _c("span", [
-              _c("i", { staticClass: "las la-share" }),
-              _vm._v(" 99")
-            ])
-          ])
-        ])
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

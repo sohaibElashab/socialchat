@@ -54,9 +54,6 @@ Route::post('/GetPost', [App\Http\Controllers\PostController::class, 'show']);
 Route::post('/create-post', [App\Http\Controllers\PostController::class, 'create']); 
 Route::post('/update-post', [App\Http\Controllers\PostController::class, 'update']); 
 Route::post('/delete-post', [App\Http\Controllers\PostController::class, 'destroy']); 
-Route::post('/save-post', [App\Http\Controllers\PostController::class, 'save']); 
-Route::post('/unsave-post', [App\Http\Controllers\PostController::class, 'unsave']); 
-Route::post('/check-post', [App\Http\Controllers\PostController::class, 'check']); 
 Route::get('/posts-saved', [App\Http\Controllers\PostController::class, 'saved']); 
 Route::post('/UserPosts', [App\Http\Controllers\PostController::class, 'UserPosts']);
 
@@ -67,3 +64,11 @@ Route::post('/LoadMessages', [App\Http\Controllers\ChatController::class, 'LoadM
 Route::get('/UnreadMessages', [App\Http\Controllers\ChatController::class, 'UnreadMessages']); 
 Route::post('/DeleteChat', [App\Http\Controllers\ChatController::class, 'DeleteChat']); 
 Route::post('/ChatSearch', [App\Http\Controllers\ChatController::class, 'ChatSearch']); 
+
+//CommentController
+Route::post('/check-post', [App\Http\Controllers\CommentController::class, 'check']); 
+Route::post('/save-post', [App\Http\Controllers\CommentController::class, 'save']); 
+Route::post('/unsave-post', [App\Http\Controllers\CommentController::class, 'unsave']); 
+Route::post('/get-numbers', [App\Http\Controllers\CommentController::class, 'getNumbers']); 
+Route::post('/like-post', [App\Http\Controllers\CommentController::class, 'like']); 
+Route::post('/unlike-post', [App\Http\Controllers\CommentController::class, 'unlike']); 

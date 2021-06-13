@@ -2,37 +2,27 @@
     <div class="comment-area mt-3">
         <div class="d-flex justify-content-between align-items-center">
           <div class="like-block position-relative d-flex align-items-center">
-             <div class="d-flex align-items-center">
-                <div class="like-data">
-                   <div class="dropdown">
-                      <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-                         <i class="lar la-heart"></i>
-                      </span>
-                   </div>
-                </div>
-                <div class="total-like-block ml-2 mr-3">
-                   <div class="dropdown">
-                      <span aria-haspopup="true" aria-expanded="false" role="button">
-                      140
-                      </span>
-                   </div>
-                </div>
-             </div>
              <div class="total-like-block ml-2 mr-3">
-                <span >
-                   <i class="lar la-comments"></i> 20
+                <span role="button" :class="{ save : liked }" @click="isLike()" >
+                    <i class="ri-heart-line" id="Ilike"></i>
+                    <!-- <i class="ri-heart-fill"></i> -->
+                     {{like}}
                 </span>
              </div>
              <div class="total-like-block ml-2 mr-3">
-                <a href="javascript:void();">
-                   <span ><i class="las la-share"></i> 99</span>
-                </a>
+                <span >
+                   <i class="lar la-comments"></i> {{comment}}
+                </span>
+             </div>
+             <div class="total-like-block ml-2 mr-3">
+                   <span ><i class="las la-share"></i> {{share}}</span>
              </div>
           </div>
           <div class="share-block d-flex align-items-center feather-icon mr-3">
              <div>
-                <span class="save" :class="{ active : saved }" @click="save()">
-                   <i class="lar la-bookmark"></i>
+                <span class="desactive" :class="{ save : saved }" @click="save()" >
+                   <i class="ri-bookmark-line" id="Ishare"></i>
+                   <!-- <i class="ri-bookmark-fill"></i> -->
                    <span class="ml-1">save</span>
                 </span>
              </div>
@@ -94,19 +84,36 @@ export default {
                 },
             },
             saved:Boolean,
+            liked:Boolean,
             posts:null,
+            like:null,
+            comment:null,
+            share:null,
         }
     },
     mounted(){
         axios
             .post("/check-post", {id : this.id})
             .then(res => {
-                this.saved = res.data;
+                console.log("get check");
+                console.log(res.data);
+                this.saved = res.data.save;
+                this.liked = res.data.like;
             })
             .catch(err => {
                 console.log(err);
             });
-
+        axios
+            .post("/get-numbers", {id : this.id})
+            .then(res => {
+                this.like = res.data.likes;
+                this.comment = res.data.comments;
+                this.share = res.data.shares;
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        this.changeclass(this.liked , null , this.saved);
     },
     methods:{
         save(){
@@ -135,19 +142,70 @@ export default {
             if(this.$route.name != "Saved"){
                 this.saved = !this.saved;
             }
+            this.changeclass(null , null ,this.saved);
+        },
+        isLike(){
+            if(this.liked){
+                axios
+                    .post("/unlike-post", {id : this.id})
+                    .then(res => {
+                        console.log(res.data);
+                        this.like = res.data.likes;
+                        this.comment = res.data.comments;
+                        this.share = res.data.shares;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }else{
+                axios
+                    .post("/like-post", {id : this.id})
+                    .then(res => {
+                        console.log(res.data);
+                        this.like = res.data.likes;
+                        this.comment = res.data.comments;
+                        this.share = res.data.shares;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+            this.liked = !this.liked;
+            this.changeclass(this.liked , null , null);
+        },
+        changeclass(l , c , s){
+            if(l != null){
+                if(l){
+                    this.addremove('Ilike' , "ri-heart-line" , "ri-heart-fill");
+                }else{
+                    this.addremove('Ilike', "ri-heart-fill" , "ri-heart-line" );
+                    
+                }
+            }
+            if(s != null){
+                if(s){
+                    this.addremove('Ishare' , "ri-bookmark-line" , "ri-bookmark-fill");
+                }else{
+                    this.addremove('Ishare' , "ri-bookmark-fill" , "ri-bookmark-line" );
+                }
+            }
+        },
+        addremove(id , r , a){
+            document.getElementById(id).classList.remove(r);
+            document.getElementById(id).classList.add(a);
         }
     }
 }
 </script>
 
 <style scoped>
-.save{
+.desactive{
     cursor: pointer;
 }
-.save:hover{
+.desactive:hover{
     color: var(--iq-primary-hover);
 }
-.active{
+.save{
     color: var(--iq-primary-hover);
 }
 </style>
