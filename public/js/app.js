@@ -13151,6 +13151,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     id: {
@@ -13164,7 +13189,7 @@ __webpack_require__.r(__webpack_exports__);
           id: 1,
           userImg: "images/user/01.jpg",
           userName: "Anna Sthesia",
-          text: "Lorem ipsum dolor sit amet",
+          text: " ipsum dolor sit amet",
           time: "Just Now"
         },
         "2": {
@@ -13219,7 +13244,7 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (err) {
           console.log(err);
         });
-        this.$emit('unsave', true);
+        this.$emit("unsave", true);
       } else {
         axios.post("/save-post", {
           id: this.id
@@ -13269,17 +13294,17 @@ __webpack_require__.r(__webpack_exports__);
     changeclass: function changeclass(l, c, s) {
       if (l != null) {
         if (l) {
-          this.addremove('Ilike', "ri-heart-line", "ri-heart-fill");
+          this.addremove("Ilike", "ri-heart-line", "ri-heart-fill");
         } else {
-          this.addremove('Ilike', "ri-heart-fill", "ri-heart-line");
+          this.addremove("Ilike", "ri-heart-fill", "ri-heart-line");
         }
       }
 
       if (s != null) {
         if (s) {
-          this.addremove('Ishare', "ri-bookmark-line", "ri-bookmark-fill");
+          this.addremove("Ishare", "ri-bookmark-line", "ri-bookmark-fill");
         } else {
-          this.addremove('Ishare', "ri-bookmark-fill", "ri-bookmark-line");
+          this.addremove("Ishare", "ri-bookmark-fill", "ri-bookmark-line");
         }
       }
     },
@@ -22192,7 +22217,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.desactive[data-v-75f13304]{\r\n    cursor: pointer;\n}\n.desactive[data-v-75f13304]:hover{\r\n    color: var(--iq-primary-hover);\n}\n.save[data-v-75f13304]{\r\n    color: var(--iq-primary-hover);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.desactive[data-v-75f13304] {\r\n    cursor: pointer;\n}\n.desactive[data-v-75f13304]:hover {\r\n    color: var(--iq-primary-hover);\n}\n.save[data-v-75f13304] {\r\n    color: var(--iq-primary-hover);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -78572,7 +78597,9 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _vm._v(
-                    "\n                 " + _vm._s(_vm.like) + "\n            "
+                    "\n                    " +
+                      _vm._s(_vm.like) +
+                      "\n                "
                   )
                 ]
               )
@@ -78581,7 +78608,7 @@ var render = function() {
             _c("div", { staticClass: "total-like-block ml-2 mr-3" }, [
               _c("span", [
                 _c("i", { staticClass: "lar la-comments" }),
-                _vm._v(" " + _vm._s(_vm.comment) + "\n            ")
+                _vm._v(" " + _vm._s(_vm.comment) + " ")
               ])
             ]),
             _vm._v(" "),

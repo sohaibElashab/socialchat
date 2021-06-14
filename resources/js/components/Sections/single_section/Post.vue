@@ -128,7 +128,51 @@
                     />
                 </div>
             </div>
-            <Comment :id="post.id" @unsave="updateSave" />
+            <div class="comment-area mt-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div
+                        class="like-block position-relative d-flex align-items-center"
+                    >
+                        <div class="total-like-block ml-2 mr-3">
+                            <span
+                                role="button"
+                                :class="{ save: liked }"
+                                @click="isLike()"
+                            >
+                                <i class="ri-heart-line" id="Ilike"></i>
+                                <!-- <i class="ri-heart-fill"></i> -->
+                                {{ like }}
+                            </span>
+                        </div>
+                        <div class="total-like-block ml-2 mr-3">
+                            <span>
+                                <i class="lar la-comments"></i> {{ comment }}
+                            </span>
+                        </div>
+                        <div class="total-like-block ml-2 mr-3">
+                            <span
+                                ><i class="las la-share"></i> {{ share }}</span
+                            >
+                        </div>
+                    </div>
+                    <div
+                        class="share-block d-flex align-items-center feather-icon mr-3"
+                    >
+                        <div>
+                            <span
+                                class="desactive"
+                                :class="{ save: saved }"
+                                @click="save()"
+                            >
+                                <i class="ri-bookmark-line" id="Ishare"></i>
+                                <span class="ml-1">save</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <Comment />
+            </div>
         </div>
     </div>
 </template>
@@ -162,13 +206,136 @@ export default {
                 padding: 0,
                 type: "fade",
                 focus: 2
-            }
+            },
+            saved: Boolean,
+            liked: Boolean,
+            posts: null,
+            like: null,
+            comment: null,
+            share: null
         };
     },
+    mounted() {
+        axios
+            .post("/check-post", { id: this.post.id })
+            .then(res => {
+                console.log("get check");
+                console.log(res.data);
+                this.saved = res.data.save;
+                this.liked = res.data.like;
+                this.changeclass(this.liked, null, this.saved);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        axios
+            .post("/get-numbers", { id: this.post.id })
+            .then(res => {
+                this.like = res.data.likes;
+                this.comment = res.data.comments;
+                this.share = res.data.shares;
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    },
     methods: {
-        updateSave(data) {
-            this.$emit("unsavePost", data);
+        save() {
+            console.log(this.post.id);
+            if (this.saved) {
+                axios
+                    .post("/unsave-post", { id: this.post.id })
+                    .then(res => {
+                        console.log(res.data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+                this.$emit("unsavePost", true);
+            } else {
+                axios
+                    .post("/save-post", { id: this.post.id })
+                    .then(res => {
+                        console.log(res.data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+            if (this.$route.name != "Saved") {
+                this.saved = !this.saved;
+            }
+            this.changeclass(null, null, this.saved);
+        },
+        isLike() {
+            if (this.liked) {
+                axios
+                    .post("/unlike-post", { id: this.post.id })
+                    .then(res => {
+                        console.log(res.data);
+                        this.like = res.data.likes;
+                        this.comment = res.data.comments;
+                        this.share = res.data.shares;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            } else {
+                axios
+                    .post("/like-post", { id: this.post.id })
+                    .then(res => {
+                        console.log(res.data);
+                        this.like = res.data.likes;
+                        this.comment = res.data.comments;
+                        this.share = res.data.shares;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+            this.liked = !this.liked;
+            this.changeclass(this.liked, null, null);
+        },
+        changeclass(l, c, s) {
+            if (l != null) {
+                if (l) {
+                    this.addremove("Ilike", "ri-heart-line", "ri-heart-fill");
+                } else {
+                    this.addremove("Ilike", "ri-heart-fill", "ri-heart-line");
+                }
+            }
+            if (s != null) {
+                if (s) {
+                    this.addremove(
+                        "Ishare",
+                        "ri-bookmark-line",
+                        "ri-bookmark-fill"
+                    );
+                } else {
+                    this.addremove(
+                        "Ishare",
+                        "ri-bookmark-fill",
+                        "ri-bookmark-line"
+                    );
+                }
+            }
+        },
+        addremove(id, r, a) {
+            document.getElementById(id).classList.remove(r);
+            document.getElementById(id).classList.add(a);
         }
     }
 };
 </script>
+
+<style scoped>
+.desactive {
+    cursor: pointer;
+}
+.desactive:hover {
+    color: var(--iq-primary-hover);
+}
+.save {
+    color: var(--iq-primary-hover);
+}
+</style>
