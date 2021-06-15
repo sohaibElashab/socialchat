@@ -58,7 +58,6 @@ Route::get('/posts-saved', [App\Http\Controllers\PostController::class, 'saved']
 Route::post('/UserPosts', [App\Http\Controllers\PostController::class, 'UserPosts']);
 Route::post('/save-post', [App\Http\Controllers\PostController::class, 'save']);
 Route::post('/like-post', [App\Http\Controllers\PostController::class, 'like']);
-Route::post('/get-numbers', [App\Http\Controllers\PostController::class, 'getNumbers']); 
 
 //ChatController
 Route::get('/ChatList', [App\Http\Controllers\ChatController::class, 'ChatList']); 
