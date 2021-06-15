@@ -136,22 +136,24 @@
                         <div class="total-like-block ml-2 mr-3">
                             <span
                                 role="button"
-                                :class="{ save: liked }"
+                                :class="{ save: post.postLike }"
                                 @click="isLike()"
                             >
-                                <i class="ri-heart-line" id="Ilike"></i>
-                                <!-- <i class="ri-heart-fill"></i> -->
-                                {{ like }}
+                                <i :class="{ 'ri-heart-line': !post.postLike , 'ri-heart-fill': post.postLike }" id="Ilike"></i>
+                                {{ post.numbers.likes }}
                             </span>
                         </div>
                         <div class="total-like-block ml-2 mr-3">
                             <span>
-                                <i class="lar la-comments"></i> {{ comment }}
+                                <i class="lar la-comments"></i> 
+                                {{ post.numbers.comments }}
                             </span>
                         </div>
                         <div class="total-like-block ml-2 mr-3">
-                            <span
-                                ><i class="las la-share"></i> {{ share }}</span
+                            <span>
+                                <i class="las la-share" ></i>
+                                {{ post.numbers.shares }}
+                                </span
                             >
                         </div>
                     </div>
@@ -161,10 +163,10 @@
                         <div>
                             <span
                                 class="desactive"
-                                :class="{ save: saved }"
+                                :class="{ save: post.postSave }"
                                 @click="save()"
                             >
-                                <i class="ri-bookmark-line" id="Ishare"></i>
+                                <i :class="{ 'ri-bookmark-line': !post.postSave , 'ri-bookmark-fill': post.postSave }"></i>
                                 <span class="ml-1">save</span>
                             </span>
                         </div>
@@ -207,122 +209,33 @@ export default {
                 type: "fade",
                 focus: 2
             },
-            saved: Boolean,
-            liked: Boolean,
             posts: null,
-            like: null,
-            comment: null,
-            share: null
         };
     },
-    mounted() {
-        axios
-            .post("/check-post", { id: this.post.id })
-            .then(res => {
-                console.log("get check");
-                console.log(res.data);
-                this.saved = res.data.save;
-                this.liked = res.data.like;
-                this.changeclass(this.liked, null, this.saved);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-        axios
-            .post("/get-numbers", { id: this.post.id })
-            .then(res => {
-                this.like = res.data.likes;
-                this.comment = res.data.comments;
-                this.share = res.data.shares;
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    },
     methods: {
-        save() {
-            console.log(this.post.id);
-            if (this.saved) {
-                axios
-                    .post("/unsave-post", { id: this.post.id })
-                    .then(res => {
-                        console.log(res.data);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-                this.$emit("unsavePost", true);
-            } else {
-                axios
-                    .post("/save-post", { id: this.post.id })
-                    .then(res => {
-                        console.log(res.data);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            }
+        async save() {
+            await axios
+                .post("/save-post", { id: this.post.id , etat : this.post.postSave})
+                .then(res => {
+                    console.log(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
             if (this.$route.name != "Saved") {
-                this.saved = !this.saved;
-            }
-            this.changeclass(null, null, this.saved);
-        },
-        isLike() {
-            if (this.liked) {
-                axios
-                    .post("/unlike-post", { id: this.post.id })
-                    .then(res => {
-                        console.log(res.data);
-                        this.like = res.data.likes;
-                        this.comment = res.data.comments;
-                        this.share = res.data.shares;
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            } else {
-                axios
-                    .post("/like-post", { id: this.post.id })
-                    .then(res => {
-                        console.log(res.data);
-                        this.like = res.data.likes;
-                        this.comment = res.data.comments;
-                        this.share = res.data.shares;
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            }
-            this.liked = !this.liked;
-            this.changeclass(this.liked, null, null);
-        },
-        changeclass(l, c, s) {
-            if (l != null) {
-                if (l) {
-                    this.addremove("Ilike", "ri-heart-line", "ri-heart-fill");
-                } else {
-                    this.addremove("Ilike", "ri-heart-fill", "ri-heart-line");
-                }
-            }
-            if (s != null) {
-                if (s) {
-                    this.addremove(
-                        "Ishare",
-                        "ri-bookmark-line",
-                        "ri-bookmark-fill"
-                    );
-                } else {
-                    this.addremove(
-                        "Ishare",
-                        "ri-bookmark-fill",
-                        "ri-bookmark-line"
-                    );
-                }
+                this.post.postSave = !this.post.postSave;
             }
         },
-        addremove(id, r, a) {
-            document.getElementById(id).classList.remove(r);
-            document.getElementById(id).classList.add(a);
+        async isLike() {
+            await axios
+                .post("/like-post", { id: this.post.id , etat : this.post.postLike})
+                .then(res => {
+                    this.post.numbers.likes = res.data.likes;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            this.post.postLike = !this.post.postLike;
         }
     }
 };

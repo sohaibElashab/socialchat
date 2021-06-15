@@ -10,6 +10,9 @@ use App\Models\User;
 use App\Models\Image;
 use App\Models\Video;
 use App\Models\PostSave;
+use App\Models\PostLike;
+use App\Models\PostShare; 
+use App\Models\Comment;
 use Auth;
 use DateTime as GlobalDateTime;
 use Illuminate\Support\Arr;
@@ -32,6 +35,9 @@ class PostController extends Controller
         $userId = '';
         $post->postImgs = array();
         $post->postVds = '';
+        $post->postLike = false;
+        $post->postSave = false;
+        $post->numbers = array();
 
         $user = User::where('id',$post->user_id)->first();
         $imagesArray = array();
@@ -83,6 +89,18 @@ class PostController extends Controller
         if ($post->type == "create" || $post->type == "cover" || $post->type == "profile") {
             $post->edit = false;
         }
+
+        
+        $save = PostSave::where('post_id',$post->id)->where('user_id',auth()->user()->id)->get();
+        $like = PostLike::where('post_id',$post->id)->where('user_id',auth()->user()->id)->get();
+        if(count($save) > 0){
+            $post->postSave = true;
+        }
+        if(count($like) > 0){
+            $post->postLike = true;
+        }
+
+        $post->numbers = $this->get($post->id);
 
         return $post;
     }
@@ -228,6 +246,47 @@ class PostController extends Controller
             $this->postget($post);
         }
         return response()->json($posts);
+    }
+
+    
+    public function get($id)
+    {
+        $likes = PostLike::where('post_id',$id)->get();
+        $shares = PostShare::where('post_id',$id)->get();
+        $comments = Comment::where('post_id',$id)->get();
+        $numbers = ['likes' => count($likes) , 'shares' => count($shares) , 'comments' => count($comments) ];
+        return $numbers;
+    }
+    
+    public function getNumbers(Request $request)
+    {
+        return response()->json($this->get($request->id));
+    }
+    // like
+
+    public function like(Request $request)
+    {
+        if($request->etat){
+            PostLike::where('user_id',auth()->user()->id)->where('post_id',$request->id)->delete();
+        }else{
+            PostLike::create([
+                'post_id' => $request->id,
+                'user_id' => auth()->user()->id,
+            ]);
+        }
+        return response()->json($this->get($request->id)); 
+    }
+
+    public function save(Request $request)
+    {
+        if($request->etat){
+            PostSave::where('user_id',auth()->user()->id)->where('post_id',$request->id)->delete();
+        }else{
+            PostSave::create([
+                'post_id' => $request->id,
+                'user_id' => auth()->user()->id,
+            ]);
+        }
     }
     /**
      * Show the form for editing the specified resource.

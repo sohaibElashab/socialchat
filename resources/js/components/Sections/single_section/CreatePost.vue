@@ -98,17 +98,11 @@
                     </div>
                 </div>
                 <div class="bd-highlight justify-content-center mt-2">
-                    <form class="post-text ml-3" action="javascript:void();">
-                        <!-- <VueEmoji
-                            ref="emoji"
-                            @input="onInput"
-                            height="100"
-                            class="emoji-div -create"
-                        /> -->
+                    <form class="post-text" action="javascript:void();">
                         <div class="wrapper">
                             <textarea
                                 class="regular-input"
-                                placeholder="Message..."
+                                :placeholder="`What's on your mind, ${user.name} ?`"
                                 v-model="myText"
                             ></textarea>
 
@@ -138,13 +132,6 @@
                                     slot-scope="{ emojis, insert }"
                                 >
                                     <div class="emoji-picker">
-                                        <div class="emoji-picker__search">
-                                            <input
-                                                type="text"
-                                                v-model="search"
-                                                v-focus
-                                            />
-                                        </div>
                                         <div>
                                             <div
                                                 v-for="(emojiGroup,
@@ -334,7 +321,6 @@
 </template>
 
 <script>
-import VueEmoji from "emoji-vue";
 import EmojiPicker from "vue-emoji-picker";
 export default {
     data() {
@@ -540,7 +526,6 @@ export default {
         }
     },
     components: {
-        VueEmoji,
         EmojiPicker
     },
     directives: {
@@ -561,56 +546,34 @@ export default {
 <style scoped>
 .wrapper {
     position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
-.regular-input {
+.regular-input {  
+    position: relative;
+    width: 90% ;  
+    height: 100px;
+    background: transparent;
+    color: var(--iq-dark-body-text);
+    border: 1px solid var(--iq-border-dark);
+    border-radius: 10px;
     padding: 0.25rem 1rem;
-    border-radius: 3px;
-    border: 1px solid white;
-    width: 37rem;
-    height: 10rem;
+    font-size: 14px;
+    line-height: 45px;
     outline: none;
     resize: none;
-    background: transparent;
-    font-size: 16px;
-    color: var(--iq-dark-body-text);
-    overflow: hidden;
-}
-
-@media (min-width: 375px) {
-    .regular-input {
-        max-width: 16rem;
-    }
-}
-@media (min-width: 360px) {
-    .regular-input {
-        max-width: 15rem;
-    }
-}
-@media (min-width: 768px) {
-    .regular-input {
-        max-width: 37rem;
-    }
-}
-@media (min-width: 1024px) {
-    .regular-input {
-        max-width: 34rem;
-    }
-}
-@media (min-width: 1200px) {
-    .regular-input {
-        max-width: 37rem;
-    }
+    overflow: auto;
 }
 
 .regular-input:focus {
-    /* --iq-primary-hover */
     border: 1px solid var(--iq-primary-hover);
 }
 
-.emoji-invoker {
+.emoji-invoker {    
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 2.5rem;
+    margin-left: 10px;
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
@@ -626,30 +589,17 @@ export default {
 
 .emoji-picker {
     position: absolute;
-    top: 3rem;
-    right: 0.5rem;
-    font-family: Montserrat;
+    top: 4rem;
+    right: 0rem;
     border: 1px solid #ccc;
     width: 15rem;
     height: 20rem;
-    overflow: scroll;
+    overflow: auto;
     padding: 1rem;
-    box-sizing: border-box;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     background: var(--iq-dark-body-text);
-    box-shadow: 1px 1px 8px #c7dbe6;
+    box-shadow: 1px 2px 5px #c7dbe6;
     z-index: 11;
-}
-.emoji-picker__search {
-    display: flex;
-}
-.emoji-picker__search > input {
-    flex: 1;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 0.5rem 1rem;
-    outline: none;
-    background: transparent;
 }
 .emoji-picker h5 {
     margin-bottom: 0;

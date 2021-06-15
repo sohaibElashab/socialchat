@@ -38,9 +38,10 @@ class ProfilController extends Controller
 
     public function index() 
     {
-        $user = auth()->user();
+        $user = auth()->user(); 
         $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
         $user->coverimg = Image::where('user_id',$user->id)->where('type','cover')->first('name');
+        $user->name = ucfirst(strtolower($user->name));
         return response()->json($user);
     }
 
