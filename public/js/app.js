@@ -9178,6 +9178,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -9410,10 +9411,8 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    CancelPost: function CancelPost() {
-      this.$router.push({
-        name: "home"
-      });
+    comeBack: function comeBack() {
+      this.$router.back();
     },
     deletePost: function deletePost() {
       var _this4 = this;
@@ -9445,6 +9444,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _single_section_Post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../single_section/Post */ "./resources/js/components/Sections/single_section/Post.vue");
+//
 //
 //
 //
@@ -15130,6 +15130,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   etat: _this.post.postSave
                 }).then(function (res) {
                   console.log(res.data);
+
+                  _this.$emit('unsavePost');
                 })["catch"](function (err) {
                   console.log(err);
                 });
@@ -22047,7 +22049,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.img-edit[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    position: relative;\r\n    top: -25px;\n}\n.delete-btn[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: 5px;\r\n    left: 108px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.delete:hover .delete-btn[data-v-5281f7ec] {\r\n    opacity: 1;\r\n    transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\r\n    position: relative;\r\n    top: -2px;\n}\n.delete-images[data-v-5281f7ec] {\r\n    width: 250px;\r\n    height: 250px;\r\n    margin: 20px;\r\n    float: left;\n}\n.d-video[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: -500px;\r\n    left: 95%;\r\n    background: var(--iq-dark-bg);\n}\n.inputfile[data-v-5281f7ec] {\r\n    width: 0.1px;\r\n    height: 0.1px;\r\n    opacity: 0;\r\n    overflow: hidden;\r\n    position: absolute;\r\n    display: none;\r\n    z-index: -1;\n}\n.labelfile[data-v-5281f7ec] {\r\n    padding: 30% 30%;\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile[data-v-5281f7ec] {\r\n    max-width: 1000%;\r\n    font-size: 1.15rem;\r\n    font-weight: 700;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    overflow: hidden;\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile svg[data-v-5281f7ec] {\r\n    width: 1em;\r\n    height: 1em;\r\n    vertical-align: middle;\r\n    fill: currentColor;\r\n    margin-top: -0.25em;\r\n    /* 4px */\r\n    margin-right: 0.25em;\r\n    /* 4px */\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\n}\n.inputfile:focus .labelfile[data-v-5281f7ec],\r\n.inputfile.has-focus .labelfile[data-v-5281f7ec],\r\n.inputfile .labelfile[data-v-5281f7ec]:hover {\r\n    color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile figure[data-v-5281f7ec] {\r\n    width: 80px;\r\n    height: 80px;\r\n    border-radius: 50%;\r\n    background-color: var(--iq-primary);\r\n    display: block;\r\n    padding: 20px;\r\n    margin: 0 auto 10px;\n}\n.inputfile[data-v-5281f7ec]:focus,\r\n.labelfile figure[data-v-5281f7ec],\r\n.inputfile.has-focus[data-v-5281f7ec],\r\n.labelfile figure[data-v-5281f7ec],\r\n.inputfile[data-v-5281f7ec],\r\n.labelfile:hover figure[data-v-5281f7ec] {\r\n    background-color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile svg[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    fill: var(--iq-dark-bg);\n}\n.box[data-v-5281f7ec] {\r\n    position: relative;\r\n    height: 100%;\r\n    border: 1px dashed var(--iq-primary);\r\n    border-radius: 5px;\r\n    width: 100%;\n}\r\n/* emojie style */\n.wrapper[data-v-5281f7ec] {\r\n    position: relative;\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: center;\n}\n.regular-input[data-v-5281f7ec] {  \r\n    position: relative;\r\n    width: 90% ;  \r\n    height: 100px;\r\n    background: transparent;\r\n    color: var(--iq-dark-body-text);\r\n    border: 1px solid var(--iq-border-dark);\r\n    border-radius: 10px;\r\n    padding: 0.25rem 1rem;\r\n    font-size: 14px;\r\n    line-height: 45px;\r\n    outline: none;\r\n    resize: none;\r\n    overflow: auto;\n}\n.regular-input[data-v-5281f7ec]:focus {\r\n    border: 1px solid var(--iq-primary-hover);\n}\n.emoji-invoker[data-v-5281f7ec] {    \r\n    position: absolute;\r\n    top: 2.5rem;\r\n    margin-left: 10px;\r\n    width: 1.5rem;\r\n    height: 1.5rem;\r\n    border-radius: 50%;\r\n    cursor: pointer;\r\n    transition: all 0.2s;\n}\n.emoji-invoker[data-v-5281f7ec]:hover {\r\n    transform: scale(1.1);\n}\n.emoji-invoker > svg[data-v-5281f7ec] {\r\n    fill: #b1c6d0;\n}\n.emoji-picker[data-v-5281f7ec] {\r\n    position: absolute;\r\n    top: 4rem;\r\n    right: 0rem;\r\n    border: 1px solid #ccc;\r\n    width: 15rem;\r\n    height: 20rem;\r\n    overflow: auto;\r\n    padding: 1rem;\r\n    border-radius: 1rem;\r\n    background: var(--iq-dark-body-text);\r\n    box-shadow: 1px 2px 5px #c7dbe6;\r\n    z-index: 11;\n}\n.emoji-picker h5[data-v-5281f7ec] {\r\n    margin-bottom: 0;\r\n    color: #b1b1b1;\r\n    text-transform: uppercase;\r\n    font-size: 0.8rem;\r\n    cursor: default;\n}\n.emoji-picker .emojis[data-v-5281f7ec] {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: space-between;\n}\n.emoji-picker .emojis[data-v-5281f7ec]:after {\r\n    content: \"\";\r\n    flex: auto;\n}\n.emoji-picker .emojis span[data-v-5281f7ec] {\r\n    padding: 0.2rem;\r\n    cursor: pointer;\r\n    border-radius: 5px;\n}\n.emoji-picker .emojis span[data-v-5281f7ec]:hover {\r\n    background: #ececec;\r\n    cursor: pointer;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.img-edit[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    position: relative;\r\n    top: -25px;\n}\n.delete-btn[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: 5px;\r\n    left: 108px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.delete:hover .delete-btn[data-v-5281f7ec] {\r\n    opacity: 1;\r\n    transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\r\n    position: relative;\r\n    top: -2px;\n}\n.delete-images[data-v-5281f7ec] {\r\n    width: 250px;\r\n    height: 250px;\r\n    margin: 20px;\r\n    float: left;\n}\n.d-video[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: -500px;\r\n    left: 95%;\r\n    background: var(--iq-dark-bg);\n}\n.inputfile[data-v-5281f7ec] {\r\n    width: 0.1px;\r\n    height: 0.1px;\r\n    opacity: 0;\r\n    overflow: hidden;\r\n    position: absolute;\r\n    display: none;\r\n    z-index: -1;\n}\n.labelfile[data-v-5281f7ec] {\r\n    padding: 30% 30%;\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile[data-v-5281f7ec] {\r\n    max-width: 1000%;\r\n    font-size: 1.15rem;\r\n    font-weight: 700;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    overflow: hidden;\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile svg[data-v-5281f7ec] {\r\n    width: 1em;\r\n    height: 1em;\r\n    vertical-align: middle;\r\n    fill: currentColor;\r\n    margin-top: -0.25em;\r\n    /* 4px */\r\n    margin-right: 0.25em;\r\n    /* 4px */\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\n}\n.inputfile:focus .labelfile[data-v-5281f7ec],\r\n.inputfile.has-focus .labelfile[data-v-5281f7ec],\r\n.inputfile .labelfile[data-v-5281f7ec]:hover {\r\n    color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile figure[data-v-5281f7ec] {\r\n    width: 80px;\r\n    height: 80px;\r\n    border-radius: 50%;\r\n    background-color: var(--iq-primary);\r\n    display: block;\r\n    padding: 20px;\r\n    margin: 0 auto 10px;\n}\n.inputfile[data-v-5281f7ec]:focus,\r\n.labelfile figure[data-v-5281f7ec],\r\n.inputfile.has-focus[data-v-5281f7ec],\r\n.labelfile figure[data-v-5281f7ec],\r\n.inputfile[data-v-5281f7ec],\r\n.labelfile:hover figure[data-v-5281f7ec] {\r\n    background-color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile svg[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    fill: var(--iq-dark-bg);\n}\n.box[data-v-5281f7ec] {\r\n    position: relative;\r\n    height: 100%;\r\n    border: 1px dashed var(--iq-primary);\r\n    border-radius: 5px;\r\n    width: 100%;\n}\r\n/* emojie style */\n.wrapper[data-v-5281f7ec] {\r\n    position: relative;\r\n    display: flex;\r\n    width: 95%;\r\n    flex-direction: row;\r\n    justify-content: center;\n}\n.regular-input[data-v-5281f7ec] {  \r\n    position: relative;\r\n    width: 90% ;  \r\n    height: 100px;\r\n    background: transparent;\r\n    color: var(--iq-dark-body-text);\r\n    border: 1px solid var(--iq-border-dark);\r\n    border-radius: 10px;\r\n    padding: 0.25rem 1rem;\r\n    font-size: 14px;\r\n    line-height: 45px;\r\n    outline: none;\r\n    resize: none;\r\n    overflow: auto;\n}\n.regular-input[data-v-5281f7ec]:focus {\r\n    border: 1px solid var(--iq-primary-hover);\n}\n.emoji-invoker[data-v-5281f7ec] {    \r\n    position: absolute;\r\n    top: 2.5rem;\r\n    margin-left: 10px;\r\n    width: 1.5rem;\r\n    height: 1.5rem;\r\n    border-radius: 50%;\r\n    cursor: pointer;\r\n    transition: all 0.2s;\n}\n.emoji-invoker[data-v-5281f7ec]:hover {\r\n    transform: scale(1.1);\n}\n.emoji-invoker > svg[data-v-5281f7ec] {\r\n    fill: #b1c6d0;\n}\n.emoji-picker[data-v-5281f7ec] {\r\n    position: absolute;\r\n    top: 4rem;\r\n    right: 0rem;\r\n    border: 1px solid #ccc;\r\n    width: 15rem;\r\n    height: 20rem;\r\n    overflow: auto;\r\n    padding: 1rem;\r\n    border-radius: 1rem;\r\n    background: var(--iq-dark-body-text);\r\n    box-shadow: 1px 2px 5px #c7dbe6;\r\n    z-index: 11;\n}\n.emoji-picker h5[data-v-5281f7ec] {\r\n    margin-bottom: 0;\r\n    color: #b1b1b1;\r\n    text-transform: uppercase;\r\n    font-size: 0.8rem;\r\n    cursor: default;\n}\n.emoji-picker .emojis[data-v-5281f7ec] {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: space-between;\n}\n.emoji-picker .emojis[data-v-5281f7ec]:after {\r\n    content: \"\";\r\n    flex: auto;\n}\n.emoji-picker .emojis span[data-v-5281f7ec] {\r\n    padding: 0.2rem;\r\n    cursor: pointer;\r\n    border-radius: 5px;\n}\n.emoji-picker .emojis span[data-v-5281f7ec]:hover {\r\n    background: #ececec;\r\n    cursor: pointer;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22215,7 +22217,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.desactive[data-v-e475566a] {\r\n    cursor: pointer;\n}\n.desactive[data-v-e475566a]:hover {\r\n    color: var(--iq-primary-hover);\n}\n.save[data-v-e475566a] {\r\n    color: var(--iq-primary-hover);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.desactive[data-v-e475566a] {\r\n    cursor: pointer;\n}\n.desactive[data-v-e475566a]:hover {\r\n    color: var(--iq-primary-hover);\n}\n.save[data-v-e475566a] {\r\n    color: var(--iq-primary-hover);\n}\n.postImg[data-v-e475566a]{\r\n    position: relative;\r\n    width: 87%;\r\n    border-radius: 5px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -73383,6 +73385,24 @@ var render = function() {
     ? _c("div", { staticClass: "container mt-5 pt-5" }, [
         _c("div", { staticClass: "iq-card iq-card-block iq-card-stretch" }, [
           _c("div", { staticClass: "iq-card-body" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "iq-card-header d-flex justify-content-between mb-4"
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "iq-header-title",
+                    on: { click: _vm.comeBack }
+                  },
+                  [_vm._m(0)]
+                )
+              ]
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "user-post-data" }, [
               _c("div", { staticClass: "d-flex flex-wrap" }, [
                 _c("div", { staticClass: "media-support-user-img mr-3" }, [
@@ -73891,7 +73911,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary ml-4 mb-4 mt-4",
+                staticClass: "btn btn-primary d-block w-100 mt-4",
                 attrs: { type: "button" },
                 on: {
                   click: function($event) {
@@ -73900,29 +73920,33 @@ var render = function() {
                 }
               },
               [_vm._v("\n                Update\n            ")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger ml-4 mb-4 mt-4",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.CancelPost()
-                  }
-                }
-              },
-              [_vm._v("\n                Cancel\n            ")]
             )
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _vm._m(1)
         ])
       ])
     : _vm._e()
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h6",
+      { staticClass: "card-title", staticStyle: { cursor: "pointer" } },
+      [
+        _c("i", {
+          staticClass: "ri-arrow-left-fill",
+          staticStyle: { "font-size": "25px" }
+        }),
+        _vm._v(
+          "\n                        Back to previous page\n                    "
+        )
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -73978,35 +74002,41 @@ var render = function() {
         }),
         1
       )
-    : _c("div", { staticClass: "content-page" }, [_vm._m(0)])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container " }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "iq-card" }, [
-            _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
-              _c("div", { staticClass: "profile-header-image" }, [
-                _c("div", { staticClass: "profile-info p-4" }, [
-                  _c("div", { staticClass: "user-detail" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "d-flex flex-wrap justify-content-between align-items-start"
-                      },
-                      [
-                        _c("h6", [
-                          _vm._v(
-                            "\n                                            You have no saved posts\n                                        "
-                          )
-                        ])
-                      ]
-                    )
+    : _c("div", { staticClass: "content-page" }, [
+        _c("div", { staticClass: "container " }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "iq-card" }, [
+                _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
+                  _c("div", { staticClass: "profile-header-image" }, [
+                    _c("div", { staticClass: "profile-info p-4" }, [
+                      _c("div", { staticClass: "user-detail" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "d-flex flex-wrap justify-content-between align-items-start"
+                          },
+                          [
+                            _c("h6", [
+                              _vm._v(
+                                "\n                                            You have no saved posts \n                                        "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "router-link",
+                              {
+                                staticStyle: { cursor: "pointer" },
+                                attrs: { to: "/", tag: "h6" }
+                              },
+                              [_vm._v("Back to home")]
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ])
                   ])
                 ])
               ])
@@ -74014,9 +74044,8 @@ var staticRenderFns = [
           ])
         ])
       ])
-    ])
-  }
-]
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -80427,7 +80456,7 @@ var render = function() {
                     : _c("div", { staticClass: "user-post text-center" }, [
                         _c("a", { attrs: { href: "javascript:void();" } }, [
                           _c("img", {
-                            staticClass: "img-fluid rounded w-100",
+                            staticClass: "postImg",
                             attrs: {
                               src:
                                 "images/posts/" +
@@ -80501,7 +80530,7 @@ var render = function() {
             ? _c("div", { staticClass: "user-post" }, [
                 _c("div", { staticClass: "user-post text-center mt-3" }, [
                   _c("img", {
-                    staticClass: "img-fluid rounded w-100 ",
+                    staticClass: "postImg",
                     attrs: {
                       src: "images/user/" + _vm.post.userImg,
                       alt: "post-image"
@@ -80515,7 +80544,7 @@ var render = function() {
             ? _c("div", { staticClass: "user-post" }, [
                 _c("div", { staticClass: "user-post text-center mt-3" }, [
                   _c("img", {
-                    staticClass: "img-fluid rounded w-100 ",
+                    staticClass: "postImg",
                     attrs: {
                       src: "images/user/" + _vm.post.userCover,
                       alt: "post-image"

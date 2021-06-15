@@ -20,8 +20,9 @@
                                             class="d-flex flex-wrap justify-content-between align-items-start"
                                         >
                                             <h6>
-                                                You have no saved posts
+                                                You have no saved posts 
                                             </h6>
+                                            <router-link to="/" tag="h6" style="cursor: pointer;">Back to home</router-link>
                                         </div>
                                     </div>
                                 </div>

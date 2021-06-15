@@ -2,6 +2,14 @@
     <div class="container mt-5 pt-5" v-if="post">
         <div class="iq-card iq-card-block iq-card-stretch">
             <div class="iq-card-body">
+                <div class="iq-card-header d-flex justify-content-between mb-4">
+                    <div class="iq-header-title" @click="comeBack">
+                        <h6 class="card-title" style="cursor: pointer;">
+                            <i class="ri-arrow-left-fill" style=" font-size: 25px; "></i>
+                            Back to previous page
+                        </h6>
+                    </div>
+                </div>
                 <div class="user-post-data">
                     <div class="d-flex flex-wrap">
                         <div class="media-support-user-img mr-3">
@@ -268,16 +276,9 @@
                 <button
                     type="button"
                     @click="UpdatePost()"
-                    class="btn btn-primary ml-4 mb-4 mt-4"
+                    class="btn btn-primary d-block w-100 mt-4"
                 >
                     Update
-                </button>
-                <button
-                    @click="CancelPost()"
-                    type="button"
-                    class="btn btn-danger ml-4 mb-4 mt-4"
-                >
-                    Cancel
                 </button>
             </div>
             <div
@@ -560,8 +561,8 @@ export default {
                     });
             }
         },
-        CancelPost() {
-            this.$router.push({ name: "home" });
+        comeBack() {
+            this.$router.back();
         },
         deletePost() {
             axios
@@ -705,6 +706,7 @@ export default {
 .wrapper {
     position: relative;
     display: flex;
+    width: 95%;
     flex-direction: row;
     justify-content: center;
 }

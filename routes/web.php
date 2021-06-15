@@ -54,8 +54,8 @@ Route::post('/GetPost', [App\Http\Controllers\PostController::class, 'show']);
 Route::post('/create-post', [App\Http\Controllers\PostController::class, 'create']); 
 Route::post('/update-post', [App\Http\Controllers\PostController::class, 'update']); 
 Route::post('/delete-post', [App\Http\Controllers\PostController::class, 'destroy']); 
-Route::get('/posts-saved', [App\Http\Controllers\PostController::class, 'saved']); 
 Route::post('/UserPosts', [App\Http\Controllers\PostController::class, 'UserPosts']);
+Route::get('/posts-saved', [App\Http\Controllers\PostController::class, 'saved']); 
 Route::post('/save-post', [App\Http\Controllers\PostController::class, 'save']);
 Route::post('/like-post', [App\Http\Controllers\PostController::class, 'like']);
 

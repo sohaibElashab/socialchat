@@ -78,7 +78,7 @@
                                 `images/posts/${post.user_id}/${post.postImgs[0]}`
                             "
                             alt="post-image"
-                            class="img-fluid rounded w-100"
+                            class="postImg"
                     /></a>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                     <img
                         :src="`images/user/${post.userImg}`"
                         alt="post-image"
-                        class="img-fluid rounded w-100 "
+                        class="postImg"
                     />
                 </div>
             </div>
@@ -124,7 +124,7 @@
                     <img
                         :src="`images/user/${post.userCover}`"
                         alt="post-image"
-                        class="img-fluid rounded w-100 "
+                        class="postImg"
                     />
                 </div>
             </div>
@@ -218,6 +218,7 @@ export default {
                 .post("/save-post", { id: this.post.id , etat : this.post.postSave})
                 .then(res => {
                     console.log(res.data);
+                    this.$emit('unsavePost');
                 })
                 .catch(err => {
                     console.log(err);
@@ -250,5 +251,10 @@ export default {
 }
 .save {
     color: var(--iq-primary-hover);
+}
+.postImg{
+    position: relative;
+    width: 87%;
+    border-radius: 5px;
 }
 </style>
