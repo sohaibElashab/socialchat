@@ -4093,8 +4093,10 @@ form.comment-text input {
 .comment-attagement {
     position: absolute;
     left: auto;
-    right: 0;
-    font-size: 20px;
+    right: -18px;
+    top: 4px;
+    cursor: pointer;
+    font-size: 23px;
 }
 .comment-attagement a {
     color: var(--iq-body-text);
@@ -4509,40 +4511,87 @@ button.qty-btn {
 }
 /* -------------------input imoji---------------- */
 
-.emoji-div {
-    position: relative !important;
-    width: 100% !important;
+
+.wrapper-emoji {
+    position: relative;
+    display: flex;
+    flex-direction: row;
 }
-.emoji-div > div {
-    position: relative !important;
-    width: 100% !important;
-}
-.emoji-div > div > div {
-    position: relative !important;
-    width: 90% !important;
-    border-radius: 10px;
-}
-.emoji-div > div > textarea {
-    position: relative !important;
-    width: 100% !important;
-    max-height: 60px !important;
-    border-radius: 10px;
-    padding: 5px 10px;
+.regular-input {  
+    position: relative;
+    width: 90%;
     background: transparent;
+    color: var(--iq-dark-body-text);
+    border: 1px solid var(--iq-border-dark);
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 45px;
+    outline: none;
+    resize: none;
+    overflow: auto;
 }
-.-create > div > i {
-    top: 35px !important;
-    right: -15px;
-    background: transparent url("../../images/icon/happyLight.png") no-repeat
-        center center !important;
-    color: var(--iq-primary) !important;
+
+.regular-input:focus {
+    border: 1px solid var(--iq-primary-hover);
 }
-.emoji-div > div > div:focus-visible,
-.emoji-div > div > textarea:focus-visible {
-    color: var(--iq-dark-title-text) !important;
-    border: 2px solid var(--iq-primary) !important;
-    outline: none !important;
+
+.emoji-invoker {    
+    position: absolute;
+    margin-left: 10px;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
 }
+.emoji-invoker:hover {
+    transform: scale(1.1);
+}
+.emoji-invoker > i {
+    font-size: 24px;
+    fill: #b1c6d0;
+}
+
+.emoji-picker {
+    position: absolute;
+    top: 4rem;
+    right: 0rem;
+    border: 1px solid #ccc;
+    width: 15rem;
+    height: 20rem;
+    overflow: auto;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: var(--iq-dark-body-text);
+    box-shadow: 1px 2px 5px #c7dbe6;
+    z-index: 11;
+}
+.emoji-picker h5 {
+    margin-bottom: 0;
+    color: #b1b1b1;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    cursor: default;
+}
+.emoji-picker .emojis {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.emoji-picker .emojis:after {
+    content: "";
+    flex: auto;
+}
+.emoji-picker .emojis span {
+    padding: 0.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.emoji-picker .emojis span:hover {
+    background: #ececec;
+    cursor: pointer;
+}
+
 
 /* ----------------------------feelings---------------------------- */
 .feelings {

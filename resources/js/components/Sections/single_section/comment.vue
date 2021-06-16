@@ -24,30 +24,67 @@
                 </div>
             </li>
         </ul>
+        <div class="files" v-if="file">
+            <img :src="fileUrl" alt="">
+        </div>
         <form
             class="comment-text d-flex align-items-center mt-3"
             action="javascript:void(0);"
         >
-            <input
-                type="text"
-                class="form-control rounded"
-                placeholder="Write a comment…"
-            />
-            <div class="comment-attagement d-flex">
-                <a href="javascript:void();"><i class="ri-link mr-3"></i></a>
-                <a href="javascript:void();"
-                    ><i class="ri-user-smile-line mr-3"></i
-                ></a>
-                <a href="javascript:void();"
-                    ><i class="ri-camera-line mr-3"></i
-                ></a>
+            <div class="wrapper-emoji">
+                <textarea
+                    class="regular-input"
+                    placeholder="Write a comment..."
+                    v-model="input"
+                ></textarea>
+
+                <emoji-picker @emoji="append" :search="search" class="iconemoji">
+                    <div
+                        class="emoji-invoker"
+                        slot="emoji-invoker"
+                        slot-scope="{ events: { click: clickEvent } }"
+                        @click.stop="clickEvent"
+                    >
+                        <i class="ri-user-smile-line"></i>
+                    </div>
+                    <div slot="emoji-picker" slot-scope="{ emojis, insert }">
+                        <div class="emoji-picker">
+                            <div>
+                                <div
+                                    v-for="(emojiGroup, category) in emojis"
+                                    :key="category"
+                                >
+                                    <h5 style="color:white">{{ category }}</h5>
+                                    <div class="emojis">
+                                        <span
+                                            v-for="(emoji,
+                                            emojiName) in emojiGroup"
+                                            :key="emojiName"
+                                            @click="insert(emoji)"
+                                            :title="emojiName"
+                                            >{{ emoji }}</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </emoji-picker>
+                <div class="comment-attagement d-flex">
+                    <input type="file" name="" id="fileComment" @change="showFile" accept="image/*" style="display:none">
+                    <label style=" cursor: pointer; " for="fileComment" ><i class="ri-link mr-3"></i></label>
+                </div>
             </div>
         </form>
     </div>
 </template>
 
 <script>
+import EmojiPicker from "vue-emoji-picker";
 export default {
+    components: {
+        EmojiPicker
+    },
     data() {
         return {
             comments: {
@@ -55,7 +92,7 @@ export default {
                     id: 1,
                     userImg: "images/user/01.jpg",
                     userName: "Anna Sthesia",
-                    text: "test g",
+                    text: "test 6",
                     time: "Just Now"
                 },
                 "2": {
@@ -66,9 +103,48 @@ export default {
                     time: "1 hour ago"
                 }
             },
+            file: null,
+            fileUrl : null
         };
     },
     methods: {
+        showFile(e){
+            console.log("yes");
+            const files = e.target.files[0];
+            this.fileUrl = URL.createObjectURL(files);
+            this.file =  files;
+        },
     }
 };
 </script>
+
+<style scoped>
+.wrapper-emoji {
+    width: 100%;
+    justify-content: flex-start;
+}
+.regular-input {  
+    height: 50px;
+    padding: 0rem 1rem;
+}
+.emoji-invoker {
+    top: 0.3rem;
+}
+.iconemoji{
+    position: relative;
+    width: 70px;
+}
+.files{
+    position: relative;
+    width: 100%;
+    height: 150px;
+    border-top: 1px solid;
+}
+.files img{
+    position: relative;
+    width: 200px;
+    height: 140px;
+    padding: 10px 10px 0px 10px;
+}
+
+</style>
