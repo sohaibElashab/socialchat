@@ -5,7 +5,7 @@
                 <div class="d-flex flex-wrap">
                     <div class="user-img">
                         <img
-                            :src="comment.userImg"
+                            :src="`images/user/${comment.userImg.name}`"
                             alt="userimg"
                             class="avatar-35 rounded-circle img-fluid"
                         />
@@ -16,17 +16,15 @@
                         <div
                             class="d-flex flex-wrap align-items-center comment-activity"
                         >
-                            <a href="javascript:void();">like</a>
-                            <a href="javascript:void();">reply</a>
+                            <a href="javascript:void();"><i class="ri-heart-line"></i></a>
+                            <a href="javascript:void();"><i class="ri-edit-2-line"></i></a>
+                            <a href="javascript:void();"><i class="ri-delete-bin-6-line"></i></a>
                             <span> {{ comment.time }} </span>
                         </div>
                     </div>
                 </div>
             </li>
         </ul>
-        <div class="files" v-if="file">
-            <img :src="fileUrl" alt="">
-        </div>
         <form
             class="comment-text d-flex align-items-center mt-3"
             action="javascript:void(0);"
@@ -35,7 +33,7 @@
                 <textarea
                     class="regular-input"
                     placeholder="Write a comment..."
-                    v-model="input"
+                    v-model="myText"
                 ></textarea>
 
                 <emoji-picker @emoji="append" :search="search" class="iconemoji">
@@ -70,8 +68,8 @@
                         </div>
                     </div>
                 </emoji-picker>
-                <div class="comment-attagement d-flex">
-                    <input type="file" name="" id="fileComment" @change="showFile" accept="image/*" style="display:none">
+                <!-- <input type="file" name="" id="fileComment" @change="showFile" accept="image/*" style="display:none"> -->
+                <div class="comment-attagement d-flex" @click="addComment">
                     <label style=" cursor: pointer; " for="fileComment" ><i class="ri-link mr-3"></i></label>
                 </div>
             </div>
@@ -85,36 +83,86 @@ export default {
     components: {
         EmojiPicker
     },
+    props:{
+        id: {
+            require:true
+        }
+    },
     data() {
         return {
-            comments: {
-                "1": {
-                    id: 1,
-                    userImg: "images/user/01.jpg",
-                    userName: "Anna Sthesia",
-                    text: "test 6",
-                    time: "Just Now"
-                },
-                "2": {
-                    id: 2,
-                    userImg: "images/user/03.jpg",
-                    userName: "Barb Ackue",
-                    statu: "ipsum dolor sit amet",
-                    time: "1 hour ago"
-                }
-            },
+            // comments: {
+            //     "1": {
+            //         id: 1,
+            //         userImg: "images/user/01.jpg",
+            //         userName: "testy Sthesia",
+            //         text: "test 6",
+            //         time: "Just Now"
+            //     },
+            //     "2": {
+            //         id: 2,
+            //         userImg: "images/user/03.jpg",
+            //         userName: "Barb Ackue",
+            //         statu: "ipsum dolor sit amet",
+            //         time: "1 hour ago"
+            //     }
+            // },
+            comments: [],
             file: null,
-            fileUrl : null
+            fileUrl : null,
+            search: "",
+            myText: "",
         };
     },
     methods: {
-        showFile(e){
-            console.log("yes");
-            const files = e.target.files[0];
-            this.fileUrl = URL.createObjectURL(files);
-            this.file =  files;
+        append(emoji) {
+            this.myText += emoji;
         },
-    }
+        showFile(e){
+            // axios
+            //     .post("/comment", {id: this.id} )
+            //     .then(res => {
+            //         console.log(res.data);
+            //     })
+            //     .catch(err => {
+            //         console.log(err);
+            //     });
+            // console.log('fichier :' , e.target.files[0]);
+            console.log('id :' , this.id);
+            // document.getElementById("fileComment").value = null;
+        },
+        addComment(){
+            if(this.myText != ""){
+                axios
+                    .post("/add-comment", {id: this.id , text : this.myText} )
+                    .then(res => {
+                        console.log(res.data);
+                        this.comments.push(res.data);
+                        this.myText = '';
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+        }
+    },
+    mounted(){
+        axios
+            .post("/get-comments", {id: this.id } )
+            .then(res => {
+                console.log(res.data);
+                this.comments = res.data;
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    },
+    directives: {
+        focus: {
+            inserted(el) {
+                el.focus();
+            }
+        }
+    },
 };
 </script>
 

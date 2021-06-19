@@ -39,6 +39,7 @@
 import story from "../../single_section/Story";
 import CreatePost from "../../single_section/CreatePost";
 import Post from "../../single_section/Post";
+import EventBus from "../../../../event-bus";
 export default {
     components: {
         story,
@@ -74,6 +75,7 @@ export default {
                 document.getElementById("newP").style.display = "initial";
             }
         });
+        EventBus.$on("image", this.addImage);
     },
     methods: {
         LoadNew() {
@@ -98,7 +100,17 @@ export default {
                 }
             });
             return p;
-        }
+        },
+        // addfile(data){
+        //     console.log(" add data");
+        //     console.log(data);
+        //     this.posts.forEach(element => {
+        //         if(element.id == data.id){
+        //             element.fileUrl = data.url;
+        //             console.log(element);
+        //         }
+        //     });
+        // }
     }
 };
 </script>

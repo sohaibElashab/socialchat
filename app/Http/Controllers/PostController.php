@@ -38,6 +38,7 @@ class PostController extends Controller
         $post->postLike = false;
         $post->postSave = false;
         $post->numbers = array();
+        $post->fileUrl = null;
 
         $user = User::where('id',$post->user_id)->first();
         $imagesArray = array();
@@ -93,11 +94,15 @@ class PostController extends Controller
         
         $save = PostSave::where('post_id',$post->id)->where('user_id',auth()->user()->id)->get();
         $like = PostLike::where('post_id',$post->id)->where('user_id',auth()->user()->id)->get();
+        $Comment = Comment::where('post_id',$post->id)->where('user_id',auth()->user()->id)->get();
         if(count($save) > 0){
             $post->postSave = true;
         }
         if(count($like) > 0){
             $post->postLike = true;
+        }
+        if(count($Comment) > 0){
+            $post->postComment = true;
         }
 
         $post->numbers = $this->get($post->id);

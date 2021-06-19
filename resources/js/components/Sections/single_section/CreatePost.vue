@@ -316,6 +316,7 @@ export default {
     data() {
         return {
             user: null,
+            search: "",
             myText: "",
             UserStatu: "",
             image: null,
@@ -371,7 +372,6 @@ export default {
             ],
             postImgs: [],
             postVds: "",
-            search: ""
         };
     },
     methods: {

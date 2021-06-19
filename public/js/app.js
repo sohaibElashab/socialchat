@@ -9846,6 +9846,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _single_section_Story__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../single_section/Story */ "./resources/js/components/Sections/single_section/Story.vue");
 /* harmony import */ var _single_section_CreatePost__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../single_section/CreatePost */ "./resources/js/components/Sections/single_section/CreatePost.vue");
 /* harmony import */ var _single_section_Post__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../single_section/Post */ "./resources/js/components/Sections/single_section/Post.vue");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../event-bus */ "./resources/js/event-bus.js");
 //
 //
 //
@@ -9883,6 +9884,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -9921,6 +9923,7 @@ __webpack_require__.r(__webpack_exports__);
         document.getElementById("newP").style.display = "initial";
       }
     });
+    _event_bus__WEBPACK_IMPORTED_MODULE_3__.default.$on("image", this.addImage);
   },
   methods: {
     LoadNew: function LoadNew() {
@@ -9953,7 +9956,17 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       return p;
-    }
+    } // addfile(data){
+    //     console.log(" add data");
+    //     console.log(data);
+    //     this.posts.forEach(element => {
+    //         if(element.id == data.id){
+    //             element.fileUrl = data.url;
+    //             console.log(element);
+    //         }
+    //     });
+    // }
+
   }
 });
 
@@ -13131,41 +13144,93 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     EmojiPicker: (vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default())
   },
+  props: {
+    id: {
+      require: true
+    }
+  },
   data: function data() {
     return {
-      comments: {
-        "1": {
-          id: 1,
-          userImg: "images/user/01.jpg",
-          userName: "Anna Sthesia",
-          text: "test 6",
-          time: "Just Now"
-        },
-        "2": {
-          id: 2,
-          userImg: "images/user/03.jpg",
-          userName: "Barb Ackue",
-          statu: "ipsum dolor sit amet",
-          time: "1 hour ago"
-        }
-      },
+      // comments: {
+      //     "1": {
+      //         id: 1,
+      //         userImg: "images/user/01.jpg",
+      //         userName: "testy Sthesia",
+      //         text: "test 6",
+      //         time: "Just Now"
+      //     },
+      //     "2": {
+      //         id: 2,
+      //         userImg: "images/user/03.jpg",
+      //         userName: "Barb Ackue",
+      //         statu: "ipsum dolor sit amet",
+      //         time: "1 hour ago"
+      //     }
+      // },
+      comments: [],
       file: null,
-      fileUrl: null
+      fileUrl: null,
+      search: "",
+      myText: ""
     };
   },
   methods: {
+    append: function append(emoji) {
+      this.myText += emoji;
+    },
     showFile: function showFile(e) {
-      console.log("yes");
-      var files = e.target.files[0];
-      this.fileUrl = URL.createObjectURL(files);
-      this.file = files;
+      // axios
+      //     .post("/comment", {id: this.id} )
+      //     .then(res => {
+      //         console.log(res.data);
+      //     })
+      //     .catch(err => {
+      //         console.log(err);
+      //     });
+      // console.log('fichier :' , e.target.files[0]);
+      console.log('id :', this.id); // document.getElementById("fileComment").value = null;
+    },
+    addComment: function addComment() {
+      var _this = this;
+
+      if (this.myText != "") {
+        axios.post("/add-comment", {
+          id: this.id,
+          text: this.myText
+        }).then(function (res) {
+          console.log(res.data);
+
+          _this.comments.push(res.data);
+
+          _this.myText = '';
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    axios.post("/get-comments", {
+      id: this.id
+    }).then(function (res) {
+      console.log(res.data);
+      _this2.comments = res.data;
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  },
+  directives: {
+    focus: {
+      inserted: function inserted(el) {
+        el.focus();
+      }
     }
   }
 });
@@ -13888,6 +13953,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       user: null,
+      search: "",
       myText: "",
       UserStatu: "",
       image: null,
@@ -13928,8 +13994,7 @@ __webpack_require__.r(__webpack_exports__);
         active: ""
       }],
       postImgs: [],
-      postVds: "",
-      search: ""
+      postVds: ""
     };
   },
   methods: {
@@ -14918,6 +14983,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -70444,7 +70510,10 @@ var render = function() {
             _c("div", { staticClass: "user-img" }, [
               _c("img", {
                 staticClass: "avatar-35 rounded-circle img-fluid",
-                attrs: { src: comment.userImg, alt: "userimg" }
+                attrs: {
+                  src: "images/user/" + comment.userImg.name,
+                  alt: "userimg"
+                }
               })
             ]),
             _vm._v(" "),
@@ -70460,13 +70529,11 @@ var render = function() {
                     "d-flex flex-wrap align-items-center comment-activity"
                 },
                 [
-                  _c("a", { attrs: { href: "javascript:void();" } }, [
-                    _vm._v("like")
-                  ]),
+                  _vm._m(0, true),
                   _vm._v(" "),
-                  _c("a", { attrs: { href: "javascript:void();" } }, [
-                    _vm._v("reply")
-                  ]),
+                  _vm._m(1, true),
+                  _vm._v(" "),
+                  _vm._m(2, true),
                   _vm._v(" "),
                   _c("span", [_vm._v(" " + _vm._s(comment.time) + " ")])
                 ]
@@ -70477,12 +70544,6 @@ var render = function() {
       }),
       0
     ),
-    _vm._v(" "),
-    _vm.file
-      ? _c("div", { staticClass: "files" }, [
-          _c("img", { attrs: { src: _vm.fileUrl, alt: "" } })
-        ])
-      : _vm._e(),
     _vm._v(" "),
     _c(
       "form",
@@ -70500,19 +70561,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.input,
-                  expression: "input"
+                  value: _vm.myText,
+                  expression: "myText"
                 }
               ],
               staticClass: "regular-input",
               attrs: { placeholder: "Write a comment..." },
-              domProps: { value: _vm.input },
+              domProps: { value: _vm.myText },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.input = $event.target.value
+                  _vm.myText = $event.target.value
                 }
               }
             }),
@@ -70587,20 +70648,14 @@ var render = function() {
               ])
             }),
             _vm._v(" "),
-            _c("div", { staticClass: "comment-attagement d-flex" }, [
-              _c("input", {
-                staticStyle: { display: "none" },
-                attrs: {
-                  type: "file",
-                  name: "",
-                  id: "fileComment",
-                  accept: "image/*"
-                },
-                on: { change: _vm.showFile }
-              }),
-              _vm._v(" "),
-              _vm._m(0)
-            ])
+            _c(
+              "div",
+              {
+                staticClass: "comment-attagement d-flex",
+                on: { click: _vm.addComment }
+              },
+              [_vm._m(3)]
+            )
           ],
           1
         )
@@ -70609,6 +70664,30 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "javascript:void();" } }, [
+      _c("i", { staticClass: "ri-heart-line" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "javascript:void();" } }, [
+      _c("i", { staticClass: "ri-edit-2-line" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "javascript:void();" } }, [
+      _c("i", { staticClass: "ri-delete-bin-6-line" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -72651,10 +72730,15 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "total-like-block ml-2 mr-3" }, [
-                        _c("span", [
-                          _c("i", { staticClass: "lar la-comments" }),
+                        _c("span", { class: { save: _vm.post.postComment } }, [
+                          _c("i", {
+                            class: {
+                              "ri-discuss-line": !_vm.post.postComment,
+                              "ri-discuss-fill": _vm.post.postComment
+                            }
+                          }),
                           _vm._v(
-                            " \n                            " +
+                            "\n                            " +
                               _vm._s(_vm.post.numbers.comments) +
                               "\n                        "
                           )
@@ -72714,7 +72798,7 @@ var render = function() {
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
-              _c("Comment")
+              _c("Comment", { attrs: { id: _vm.post.id } })
             ],
             1
           )

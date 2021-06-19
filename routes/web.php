@@ -68,3 +68,5 @@ Route::post('/DeleteChat', [App\Http\Controllers\ChatController::class, 'DeleteC
 Route::post('/ChatSearch', [App\Http\Controllers\ChatController::class, 'ChatSearch']); 
 
 //CommentController
+Route::post('/add-comment', [App\Http\Controllers\CommentController::class, 'store']); 
+Route::post('/get-comments', [App\Http\Controllers\CommentController::class, 'show']); 

@@ -12,7 +12,7 @@
                         name: 'chat',
                         query: { user: ChatList.id }
                     }"
-                    :id="`pp${ChatList.id}`"
+                    :id="`pp${ChatList.id}`" 
                     tag="a"
                     :class="ChatList.id == $route.query.user ? 'active' : ''"
                 >

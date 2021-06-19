@@ -144,8 +144,9 @@
                             </span>
                         </div>
                         <div class="total-like-block ml-2 mr-3">
-                            <span>
-                                <i class="lar la-comments"></i> 
+                            <span
+                                :class="{ save: post.postComment }">
+                                <i :class="{ 'ri-discuss-line': !post.postComment , 'ri-discuss-fill': post.postComment }"></i>
                                 {{ post.numbers.comments }}
                             </span>
                         </div>
@@ -173,7 +174,7 @@
                     </div>
                 </div>
                 <hr />
-                <Comment />
+                <Comment :id="post.id"/>
             </div>
         </div>
     </div>
