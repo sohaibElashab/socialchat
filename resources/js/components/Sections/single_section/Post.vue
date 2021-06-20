@@ -139,23 +139,32 @@
                                 :class="{ save: post.postLike }"
                                 @click="isLike()"
                             >
-                                <i :class="{ 'ri-heart-line': !post.postLike , 'ri-heart-fill': post.postLike }" id="Ilike"></i>
+                                <i
+                                    :class="{
+                                        'ri-heart-line': !post.postLike,
+                                        'ri-heart-fill': post.postLike
+                                    }"
+                                    id="Ilike"
+                                ></i>
                                 {{ post.numbers.likes }}
                             </span>
                         </div>
                         <div class="total-like-block ml-2 mr-3">
-                            <span
-                                :class="{ save: post.postComment }">
-                                <i :class="{ 'ri-discuss-line': !post.postComment , 'ri-discuss-fill': post.postComment }"></i>
+                            <span :class="{ save: post.postComment }">
+                                <i
+                                    :class="{
+                                        'ri-discuss-line': !post.postComment,
+                                        'ri-discuss-fill': post.postComment
+                                    }"
+                                ></i>
                                 {{ post.numbers.comments }}
                             </span>
                         </div>
                         <div class="total-like-block ml-2 mr-3">
-                            <span>
-                                <i class="las la-share" ></i>
+                            <span @click="sharePost">
+                                <i class="las la-share"></i>
                                 {{ post.numbers.shares }}
-                                </span
-                            >
+                            </span>
                         </div>
                     </div>
                     <div
@@ -167,14 +176,19 @@
                                 :class="{ save: post.postSave }"
                                 @click="save()"
                             >
-                                <i :class="{ 'ri-bookmark-line': !post.postSave , 'ri-bookmark-fill': post.postSave }"></i>
+                                <i
+                                    :class="{
+                                        'ri-bookmark-line': !post.postSave,
+                                        'ri-bookmark-fill': post.postSave
+                                    }"
+                                ></i>
                                 <span class="ml-1">save</span>
                             </span>
                         </div>
                     </div>
                 </div>
                 <hr />
-                <Comment :id="post.id"/>
+                <Comment :id="post.id" />
             </div>
         </div>
     </div>
@@ -184,6 +198,7 @@
 import "@splidejs/splide/dist/css/themes/splide-skyblue.min.css";
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import Comment from "./Comment";
+import EventBus from "../../../event-bus";
 
 export default {
     components: {
@@ -210,16 +225,32 @@ export default {
                 type: "fade",
                 focus: 2
             },
-            posts: null,
+            posts: null
         };
     },
+    mounted() {
+        Echo.private(`sharePost.${this.post.id}`).listen(
+            "SharePostEvent",
+            e => {
+                this.share += 1;
+            }
+        );
+    },
     methods: {
+        sharePost() {
+            EventBus.$emit("postID", this.post.id);
+            document.getElementById("SharePostWrap").style.display = "flex";
+            document.body.style.overflowY = "hidden";
+        },
         async save() {
             await axios
-                .post("/save-post", { id: this.post.id , etat : this.post.postSave})
+                .post("/save-post", {
+                    id: this.post.id,
+                    etat: this.post.postSave
+                })
                 .then(res => {
                     console.log(res.data);
-                    this.$emit('unsavePost');
+                    this.$emit("unsavePost");
                 })
                 .catch(err => {
                     console.log(err);
@@ -230,7 +261,10 @@ export default {
         },
         async isLike() {
             await axios
-                .post("/like-post", { id: this.post.id , etat : this.post.postLike})
+                .post("/like-post", {
+                    id: this.post.id,
+                    etat: this.post.postLike
+                })
                 .then(res => {
                     this.post.numbers.likes = res.data.likes;
                 })
@@ -253,7 +287,7 @@ export default {
 .save {
     color: var(--iq-primary-hover);
 }
-.postImg{
+.postImg {
     position: relative;
     width: 87%;
     border-radius: 5px;

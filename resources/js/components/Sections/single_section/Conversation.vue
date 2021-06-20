@@ -89,7 +89,101 @@
                         class="chat-message"
                         v-if="ChatContent.txtChat != null"
                     >
-                        <p>{{ ChatContent.txtChat }}</p>
+                        <div
+                            v-if="
+                                ChatContent.txtChat.substring(0, 4) == 'http' &&
+                                    ChatContent.MsgFor == '' &&
+                                    load_share
+                            "
+                        >
+                            <h6 style="color:white">Shared post</h6>
+                            <hr />
+                            <div
+                                class="iq-waves-effect d-flex align-items-center"
+                            >
+                                <img
+                                    :src="
+                                        `images/user/${ChatContent.share_image}`
+                                    "
+                                    class="img-fluid rounded-circle mr-3"
+                                    alt="user"
+                                    v-if="ChatContent.share_image != null"
+                                    style="height:50px;width:50px"
+                                />
+                                <router-link
+                                    :to="{
+                                        name: 'profile',
+                                        query: { user: ChatContent.share_id }
+                                    }"
+                                    tag="a"
+                                    class="caption"
+                                    v-if="ChatContent.share_name != null"
+                                >
+                                    <h6
+                                        class="mb-0 line-height"
+                                        style="color:#1E2745"
+                                    >
+                                        {{ ChatContent.share_name }}
+                                    </h6>
+                                </router-link>
+                            </div>
+
+                            <hr />
+                            <a
+                                :href="ChatContent.txtChat"
+                                style="color:#1E2745"
+                                >{{ ChatContent.txtChat }}</a
+                            >
+                        </div>
+
+                        <div
+                            v-else-if="
+                                ChatContent.txtChat.substring(0, 4) == 'http' &&
+                                    ChatContent.MsgFor != '' &&
+                                    load_share
+                            "
+                        >
+                            <h6 style="color:white">Shared post</h6>
+                            <hr />
+                            <div
+                                class="iq-waves-effect d-flex align-items-center"
+                            >
+                                <img
+                                    :src="
+                                        `images/user/${ChatContent.share_image}`
+                                    "
+                                    class="img-fluid rounded-circle mr-3"
+                                    alt="user"
+                                    v-if="ChatContent.share_image != null"
+                                    style="height:50px;width:50px"
+                                /><!-- share_id -->
+                                <router-link
+                                    :to="{
+                                        name: 'profile',
+                                        query: { user: ChatContent.share_id }
+                                    }"
+                                    tag="a"
+                                    class="caption"
+                                    v-if="ChatContent.share_name != null"
+                                >
+                                    <h6
+                                        class="mb-0 line-height"
+                                        style="color:#50B5FF"
+                                    >
+                                        {{ ChatContent.share_name }}
+                                    </h6>
+                                </router-link>
+                            </div>
+
+                            <hr />
+                            <a
+                                :href="ChatContent.txtChat"
+                                style="color:#50B5FF"
+                                >{{ ChatContent.txtChat }}</a
+                            >
+                        </div>
+
+                        <p v-else>{{ ChatContent.txtChat }}</p>
                     </div>
                     <div
                         class="chat-message"
@@ -152,7 +246,9 @@ export default {
             OtherUser: null,
             ChatContents: null,
             isFile: null,
-            typeFile: null
+            typeFile: null,
+            load_share: false,
+            watch_chat: false
         };
     },
     mounted() {
@@ -177,7 +273,23 @@ export default {
                             MsgFor: "chat-left"
                         };
 
-                        this.ChatContents.push(message);
+                        if (message.txtChat.substring(0, 4) == "http") {
+                            axios
+                                .post("/userInfoReq", {
+                                    id: message.txtChat.split("postId=")[1]
+                                })
+                                .then(res => {
+                                    message.share_name = res.data.name;
+                                    message.share_id = res.data.id;
+                                    message.share_image =
+                                        res.data.profileimg.name;
+                                    this.ChatContents.push(message);
+                                    this.scrollToBottom();
+                                });
+                        } else {
+                            this.ChatContents.push(message);
+                            this.scrollToBottom();
+                        }
                     }
                     this.scrollToBottom();
                 }
@@ -206,18 +318,33 @@ export default {
                 }
             }, 50);
         },
-        LoadMessages() {
-            axios
+        async LoadMessages() {
+            this.load_share = false;
+
+            await axios
                 .post("/LoadMessages", {
                     id: this.$route.query.user
                 })
                 .then(res => {
-                    console.log("messages");
-                    console.log(res.data);
                     this.ChatContents = res.data;
-
-                    this.scrollToBottom();
                 });
+
+            for (const element of this.ChatContents) {
+                if (element.txtChat.substring(0, 4) == "http") {
+                    await axios
+                        .post("/userInfoReq", {
+                            id: element.txtChat.split("postId=")[1]
+                        })
+                        .then(res => {
+                            element.share_name = res.data.name;
+                            element.share_id = res.data.id;
+                            element.share_image = res.data.profileimg.name;
+                        });
+                }
+            }
+            this.scrollToBottom();
+            this.load_share = true;
+            this.watch_chat = true;
         },
         loadOtherUser() {
             axios
@@ -336,7 +463,28 @@ export default {
             this.loadOtherUser();
             this.LoadMessages();
             EventBus.$emit("reload-uread", { data: "z" });
-        }
+        } /* ,
+        ChatContents: async function() {
+            if (this.watch_chat == true) {
+                console.log("watch chat");
+                for (const element of this.ChatContents) {
+                    if (element.txtChat.substring(0, 4) == "http") {
+                        await axios
+                            .post("/userInfoReq", {
+                                id: element.txtChat.split("postId=")[1]
+                            })
+                            .then(res => {
+                                element.share_name = res.data.name;
+                                element.share_image = res.data.profileimg.name;
+                            });
+                    }
+                }
+
+                this.ChatContents = this.ChatContents;
+                this.scrollToBottom();
+                this.load_share = true;
+            }
+        } */
     }
 };
 </script>
@@ -376,5 +524,9 @@ export default {
 }
 .delete-btn > i {
     color: var(--iq-primary);
+}
+
+.chat-content .chat-left .chat-message {
+    background-color: #141a2f;
 }
 </style>

@@ -50,3 +50,7 @@ Broadcast::channel('likeComment.{id}', function () {
 	return Auth::check(); 
 }); 
 
+Broadcast::channel('sharePost.{id}', function () {
+	return Auth::check(); 
+}); 
+

@@ -13,9 +13,21 @@ use App\Models\Message;
 use App\Models\MessageRead;
 use App\Models\MessageDelete;
 use App\Events\SendTextEvent;
+use App\Models\Post;
 
 class ChatController extends Controller
 {
+
+    public function userInfoReq(Request $request)
+    {
+        $user_id = Post::where('id',$request->id)->first('user_id');
+        $user = User::where('id',$user_id->user_id)->first(['name','id']);
+        if($user){
+            $user->profileimg = Image::where('user_id',$user_id->user_id)->where('type','profile')->first('name');
+        }
+        return response()->json($user);
+    }
+
     public function ChatList()
     {
         $id = auth()->user()->id;

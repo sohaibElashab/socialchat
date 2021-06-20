@@ -66,8 +66,10 @@ Route::post('/LoadMessages', [App\Http\Controllers\ChatController::class, 'LoadM
 Route::get('/UnreadMessages', [App\Http\Controllers\ChatController::class, 'UnreadMessages']); 
 Route::post('/DeleteChat', [App\Http\Controllers\ChatController::class, 'DeleteChat']); 
 Route::post('/ChatSearch', [App\Http\Controllers\ChatController::class, 'ChatSearch']); 
+Route::post('/userInfoReq', [App\Http\Controllers\ChatController::class, 'userInfoReq']); 
 
 //CommentController
 Route::post('/add-comment', [App\Http\Controllers\CommentController::class, 'store']); 
 Route::post('/get-comments', [App\Http\Controllers\CommentController::class, 'show']); 
 Route::post('/like-comment', [App\Http\Controllers\CommentController::class, 'like']); 
+Route::post('/SharePost', [App\Http\Controllers\CommentController::class, 'SharePost']); 

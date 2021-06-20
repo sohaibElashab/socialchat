@@ -10,9 +10,24 @@ use Illuminate\Http\Request;
 use DateTime;
 use App\Events\LikeCommentEvent;
 use Auth;
+use App\Events\SharePostEvent;
+use App\Models\PostShare;
 
 class CommentController extends Controller
 {
+
+    public function SharePost(Request $request)
+    {
+        $share = PostShare::create([
+            'post_id' => $request->post_id,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        broadcast(new SharePostEvent($request->post_id));
+
+        return response()->json($share);
+    }
+
     public function commentget($comment)
     {        
         date_default_timezone_set('Africa/Casablanca');        

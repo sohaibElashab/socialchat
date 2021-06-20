@@ -22,16 +22,19 @@
         <!-- Wrapper END -->
         <bottombar />
         <!-- Footer -->
+        <SharePost />
     </div>
 </template>
 
 <script>
 import contentProfile from "./../Sections/general_section/dynamic_section/contentProfile.vue";
+import SharePost from "../Sections/single_section/SharePost.vue";
 export default {
     /* 
     props: ["id"], */
     components: {
-        contentProfile
+        contentProfile,
+        SharePost
     } /*,
     data() {
         return {
@@ -68,3 +71,18 @@ export default {
     } */
 };
 </script>
+
+<style>
+.SharePostWrap {
+    position: fixed;
+    z-index: 10001;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.295);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>
