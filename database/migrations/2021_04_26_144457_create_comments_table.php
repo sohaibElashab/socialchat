@@ -18,10 +18,6 @@ class CreateCommentsTable extends Migration
             $table->unsignedInteger('post_id');
             $table->unsignedInteger('user_id');
             $table->text('text');
-            $table->text('image');
-            $table->text('video');
-            $table->boolean('reply');
-            $table->unsignedInteger('org_comment');
             $table->dateTime('time');
             $table->timestamps();
         });

@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\Image;
 use App\Models\Video;
 use App\Models\PostSave;
-use App\Models\PostLike;
+use App\Models\Like;
 use App\Models\PostShare; 
 use App\Models\Comment;
 use Auth;
@@ -93,7 +93,7 @@ class PostController extends Controller
 
         
         $save = PostSave::where('post_id',$post->id)->where('user_id',auth()->user()->id)->get();
-        $like = PostLike::where('post_id',$post->id)->where('user_id',auth()->user()->id)->get();
+        $like = Like::where('post_id',$post->id)->where('user_id',auth()->user()->id)->get();
         $Comment = Comment::where('post_id',$post->id)->where('user_id',auth()->user()->id)->get();
         if(count($save) > 0){
             $post->postSave = true;
@@ -256,7 +256,7 @@ class PostController extends Controller
     
     public function get($id)
     {
-        $likes = PostLike::where('post_id',$id)->get();
+        $likes = Like::where('post_id',$id)->get();
         $shares = PostShare::where('post_id',$id)->get();
         $comments = Comment::where('post_id',$id)->get();
         $numbers = ['likes' => count($likes) , 'shares' => count($shares) , 'comments' => count($comments) ];
@@ -272,9 +272,9 @@ class PostController extends Controller
     public function like(Request $request)
     {
         if($request->etat){
-            PostLike::where('user_id',auth()->user()->id)->where('post_id',$request->id)->delete();
+            Like::where('user_id',auth()->user()->id)->where('post_id',$request->id)->delete();
         }else{
-            PostLike::create([
+            Like::create([
                 'post_id' => $request->id,
                 'user_id' => auth()->user()->id,
             ]);

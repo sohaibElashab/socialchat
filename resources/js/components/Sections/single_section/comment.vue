@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul class="post-comments p-0 m-0">
-            <li class="mb-2" v-for="comment in comments" :key="comment.id">
+            <li class="mb-2" v-for="(comment , index) in comments" :key="comment.id">
                 <div class="d-flex flex-wrap">
                     <div class="user-img">
                         <img
@@ -13,13 +13,18 @@
                     <div class="comment-data-block ml-3">
                         <h6>{{ comment.userName }}</h6>
                         <p class="mb-0">{{ comment.text }}</p>
-                        <div
-                            class="d-flex flex-wrap align-items-center comment-activity"
-                        >
-                            <a href="javascript:void();"><i class="ri-heart-line"></i></a>
-                            <a href="javascript:void();"><i class="ri-edit-2-line"></i></a>
-                            <a href="javascript:void();"><i class="ri-delete-bin-6-line"></i></a>
-                            <span> {{ comment.time }} </span>
+                        <div class="d-flex flex-wrap align-items-center comment-activity">
+                            <span @click="CmtLike(index)" :class="{hover: comment.commentLike}"> 
+                                <i class=" desactive" :class="{ 'ri-heart-line': !comment.commentLike , 'ri-heart-fill': comment.commentLike   }" ></i>
+                                <span v-if="comment.likes>0">
+                                    {{comment.likes}}
+                                </span> 
+                            </span>
+                            <div v-if="comment.edit">
+                                <i class="ri-edit-2-line ml-2 mr-2"></i>
+                                <i class="ri-delete-bin-6-line mr-2 "></i>
+                            </div>
+                            <span class="ml-2"> {{ comment.time }} </span>
                         </div>
                     </div>
                 </div>
@@ -90,22 +95,6 @@ export default {
     },
     data() {
         return {
-            // comments: {
-            //     "1": {
-            //         id: 1,
-            //         userImg: "images/user/01.jpg",
-            //         userName: "testy Sthesia",
-            //         text: "test 6",
-            //         time: "Just Now"
-            //     },
-            //     "2": {
-            //         id: 2,
-            //         userImg: "images/user/03.jpg",
-            //         userName: "Barb Ackue",
-            //         statu: "ipsum dolor sit amet",
-            //         time: "1 hour ago"
-            //     }
-            // },
             comments: [],
             file: null,
             fileUrl : null,
@@ -116,19 +105,6 @@ export default {
     methods: {
         append(emoji) {
             this.myText += emoji;
-        },
-        showFile(e){
-            // axios
-            //     .post("/comment", {id: this.id} )
-            //     .then(res => {
-            //         console.log(res.data);
-            //     })
-            //     .catch(err => {
-            //         console.log(err);
-            //     });
-            // console.log('fichier :' , e.target.files[0]);
-            console.log('id :' , this.id);
-            // document.getElementById("fileComment").value = null;
         },
         addComment(){
             if(this.myText != ""){
@@ -143,6 +119,17 @@ export default {
                         console.log(err);
                     });
             }
+        },
+        CmtLike(i) {
+            axios
+                .post("/like-comment", { id: this.comments[i].id , etat : this.comments[i].commentLike , postId : this.id})
+                .then(res => {
+                    this.comments[i].likes = res.data;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            this.comments[i].commentLike = !this.comments[i].commentLike;
         }
     },
     mounted(){
@@ -155,6 +142,17 @@ export default {
             .catch(err => {
                 console.log(err);
             });
+        
+        Echo.private(`likeComment.${this.id}`).listen(
+            'LikeCommentEvent',
+            e => {
+                this.comments.forEach(element => {
+                    if(e.id == element.id){
+                        ++element.likes;
+                    }
+                });
+            }
+        )
     },
     directives: {
         focus: {
@@ -195,4 +193,13 @@ export default {
     padding: 10px 10px 0px 10px;
 }
 
+.desactive {
+    cursor: pointer;
+}
+.desactive:hover {
+    color: var(--iq-primary-hover);
+}
+.hover {
+    color: var(--iq-primary-hover);
+}
 </style>

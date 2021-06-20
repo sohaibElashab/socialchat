@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\Image;
+use App\Models\like;
 use Illuminate\Http\Request;
 use DateTime;
+use App\Events\LikeCommentEvent;
 use Auth;
 
 class CommentController extends Controller
@@ -18,6 +20,8 @@ class CommentController extends Controller
         $comment->userId = $user->id;
         $comment->userImg = Image::where("user_id" , $user->id)->where("type" , "profile")->first('name');
         $comment->userName = $user->name;
+        $comment->commentLike = false;
+        $comment->likes = Like::where('comment_id',$comment->id)->count();
 
         $datetime1 = new DateTime($comment->time);
         $datetime2 = new DateTime(date("Y-m-d H:i:s"));
@@ -39,6 +43,11 @@ class CommentController extends Controller
             $comment->edit = true;
         }else{
             $comment->edit = false;
+        }
+
+        $like = Like::where('comment_id',$comment->id)->where('user_id',auth()->user()->id)->get();
+        if(count($like) > 0){
+            $comment->commentLike = true;
         }
 
         return $comment;
@@ -78,14 +87,26 @@ class CommentController extends Controller
             'post_id' => $request->id,
             'user_id' => $userId,
             'text' => $request->text,
-            'image' => "null",
-            'video' => "null",
-            'reply' => 1,
-            'org_comment' => 1,
             'time' => date("Y-m-d H:i:s"),
         ]);
         
         return response()->json($this->commentget($comment)); 
+    }
+
+    public function like(Request $request)
+    {
+        if($request->etat){
+            Like::where('user_id',auth()->user()->id)->where('comment_id',$request->id)->delete();
+        }else{
+            Like::create([
+                'comment_id' => $request->id,
+                'user_id' => auth()->user()->id,
+            ]);
+        }
+        
+        $likes = Like::where('comment_id',$request->id)->count();
+        broadcast(new LikeCommentEvent($request->id , $request->postId));
+        return response()->json($likes); 
     }
 
     /**

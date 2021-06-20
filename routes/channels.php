@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,10 @@ Broadcast::channel('sendText.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('newPost', function () {
+	return Auth::check(); 
+}); 
+
+Broadcast::channel('likeComment.{id}', function () {
 	return Auth::check(); 
 }); 
 

@@ -13144,6 +13144,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -13156,22 +13161,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      // comments: {
-      //     "1": {
-      //         id: 1,
-      //         userImg: "images/user/01.jpg",
-      //         userName: "testy Sthesia",
-      //         text: "test 6",
-      //         time: "Just Now"
-      //     },
-      //     "2": {
-      //         id: 2,
-      //         userImg: "images/user/03.jpg",
-      //         userName: "Barb Ackue",
-      //         statu: "ipsum dolor sit amet",
-      //         time: "1 hour ago"
-      //     }
-      // },
       comments: [],
       file: null,
       fileUrl: null,
@@ -13182,18 +13171,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     append: function append(emoji) {
       this.myText += emoji;
-    },
-    showFile: function showFile(e) {
-      // axios
-      //     .post("/comment", {id: this.id} )
-      //     .then(res => {
-      //         console.log(res.data);
-      //     })
-      //     .catch(err => {
-      //         console.log(err);
-      //     });
-      // console.log('fichier :' , e.target.files[0]);
-      console.log('id :', this.id); // document.getElementById("fileComment").value = null;
     },
     addComment: function addComment() {
       var _this = this;
@@ -13212,18 +13189,39 @@ __webpack_require__.r(__webpack_exports__);
           console.log(err);
         });
       }
+    },
+    CmtLike: function CmtLike(i) {
+      var _this2 = this;
+
+      axios.post("/like-comment", {
+        id: this.comments[i].id,
+        etat: this.comments[i].commentLike,
+        postId: this.id
+      }).then(function (res) {
+        _this2.comments[i].likes = res.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+      this.comments[i].commentLike = !this.comments[i].commentLike;
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
     axios.post("/get-comments", {
       id: this.id
     }).then(function (res) {
       console.log(res.data);
-      _this2.comments = res.data;
+      _this3.comments = res.data;
     })["catch"](function (err) {
       console.log(err);
+    });
+    Echo["private"]("likeComment.".concat(this.id)).listen('LikeCommentEvent', function (e) {
+      _this3.comments.forEach(function (element) {
+        if (e.id == element.id) {
+          ++element.likes;
+        }
+      });
     });
   },
   directives: {
@@ -22145,7 +22143,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper-emoji[data-v-75f13304] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-75f13304] {  \r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-75f13304] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-75f13304]{\r\n    position: relative;\r\n    width: 70px;\n}\n.files[data-v-75f13304]{\r\n    position: relative;\r\n    width: 100%;\r\n    height: 150px;\r\n    border-top: 1px solid;\n}\n.files img[data-v-75f13304]{\r\n    position: relative;\r\n    width: 200px;\r\n    height: 140px;\r\n    padding: 10px 10px 0px 10px;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper-emoji[data-v-75f13304] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-75f13304] {  \r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-75f13304] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-75f13304]{\r\n    position: relative;\r\n    width: 70px;\n}\n.files[data-v-75f13304]{\r\n    position: relative;\r\n    width: 100%;\r\n    height: 150px;\r\n    border-top: 1px solid;\n}\n.files img[data-v-75f13304]{\r\n    position: relative;\r\n    width: 200px;\r\n    height: 140px;\r\n    padding: 10px 10px 0px 10px;\n}\n.desactive[data-v-75f13304] {\r\n    cursor: pointer;\n}\n.desactive[data-v-75f13304]:hover {\r\n    color: var(--iq-primary-hover);\n}\n.hover[data-v-75f13304] {\r\n    color: var(--iq-primary-hover);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -70504,7 +70502,7 @@ var render = function() {
     _c(
       "ul",
       { staticClass: "post-comments p-0 m-0" },
-      _vm._l(_vm.comments, function(comment) {
+      _vm._l(_vm.comments, function(comment, index) {
         return _c("li", { key: comment.id, staticClass: "mb-2" }, [
           _c("div", { staticClass: "d-flex flex-wrap" }, [
             _c("div", { staticClass: "user-img" }, [
@@ -70529,13 +70527,48 @@ var render = function() {
                     "d-flex flex-wrap align-items-center comment-activity"
                 },
                 [
-                  _vm._m(0, true),
+                  _c(
+                    "span",
+                    {
+                      class: { hover: comment.commentLike },
+                      on: {
+                        click: function($event) {
+                          return _vm.CmtLike(index)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: " desactive",
+                        class: {
+                          "ri-heart-line": !comment.commentLike,
+                          "ri-heart-fill": comment.commentLike
+                        }
+                      }),
+                      _vm._v(" "),
+                      comment.likes > 0
+                        ? _c("span", [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(comment.likes) +
+                                "\n                            "
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  ),
                   _vm._v(" "),
-                  _vm._m(1, true),
+                  comment.edit
+                    ? _c("div", [
+                        _c("i", { staticClass: "ri-edit-2-line ml-2 mr-2" }),
+                        _vm._v(" "),
+                        _c("i", { staticClass: "ri-delete-bin-6-line mr-2 " })
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
-                  _vm._m(2, true),
-                  _vm._v(" "),
-                  _c("span", [_vm._v(" " + _vm._s(comment.time) + " ")])
+                  _c("span", { staticClass: "ml-2" }, [
+                    _vm._v(" " + _vm._s(comment.time) + " ")
+                  ])
                 ]
               )
             ])
@@ -70654,7 +70687,7 @@ var render = function() {
                 staticClass: "comment-attagement d-flex",
                 on: { click: _vm.addComment }
               },
-              [_vm._m(3)]
+              [_vm._m(0)]
             )
           ],
           1
@@ -70664,30 +70697,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "javascript:void();" } }, [
-      _c("i", { staticClass: "ri-heart-line" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "javascript:void();" } }, [
-      _c("i", { staticClass: "ri-edit-2-line" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "javascript:void();" } }, [
-      _c("i", { staticClass: "ri-delete-bin-6-line" })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

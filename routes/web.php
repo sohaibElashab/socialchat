@@ -70,3 +70,4 @@ Route::post('/ChatSearch', [App\Http\Controllers\ChatController::class, 'ChatSea
 //CommentController
 Route::post('/add-comment', [App\Http\Controllers\CommentController::class, 'store']); 
 Route::post('/get-comments', [App\Http\Controllers\CommentController::class, 'show']); 
+Route::post('/like-comment', [App\Http\Controllers\CommentController::class, 'like']); 
