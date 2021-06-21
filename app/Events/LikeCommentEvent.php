@@ -26,15 +26,17 @@ class LikeCommentEvent implements ShouldBroadcast
 
     public $id;
     public $idPost;
+    public $etat;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($id , $idPost)
+    public function __construct($id , $idPost , $etat)
     {
         $this->id = $id;
         $this->idPost = $idPost;
+        $this->etat = $etat;
     }
 
     /**
@@ -47,10 +49,10 @@ class LikeCommentEvent implements ShouldBroadcast
         return new PrivateChannel('likeComment.'.$this->idPost);
     }
 
-    public function broadcastWith()
-    {
-        return ['post_id' => $this->idPost , 'id' => $this->id];
-    }
+    // public function broadcastWith()
+    // {
+    //     return ['post_id' => $this->idPost , 'id' => $this->id , 'etat' => $this->etat]; 
+    // }
 
 
 }

@@ -9,6 +9,7 @@ use App\Models\like;
 use Illuminate\Http\Request;
 use DateTime;
 use App\Events\LikeCommentEvent;
+use App\Events\CommentEvent;
 use Auth;
 use App\Events\SharePostEvent;
 use App\Models\PostShare;
@@ -105,6 +106,7 @@ class CommentController extends Controller
             'time' => date("Y-m-d H:i:s"),
         ]);
         
+        broadcast(new CommentEvent($comment , true));
         return response()->json($this->commentget($comment)); 
     }
 
@@ -120,17 +122,17 @@ class CommentController extends Controller
         }
         
         $likes = Like::where('comment_id',$request->id)->count();
-        broadcast(new LikeCommentEvent($request->id , $request->postId));
+        broadcast(new LikeCommentEvent($request->id , $request->postId , $request->etat));
         return response()->json($likes); 
     }
-
+    
     /**
      * get the numbers of liks, comment and share.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
+    
     /**
      * Display the specified resource.
      *
@@ -145,7 +147,7 @@ class CommentController extends Controller
         }
         return response()->json($comments); 
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -156,7 +158,7 @@ class CommentController extends Controller
     {
         //
     }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -168,15 +170,18 @@ class CommentController extends Controller
     {
         //
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $comment =Comment::where('id',$request->id)->first();
+        broadcast(new CommentEvent($comment , false));
+        $comment->delete();
+        return response()->json($this->show($request)); 
     }
 }

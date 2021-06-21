@@ -188,7 +188,7 @@
                     </div>
                 </div>
                 <hr />
-                <Comment :id="post.id" />
+                <Comment :id="post.id" @changeNumbers="NumbersComment"/>
             </div>
         </div>
     </div>
@@ -272,6 +272,9 @@ export default {
                     console.log(err);
                 });
             this.post.postLike = !this.post.postLike;
+        },
+        NumbersComment(etat){
+            etat ? ++this.post.numbers.comments : --this.post.numbers.comments ;
         }
     }
 };

@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-6 text-center pt-5">
         <div class="sign-in-detail text-white">
-            <div class="sign-in-logo mb-5"
+            <div class="sign-in-logo mb-3"
                 ><img
                     src="images/logo-full.png"
                     class="img-fluid"

@@ -14,15 +14,14 @@
                         <h6>{{ comment.userName }}</h6>
                         <p class="mb-0">{{ comment.text }}</p>
                         <div class="d-flex flex-wrap align-items-center comment-activity">
-                            <span @click="CmtLike(index)" :class="{hover: comment.commentLike}"> 
-                                <i class=" desactive" :class="{ 'ri-heart-line': !comment.commentLike , 'ri-heart-fill': comment.commentLike   }" ></i>
+                            <span @click="CmtLike(index)" class="d-flex" :class="{hover: comment.commentLike}"> 
+                                <i class=" desactive mr-1" :class="{ 'ri-heart-line': !comment.commentLike , 'ri-heart-fill': comment.commentLike   }" ></i>
                                 <span v-if="comment.likes>0">
                                     {{comment.likes}}
                                 </span> 
                             </span>
                             <div v-if="comment.edit">
-                                <i class="ri-edit-2-line ml-2 mr-2"></i>
-                                <i class="ri-delete-bin-6-line mr-2 "></i>
+                                <i class="ri-delete-bin-6-line desactive ml-2 mr-2 " @click="deleteComment(index)"></i>
                             </div>
                             <span class="ml-2"> {{ comment.time }} </span>
                         </div>
@@ -75,7 +74,7 @@
                 </emoji-picker>
                 <!-- <input type="file" name="" id="fileComment" @change="showFile" accept="image/*" style="display:none"> -->
                 <div class="comment-attagement d-flex" @click="addComment">
-                    <label style=" cursor: pointer; " for="fileComment" ><i class="ri-link mr-3"></i></label>
+                    <label style=" cursor: pointer; " ><i class="ri-send-plane-2-line mr-3"></i></label>
                 </div>
             </div>
         </form>
@@ -100,6 +99,7 @@ export default {
             fileUrl : null,
             search: "",
             myText: "",
+            user: -1
         };
     },
     methods: {
@@ -112,7 +112,6 @@ export default {
                     .post("/add-comment", {id: this.id , text : this.myText} )
                     .then(res => {
                         console.log(res.data);
-                        this.comments.push(res.data);
                         this.myText = '';
                     })
                     .catch(err => {
@@ -130,9 +129,24 @@ export default {
                     console.log(err);
                 });
             this.comments[i].commentLike = !this.comments[i].commentLike;
+        },
+        deleteComment(i){
+            axios
+                .post("/delete-comment", { id: this.comments[i].id })
+                .then(res => {
+                    console.log("delete")
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     },
     mounted(){
+        axios.get("/profile").then(res => {
+            console.log(res.data);
+            this.user = res.data.id;
+        });
+
         axios
             .post("/get-comments", {id: this.id } )
             .then(res => {
@@ -148,9 +162,28 @@ export default {
             e => {
                 this.comments.forEach(element => {
                     if(e.id == element.id){
-                        ++element.likes;
+                        e.etat ? --element.likes : ++element.likes ; 
                     }
                 });
+            }
+        )
+        Echo.private(`Comment.${this.id}`).listen(
+            'CommentEvent',
+            e => {
+                if(e.etat){
+                    if(e.comment.userId == this.user){ 
+                        e.comment.edit = true
+                    }
+                    this.comments.push(e.comment);
+                    this.$emit('changeNumbers' , true);
+                }else{
+                    this.comments.forEach((element , i) => {
+                        if(e.comment.id == element.id){
+                            this.comments.splice(i , 1);
+                            this.$emit('changeNumbers' , false);
+                        }
+                    });
+                }
             }
         )
     },

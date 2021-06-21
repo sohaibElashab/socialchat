@@ -72,4 +72,5 @@ Route::post('/userInfoReq', [App\Http\Controllers\ChatController::class, 'userIn
 Route::post('/add-comment', [App\Http\Controllers\CommentController::class, 'store']); 
 Route::post('/get-comments', [App\Http\Controllers\CommentController::class, 'show']); 
 Route::post('/like-comment', [App\Http\Controllers\CommentController::class, 'like']); 
+Route::post('/delete-comment', [App\Http\Controllers\CommentController::class, 'destroy']); 
 Route::post('/SharePost', [App\Http\Controllers\CommentController::class, 'SharePost']); 

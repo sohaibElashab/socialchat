@@ -24,6 +24,9 @@
            </ul>
            <a href="#" class="btn btn-primary d-block mt-3">Show More</a>
         </div>
+        <div class="showStories">
+            <div class="stories"></div>
+        </div>
     </div>
 </template>
 
@@ -58,3 +61,23 @@ data() {
 }
 }
 </script>
+
+<style scoped>
+.showStories{
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    background: #00000078;
+    display: none;
+    justify-content: center;
+}
+.stories{
+    position: absolute;
+    height: 75vh;
+    top: 15%;
+    background: aliceblue;
+    width: 25%;
+}
+</style>
