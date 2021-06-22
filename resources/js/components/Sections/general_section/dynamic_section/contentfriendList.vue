@@ -126,7 +126,6 @@ export default {
                     id: null
                 })
                 .then(res => {
-                    console.log(res.data);
                     this.friends = res.data;
                 });
             // document.getElementById("New").style.display = "none";

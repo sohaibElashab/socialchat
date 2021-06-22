@@ -259,8 +259,6 @@ export default {
             Echo.private(`sendText.${this.CurrentUser.id}`).listen(
                 "SendTextEvent",
                 e => {
-                    console.log(e);
-                    //console.log(e.message);
                     if (e.message.user_id == this.$route.query.user) {
                         var message = {
                             id: e.message.id,
@@ -304,8 +302,6 @@ export default {
                     messages: this.ChatContents
                 })
                 .then(res => {
-                    console.log("deleted");
-                    console.log(res.data);
                     this.ChatContents = [];
                     EventBus.$emit("delete-chat", this.$route.query.user);
                     this.$router.push({ name: "chat" });
@@ -358,7 +354,6 @@ export default {
         newMessage(text) {
             var d = new Date();
             var time = d.getHours() + ":" + d.getMinutes();
-            console.log("text");
             if (text[1] == "image") {
                 var img = URL.createObjectURL(text[0]);
                 var newT = {
@@ -376,8 +371,6 @@ export default {
                 data.append("video", newT.vidChat);
                 data.append("time", newT.TimeSend);
                 axios.post("/NewMessage", data).then(res => {
-                    console.log("id");
-                    console.log(res.data);
                     newT.id = res.data.id;
                     this.ChatContents.push(newT);
                     var txt = {
@@ -405,7 +398,6 @@ export default {
                 data.append("video", text[0]);
                 data.append("time", newT.TimeSend);
                 axios.post("/NewMessage", data).then(res => {
-                    //console.log(res);
                     newT.id = res.data.id;
                     this.ChatContents.push(newT);
 
@@ -433,8 +425,6 @@ export default {
                 data.append("video", newT.vidChat);
                 data.append("time", newT.TimeSend);
                 axios.post("/NewMessage", data).then(res => {
-                    /* console.log("id");
-                    console.log(res.data); */
                     newT.id = res.data.id;
                     this.ChatContents.push(newT);
                     var txt = {
@@ -463,28 +453,7 @@ export default {
             this.loadOtherUser();
             this.LoadMessages();
             EventBus.$emit("reload-uread", { data: "z" });
-        } /* ,
-        ChatContents: async function() {
-            if (this.watch_chat == true) {
-                console.log("watch chat");
-                for (const element of this.ChatContents) {
-                    if (element.txtChat.substring(0, 4) == "http") {
-                        await axios
-                            .post("/userInfoReq", {
-                                id: element.txtChat.split("postId=")[1]
-                            })
-                            .then(res => {
-                                element.share_name = res.data.name;
-                                element.share_image = res.data.profileimg.name;
-                            });
-                    }
-                }
-
-                this.ChatContents = this.ChatContents;
-                this.scrollToBottom();
-                this.load_share = true;
-            }
-        } */
+        }
     }
 };
 </script>

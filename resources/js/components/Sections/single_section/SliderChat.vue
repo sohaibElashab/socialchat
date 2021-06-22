@@ -12,7 +12,7 @@
                         name: 'chat',
                         query: { user: ChatList.id }
                     }"
-                    :id="`pp${ChatList.id}`" 
+                    :id="`pp${ChatList.id}`"
                     tag="a"
                     :class="ChatList.id == $route.query.user ? 'active' : ''"
                 >
@@ -118,8 +118,7 @@ export default {
     mounted() {
         //this.loadList();
         axios.get("/ChatList").then(res => {
-            console.log("list");
-            console.log(res.data);
+
             this.ChatLists = res.data;
             if (
                 this.findUser(this.$route.query.user) == null &&
@@ -136,8 +135,6 @@ export default {
             Echo.private(`sendText.${this.CurrentUser.id}`).listen(
                 "SendTextEvent",
                 e => {
-                    console.log(e);
-                    //console.log(e.message);
                     if (e.message.user_id != this.$route.query.user) {
                         var p = false;
                         this.ChatLists.forEach(u => {
@@ -183,8 +180,6 @@ export default {
                                         numberMsg: 1,
                                         TimeSend: e.message.time
                                     };
-                                    console.log("item");
-                                    console.log(item);
                                     this.ChatLists.unshift(item);
                                 });
                         }
@@ -222,7 +217,7 @@ export default {
                     id: null
                 })
                 .then(res => {
-                    //console.log(res.data);
+                    //
                     this.friends = res.data;
                 });
         },
@@ -232,7 +227,6 @@ export default {
             this.ChatLists.splice(index, 1);
         },
         LastText(data) {
-            console.log(data);
             this.ChatLists.forEach(u => {
                 if (u.id == this.$route.query.user) {
                     var index = this.ChatLists.indexOf(u);
@@ -243,8 +237,6 @@ export default {
         },
         loadList() {
             axios.get("/ChatList").then(res => {
-                //console.log("list");
-                //console.log(res.data);
                 this.ChatLists = res.data;
                 if (
                     this.findUser(this.$route.query.user) == null &&
@@ -273,7 +265,6 @@ export default {
                     id: this.$route.query.user
                 })
                 .then(res => {
-                    //console.log("unshift");
                     this.OtherUser = res.data;
                     var time = new Date();
                     var person = {
@@ -297,14 +288,11 @@ export default {
                 this.$route.query.user
             ) {
                 this.AddUserToList();
-
-                //console.log("changer id");
             }
             this.ChatLists.forEach(u => {
                 if (u.id == this.$route.query.user) {
                     var index = this.ChatLists.indexOf(u);
                     this.ChatLists[index].numberMsg = 0;
-                    console.log("change to 0");
                 }
             });
         }

@@ -579,14 +579,12 @@ export default {
         Echo.private(`sendRequest.${this.IdOnline}`).listen(
             "SendRequestEvent",
             e => {
-                //console.log(e.user);
                 this.LoadFriends();
             }
         );
         Echo.private(`cancelRequest.${this.IdOnline}`).listen(
             "CancelRequestEvent",
             e => {
-                //console.log(e.user);
                 this.LoadFriends();
             }
         );
@@ -598,7 +596,6 @@ export default {
                     id: id
                 })
                 .then(res => {
-                    //console.log(res);
                     this.LoadFriends();
                 });
         },
@@ -608,7 +605,6 @@ export default {
                     id: id
                 })
                 .then(res => {
-                    // console.log(res);
                     this.LoadFriends();
                 });
         },
@@ -618,7 +614,7 @@ export default {
                     id: id
                 })
                 .then(res => {
-                    //console.log(res.data);
+                    //
                     this.LoadFriends();
                 });
         },
@@ -628,7 +624,6 @@ export default {
                     id: id
                 })
                 .then(res => {
-                    // console.log(res);
                     this.LoadFriends();
                 });
         },
@@ -638,7 +633,7 @@ export default {
                     id: this.Id
                 })
                 .then(res => {
-                    //console.log(res.data);
+                    //
                     this.FriendLists = res.data;
                 });
 
@@ -648,7 +643,7 @@ export default {
                         id: this.Id
                     })
                     .then(res => {
-                        // console.log(res.data);
+                        //
                         this.InCommon = res.data[0];
                         this.Others = res.data[1];
                     });

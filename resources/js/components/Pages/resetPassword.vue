@@ -17,11 +17,9 @@ export default {
         CircleSign
     },
     beforeRouteEnter(to, from, next) {
-        //console.log("aa");
         axios
             .get("/GatHashed")
             .then(res => {
-                console.log(res.data === to.query.token);
                 if (res.data === to.query.token) {
                     next();
                 } else {

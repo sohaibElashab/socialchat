@@ -355,14 +355,12 @@ export default {
     },
     mounted() {
         axios.get("/profile").then(res => {
-            console.log(res.data);
             this.user = res.data;
             this.img = this.user.profileimg.name;
             this.isMounted = true;
             Echo.private(`sendRequest.${this.user.id}`).listen(
                 "SendRequestEvent",
                 e => {
-                    console.log(e.user);
                     this.allReqs.unshift(e.user);
                     this.friendReqs = this.allReqs.slice(0, 4);
                     this.loadedReqs = true;
@@ -372,8 +370,6 @@ export default {
             Echo.private(`cancelRequest.${this.user.id}`).listen(
                 "CancelRequestEvent",
                 e => {
-                    console.log(e.user);
-                    // console.log(this.allReqs.indexOf(e.user));
                     this.allReqs.forEach(req => {
                         if (req.id === e.user.id) {
                             var index = this.allReqs.indexOf(req);
@@ -387,8 +383,6 @@ export default {
             Echo.private(`acceptRequest.${this.user.id}`).listen(
                 "AcceptRequestEvent",
                 e => {
-                    console.log(e.user);
-                    // console.log(this.allReqs.indexOf(e.user));
                     this.allReqs.forEach(req => {
                         if (req.id === e.user.id) {
                             var index = this.allReqs.indexOf(req);
@@ -406,7 +400,6 @@ export default {
                     if (e.message.user_id != this.$route.query.user) {
                         document.getElementById("redMSG").style.display =
                             "initial";
-                        console.log(e);
                         this.msgCount += 1;
                         var p = false;
                         this.messages.forEach(m => {
@@ -440,15 +433,12 @@ export default {
         });
 
         axios.get("/LoadRequests").then(res => {
-            console.log(res.data);
             this.allReqs = res.data;
             this.friendReqs = this.allReqs.slice(0, 4);
             this.loadedReqs = true;
         });
 
         axios.get("/UnreadMessages").then(res => {
-            console.log("unread");
-            console.log(res.data);
             this.msgCount = res.data[1];
             this.ALLmsg = res.data[0];
             this.messages = this.ALLmsg.slice(0, 4);
@@ -466,7 +456,6 @@ export default {
             }
         };
         if (sessionStorage.getItem("themeMode") === null) {
-            console.log("cree session");
             sessionStorage.setItem("themeMode", false);
         } else {
             if (sessionStorage.getItem("themeMode") == "true") {
@@ -480,8 +469,6 @@ export default {
     methods: {
         ReloadMSG(data) {
             axios.get("/UnreadMessages").then(res => {
-                console.log("unread");
-                console.log(res.data);
                 this.msgCount = res.data[1];
                 this.ALLmsg = res.data[0];
                 this.messages = this.ALLmsg.slice(0, 4);
@@ -491,14 +478,12 @@ export default {
             var loading = document.getElementById("loading");
             var mode = (a, b, c) => {
                 this.modeTOmode(a, b, c).then(() => {
-                    console.log("test");
                     return true;
                 });
             };
 
             function step1() {
                 loading.style.display = "block";
-                console.log("1");
                 setTimeout(() => {
                     step2();
                 }, 500);
@@ -518,13 +503,9 @@ export default {
                         "http://127.0.0.1:8000/css/dark/responsive.css"
                     );
                 }
-                console.log("2");
                 setTimeout(() => {
                     step3();
                     var theme = swit.checked ? "dark" : "light";
-                    console.log(
-                        document.querySelectorAll("link[href*='" + theme + "']")
-                    );
                     document
                         .querySelectorAll("link[href*='" + theme + "']")
                         .forEach(elem => {
@@ -535,7 +516,6 @@ export default {
 
             function step3() {
                 loading.style.display = "none";
-                console.log("3");
             }
 
             step1();
@@ -544,7 +524,6 @@ export default {
             this.user = data;
             if (this.user.profile) {
                 this.img = this.user.profile;
-                console.log(this.user);
             }
         },
         DeleteRequest(id) {
@@ -553,9 +532,7 @@ export default {
                     id: id
                 })
                 .then(res => {
-                    console.log(res);
                     axios.get("/LoadRequests").then(res => {
-                        console.log(res.data);
                         this.allReqs = res.data;
                         this.friendReqs = this.allReqs.slice(0, 4);
                         this.loadedReqs = true;
@@ -568,9 +545,7 @@ export default {
                     id: id
                 })
                 .then(res => {
-                    console.log(res);
                     axios.get("/LoadRequests").then(res => {
-                        console.log(res.data);
                         this.allReqs = res.data;
                         this.friendReqs = this.allReqs.slice(0, 4);
                         this.loadedReqs = true;
@@ -578,19 +553,14 @@ export default {
                 });
         },
         check() {
-            console.log("before ", sessionStorage.getItem("themeMode"));
-
             var reverse =
                 sessionStorage.getItem("themeMode") == "true"
                     ? "false"
                     : "true";
             sessionStorage.setItem("themeMode", reverse);
-            console.log("after ", sessionStorage.getItem("themeMode"));
             this.aplaytheme();
         },
         async modeTOmode(href1, href2, href3) {
-            console.log("mode");
-
             var newlinktypography = document.createElement("link");
             var newlinkstyle = document.createElement("link");
             var newlinkresponsive = document.createElement("link");

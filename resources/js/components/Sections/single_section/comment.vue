@@ -1,7 +1,11 @@
 <template>
     <div>
         <ul class="post-comments p-0 m-0">
-            <li class="mb-2" v-for="(comment , index) in comments" :key="comment.id">
+            <li
+                class="mb-2"
+                v-for="(comment, index) in comments"
+                :key="comment.id"
+            >
                 <div class="d-flex flex-wrap">
                     <div class="user-img">
                         <img
@@ -13,15 +17,30 @@
                     <div class="comment-data-block ml-3">
                         <h6>{{ comment.userName }}</h6>
                         <p class="mb-0">{{ comment.text }}</p>
-                        <div class="d-flex flex-wrap align-items-center comment-activity">
-                            <span @click="CmtLike(index)" class="d-flex" :class="{hover: comment.commentLike}"> 
-                                <i class=" desactive mr-1" :class="{ 'ri-heart-line': !comment.commentLike , 'ri-heart-fill': comment.commentLike   }" ></i>
-                                <span v-if="comment.likes>0">
-                                    {{comment.likes}}
-                                </span> 
+                        <div
+                            class="d-flex flex-wrap align-items-center comment-activity"
+                        >
+                            <span
+                                @click="CmtLike(index)"
+                                class="d-flex"
+                                :class="{ hover: comment.commentLike }"
+                            >
+                                <i
+                                    class=" desactive mr-1"
+                                    :class="{
+                                        'ri-heart-line': !comment.commentLike,
+                                        'ri-heart-fill': comment.commentLike
+                                    }"
+                                ></i>
+                                <span v-if="comment.likes > 0">
+                                    {{ comment.likes }}
+                                </span>
                             </span>
                             <div v-if="comment.edit">
-                                <i class="ri-delete-bin-6-line desactive ml-2 mr-2 " @click="deleteComment(index)"></i>
+                                <i
+                                    class="ri-delete-bin-6-line desactive ml-2 mr-2 "
+                                    @click="deleteComment(index)"
+                                ></i>
                             </div>
                             <span class="ml-2"> {{ comment.time }} </span>
                         </div>
@@ -40,7 +59,11 @@
                     v-model="myText"
                 ></textarea>
 
-                <emoji-picker @emoji="append" :search="search" class="iconemoji">
+                <emoji-picker
+                    @emoji="append"
+                    :search="search"
+                    class="iconemoji"
+                >
                     <div
                         class="emoji-invoker"
                         slot="emoji-invoker"
@@ -74,7 +97,9 @@
                 </emoji-picker>
                 <!-- <input type="file" name="" id="fileComment" @change="showFile" accept="image/*" style="display:none"> -->
                 <div class="comment-attagement d-flex" @click="addComment">
-                    <label style=" cursor: pointer; " ><i class="ri-send-plane-2-line mr-3"></i></label>
+                    <label style=" cursor: pointer; "
+                        ><i class="ri-send-plane-2-line mr-3"></i
+                    ></label>
                 </div>
             </div>
         </form>
@@ -87,16 +112,16 @@ export default {
     components: {
         EmojiPicker
     },
-    props:{
+    props: {
         id: {
-            require:true
+            require: true
         }
     },
     data() {
         return {
             comments: [],
             file: null,
-            fileUrl : null,
+            fileUrl: null,
             search: "",
             myText: "",
             user: -1
@@ -106,86 +131,71 @@ export default {
         append(emoji) {
             this.myText += emoji;
         },
-        addComment(){
-            if(this.myText != ""){
+        addComment() {
+            if (this.myText != "") {
                 axios
-                    .post("/add-comment", {id: this.id , text : this.myText} )
+                    .post("/add-comment", { id: this.id, text: this.myText })
                     .then(res => {
-                        console.log(res.data);
-                        this.myText = '';
+                        this.myText = "";
                     })
-                    .catch(err => {
-                        console.log(err);
-                    });
             }
         },
         CmtLike(i) {
             axios
-                .post("/like-comment", { id: this.comments[i].id , etat : this.comments[i].commentLike , postId : this.id})
+                .post("/like-comment", {
+                    id: this.comments[i].id,
+                    etat: this.comments[i].commentLike,
+                    postId: this.id
+                })
                 .then(res => {
                     this.comments[i].likes = res.data;
                 })
-                .catch(err => {
-                    console.log(err);
-                });
             this.comments[i].commentLike = !this.comments[i].commentLike;
         },
-        deleteComment(i){
+        deleteComment(i) {
             axios
                 .post("/delete-comment", { id: this.comments[i].id })
                 .then(res => {
-                    console.log("delete")
                 })
-                .catch(err => {
-                    console.log(err);
-                });
         }
     },
-    mounted(){
+    mounted() {
         axios.get("/profile").then(res => {
-            console.log(res.data);
             this.user = res.data.id;
         });
 
         axios
-            .post("/get-comments", {id: this.id } )
+            .post("/get-comments", { id: this.id })
             .then(res => {
-                console.log(res.data);
                 this.comments = res.data;
             })
-            .catch(err => {
-                console.log(err);
+
+        Echo.private(`likeComment.${this.id}`).listen("LikeCommentEvent", e => {
+            this.comments.forEach(element => {
+                if (e.id == element.id) {
+                    e.etat ? --element.likes : ++element.likes;
+                }
             });
-        
-        Echo.private(`likeComment.${this.id}`).listen(
-            'LikeCommentEvent',
-            e => {
-                this.comments.forEach(element => {
-                    if(e.id == element.id){
-                        e.etat ? --element.likes : ++element.likes ; 
+        });
+        Echo.private(`Comment.${this.id}`).listen("CommentEvent", e => {
+            if (e.etat) {
+                if (e.comment.userId == this.user) {
+                    e.comment.edit = true;
+                }
+                // if(this.id == e.comment.user_id){
+                //     this.comments.push(e.comment);
+                //     }
+                this.comments.push(e.comment);
+                this.$emit("changeNumbers", true);
+            } else {
+                this.comments.forEach((element, i) => {
+                    if (e.comment.id == element.id) {
+                        this.comments.splice(i, 1);
+                        this.$emit("changeNumbers", false);
                     }
                 });
             }
-        )
-        Echo.private(`Comment.${this.id}`).listen(
-            'CommentEvent',
-            e => {
-                if(e.etat){
-                    if(e.comment.userId == this.user){ 
-                        e.comment.edit = true
-                    }
-                    this.comments.push(e.comment);
-                    this.$emit('changeNumbers' , true);
-                }else{
-                    this.comments.forEach((element , i) => {
-                        if(e.comment.id == element.id){
-                            this.comments.splice(i , 1);
-                            this.$emit('changeNumbers' , false);
-                        }
-                    });
-                }
-            }
-        )
+        });
     },
     directives: {
         focus: {
@@ -193,7 +203,7 @@ export default {
                 el.focus();
             }
         }
-    },
+    }
 };
 </script>
 
@@ -202,24 +212,24 @@ export default {
     width: 100%;
     justify-content: flex-start;
 }
-.regular-input {  
+.regular-input {
     height: 50px;
     padding: 0rem 1rem;
 }
 .emoji-invoker {
     top: 0.3rem;
 }
-.iconemoji{
+.iconemoji {
     position: relative;
     width: 70px;
 }
-.files{
+.files {
     position: relative;
     width: 100%;
     height: 150px;
     border-top: 1px solid;
 }
-.files img{
+.files img {
     position: relative;
     width: 200px;
     height: 140px;

@@ -30,28 +30,10 @@
 import contentProfile from "./../Sections/general_section/dynamic_section/contentProfile.vue";
 import SharePost from "../Sections/single_section/SharePost.vue";
 export default {
-    /* 
-    props: ["id"], */
     components: {
         contentProfile,
         SharePost
-    } /*,
-    data() {
-        return {
-            isMounted: false
-        };
-    } ,
-    mounted() {
-        console.log("profile mounted   " + this.id);
-        this.isMounted = true;
-    },
-    watch: {
-        id: function() {
-            console.log("profile watch   " + this.id);
-            this.isMounted = true;
-        }
-    } */
-
+    }
     /* ,
     beforeRouteEnter(to, from, next) {
         // called before the route that renders this component is confirmed.

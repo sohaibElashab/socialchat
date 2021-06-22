@@ -51,7 +51,6 @@ export default {
     },
     mounted() {
         axios.get("/verify").then(res => {
-            console.log(res.data);
             this.org_code = res.data[0];
             this.user = res.data[1];
         });
@@ -60,14 +59,12 @@ export default {
         resend() {
             this.code_err = "";
             axios.get("/verify").then(res => {
-                console.log(res.data);
                 this.org_code = res.data[0];
                 this.user = res.data[1];
             });
         },
         check() {
             if (this.code == this.org_code) {
-                console.log(this.user.email);
                 axios
                     .post("/register", {
                         name: this.user.name,
@@ -79,7 +76,6 @@ export default {
                         gender: this.user.gender
                     })
                     .then(res => {
-                        console.log(res);
                         this.$router.push({ name: "home" });
                     });
             } else {

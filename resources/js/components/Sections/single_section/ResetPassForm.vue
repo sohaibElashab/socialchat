@@ -55,12 +55,10 @@ export default {
                     password_confirmation: this.password_confirmation
                 })
                 .then(res => {
-                    console.log(res.data.email);
                     this.$router.push({ name: "home" });
                 })
                 .catch(err => {
                     var error = JSON.parse(err.request.response);
-                    console.log(error.errors);
                     this.password_err = error.errors.password
                         ? error.errors.password[0]
                         : "";

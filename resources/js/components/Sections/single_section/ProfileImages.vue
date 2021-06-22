@@ -17,7 +17,7 @@
                                         v-for="(image , index) in images"
                                         :key="index"
                                     >
-                                        <div class="user-images position-relative overflow-hidden">
+                                        <router-link tag="div" :to="{ name: 'post', query: { postId: image.post_id } }" class="user-images position-relative overflow-hidden">
                                             <a href="#" v-if="image.type != 'post'">
                                                 <img
                                                     :src="`images/user/${image.name}`"
@@ -36,7 +36,7 @@
                                             </a>
                                             <div class="image-hover-data">
                                                 <div class="product-elements-icon">
-                                                    <ul
+                                                    <ul 
                                                         class="d-flex align-items-center m-0 p-0 list-inline"
                                                     >
                                                         <li>
@@ -60,16 +60,14 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <a
-                                                href="#"
+                                            <router-link
+                                                v-if="image.type == 'post' && image.user_id == id"
+                                                tag="a"
+                                                :to="{ name: 'postEdit', query: { postId: image.post_id } }"
                                                 class="image-edit-btn"
-                                                data-toggle="tooltip"
-                                                data-placement="top"
-                                                title=""
-                                                data-original-title="Edit or Remove"
                                                 ><i class="ri-edit-2-fill"></i
-                                            ></a>
-                                        </div>
+                                            ></router-link> 
+                                        </router-link>
                                     </div>
                                 </div>
                             </div>

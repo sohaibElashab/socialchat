@@ -5,7 +5,10 @@
                 <div class="iq-card-header d-flex justify-content-between mb-4">
                     <div class="iq-header-title" @click="comeBack">
                         <h6 class="card-title" style="cursor: pointer;">
-                            <i class="ri-arrow-left-fill" style=" font-size: 25px; "></i>
+                            <i
+                                class="ri-arrow-left-fill"
+                                style=" font-size: 25px; "
+                            ></i>
                             Back to previous page
                         </h6>
                     </div>
@@ -66,7 +69,7 @@
                                 slot-scope="{ events: { click: clickEvent } }"
                                 @click.stop="clickEvent"
                             >
-                                    <i class="ri-user-smile-line"></i>
+                                <i class="ri-user-smile-line"></i>
                             </div>
                             <div
                                 slot="emoji-picker"
@@ -360,7 +363,6 @@ export default {
     mounted() {
         this.postId = this.$route.query.postId;
         axios.post("/GetPost", { id: this.postId }).then(res => {
-            console.log("this.post");
             this.post = res.data;
             this.feelings.forEach((element, index) => {
                 if (element.FeelTitle == this.post.statu.substring(11)) {
@@ -375,8 +377,6 @@ export default {
             );
             this.text = this.post.text;
             this.acceptFiles();
-            console.log(res.data);
-            console.log(this.post);
         });
     },
     methods: {
@@ -384,20 +384,15 @@ export default {
             this.text += emoji;
         },
         acceptFiles() {
-            console.log("accepte file");
             if (this.post.postImgs.length > 0 || this.NewImgs.length > 0) {
                 this.accept = "image/*";
-                console.log("accepte image");
             } else if (this.post.postVds != "") {
                 this.accept = "video/*";
-                console.log("accepte video");
             } else {
                 this.accept = "image/*|video/*";
-                console.log("accepte video et image");
             }
         },
         removeImage(path, list) {
-            console.log(path);
             var newPostImgs = [];
             var newFilesImgs = [];
             if (list == "old") {
@@ -443,7 +438,6 @@ export default {
         },
         addImages(e) {
             const file = e.target.files[0];
-            console.log();
             var NewLink = URL.createObjectURL(file);
             if (file.type.substring(0, 5) == "image") {
                 this.NewImgs.push(NewLink);
@@ -515,7 +509,6 @@ export default {
             ) {
                 document.getElementById("warning").style.display = "block";
             } else {
-                // console.log(this.NewFiles);
                 let data = new FormData();
                 data.append("id", this.post.id);
                 data.append("Statu", this.post.statu);
@@ -540,7 +533,6 @@ export default {
                 axios
                     .post("/update-post", data)
                     .then(res => {
-                        console.log(res.data);
                         this.$router.push({
                             name: "post",
                             query: { postId: res.data }
@@ -558,7 +550,6 @@ export default {
             axios
                 .post("/delete-post", { id: this.post.id })
                 .then(res => {
-                    console.log(res.data);
                     //this.$router.push({ name: "home" });
                     this.$router.back();
                 })
@@ -697,12 +688,12 @@ export default {
     width: 95%;
     justify-content: center;
 }
-.regular-input { 
+.regular-input {
     height: 100px;
     padding: 0.25rem 1rem;
 }
 
-.emoji-invoker {    
+.emoji-invoker {
     top: 1.5rem;
 }
 </style>

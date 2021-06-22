@@ -114,12 +114,10 @@ export default {
                     password: this.password
                 })
                 .then(res => {
-                    console.log(res);
                     this.$router.push({ name: "home" });
                 })
                 .catch(err => {
                     var error = JSON.parse(err.request.response);
-                    console.log(error.errors);
                     this.email_err = error.errors.email
                         ? error.errors.email[0]
                         : "";
@@ -139,7 +137,6 @@ export default {
                     email: this.new_email
                 })
                 .then(res => {
-                    console.log(res.data);
                     if (res.data == "Invalid email") {
                         this.new_email_err = "Invalid email";
                     } else {
@@ -149,7 +146,6 @@ export default {
                 })
                 .catch(err => {
                     var error = JSON.parse(err.request.response);
-                    console.log(error.errors);
                     this.new_email_err = error.errors.email
                         ? error.errors.email[0]
                         : "";

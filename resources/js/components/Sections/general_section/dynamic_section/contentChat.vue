@@ -279,7 +279,6 @@ export default {
                         value: this.value
                     })
                     .then(response => {
-                        console.log(response.data);
                         this.results = response.data;
                     });
             }

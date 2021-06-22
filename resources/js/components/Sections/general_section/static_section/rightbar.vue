@@ -86,18 +86,15 @@ export default {
     mounted() {
         axios.get("/profile").then(res => {
             this.OnlineUser = res.data;
-            console.log("aa");
             Echo.private(`acceptRequest.${this.OnlineUser.id}`).listen(
                 "AcceptRequestEvent",
                 e => {
-                    console.log("bb");
                     this.load();
                 }
             );
             Echo.private(`acceptRequest2.${this.OnlineUser.id}`).listen(
                 "AcceptRequestEvent2",
                 e => {
-                    console.log("bb2");
                     this.load();
                 }
             );
@@ -132,16 +129,11 @@ export default {
                     id: null
                 })
                 .then(res => {
-                    console.log("friends");
-                    console.log(res.data);
                     this.DBfriends = res.data;
                     axios.get("/OnlineUsers").then(res => {
-                        console.log("on");
-                        console.log(res.data);
                         var users = res.data;
                         users.forEach(user => {
                             if (this.checkFriend(user.user_id) != null) {
-                                console.log(user);
                                 var fr = this.checkFriend(user.user_id);
                                 var index = this.DBfriends.indexOf(fr);
                                 this.DBfriends[index].statu = "status-online";

@@ -8380,29 +8380,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  /* 
-  props: ["id"], */
   components: {
     contentProfile: _Sections_general_section_dynamic_section_contentProfile_vue__WEBPACK_IMPORTED_MODULE_0__.default,
     SharePost: _Sections_single_section_SharePost_vue__WEBPACK_IMPORTED_MODULE_1__.default
   }
-  /*,
-  data() {
-    return {
-        isMounted: false
-    };
-  } ,
-  mounted() {
-    console.log("profile mounted   " + this.id);
-    this.isMounted = true;
-  },
-  watch: {
-    id: function() {
-        console.log("profile watch   " + this.id);
-        this.isMounted = true;
-    }
-  } */
-
   /* ,
   beforeRouteEnter(to, from, next) {
       // called before the route that renders this component is confirmed.
@@ -8676,10 +8657,7 @@ __webpack_require__.r(__webpack_exports__);
     CircleSign: _Sections_single_section_CircleSign__WEBPACK_IMPORTED_MODULE_1__.default
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-    //console.log("aa");
     axios.get("/GatHashed").then(function (res) {
-      console.log(res.data === to.query.token);
-
       if (res.data === to.query.token) {
         next();
       } else {
@@ -8869,9 +8847,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.post("/GetPost", {
       id: this.$route.query.postId
     }).then(function (res) {
-      console.log("this.post");
       _this.post = res.data;
-      console.log(res.data);
     });
   }
 });
@@ -8891,6 +8867,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-emoji-picker */ "./node_modules/vue-emoji-picker/dist-module/main.js");
 /* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
 //
 //
 //
@@ -9242,7 +9221,6 @@ __webpack_require__.r(__webpack_exports__);
     axios.post("/GetPost", {
       id: this.postId
     }).then(function (res) {
-      console.log("this.post");
       _this.post = res.data;
 
       _this.feelings.forEach(function (element, index) {
@@ -9256,9 +9234,6 @@ __webpack_require__.r(__webpack_exports__);
       _this.text = _this.post.text;
 
       _this.acceptFiles();
-
-      console.log(res.data);
-      console.log(_this.post);
     });
   },
   methods: {
@@ -9266,21 +9241,15 @@ __webpack_require__.r(__webpack_exports__);
       this.text += emoji;
     },
     acceptFiles: function acceptFiles() {
-      console.log("accepte file");
-
       if (this.post.postImgs.length > 0 || this.NewImgs.length > 0) {
         this.accept = "image/*";
-        console.log("accepte image");
       } else if (this.post.postVds != "") {
         this.accept = "video/*";
-        console.log("accepte video");
       } else {
         this.accept = "image/*|video/*";
-        console.log("accepte video et image");
       }
     },
     removeImage: function removeImage(path, list) {
-      console.log(path);
       var newPostImgs = [];
       var newFilesImgs = [];
 
@@ -9316,7 +9285,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     addImages: function addImages(e) {
       var file = e.target.files[0];
-      console.log();
       var NewLink = URL.createObjectURL(file);
 
       if (file.type.substring(0, 5) == "image") {
@@ -9373,7 +9341,6 @@ __webpack_require__.r(__webpack_exports__);
       if (this.text == "" && this.post.statu == "" && !this.NewFiles.length && !this.post.postImgs && this.post.postVds == "") {
         document.getElementById("warning").style.display = "block";
       } else {
-        // console.log(this.NewFiles);
         var data = new FormData();
         data.append("id", this.post.id);
         data.append("Statu", this.post.statu);
@@ -9396,8 +9363,6 @@ __webpack_require__.r(__webpack_exports__);
         data.append("fileLength", this.NewFiles.length);
         data.append("fileType", this.typeFiles);
         axios.post("/update-post", data).then(function (res) {
-          console.log(res.data);
-
           _this3.$router.push({
             name: "post",
             query: {
@@ -9418,8 +9383,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/delete-post", {
         id: this.post.id
       }).then(function (res) {
-        console.log(res.data); //this.$router.push({ name: "home" });
-
+        //this.$router.push({ name: "home" });
         _this4.$router.back();
       })["catch"](function (err) {
         console.log(err);
@@ -9479,6 +9443,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -9500,9 +9469,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/posts-saved").then(function (res) {
-        console.log("this.posts");
         _this.posts = res.data;
-        console.log(res.data);
       });
     }
   }
@@ -9804,7 +9771,6 @@ __webpack_require__.r(__webpack_exports__);
         axios.post("/ChatSearch", {
           value: this.value
         }).then(function (response) {
-          console.log(response.data);
           _this2.results = response.data;
         });
       }
@@ -9913,9 +9879,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/GetPosts").then(function (res) {
-      console.log("this.posts");
       _this.posts = res.data;
-      console.log(res.data);
     });
     axios.post("/LoadFriends", {
       id: null
@@ -9924,8 +9888,6 @@ __webpack_require__.r(__webpack_exports__);
     });
     Echo["private"]("newPost").listen("NewPostEvent", function (e) {
       if (_this.checkFriend(e.post.user_id) != null) {
-        console.log(e.post.user_id);
-
         _this.NewPosts.unshift(e.post);
 
         document.getElementById("newP").style.display = "initial";
@@ -9956,25 +9918,13 @@ __webpack_require__.r(__webpack_exports__);
     checkFriend: function checkFriend(id) {
       var p = null;
       this.friends.forEach(function (friend) {
-        console.log(friend);
-
         if (friend.id == id) {
           p = friend;
           return true;
         }
       });
       return p;
-    } // addfile(data){
-    //     console.log(" add data");
-    //     console.log(data);
-    //     this.posts.forEach(element => {
-    //         if(element.id == data.id){
-    //             element.fileUrl = data.url;
-    //             console.log(element);
-    //         }
-    //     });
-    // }
-
+    }
   }
 });
 
@@ -9991,6 +9941,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10793,7 +10759,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/UserProfile", {
         id: this.$route.query.user
       }).then(function (res) {
-        console.log(res.data);
         _this2.user = res.data;
 
         if (_this2.user.message != undefined) {
@@ -10803,23 +10768,11 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         Echo["private"]("cancelRequest.".concat(_this2.user.id)).listen("CancelRequestEvent", function (e) {
-          console.log(e.user.name);
-
           if (_this2.user.status == "friend") {
             _this2.message = "";
           }
         });
-        /*  Echo.private(`sendRequest.${this.user.id}`).listen(
-            "SendRequestEvent",
-            e => {
-                // console.log(e.user);
-                //console.log("accept");
-                this.message = "accept";
-            }
-        ); */
-
         Echo["private"]("acceptRequest.".concat(_this2.user.id)).listen("AcceptRequestEvent", function (e) {
-          //console.log(e.user.name);
           if (_this2.user.status == "friend") {
             _this2.message = "friend";
           }
@@ -10829,10 +10782,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.OnlineUser = res.data;
         _this2.loaded = true;
         Echo["private"]("cancelRequest.".concat(_this2.OnlineUser.id)).listen("CancelRequestEvent", function (e) {
-          //console.log(e.user.name);
-
-          /*  if (this.user.status == "friend") {
-              } */
           _this2.message = "";
         });
         Echo["private"]("sendRequest.".concat(_this2.OnlineUser.id)).listen("SendRequestEvent", function (e) {
@@ -10841,10 +10790,6 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
         Echo["private"]("acceptRequest.".concat(_this2.OnlineUser.id)).listen("AcceptRequestEvent", function (e) {
-          //console.log(e.user.name);
-
-          /*    if (this.user.status == "friend") {
-              } */
           _this2.message = "friend";
         });
       });
@@ -10855,8 +10800,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/SendRequest", {
         id: this.user.id
       }).then(function (res) {
-        console.log(res.data);
-        _this3.message = "cancel"; //console.log(this.message);
+        _this3.message = "cancel";
       });
     },
     DeleteRequest: function DeleteRequest() {
@@ -10865,7 +10809,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/DeleteRequest", {
         id: this.user.id
       }).then(function (res) {
-        console.log(res);
         _this4.message = "";
       });
     },
@@ -10875,10 +10818,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/AcceptRequest", {
         id: this.user.id
       }).then(function (res) {
-        console.log(res);
         _this5.message = "friend";
-        /*    var child = this.$refs.friends;
-        child.LoadFriends(); */
       });
     },
     RemoveFriend: function RemoveFriend() {
@@ -10887,7 +10827,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/RemoveFriend", {
         id: this.user.id
       }).then(function (res) {
-        console.log(res);
         _this6.message = "";
         var child = _this6.$refs.friends;
         child.LoadFriends();
@@ -10916,18 +10855,12 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/LoadFriends", {
         id: this.$route.query.user
       }).then(function (res) {
-        console.log(res.data);
         _this8.FriendLists = res.data;
       });
     }
   },
   watch: {
     "$route.query.user": function $routeQueryUser() {
-      /*      if (this.UserId != null) {
-          sessionStorage.clear();
-          sessionStorage.setItem("id", this.user.id);
-          // console.log("profile content watch");
-      } */
       this.load();
       this.friendLoad();
       this.imagesLoad();
@@ -11606,7 +11539,6 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/profile").then(function (res) {
-      console.log(res.data);
       _this.user = res.data;
       _this.name = _this.user.name;
       _this.email = _this.user.email;
@@ -11658,11 +11590,9 @@ __webpack_require__.r(__webpack_exports__);
       data.append("linkedin", this.linkedin); //axios.post("/profile-update", data, config);
 
       axios.post("/profile-update", data).then(function (res) {
-        console.log(res);
         _event_bus__WEBPACK_IMPORTED_MODULE_0__.default.$emit("user-update", res.data);
 
-        _this2.$router.back(); //this.$router.push({ name: "profile" });
-
+        _this2.$router.back();
       })["catch"](function (err) {
         var error = JSON.parse(err.request.response);
         _this2.name_err = error.errors.name ? error.errors.name[0] : "";
@@ -11695,13 +11625,11 @@ __webpack_require__.r(__webpack_exports__);
       var file = e.target.files[0];
       this.profile = URL.createObjectURL(file);
       this.profile_img = file;
-      console.log(this.profile_img);
     },
     onCoverChange: function onCoverChange(e) {
       var file = e.target.files[0];
       this.cover = URL.createObjectURL(file);
       this.cover_img = file;
-      console.log(this.cover_img);
     },
     reset: function reset() {
       var _this3 = this;
@@ -11711,11 +11639,10 @@ __webpack_require__.r(__webpack_exports__);
         password: this.password,
         password_confirmation: this.password_confirmation
       }).then(function (res) {
-        // console.log(res.data);
+        //
         if (res.data == "wrong password") {
           _this3.old_err = "Current password invalid";
         } else {
-          //console.log("done");
           _this3.$router.push({
             name: "signIn"
           });
@@ -12191,7 +12118,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/LoadFriends", {
         id: null
       }).then(function (res) {
-        console.log(res.data);
         _this2.friends = res.data;
       }); // document.getElementById("New").style.display = "none";
     }
@@ -12374,20 +12300,15 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/profile").then(function (res) {
-      console.log(res.data);
       _this.user = res.data;
       _this.img = _this.user.profileimg.name;
       _this.isMounted = true;
       Echo["private"]("sendRequest.".concat(_this.user.id)).listen("SendRequestEvent", function (e) {
-        console.log(e.user);
-
         _this.allReqs.unshift(e.user);
 
         _this.friendRqs = _this.allReqs.slice(0, 4);
       });
       Echo["private"]("cancelRequest.".concat(_this.user.id)).listen("CancelRequestEvent", function (e) {
-        console.log(e.user); // console.log(this.allReqs.indexOf(e.user));
-
         _this.allReqs.forEach(function (req) {
           if (req.id === e.user.id) {
             var index = _this.allReqs.indexOf(req);
@@ -12399,8 +12320,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
       Echo["private"]("acceptRequest.".concat(_this.user.id)).listen("AcceptRequestEvent", function (e) {
-        console.log(e.user); // console.log(this.allReqs.indexOf(e.user));
-
         _this.allReqs.forEach(function (req) {
           if (req.id === e.user.id) {
             var index = _this.allReqs.indexOf(req);
@@ -12413,7 +12332,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     });
     axios.get("/LoadRequests").then(function (res) {
-      console.log(res.data);
       _this.allReqs = res.data;
       _this.friendRqs = _this.allReqs.slice(0, 4);
     });
@@ -12425,9 +12343,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/DeleteReq", {
         id: id
       }).then(function (res) {
-        console.log(res);
         axios.get("/LoadRequests").then(function (res) {
-          console.log(res.data);
           _this2.allReqs = res.data;
           _this2.friendRqs = _this2.allReqs.slice(0, 4);
           _this2.show = true;
@@ -12440,9 +12356,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/AcceptRequest", {
         id: id
       }).then(function (res) {
-        console.log(res);
         axios.get("/LoadRequests").then(function (res) {
-          console.log(res.data);
           _this3.allReqs = res.data;
           _this3.friendRqs = _this3.allReqs.slice(0, 4);
           _this3.show = true;
@@ -12593,15 +12507,10 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get("/profile").then(function (res) {
       _this.OnlineUser = res.data;
-      console.log("aa");
       Echo["private"]("acceptRequest.".concat(_this.OnlineUser.id)).listen("AcceptRequestEvent", function (e) {
-        console.log("bb");
-
         _this.load();
       });
       Echo["private"]("acceptRequest2.".concat(_this.OnlineUser.id)).listen("AcceptRequestEvent2", function (e) {
-        console.log("bb2");
-
         _this.load();
       });
     });
@@ -12636,17 +12545,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/LoadFriends", {
         id: null
       }).then(function (res) {
-        console.log("friends");
-        console.log(res.data);
         _this3.DBfriends = res.data;
         axios.get("/OnlineUsers").then(function (res) {
-          console.log("on");
-          console.log(res.data);
           var users = res.data;
           users.forEach(function (user) {
             if (_this3.checkFriend(user.user_id) != null) {
-              console.log(user);
-
               var fr = _this3.checkFriend(user.user_id);
 
               var index = _this3.DBfriends.indexOf(fr);
@@ -12815,8 +12718,6 @@ __webpack_require__.r(__webpack_exports__);
 
       e.preventDefault();
       axios.post("/LogoutUser").then(function (res) {
-        console.log(res);
-
         _this.$router.push({
           name: "signIn"
         });
@@ -12828,7 +12729,6 @@ __webpack_require__.r(__webpack_exports__);
 
     this.UrlHref = "/" + window.location.href.split("/")[4];
     axios.get("/profile").then(function (res) {
-      console.log(res.data);
       _this2.user = res.data;
       _this2.menus[2].href = "/profile?user=" + _this2.user.id;
     });
@@ -13156,6 +13056,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -13188,10 +13113,7 @@ __webpack_require__.r(__webpack_exports__);
           id: this.id,
           text: this.myText
         }).then(function (res) {
-          console.log(res.data);
-          _this.myText = '';
-        })["catch"](function (err) {
-          console.log(err);
+          _this.myText = "";
         });
       }
     },
@@ -13204,58 +13126,51 @@ __webpack_require__.r(__webpack_exports__);
         postId: this.id
       }).then(function (res) {
         _this2.comments[i].likes = res.data;
-      })["catch"](function (err) {
-        console.log(err);
       });
       this.comments[i].commentLike = !this.comments[i].commentLike;
     },
     deleteComment: function deleteComment(i) {
       axios.post("/delete-comment", {
         id: this.comments[i].id
-      }).then(function (res) {
-        console.log("delete");
-      })["catch"](function (err) {
-        console.log(err);
-      });
+      }).then(function (res) {});
     }
   },
   mounted: function mounted() {
     var _this3 = this;
 
     axios.get("/profile").then(function (res) {
-      console.log(res.data);
       _this3.user = res.data.id;
     });
     axios.post("/get-comments", {
       id: this.id
     }).then(function (res) {
-      console.log(res.data);
       _this3.comments = res.data;
-    })["catch"](function (err) {
-      console.log(err);
     });
-    Echo["private"]("likeComment.".concat(this.id)).listen('LikeCommentEvent', function (e) {
+    Echo["private"]("likeComment.".concat(this.id)).listen("LikeCommentEvent", function (e) {
       _this3.comments.forEach(function (element) {
         if (e.id == element.id) {
           e.etat ? --element.likes : ++element.likes;
         }
       });
     });
-    Echo["private"]("Comment.".concat(this.id)).listen('CommentEvent', function (e) {
+    Echo["private"]("Comment.".concat(this.id)).listen("CommentEvent", function (e) {
       if (e.etat) {
         if (e.comment.userId == _this3.user) {
           e.comment.edit = true;
-        }
+        } // if(this.id == e.comment.user_id){
+        //     this.comments.push(e.comment);
+        //     }
+
 
         _this3.comments.push(e.comment);
 
-        _this3.$emit('changeNumbers', true);
+        _this3.$emit("changeNumbers", true);
       } else {
         _this3.comments.forEach(function (element, i) {
           if (e.comment.id == element.id) {
             _this3.comments.splice(i, 1);
 
-            _this3.$emit('changeNumbers', false);
+            _this3.$emit("changeNumbers", false);
           }
         });
       }
@@ -13562,8 +13477,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.loadOtherUser();
       this.LoadMessages();
       Echo["private"]("sendText.".concat(this.CurrentUser.id)).listen("SendTextEvent", function (e) {
-        console.log(e); //console.log(e.message);
-
         if (e.message.user_id == _this.$route.query.user) {
           var message = {
             id: e.message.id,
@@ -13606,8 +13519,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         id: this.CurrentUser.id,
         messages: this.ChatContents
       }).then(function (res) {
-        console.log("deleted");
-        console.log(res.data);
         _this2.ChatContents = [];
         _event_bus__WEBPACK_IMPORTED_MODULE_2__.default.$emit("delete-chat", _this2.$route.query.user);
 
@@ -13735,7 +13646,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var d = new Date();
       var time = d.getHours() + ":" + d.getMinutes();
-      console.log("text");
 
       if (text[1] == "image") {
         var img = URL.createObjectURL(text[0]);
@@ -13753,8 +13663,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         data.append("video", newT.vidChat);
         data.append("time", newT.TimeSend);
         axios.post("/NewMessage", data).then(function (res) {
-          console.log("id");
-          console.log(res.data);
           newT.id = res.data.id;
 
           _this6.ChatContents.push(newT);
@@ -13790,7 +13698,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _data.append("time", newT.TimeSend);
 
         axios.post("/NewMessage", _data).then(function (res) {
-          //console.log(res);
           newT.id = res.data.id;
 
           _this6.ChatContents.push(newT);
@@ -13825,8 +13732,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _data2.append("time", newT.TimeSend);
 
         axios.post("/NewMessage", _data2).then(function (res) {
-          /* console.log("id");
-          console.log(res.data); */
           newT.id = res.data.id;
 
           _this6.ChatContents.push(newT);
@@ -13862,28 +13767,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         data: "z"
       });
     }
-    /* ,
-    ChatContents: async function() {
-      if (this.watch_chat == true) {
-          console.log("watch chat");
-          for (const element of this.ChatContents) {
-              if (element.txtChat.substring(0, 4) == "http") {
-                  await axios
-                      .post("/userInfoReq", {
-                          id: element.txtChat.split("postId=")[1]
-                      })
-                      .then(res => {
-                          element.share_name = res.data.name;
-                          element.share_image = res.data.profileimg.name;
-                      });
-              }
-          }
-            this.ChatContents = this.ChatContents;
-          this.scrollToBottom();
-          this.load_share = true;
-      }
-    } */
-
   }
 });
 
@@ -13902,17 +13785,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-emoji-picker */ "./node_modules/vue-emoji-picker/dist-module/main.js");
 /* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -14299,7 +14171,6 @@ __webpack_require__.r(__webpack_exports__);
       this.showFeeling = !this.showFeeling;
     },
     removeFile: function removeFile(path) {
-      //console.log("removeFile");
       if (this.postImgs.length > 0) {
         var newPostImgs = [];
 
@@ -14365,7 +14236,6 @@ __webpack_require__.r(__webpack_exports__);
 
         data.append("imagenbr", this.Images.length);
         axios.post("/create-post", data).then(function (res) {
-          // console.log(res);
           _this2.myText = "";
           _this2.UserStatu = "";
           _this2.postImgs = [];
@@ -14376,11 +14246,8 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.$emit("newPost", res.data);
 
-          _this2.close(); // console.log(res.config.data)
-
-        })["catch"](function (err) {
-          console.log(err);
-        }); // document.getElementById("post-modal").style.display = 'none';
+          _this2.close();
+        });
       }
     },
     open: function open() {
@@ -14791,13 +14658,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     axios.get("/profile").then(function (res) {
-      console.log(res.data);
       _this.user = res.data;
       _this.img = _this.user.profileimg.name;
       _this.isMounted = true;
       Echo["private"]("sendRequest.".concat(_this.user.id)).listen("SendRequestEvent", function (e) {
-        console.log(e.user);
-
         _this.allReqs.unshift(e.user);
 
         _this.friendReqs = _this.allReqs.slice(0, 4);
@@ -14805,8 +14669,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         document.getElementById("redREQ").style.display = "initial";
       });
       Echo["private"]("cancelRequest.".concat(_this.user.id)).listen("CancelRequestEvent", function (e) {
-        console.log(e.user); // console.log(this.allReqs.indexOf(e.user));
-
         _this.allReqs.forEach(function (req) {
           if (req.id === e.user.id) {
             var index = _this.allReqs.indexOf(req);
@@ -14819,8 +14681,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         });
       });
       Echo["private"]("acceptRequest.".concat(_this.user.id)).listen("AcceptRequestEvent", function (e) {
-        console.log(e.user); // console.log(this.allReqs.indexOf(e.user));
-
         _this.allReqs.forEach(function (req) {
           if (req.id === e.user.id) {
             var index = _this.allReqs.indexOf(req);
@@ -14835,7 +14695,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       Echo["private"]("sendText.".concat(_this.user.id)).listen("SendTextEvent", function (e) {
         if (e.message.user_id != _this.$route.query.user) {
           document.getElementById("redMSG").style.display = "initial";
-          console.log(e);
           _this.msgCount += 1;
           var p = false;
 
@@ -14867,14 +14726,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     });
     axios.get("/LoadRequests").then(function (res) {
-      console.log(res.data);
       _this.allReqs = res.data;
       _this.friendReqs = _this.allReqs.slice(0, 4);
       _this.loadedReqs = true;
     });
     axios.get("/UnreadMessages").then(function (res) {
-      console.log("unread");
-      console.log(res.data);
       _this.msgCount = res.data[1];
       _this.ALLmsg = res.data[0];
       _this.messages = _this.ALLmsg.slice(0, 4);
@@ -14894,7 +14750,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
 
     if (sessionStorage.getItem("themeMode") === null) {
-      console.log("cree session");
       sessionStorage.setItem("themeMode", false);
     } else {
       if (sessionStorage.getItem("themeMode") == "true") {
@@ -14910,8 +14765,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       axios.get("/UnreadMessages").then(function (res) {
-        console.log("unread");
-        console.log(res.data);
         _this2.msgCount = res.data[1];
         _this2.ALLmsg = res.data[0];
         _this2.messages = _this2.ALLmsg.slice(0, 4);
@@ -14924,14 +14777,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var mode = function mode(a, b, c) {
         _this3.modeTOmode(a, b, c).then(function () {
-          console.log("test");
           return true;
         });
       };
 
       function step1() {
         loading.style.display = "block";
-        console.log("1");
         setTimeout(function () {
           step2();
         }, 500);
@@ -14944,11 +14795,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           mode("http://127.0.0.1:8000/css/dark/typography.css", "http://127.0.0.1:8000/css/dark/style.css", "http://127.0.0.1:8000/css/dark/responsive.css");
         }
 
-        console.log("2");
         setTimeout(function () {
           step3();
           var theme = swit.checked ? "dark" : "light";
-          console.log(document.querySelectorAll("link[href*='" + theme + "']"));
           document.querySelectorAll("link[href*='" + theme + "']").forEach(function (elem) {
             document.head.removeChild(elem);
           });
@@ -14957,7 +14806,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       function step3() {
         loading.style.display = "none";
-        console.log("3");
       }
 
       step1();
@@ -14967,7 +14815,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       if (this.user.profile) {
         this.img = this.user.profile;
-        console.log(this.user);
       }
     },
     DeleteRequest: function DeleteRequest(id) {
@@ -14976,9 +14823,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       axios.post("/DeleteReq", {
         id: id
       }).then(function (res) {
-        console.log(res);
         axios.get("/LoadRequests").then(function (res) {
-          console.log(res.data);
           _this4.allReqs = res.data;
           _this4.friendReqs = _this4.allReqs.slice(0, 4);
           _this4.loadedReqs = true;
@@ -14991,9 +14836,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       axios.post("/AcceptRequest", {
         id: id
       }).then(function (res) {
-        console.log(res);
         axios.get("/LoadRequests").then(function (res) {
-          console.log(res.data);
           _this5.allReqs = res.data;
           _this5.friendReqs = _this5.allReqs.slice(0, 4);
           _this5.loadedReqs = true;
@@ -15001,10 +14844,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     check: function check() {
-      console.log("before ", sessionStorage.getItem("themeMode"));
       var reverse = sessionStorage.getItem("themeMode") == "true" ? "false" : "true";
       sessionStorage.setItem("themeMode", reverse);
-      console.log("after ", sessionStorage.getItem("themeMode"));
       this.aplaytheme();
     },
     modeTOmode: function modeTOmode(href1, href2, href3) {
@@ -15024,7 +14865,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   document.head.appendChild(n);
                 };
 
-                console.log("mode");
                 newlinktypography = document.createElement("link");
                 newlinkstyle = document.createElement("link");
                 newlinkresponsive = document.createElement("link");
@@ -15035,7 +14875,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 newlinkstyle.onload = addEventListener("load", appendToHead(newlinkstyle), true);
                 newlinkresponsive.onload = addEventListener("load", appendToHead(newlinkresponsive), true);
 
-              case 12:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -15179,7 +15019,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/profile").then(function (res) {
-      //console.log(res.data);
+      //
       _this.user = res.data;
     });
   },
@@ -15193,7 +15033,6 @@ __webpack_require__.r(__webpack_exports__);
         axios.post("/ProfileSearch", {
           value: this.value
         }).then(function (response) {
-          console.log(response.data);
           _this2.results = response.data;
         });
       }
@@ -15210,15 +15049,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     show: function show() {
-      console.log("showSearch");
-      var search = document.getElementsByClassName("iq-search-bar"); // show ? search.style.display = "flex" : search.style.display = "none" ;
+      var search = document.getElementsByClassName("iq-search-bar");
 
       if (this.show) {
         search[0].style.display = "flex";
-        console.log("fles");
       } else {
         search[0].style.display = "none";
-        console.log("none");
       }
     }
   }
@@ -15250,6 +15086,14 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15484,6 +15328,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     Echo["private"]("sharePost.".concat(this.post.id)).listen("SharePostEvent", function (e) {
       _this.share += 1;
     });
+    Echo["private"]("likePost.".concat(this.post.id)).listen('likePostEvent', function (e) {
+      if (e.id == _this.post.id) {
+        e.etat ? --_this.post.numbers.likes : ++_this.post.numbers.likes;
+      }
+    });
   },
   methods: {
     sharePost: function sharePost() {
@@ -15504,11 +15353,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   id: _this2.post.id,
                   etat: _this2.post.postSave
                 }).then(function (res) {
-                  console.log(res.data);
-
                   _this2.$emit("unsavePost");
-                })["catch"](function (err) {
-                  console.log(err);
                 });
 
               case 2:
@@ -15538,8 +15383,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   etat: _this3.post.postLike
                 }).then(function (res) {
                   _this3.post.numbers.likes = res.data.likes;
-                })["catch"](function (err) {
-                  console.log(err);
                 });
 
               case 2:
@@ -15555,6 +15398,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     NumbersComment: function NumbersComment(etat) {
       etat ? ++this.post.numbers.comments : --this.post.numbers.comments;
+    },
+    comeBack: function comeBack() {
+      this.$router.back();
+    }
+  },
+  computed: {
+    isPost: function isPost() {
+      return this.$route.name === 'post';
     }
   }
 });
@@ -16398,11 +16249,9 @@ __webpack_require__.r(__webpack_exports__);
       _this.LoadFriends();
     });
     Echo["private"]("sendRequest.".concat(this.IdOnline)).listen("SendRequestEvent", function (e) {
-      //console.log(e.user);
       _this.LoadFriends();
     });
     Echo["private"]("cancelRequest.".concat(this.IdOnline)).listen("CancelRequestEvent", function (e) {
-      //console.log(e.user);
       _this.LoadFriends();
     });
   },
@@ -16413,7 +16262,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/DeleteRequest", {
         id: id
       }).then(function (res) {
-        //console.log(res);
         _this2.LoadFriends();
       });
     },
@@ -16423,7 +16271,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/AcceptRequest", {
         id: id
       }).then(function (res) {
-        // console.log(res);
         _this3.LoadFriends();
       });
     },
@@ -16433,7 +16280,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/SendRequest", {
         id: id
       }).then(function (res) {
-        //console.log(res.data);
+        //
         _this4.LoadFriends();
       });
     },
@@ -16443,7 +16290,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/RemoveFriend", {
         id: id
       }).then(function (res) {
-        // console.log(res);
         _this5.LoadFriends();
       });
     },
@@ -16453,7 +16299,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/LoadFriends", {
         id: this.Id
       }).then(function (res) {
-        //console.log(res.data);
+        //
         _this6.FriendLists = res.data;
       });
 
@@ -16461,7 +16307,7 @@ __webpack_require__.r(__webpack_exports__);
         axios.post("/FriendsInCommon", {
           id: this.Id
         }).then(function (res) {
-          // console.log(res.data);
+          //
           _this6.InCommon = res.data[0];
           _this6.Others = res.data[1];
         });
@@ -16489,8 +16335,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
 //
 //
 //
@@ -16652,14 +16496,11 @@ __webpack_require__.r(__webpack_exports__);
         password: this.password,
         password_confirmation: this.password_confirmation
       }).then(function (res) {
-        console.log(res.data.email);
-
         _this.$router.push({
           name: "home"
         });
       })["catch"](function (err) {
         var error = JSON.parse(err.request.response);
-        console.log(error.errors);
         _this.password_err = error.errors.password ? error.errors.password[0] : "";
       });
     }
@@ -16806,10 +16647,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   image: "null",
                   video: "null",
                   time: time
-                }).then(function (res) {
-                  console.log(res);
-                })["catch"](function (err) {
-                  console.log(err);
                 });
 
               case 5:
@@ -16817,11 +16654,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return axios.post("/SharePost", {
                   post_id: _this.post_id
                 }).then(function (res) {
-                  console.log(res);
                   e.target.disabled = true;
                   e.target.innerHTML = '<i class="ri-check-line mr-1 text-white font-size-16" ></i>';
-                })["catch"](function (err) {
-                  console.log(err);
                 });
 
               case 7:
@@ -16853,7 +16687,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       axios.post("/LoadFriends", {
         id: null
       }).then(function (res) {
-        //console.log(res.data);
+        //
         _this2.friends = res.data;
       });
     },
@@ -16864,7 +16698,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         axios.post("/ChatSearch", {
           value: this.value
         }).then(function (response) {
-          //console.log(response.data);
           _this3.friends = response.data;
         });
       } else {
@@ -17103,14 +16936,11 @@ __webpack_require__.r(__webpack_exports__);
         email: this.email,
         password: this.password
       }).then(function (res) {
-        console.log(res);
-
         _this.$router.push({
           name: "home"
         });
       })["catch"](function (err) {
         var error = JSON.parse(err.request.response);
-        console.log(error.errors);
         _this.email_err = error.errors.email ? error.errors.email[0] : "";
         _this.password_err = error.errors.password ? error.errors.password[0] : "";
       });
@@ -17126,8 +16956,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/ForgotPass", {
         email: this.new_email
       }).then(function (res) {
-        console.log(res.data);
-
         if (res.data == "Invalid email") {
           _this2.new_email_err = "Invalid email";
         } else {
@@ -17136,7 +16964,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (err) {
         var error = JSON.parse(err.request.response);
-        console.log(error.errors);
         _this2.new_email_err = error.errors.email ? error.errors.email[0] : "";
       });
     }
@@ -17327,7 +17154,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       e.preventDefault();
-      console.log(this.name + "_" + this.email + "_" + this.password);
       axios.post("/BeforeRegister", {
         name: this.name,
         email: this.email,
@@ -17337,8 +17163,6 @@ __webpack_require__.r(__webpack_exports__);
         birthdate: this.birthdate,
         gender: this.gender
       }).then(function (response) {
-        console.log(response.status + " " + response.statusText);
-
         _this.$router.push({
           name: "verifyEmail"
         });
@@ -17350,7 +17174,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.password_err = error.errors.password ? error.errors.password[0] : "";
         _this.mobile_err = error.errors.mobile ? error.errors.mobile[0] : "";
         _this.birthdate_err = error.errors.birthdate ? error.errors.birthdate[0] : "";
-        _this.gender_err = error.errors.gender ? error.errors.gender[0] : ""; //console.log(error.errors);
+        _this.gender_err = error.errors.gender ? error.errors.gender[0] : "";
       });
     }
   }
@@ -17491,8 +17315,6 @@ __webpack_require__.r(__webpack_exports__);
 
     //this.loadList();
     axios.get("/ChatList").then(function (res) {
-      console.log("list");
-      console.log(res.data);
       _this.ChatLists = res.data;
 
       if (_this.findUser(_this.$route.query.user) == null && _this.$route.query.user) {
@@ -17508,8 +17330,6 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       Echo["private"]("sendText.".concat(_this.CurrentUser.id)).listen("SendTextEvent", function (e) {
-        console.log(e); //console.log(e.message);
-
         if (e.message.user_id != _this.$route.query.user) {
           var p = false;
 
@@ -17555,8 +17375,6 @@ __webpack_require__.r(__webpack_exports__);
                 numberMsg: 1,
                 TimeSend: e.message.time
               };
-              console.log("item");
-              console.log(item);
 
               _this.ChatLists.unshift(item);
             });
@@ -17594,7 +17412,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/LoadFriends", {
         id: null
       }).then(function (res) {
-        //console.log(res.data);
+        //
         _this2.friends = res.data;
       });
     },
@@ -17606,7 +17424,6 @@ __webpack_require__.r(__webpack_exports__);
     LastText: function LastText(data) {
       var _this3 = this;
 
-      console.log(data);
       this.ChatLists.forEach(function (u) {
         if (u.id == _this3.$route.query.user) {
           var index = _this3.ChatLists.indexOf(u);
@@ -17620,8 +17437,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       axios.get("/ChatList").then(function (res) {
-        //console.log("list");
-        //console.log(res.data);
         _this4.ChatLists = res.data;
 
         if (_this4.findUser(_this4.$route.query.user) == null && _this4.$route.query.user) {
@@ -17645,7 +17460,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/UserProfile", {
         id: this.$route.query.user
       }).then(function (res) {
-        //console.log("unshift");
         _this5.OtherUser = res.data;
         var time = new Date();
         var person = {
@@ -17667,7 +17481,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this6 = this;
 
       if (this.findUser(this.$route.query.user) == null && this.$route.query.user) {
-        this.AddUserToList(); //console.log("changer id");
+        this.AddUserToList();
       }
 
       this.ChatLists.forEach(function (u) {
@@ -17675,7 +17489,6 @@ __webpack_require__.r(__webpack_exports__);
           var index = _this6.ChatLists.indexOf(u);
 
           _this6.ChatLists[index].numberMsg = 0;
-          console.log("change to 0");
         }
       });
     }
@@ -17695,6 +17508,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -17824,7 +17661,6 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/verify").then(function (res) {
-      console.log(res.data);
       _this.org_code = res.data[0];
       _this.user = res.data[1];
     });
@@ -17835,7 +17671,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.code_err = "";
       axios.get("/verify").then(function (res) {
-        console.log(res.data);
         _this2.org_code = res.data[0];
         _this2.user = res.data[1];
       });
@@ -17844,7 +17679,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       if (this.code == this.org_code) {
-        console.log(this.user.email);
         axios.post("/register", {
           name: this.user.name,
           email: this.user.email,
@@ -17854,8 +17688,6 @@ __webpack_require__.r(__webpack_exports__);
           birthdate: this.user.birthdate,
           gender: this.user.gender
         }).then(function (res) {
-          console.log(res);
-
           _this3.$router.push({
             name: "home"
           });
@@ -22610,7 +22442,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.img-edit[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    position: relative;\r\n    top: -25px;\n}\n.delete-btn[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: 5px;\r\n    left: 108px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.delete:hover .delete-btn[data-v-5281f7ec] {\r\n    opacity: 1;\r\n    transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\r\n    position: relative;\r\n    top: -2px;\n}\n.delete-images[data-v-5281f7ec] {\r\n    width: 250px;\r\n    height: 250px;\r\n    margin: 20px;\r\n    float: left;\n}\n.d-video[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: -500px;\r\n    left: 95%;\r\n    background: var(--iq-dark-bg);\n}\n.inputfile[data-v-5281f7ec] {\r\n    width: 0.1px;\r\n    height: 0.1px;\r\n    opacity: 0;\r\n    overflow: hidden;\r\n    position: absolute;\r\n    display: none;\r\n    z-index: -1;\n}\n.labelfile[data-v-5281f7ec] {\r\n    padding: 30% 30%;\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile[data-v-5281f7ec] {\r\n    max-width: 1000%;\r\n    font-size: 1.15rem;\r\n    font-weight: 700;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    overflow: hidden;\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile svg[data-v-5281f7ec] {\r\n    width: 1em;\r\n    height: 1em;\r\n    vertical-align: middle;\r\n    fill: currentColor;\r\n    margin-top: -0.25em;\r\n    /* 4px */\r\n    margin-right: 0.25em;\r\n    /* 4px */\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\n}\n.inputfile:focus .labelfile[data-v-5281f7ec],\r\n.inputfile.has-focus .labelfile[data-v-5281f7ec],\r\n.inputfile .labelfile[data-v-5281f7ec]:hover {\r\n    color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile figure[data-v-5281f7ec] {\r\n    width: 80px;\r\n    height: 80px;\r\n    border-radius: 50%;\r\n    background-color: var(--iq-primary);\r\n    display: block;\r\n    padding: 20px;\r\n    margin: 0 auto 10px;\n}\n.inputfile[data-v-5281f7ec]:focus,\r\n.labelfile figure[data-v-5281f7ec],\r\n.inputfile.has-focus[data-v-5281f7ec],\r\n.labelfile figure[data-v-5281f7ec],\r\n.inputfile[data-v-5281f7ec],\r\n.labelfile:hover figure[data-v-5281f7ec] {\r\n    background-color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile svg[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    fill: var(--iq-dark-bg);\n}\n.box[data-v-5281f7ec] {\r\n    position: relative;\r\n    height: 100%;\r\n    border: 1px dashed var(--iq-primary);\r\n    border-radius: 5px;\r\n    width: 100%;\n}\r\n/* emojie style */\n.wrapper-emoji[data-v-5281f7ec] {\r\n    width: 95%;\r\n    justify-content: center;\n}\n.regular-input[data-v-5281f7ec] { \r\n    height: 100px;\r\n    padding: 0.25rem 1rem;\n}\n.emoji-invoker[data-v-5281f7ec] {    \r\n    top: 1.5rem;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.img-edit[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    position: relative;\r\n    top: -25px;\n}\n.delete-btn[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: 5px;\r\n    left: 108px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.delete:hover .delete-btn[data-v-5281f7ec] {\r\n    opacity: 1;\r\n    transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\r\n    position: relative;\r\n    top: -2px;\n}\n.delete-images[data-v-5281f7ec] {\r\n    width: 250px;\r\n    height: 250px;\r\n    margin: 20px;\r\n    float: left;\n}\n.d-video[data-v-5281f7ec] {\r\n    position: relative;\r\n    top: -500px;\r\n    left: 95%;\r\n    background: var(--iq-dark-bg);\n}\n.inputfile[data-v-5281f7ec] {\r\n    width: 0.1px;\r\n    height: 0.1px;\r\n    opacity: 0;\r\n    overflow: hidden;\r\n    position: absolute;\r\n    display: none;\r\n    z-index: -1;\n}\n.labelfile[data-v-5281f7ec] {\r\n    padding: 30% 30%;\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile[data-v-5281f7ec] {\r\n    max-width: 1000%;\r\n    font-size: 1.15rem;\r\n    font-weight: 700;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n    cursor: pointer;\r\n    display: inline-block;\r\n    overflow: hidden;\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile svg[data-v-5281f7ec] {\r\n    width: 1em;\r\n    height: 1em;\r\n    vertical-align: middle;\r\n    fill: currentColor;\r\n    margin-top: -0.25em;\r\n    /* 4px */\r\n    margin-right: 0.25em;\r\n    /* 4px */\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile[data-v-5281f7ec] {\r\n    color: var(--iq-primary);\n}\n.inputfile:focus .labelfile[data-v-5281f7ec],\r\n.inputfile.has-focus .labelfile[data-v-5281f7ec],\r\n.inputfile .labelfile[data-v-5281f7ec]:hover {\r\n    color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile figure[data-v-5281f7ec] {\r\n    width: 80px;\r\n    height: 80px;\r\n    border-radius: 50%;\r\n    background-color: var(--iq-primary);\r\n    display: block;\r\n    padding: 20px;\r\n    margin: 0 auto 10px;\n}\n.inputfile[data-v-5281f7ec]:focus,\r\n.labelfile figure[data-v-5281f7ec],\r\n.inputfile.has-focus[data-v-5281f7ec],\r\n.labelfile figure[data-v-5281f7ec],\r\n.inputfile[data-v-5281f7ec],\r\n.labelfile:hover figure[data-v-5281f7ec] {\r\n    background-color: var(--iq-light);\n}\n.inputfile[data-v-5281f7ec],\r\n.labelfile svg[data-v-5281f7ec] {\r\n    width: 100%;\r\n    height: 100%;\r\n    fill: var(--iq-dark-bg);\n}\n.box[data-v-5281f7ec] {\r\n    position: relative;\r\n    height: 100%;\r\n    border: 1px dashed var(--iq-primary);\r\n    border-radius: 5px;\r\n    width: 100%;\n}\r\n/* emojie style */\n.wrapper-emoji[data-v-5281f7ec] {\r\n    width: 95%;\r\n    justify-content: center;\n}\n.regular-input[data-v-5281f7ec] {\r\n    height: 100px;\r\n    padding: 0.25rem 1rem;\n}\n.emoji-invoker[data-v-5281f7ec] {\r\n    top: 1.5rem;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22706,7 +22538,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper-emoji[data-v-75f13304] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-75f13304] {  \r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-75f13304] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-75f13304]{\r\n    position: relative;\r\n    width: 70px;\n}\n.files[data-v-75f13304]{\r\n    position: relative;\r\n    width: 100%;\r\n    height: 150px;\r\n    border-top: 1px solid;\n}\n.files img[data-v-75f13304]{\r\n    position: relative;\r\n    width: 200px;\r\n    height: 140px;\r\n    padding: 10px 10px 0px 10px;\n}\n.desactive[data-v-75f13304] {\r\n    cursor: pointer;\n}\n.desactive[data-v-75f13304]:hover {\r\n    color: var(--iq-primary-hover);\n}\n.hover[data-v-75f13304] {\r\n    color: var(--iq-primary-hover);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper-emoji[data-v-75f13304] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-75f13304] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-75f13304] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-75f13304] {\r\n    position: relative;\r\n    width: 70px;\n}\n.files[data-v-75f13304] {\r\n    position: relative;\r\n    width: 100%;\r\n    height: 150px;\r\n    border-top: 1px solid;\n}\n.files img[data-v-75f13304] {\r\n    position: relative;\r\n    width: 200px;\r\n    height: 140px;\r\n    padding: 10px 10px 0px 10px;\n}\n.desactive[data-v-75f13304] {\r\n    cursor: pointer;\n}\n.desactive[data-v-75f13304]:hover {\r\n    color: var(--iq-primary-hover);\n}\n.hover[data-v-75f13304] {\r\n    color: var(--iq-primary-hover);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22754,7 +22586,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper-emoji[data-v-eb6038b2] {\r\n    justify-content: center;\n}\n.regular-input[data-v-eb6038b2] {\r\n    height: 100px;\r\n    padding: 0.25rem 1rem;\n}\n.emoji-invoker[data-v-eb6038b2] {    \r\n    top: 1.5rem;\n}\n.img-add[data-v-eb6038b2] {\r\n    width: 100%;\r\n    height: 100%;\r\n    position: relative;\r\n    top: -25px;\n}\n.delete-btn[data-v-eb6038b2] {\r\n    position: relative;\r\n    top: 5px;\r\n    left: 150px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.add-images:hover .delete-btn[data-v-eb6038b2],\r\n.add-video:hover .delete-btn[data-v-eb6038b2] {\r\n    opacity: 1;\r\n    transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-eb6038b2] {\r\n    color: var(--iq-primary);\n}\n.vd-btn[data-v-eb6038b2] {\r\n    position: absolute;\r\n    left: 90%;\n}\n.add-images[data-v-eb6038b2] {\r\n    width: 180px;\r\n    height: 180px;\r\n    margin: 10px;\r\n    float: left;\n}\n.classDisabled[data-v-eb6038b2] {\r\n    color: grey !important;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper-emoji[data-v-eb6038b2] {\r\n    justify-content: center;\n}\n.regular-input[data-v-eb6038b2] {\r\n    height: 100px;\r\n    padding: 0.25rem 1rem;\n}\n.emoji-invoker[data-v-eb6038b2] {    \r\n    top: 1.5rem;\n}\n.img-add[data-v-eb6038b2] {\r\n    width: 100%;\r\n    height: 100%;\r\n    position: relative;\r\n    top: -25px;\n}\n.delete-btn[data-v-eb6038b2] {\r\n    position: relative;\r\n    top: 5px;\r\n    left: 150px;\r\n    background: var(--iq-white);\r\n    height: 25px;\r\n    width: 25px;\r\n    text-align: center;\r\n    border: none;\r\n    border-radius: 5px;\r\n    opacity: 0;\r\n    z-index: 1;\n}\n.add-images:hover .delete-btn[data-v-eb6038b2],\r\n.add-video:hover .delete-btn[data-v-eb6038b2] {\r\n    opacity: 1;\r\n    transition: all 0.45s ease 0s;\n}\n.delete-btn > i[data-v-eb6038b2] {\r\n    color: var(--iq-primary);\n}\n.vd-btn[data-v-eb6038b2] {\r\n    position: absolute;\r\n    left: 90%;\n}\n.add-images[data-v-eb6038b2] {\r\n    width: 180px;\r\n    height: 180px;\r\n    margin: 10px;\r\n    float: left;\n}\n.classDisabled[data-v-eb6038b2] {\r\n    color: grey !important;\n}\n.cursor[data-v-eb6038b2]{\r\n    cursor: pointer;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22874,7 +22706,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da]{\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: none;\r\n    justify-content: center;\n}\n.stories[data-v-1c1601da]{\r\n    position: absolute;\r\n    height: 75vh;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 25%;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da] {\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: none;\r\n    justify-content: center;\n}\n.stories[data-v-1c1601da] {\r\n    position: absolute;\r\n    height: 75vh;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 25%;\n}\n.addstorie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100px;\r\n    height: 10px;\r\n    background: aliceblue;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -66839,7 +66671,7 @@ var render = function() {
                           [
                             _c("h6", [
                               _vm._v(
-                                "\n                                            You have no saved posts \n                                        "
+                                "\n                                            You have no saved posts\n                                        "
                               )
                             ]),
                             _vm._v(" "),
@@ -67379,21 +67211,41 @@ var render = function() {
               { key: image.id, staticClass: "col-md-6 col-lg-4 mb-3" },
               [
                 _c(
-                  "div",
+                  "router-link",
                   {
-                    staticClass: "user-images position-relative overflow-hidden"
+                    staticClass:
+                      "user-images position-relative overflow-hidden",
+                    attrs: {
+                      tag: "div",
+                      to: { name: "post", query: { postId: image.post_id } }
+                    }
                   },
                   [
-                    _c("a", { attrs: { href: "#" } }, [
-                      _c("img", {
-                        staticClass: "rounded",
-                        staticStyle: { width: "313px", height: "250px" },
-                        attrs: {
-                          src: "images/user/" + image.name,
-                          alt: "Responsive image"
-                        }
-                      })
-                    ]),
+                    image.type != "post"
+                      ? _c("a", { attrs: { href: "#" } }, [
+                          _c("img", {
+                            staticClass: "rounded",
+                            staticStyle: { width: "313px", height: "250px" },
+                            attrs: {
+                              src: "images/user/" + image.name,
+                              alt: "Responsive image"
+                            }
+                          })
+                        ])
+                      : _c("a", { attrs: { href: "#" } }, [
+                          _c("img", {
+                            staticClass: "rounded",
+                            staticStyle: { width: "313px", height: "250px" },
+                            attrs: {
+                              src:
+                                "images/posts/" +
+                                image.user_id +
+                                "/" +
+                                image.name,
+                              alt: "Responsive image"
+                            }
+                          })
+                        ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "image-hover-data" }, [
                       _c("div", { staticClass: "product-elements-icon" }, [
@@ -67462,10 +67314,29 @@ var render = function() {
                           ]
                         )
                       ])
-                    ])
-                  ]
+                    ]),
+                    _vm._v(" "),
+                    image.type == "post"
+                      ? _c(
+                          "router-link",
+                          {
+                            staticClass: "image-edit-btn",
+                            attrs: {
+                              tag: "a",
+                              to: {
+                                name: "postEdit",
+                                query: { postId: image.post_id }
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "ri-edit-2-fill" })]
+                        )
+                      : _vm._e()
+                  ],
+                  1
                 )
-              ]
+              ],
+              1
             )
           }),
           0
@@ -72310,7 +72181,7 @@ var render = function() {
                     "d-flex flex-wrap align-items-center list-inline m-0 p-0"
                 },
                 [
-                  _c("li", { staticClass: "col-md-12 mb-3" }, [
+                  _c("li", { staticClass: "col-md-12 mb-3 " }, [
                     _c("input", {
                       staticClass: "d-none",
                       attrs: {
@@ -72326,7 +72197,7 @@ var render = function() {
                     _vm._m(3)
                   ]),
                   _vm._v(" "),
-                  _c("li", { staticClass: "col-md-12 mb-3" }, [
+                  _c("li", { staticClass: "col-md-12 mb-3 " }, [
                     _c("input", {
                       staticClass: "d-none",
                       attrs: {
@@ -72341,11 +72212,12 @@ var render = function() {
                     _vm._m(4)
                   ]),
                   _vm._v(" "),
-                  _c("li", { staticClass: "col-md-12 mb-3" }, [
+                  _c("li", { staticClass: "col-md-12 mb-3 " }, [
                     _c(
                       "div",
                       {
-                        staticClass: "iq-bg-primary rounded p-2 pointer mr-3",
+                        staticClass:
+                          "iq-bg-primary rounded p-2 pointer mr-3 cursor",
                         on: {
                           click: function($event) {
                             return _vm.showFeelings()
@@ -72354,7 +72226,6 @@ var render = function() {
                       },
                       [
                         _c("img", {
-                          staticClass: "img-fluid",
                           staticStyle: { width: "24px" },
                           attrs: {
                             src:
@@ -72487,27 +72358,29 @@ var staticRenderFns = [
       },
       [
         _c("li", { staticClass: "iq-bg-primary rounded p-2 pointer mr-3" }, [
-          _c("a", { attrs: { href: "#" } }),
           _c("img", {
-            staticClass: "img-fluid",
-            attrs: { src: "images/small/07.png", alt: "icon" }
+            staticStyle: { width: "24px" },
+            attrs: {
+              src: "https://img.icons8.com/fluent/48/000000/image.png",
+              alt: "icon"
+            }
           }),
           _vm._v("\n                Photo\n            ")
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "iq-bg-primary rounded p-2 pointer mr-3" }, [
-          _c("a", { attrs: { href: "#" } }),
           _c("img", {
-            staticClass: "img-fluid",
-            attrs: { src: "images/small/08.png", alt: "icon" }
+            staticStyle: { width: "24px" },
+            attrs: {
+              src: "https://img.icons8.com/fluent/48/000000/video-call.png",
+              alt: "icon"
+            }
           }),
           _vm._v("\n                Video\n            ")
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "iq-bg-primary rounded p-2 pointer mr-3" }, [
-          _c("a", { attrs: { href: "#" } }),
           _c("img", {
-            staticClass: "img-fluid",
             staticStyle: { width: "24px" },
             attrs: {
               src: "https://img.icons8.com/dusk/64/000000/like.png",
@@ -72526,6 +72399,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
+        staticClass: "cursor",
         staticStyle: { position: "relative", width: "100%" },
         attrs: { for: "addImg" }
       },
@@ -72538,8 +72412,11 @@ var staticRenderFns = [
           },
           [
             _c("img", {
-              staticClass: "img-fluid",
-              attrs: { src: "images/small/07.png", alt: "icon" }
+              staticStyle: { width: "24px" },
+              attrs: {
+                src: "https://img.icons8.com/fluent/48/000000/image.png",
+                alt: "icon"
+              }
             }),
             _vm._v("\n                        Photo\n                    ")
           ]
@@ -72554,6 +72431,7 @@ var staticRenderFns = [
     return _c(
       "label",
       {
+        staticClass: "cursor",
         staticStyle: { position: "relative", width: "100%" },
         attrs: { for: "addvd" }
       },
@@ -72566,8 +72444,11 @@ var staticRenderFns = [
           },
           [
             _c("img", {
-              staticClass: "img-fluid",
-              attrs: { src: "images/small/08.png", alt: "icon" }
+              staticStyle: { width: "24px" },
+              attrs: {
+                src: "https://img.icons8.com/fluent/48/000000/video-call.png",
+                alt: "icon"
+              }
             }),
             _vm._v("\n                        Video\n                    ")
           ]
@@ -73390,6 +73271,26 @@ var render = function() {
   return _vm.post
     ? _c("div", { staticClass: "iq-card iq-card-block iq-card-stretch" }, [
         _c("div", { staticClass: "iq-card-body" }, [
+          _vm.isPost
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "iq-card-header d-flex justify-content-between mb-4"
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "iq-header-title",
+                      on: { click: _vm.comeBack }
+                    },
+                    [_vm._m(0)]
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "user-post-data" }, [
             _c("div", { staticClass: "d-flex flex-wrap" }, [
               _c("div", { staticClass: "media-support-user-img mr-3" }, [
@@ -73670,21 +73571,39 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "total-like-block ml-2 mr-3" }, [
-                        _c("span", { class: { save: _vm.post.postComment } }, [
-                          _c("i", {
-                            class: {
-                              "ri-discuss-line": !_vm.post.postComment,
-                              "ri-discuss-fill": _vm.post.postComment
-                            }
-                          }),
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.post.numbers.comments) +
-                              "\n                        "
+                      _c(
+                        "div",
+                        { staticClass: "total-like-block ml-2 mr-3" },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              class: { save: _vm.post.postComment },
+                              attrs: {
+                                tag: "span",
+                                to: {
+                                  name: "post",
+                                  query: { postId: _vm.post.id }
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                class: {
+                                  "ri-discuss-line": !_vm.post.postComment,
+                                  "ri-discuss-fill": _vm.post.postComment
+                                }
+                              }),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.post.numbers.comments) +
+                                  "\n                        "
+                              )
+                            ]
                           )
-                        ])
-                      ]),
+                        ],
+                        1
+                      ),
                       _vm._v(" "),
                       _c("div", { staticClass: "total-like-block ml-2 mr-3" }, [
                         _c("span", { on: { click: _vm.sharePost } }, [
@@ -73750,7 +73669,24 @@ var render = function() {
       ])
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h6",
+      { staticClass: "card-title", staticStyle: { cursor: "pointer" } },
+      [
+        _c("i", {
+          staticClass: "ri-arrow-left-fill",
+          staticStyle: { "font-size": "25px" }
+        }),
+        _vm._v("\n                    Back to previous page\n                ")
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -75114,10 +75050,17 @@ var render = function() {
                           { key: index, staticClass: "col-md-6 col-lg-3 mb-3" },
                           [
                             _c(
-                              "div",
+                              "router-link",
                               {
                                 staticClass:
-                                  "user-images position-relative overflow-hidden"
+                                  "user-images position-relative overflow-hidden",
+                                attrs: {
+                                  tag: "div",
+                                  to: {
+                                    name: "post",
+                                    query: { postId: image.post_id }
+                                  }
+                                }
                               },
                               [
                                 image.type != "post"
@@ -75231,10 +75174,31 @@ var render = function() {
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(0, true)
-                              ]
+                                image.type == "post" && image.user_id == _vm.id
+                                  ? _c(
+                                      "router-link",
+                                      {
+                                        staticClass: "image-edit-btn",
+                                        attrs: {
+                                          tag: "a",
+                                          to: {
+                                            name: "postEdit",
+                                            query: { postId: image.post_id }
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "ri-edit-2-fill"
+                                        })
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ],
+                              1
                             )
-                          ]
+                          ],
+                          1
                         )
                       }),
                       0
@@ -75249,27 +75213,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "image-edit-btn",
-        attrs: {
-          href: "#",
-          "data-toggle": "tooltip",
-          "data-placement": "top",
-          title: "",
-          "data-original-title": "Edit or Remove"
-        }
-      },
-      [_c("i", { staticClass: "ri-edit-2-fill" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -76480,48 +76424,49 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "iq-card" }, [
+  return _c("div", { staticClass: "iq-card storiesSection" }, [
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "iq-card-body" }, [
-      _c(
-        "ul",
-        { staticClass: "media-story m-0 p-0" },
-        [
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._l(_vm.storys, function(story) {
-            return _c(
-              "li",
-              {
-                key: story.id,
-                staticClass: "d-flex mb-4 align-items-center ",
-                class: { active: story.isActive }
-              },
-              [
-                _c("img", {
-                  staticClass: "rounded-circle img-fluid",
-                  attrs: { src: story.img, alt: "story-img" }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "stories-data ml-3" }, [
-                  _c("h5", [_vm._v(_vm._s(story.h5))]),
+    _c(
+      "div",
+      {
+        staticClass: "iq-card-body",
+        staticStyle: { height: "400px", overflow: "auto" }
+      },
+      [
+        _c(
+          "ul",
+          { staticClass: "media-story m-0 p-0" },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._l(_vm.storys, function(story) {
+              return _c(
+                "li",
+                {
+                  key: story.id,
+                  staticClass: "d-flex mb-4 align-items-center ",
+                  class: { active: story.isActive }
+                },
+                [
+                  _c("img", {
+                    staticClass: "rounded-circle img-fluid",
+                    attrs: { src: story.img, alt: "story-img" }
+                  }),
                   _vm._v(" "),
-                  _c("p", { staticClass: "mb-0" }, [_vm._v(_vm._s(story.p))])
-                ])
-              ]
-            )
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        { staticClass: "btn btn-primary d-block mt-3", attrs: { href: "#" } },
-        [_vm._v("Show More")]
-      )
-    ]),
+                  _c("div", { staticClass: "stories-data ml-3" }, [
+                    _c("h5", [_vm._v(_vm._s(story.h5))]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "mb-0" }, [_vm._v(_vm._s(story.p))])
+                  ])
+                ]
+              )
+            })
+          ],
+          2
+        )
+      ]
+    ),
     _vm._v(" "),
     _vm._m(2)
   ])
@@ -76545,13 +76490,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "d-flex mb-4 align-items-center" }, [
-      _c("i", { staticClass: "ri-add-line font-size-18" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "stories-data ml-3" }, [
-        _c("h5", [_vm._v("Creat Your Story")]),
+    return _c("li", { staticClass: "d-flex flex-column" }, [
+      _c("div", { staticClass: "d-flex mb-4 align-items-center" }, [
+        _c("i", { staticClass: " imgStory ri-add-line font-size-18" }),
         _vm._v(" "),
-        _c("p", { staticClass: "mb-0" }, [_vm._v("time to story")])
+        _c("div", { staticClass: "stories-data ml-3" }, [
+          _c("h5", [_vm._v("Creat Your Story")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "mb-0" }, [_vm._v("time to story")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-flex mb-4 align-items-center" }, [
+        _c("i", { staticClass: " imgStory ri-add-line font-size-18" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "stories-data ml-3" }, [
+          _c("h5", [_vm._v("Creat Your Story")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "mb-0" }, [_vm._v("time to story")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-flex mb-4 align-items-center" }, [
+        _c("i", { staticClass: " imgStory ri-add-line font-size-18" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "stories-data ml-3" }, [
+          _c("h5", [_vm._v("Creat Your Story")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "mb-0" }, [_vm._v("time to story")])
+        ])
       ])
     ])
   },

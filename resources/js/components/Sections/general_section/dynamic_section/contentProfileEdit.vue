@@ -653,7 +653,6 @@ export default {
     },
     mounted() {
         axios.get("/profile").then(res => {
-            console.log(res.data);
             this.user = res.data;
             this.name = this.user.name;
             this.email = this.user.email;
@@ -706,10 +705,8 @@ export default {
             axios
                 .post("/profile-update", data)
                 .then(res => {
-                    console.log(res);
                     EventBus.$emit("user-update", res.data);
                     this.$router.back();
-                    //this.$router.push({ name: "profile" });
                 })
                 .catch(err => {
                     var error = JSON.parse(err.request.response);
@@ -775,13 +772,11 @@ export default {
             const file = e.target.files[0];
             this.profile = URL.createObjectURL(file);
             this.profile_img = file;
-            console.log(this.profile_img);
         },
         onCoverChange(e) {
             const file = e.target.files[0];
             this.cover = URL.createObjectURL(file);
             this.cover_img = file;
-            console.log(this.cover_img);
         },
         reset() {
             axios
@@ -791,11 +786,10 @@ export default {
                     password_confirmation: this.password_confirmation
                 })
                 .then(res => {
-                    // console.log(res.data);
+                    //
                     if (res.data == "wrong password") {
                         this.old_err = "Current password invalid";
                     } else {
-                        //console.log("done");
                         this.$router.push({ name: "signIn" });
                     }
                 })

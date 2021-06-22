@@ -112,26 +112,16 @@ export default {
                     video: "null",
                     time: time
                 })
-                .then(res => {
-                    console.log(res);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
 
             await axios
                 .post("/SharePost", {
                     post_id: this.post_id
                 })
                 .then(res => {
-                    console.log(res);
                     e.target.disabled = true;
                     e.target.innerHTML =
                         '<i class="ri-check-line mr-1 text-white font-size-16" ></i>';
                 })
-                .catch(err => {
-                    console.log(err);
-                });
         },
         postID(data) {
             this.post_id = data;
@@ -152,7 +142,7 @@ export default {
                     id: null
                 })
                 .then(res => {
-                    //console.log(res.data);
+                    //
                     this.friends = res.data;
                 });
         },
@@ -163,7 +153,6 @@ export default {
                         value: this.value
                     })
                     .then(response => {
-                        //console.log(response.data);
                         this.friends = response.data;
                     });
             } else {

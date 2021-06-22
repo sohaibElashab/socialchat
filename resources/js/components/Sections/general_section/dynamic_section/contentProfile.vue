@@ -555,7 +555,6 @@ export default {
                     id: this.$route.query.user
                 })
                 .then(res => {
-                    console.log(res.data);
                     this.user = res.data;
                     if (this.user.message != undefined) {
                         this.message = this.user.message;
@@ -565,26 +564,14 @@ export default {
                     Echo.private(`cancelRequest.${this.user.id}`).listen(
                         "CancelRequestEvent",
                         e => {
-                            console.log(e.user.name);
                             if (this.user.status == "friend") {
                                 this.message = "";
                             }
                         }
                     );
-
-                    /*  Echo.private(`sendRequest.${this.user.id}`).listen(
-                        "SendRequestEvent",
-                        e => {
-                            // console.log(e.user);
-                            //console.log("accept");
-                            this.message = "accept";
-                        }
-                    ); */
-
                     Echo.private(`acceptRequest.${this.user.id}`).listen(
                         "AcceptRequestEvent",
                         e => {
-                            //console.log(e.user.name);
                             if (this.user.status == "friend") {
                                 this.message = "friend";
                             }
@@ -598,9 +585,6 @@ export default {
                 Echo.private(`cancelRequest.${this.OnlineUser.id}`).listen(
                     "CancelRequestEvent",
                     e => {
-                        //console.log(e.user.name);
-                        /*  if (this.user.status == "friend") {
-                            } */
                         this.message = "";
                     }
                 );
@@ -617,9 +601,6 @@ export default {
                 Echo.private(`acceptRequest.${this.OnlineUser.id}`).listen(
                     "AcceptRequestEvent",
                     e => {
-                        //console.log(e.user.name);
-                        /*    if (this.user.status == "friend") {
-                            } */
                         this.message = "friend";
                     }
                 );
@@ -631,9 +612,7 @@ export default {
                     id: this.user.id
                 })
                 .then(res => {
-                    console.log(res.data);
                     this.message = "cancel";
-                    //console.log(this.message);
                 });
         },
         DeleteRequest() {
@@ -642,7 +621,6 @@ export default {
                     id: this.user.id
                 })
                 .then(res => {
-                    console.log(res);
                     this.message = "";
                 });
         },
@@ -652,10 +630,7 @@ export default {
                     id: this.user.id
                 })
                 .then(res => {
-                    console.log(res);
                     this.message = "friend";
-                    /*    var child = this.$refs.friends;
-                    child.LoadFriends(); */
                 });
         },
         RemoveFriend() {
@@ -664,7 +639,6 @@ export default {
                     id: this.user.id
                 })
                 .then(res => {
-                    console.log(res);
                     this.message = "";
                     var child = this.$refs.friends;
                     child.LoadFriends();
@@ -689,18 +663,12 @@ export default {
                     id: this.$route.query.user
                 })
                 .then(res => {
-                    console.log(res.data);
                     this.FriendLists = res.data;
                 });
         }
     },
     watch: {
         "$route.query.user": function() {
-            /*      if (this.UserId != null) {
-                sessionStorage.clear();
-                sessionStorage.setItem("id", this.user.id);
-                // console.log("profile content watch");
-            } */
             this.load();
             this.friendLoad();
             this.imagesLoad();

@@ -55,9 +55,7 @@ export default {
     },
     mounted() {
         axios.get("/GetPosts").then(res => {
-            console.log("this.posts");
             this.posts = res.data;
-            console.log(res.data);
         });
 
         axios
@@ -70,7 +68,6 @@ export default {
 
         Echo.private(`newPost`).listen("NewPostEvent", e => {
             if (this.checkFriend(e.post.user_id) != null) {
-                console.log(e.post.user_id);
                 this.NewPosts.unshift(e.post);
                 document.getElementById("newP").style.display = "initial";
             }
@@ -93,24 +90,13 @@ export default {
             var p = null;
 
             this.friends.forEach(friend => {
-                console.log(friend);
                 if (friend.id == id) {
                     p = friend;
                     return true;
                 }
             });
             return p;
-        },
-        // addfile(data){
-        //     console.log(" add data");
-        //     console.log(data);
-        //     this.posts.forEach(element => {
-        //         if(element.id == data.id){
-        //             element.fileUrl = data.url;
-        //             console.log(element);
-        //         }
-        //     });
-        // }
+        }
     }
 };
 </script>

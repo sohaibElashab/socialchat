@@ -117,7 +117,6 @@ export default {
         logout(e) {
             e.preventDefault();
             axios.post("/LogoutUser").then(res => {
-                console.log(res);
                 this.$router.push({ name: "signIn" });
             });
         }
@@ -126,7 +125,6 @@ export default {
         this.UrlHref = "/" + window.location.href.split("/")[4];
 
         axios.get("/profile").then(res => {
-            console.log(res.data);
             this.user = res.data;
             this.menus[2].href = "/profile?user=" + this.user.id;
         });

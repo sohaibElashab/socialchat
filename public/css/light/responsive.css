@@ -80,6 +80,9 @@ NOTE: This file contains the styling for responsive Template.
 		.sign-in-from { padding: 0 30px; }
 		.sign-in-detail { padding: 100px 50px; }
 	}
+	@media(min-width:1000px) {
+		.storiesSection{ position: fixed; width: 28%;}
+	}
 	@media (min-width: 992px) {
 		.blog-list .blog-description {
 		    position: relative;

@@ -82,7 +82,7 @@ export default {
     },
     mounted() {
         axios.get("/profile").then(res => {
-            //console.log(res.data);
+            //
             this.user = res.data;
         });
     },
@@ -96,7 +96,6 @@ export default {
                         value: this.value
                     })
                     .then(response => {
-                        console.log(response.data);
                         this.results = response.data;
                     });
             }
@@ -113,15 +112,11 @@ export default {
     },
     watch: {
         show: function() {
-            console.log("showSearch");
             var search = document.getElementsByClassName("iq-search-bar");
-            // show ? search.style.display = "flex" : search.style.display = "none" ;
             if (this.show) {
                 search[0].style.display = "flex";
-                console.log("fles");
             } else {
                 search[0].style.display = "none";
-                console.log("none");
             }
         }
     }

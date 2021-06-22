@@ -122,7 +122,7 @@ class CommentController extends Controller
         }
         
         $likes = Like::where('comment_id',$request->id)->count();
-        broadcast(new LikeCommentEvent($request->id , $request->postId , $request->etat));
+        broadcast(new LikeCommentEvent($request->id , $request->postId , $request->etat)); 
         return response()->json($likes); 
     }
     

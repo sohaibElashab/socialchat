@@ -17,7 +17,10 @@ use App\Events\OfflineFriendEvent;
 use App\Models\Online; 
 use App\Models\Post;
 use App\Events\NewPostEvent;
- 
+use App\Models\Comment;
+use App\Models\like;
+use App\Models\PostShare;
+
 class ProfilController extends Controller
 { 
     
@@ -286,43 +289,34 @@ class ProfilController extends Controller
         return response()->json([$pp,$em]);
     }
 
+    public function thisFiles($Paths)
+    {
+        foreach ($Paths as $path) {
+            $path->NbrJaime = like::where('post_id',$path->post_id)->count();
+            $path->NbrComment = Comment::where('post_id',$path->post_id)->count();
+            $path->NbrPartage = PostShare::where('post_id',$path->post_id)->count();
+        }
+    }
     public function GetImages()
     {
-        
         $userId = auth()->user()->id;
         $Paths = Image::where('user_id',$userId)->get();
-        foreach ($Paths as $key => $path) {
-            $path->NbrJaime = "30";
-            $path->NbrComment = "40";
-            $path->NbrPartage = "50";
-            
-        }
+        $this->thisFiles($Paths);
         return response()->json($Paths); 
     }
     public function GetVideos()
     {
-        
         $userId = auth()->user()->id;
         $Paths = Video::where('user_id',$userId)->get();
-        foreach ($Paths as $key => $path) {
-            $path->NbrJaime = "30";
-            $path->NbrComment = "40";
-            $path->NbrPartage = "50"; 
-            
-        }
+        $this->thisFiles($Paths);
         return response()->json($Paths); 
     }
 
-    public function GetImagesProfile(Request $request)
+    public function GetImagesProfile(Request $request) 
     {
-        
         $userId = $request->id;
         $Paths = Image::where('user_id',$userId)->get();
-        foreach ($Paths as $key => $path) {
-            $path->NbrJaime = "30";
-            $path->NbrComment = "40";
-            $path->NbrPartage = "50";
-        }
+        $this->thisFiles($Paths);
         return response()->json($Paths); 
     }
 

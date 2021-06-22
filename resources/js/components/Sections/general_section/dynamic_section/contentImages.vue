@@ -3,12 +3,21 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-lg-4 mb-3" v-for="image in images" :key="image.id">
-                            <div
+                            <router-link 
+                                tag="div" :to="{ name: 'post', query: { postId: image.post_id } }" 
                                 class="user-images position-relative overflow-hidden"
                             >
-                                <a href="#">
+                                <a href="#" v-if="image.type != 'post'">
                                     <img
                                         :src="`images/user/${image.name}`"
+                                        class="rounded"
+                                        alt="Responsive image"
+                                        style="width: 313px ; height: 250px;"
+                                    />
+                                </a>
+                                <a href="#" v-else>
+                                    <img
+                                        :src="`images/posts/${image.user_id}/${image.name}`"
                                         class="rounded"
                                         alt="Responsive image"
                                         style="width: 313px ; height: 250px;"
@@ -55,7 +64,14 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                                <router-link
+                                    v-if="image.type == 'post'"
+                                    tag="a"
+                                    :to="{ name: 'postEdit', query: { postId: image.post_id } }"
+                                    class="image-edit-btn"
+                                    ><i class="ri-edit-2-fill"></i
+                                ></router-link> 
+                            </router-link>
                         </div>
                     </div>
                 </div>

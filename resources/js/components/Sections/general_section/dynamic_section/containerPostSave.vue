@@ -20,9 +20,14 @@
                                             class="d-flex flex-wrap justify-content-between align-items-start"
                                         >
                                             <h6>
-                                                You have no saved posts 
+                                                You have no saved posts
                                             </h6>
-                                            <router-link to="/" tag="h6" style="cursor: pointer;">Back to home</router-link>
+                                            <router-link
+                                                to="/"
+                                                tag="h6"
+                                                style="cursor: pointer;"
+                                                >Back to home</router-link
+                                            >
                                         </div>
                                     </div>
                                 </div>
@@ -53,9 +58,7 @@ export default {
         },
         getsave() {
             axios.get("/posts-saved").then(res => {
-                console.log("this.posts");
                 this.posts = res.data;
-                console.log(res.data);
             });
         }
     }

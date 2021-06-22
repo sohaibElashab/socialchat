@@ -46,6 +46,10 @@ Broadcast::channel('newPost', function () {
 	return Auth::check(); 
 }); 
 
+Broadcast::channel('likePost.{id}', function () {
+	return Auth::check(); 
+}); 
+
 Broadcast::channel('likeComment.{id}', function () {
 	return Auth::check(); 
 }); 

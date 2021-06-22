@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\likePostEvent;
 use Illuminate\Http\Request;
 use DateTime;
 use App\Http\Controllers\format;
@@ -279,6 +280,7 @@ class PostController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
         }
+        broadcast(new likePostEvent($request->id , $request->etat));
         return response()->json($this->get($request->id)); 
     }
 
@@ -423,6 +425,10 @@ class PostController extends Controller
             unlink('videos/posts/'.auth()->user()->id.'/'.$video[0]->name);
             Video::where('post_id',$request->id)->delete();
         }
+        Like::where('post_id',$request->id)->delete();
+        Comment::where('post_id',$request->id)->delete();
+        PostSave::where('post_id',$request->id)->delete();
+        PostShare::where('post_id',$request->id)->delete();
         Post::where('id',$request->id)->delete();
     }
 }

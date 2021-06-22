@@ -160,14 +160,12 @@ export default {
     },
     mounted() {
         axios.get("/profile").then(res => {
-            console.log(res.data);
             this.user = res.data;
             this.img = this.user.profileimg.name;
             this.isMounted = true;
             Echo.private(`sendRequest.${this.user.id}`).listen(
                 "SendRequestEvent",
                 e => {
-                    console.log(e.user);
                     this.allReqs.unshift(e.user);
                     this.friendRqs = this.allReqs.slice(0, 4);
                 }
@@ -175,8 +173,6 @@ export default {
             Echo.private(`cancelRequest.${this.user.id}`).listen(
                 "CancelRequestEvent",
                 e => {
-                    console.log(e.user);
-                    // console.log(this.allReqs.indexOf(e.user));
                     this.allReqs.forEach(req => {
                         if (req.id === e.user.id) {
                             var index = this.allReqs.indexOf(req);
@@ -189,8 +185,6 @@ export default {
             Echo.private(`acceptRequest.${this.user.id}`).listen(
                 "AcceptRequestEvent",
                 e => {
-                    console.log(e.user);
-                    // console.log(this.allReqs.indexOf(e.user));
                     this.allReqs.forEach(req => {
                         if (req.id === e.user.id) {
                             var index = this.allReqs.indexOf(req);
@@ -202,7 +196,6 @@ export default {
             );
         });
         axios.get("/LoadRequests").then(res => {
-            console.log(res.data);
             this.allReqs = res.data;
             this.friendRqs = this.allReqs.slice(0, 4);
         });
@@ -214,9 +207,7 @@ export default {
                     id: id
                 })
                 .then(res => {
-                    console.log(res);
                     axios.get("/LoadRequests").then(res => {
-                        console.log(res.data);
                         this.allReqs = res.data;
                         this.friendRqs = this.allReqs.slice(0, 4);
                         this.show = true;
@@ -229,9 +220,7 @@ export default {
                     id: id
                 })
                 .then(res => {
-                    console.log(res);
                     axios.get("/LoadRequests").then(res => {
-                        console.log(res.data);
                         this.allReqs = res.data;
                         this.friendRqs = this.allReqs.slice(0, 4);
                         this.show = true;

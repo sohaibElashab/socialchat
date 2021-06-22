@@ -1,6 +1,14 @@
 <template>
     <div class="iq-card iq-card-block iq-card-stretch" v-if="post">
         <div class="iq-card-body">
+            <div class="iq-card-header d-flex justify-content-between mb-4" v-if="isPost">
+                <div class="iq-header-title" @click="comeBack">
+                    <h6 class="card-title" style="cursor: pointer;">
+                        <i class="ri-arrow-left-fill" style=" font-size: 25px; "></i>
+                        Back to previous page
+                    </h6>
+                </div>
+            </div>
             <div class="user-post-data">
                 <div class="d-flex flex-wrap">
                     <div class="media-support-user-img mr-3">
@@ -150,7 +158,7 @@
                             </span>
                         </div>
                         <div class="total-like-block ml-2 mr-3">
-                            <span :class="{ save: post.postComment }">
+                            <router-link tag="span" :to="{ name: 'post', query: { postId: post.id } }" :class="{ save: post.postComment }">
                                 <i
                                     :class="{
                                         'ri-discuss-line': !post.postComment,
@@ -158,7 +166,7 @@
                                     }"
                                 ></i>
                                 {{ post.numbers.comments }}
-                            </span>
+                            </router-link>
                         </div>
                         <div class="total-like-block ml-2 mr-3">
                             <span @click="sharePost">
@@ -235,6 +243,14 @@ export default {
                 this.share += 1;
             }
         );
+        Echo.private(`likePost.${this.post.id}`).listen(
+            'likePostEvent',
+            e => {
+                if(e.id == this.post.id){
+                    e.etat ? --this.post.numbers.likes : ++this.post.numbers.likes ; 
+                }
+            }
+        )
     },
     methods: {
         sharePost() {
@@ -249,12 +265,8 @@ export default {
                     etat: this.post.postSave
                 })
                 .then(res => {
-                    console.log(res.data);
                     this.$emit("unsavePost");
                 })
-                .catch(err => {
-                    console.log(err);
-                });
             if (this.$route.name != "Saved") {
                 this.post.postSave = !this.post.postSave;
             }
@@ -268,13 +280,18 @@ export default {
                 .then(res => {
                     this.post.numbers.likes = res.data.likes;
                 })
-                .catch(err => {
-                    console.log(err);
-                });
             this.post.postLike = !this.post.postLike;
         },
         NumbersComment(etat){
             etat ? ++this.post.numbers.comments : --this.post.numbers.comments ;
+        },
+        comeBack() {
+            this.$router.back();
+        },
+    },
+    computed: {
+        isPost() {
+            return this.$route.name === 'post';
         }
     }
 };

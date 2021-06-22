@@ -37,30 +37,23 @@
                 class="post-opt-block d-flex align-items-center list-inline m-0 p-0"
             >
                 <li class="iq-bg-primary rounded p-2 pointer mr-3">
-                    <a href="#"></a
-                    ><img
-                        src="images/small/07.png"
+                    <img src="https://img.icons8.com/fluent/48/000000/image.png"
                         alt="icon"
-                        class="img-fluid"
-                    />
+                        style="width: 24px;"/>
                     Photo
                 </li>
                 <li class="iq-bg-primary rounded p-2 pointer mr-3">
-                    <a href="#"></a
-                    ><img
-                        src="images/small/08.png"
+                    <img src="https://img.icons8.com/fluent/48/000000/video-call.png"
                         alt="icon"
-                        class="img-fluid"
+                        style="width: 24px;"
                     />
                     Video
                 </li>
                 <li class="iq-bg-primary rounded p-2 pointer mr-3">
-                    <a href="#"></a
-                    ><img
+                    <img
                         src="https://img.icons8.com/dusk/64/000000/like.png"
                         style="width: 24px;"
                         alt="icon"
-                        class="img-fluid"
                     />
                     Feeling
                 </li>
@@ -206,7 +199,7 @@
                 <hr />
             </div>
             <ul class="d-flex flex-wrap align-items-center list-inline m-0 p-0">
-                <li class="col-md-12 mb-3">
+                <li class="col-md-12 mb-3 ">
                     <input
                         type="file"
                         name="addImg"
@@ -216,21 +209,19 @@
                         accept="image/*"
                         class="d-none"
                     />
-                    <label for="addImg" style="position: relative;width: 100%;">
+                    <label class="cursor" for="addImg" style="position: relative;width: 100%;">
                         <div
                             id="div-img"
                             class="iq-bg-primary rounded p-2 pointer mr-3"
                         >
-                            <img
-                                src="images/small/07.png"
-                                alt="icon"
-                                class="img-fluid"
-                            />
+                        <img src="https://img.icons8.com/fluent/48/000000/image.png"
+                            alt="icon"
+                            style="width: 24px;"/>
                             Photo
                         </div>
                     </label>
                 </li>
-                <li class="col-md-12 mb-3">
+                <li class="col-md-12 mb-3 ">
                     <input
                         type="file"
                         name="addvd"
@@ -239,30 +230,28 @@
                         accept="video/*"
                         class="d-none"
                     />
-                    <label for="addvd" style="position: relative;width: 100%;">
+                    <label class="cursor" for="addvd" style="position: relative;width: 100%;">
                         <div
                             id="div-vd"
                             class="iq-bg-primary rounded p-2 pointer mr-3"
                         >
-                            <img
-                                src="images/small/08.png"
+                            <img src="https://img.icons8.com/fluent/48/000000/video-call.png"
                                 alt="icon"
-                                class="img-fluid"
+                                style="width: 24px;"
                             />
                             Video
                         </div>
                     </label>
                 </li>
-                <li class="col-md-12 mb-3">
+                <li class="col-md-12 mb-3 ">
                     <div
-                        class="iq-bg-primary rounded p-2 pointer mr-3"
+                        class="iq-bg-primary rounded p-2 pointer mr-3 cursor"
                         @click="showFeelings()"
                     >
                         <img
                             src="https://img.icons8.com/dusk/64/000000/like.png"
                             style="width: 24px;"
                             alt="icon"
-                            class="img-fluid"
                         />
                         Feeling
                     </div>
@@ -408,7 +397,6 @@ export default {
             this.showFeeling = !this.showFeeling;
         },
         removeFile(path) {
-            //console.log("removeFile");
             if (this.postImgs.length > 0) {
                 var newPostImgs = [];
                 for (let index = 0; index < this.postImgs.length; index++) {
@@ -488,7 +476,6 @@ export default {
                 axios
                     .post("/create-post", data)
                     .then(res => {
-                        // console.log(res);
                         this.myText = "";
                         this.UserStatu = "";
                         this.postImgs = [];
@@ -497,13 +484,7 @@ export default {
                         this.disabled();
                         this.$emit("newPost", res.data);
                         this.close();
-
-                        // console.log(res.config.data)
                     })
-                    .catch(err => {
-                        console.log(err);
-                    });
-                // document.getElementById("post-modal").style.display = 'none';
             }
         },
         open() {
@@ -584,5 +565,8 @@ export default {
 }
 .classDisabled {
     color: grey !important;
+}
+.cursor{
+    cursor: pointer;
 }
 </style>

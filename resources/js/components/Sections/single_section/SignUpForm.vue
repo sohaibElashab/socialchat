@@ -166,7 +166,6 @@ export default {
     methods: {
         register(e) {
             e.preventDefault();
-            console.log(this.name + "_" + this.email + "_" + this.password);
             axios
                 .post("/BeforeRegister", {
                     name: this.name,
@@ -178,7 +177,6 @@ export default {
                     gender: this.gender
                 })
                 .then(response => {
-                    console.log(response.status + " " + response.statusText);
                     this.$router.push({ name: "verifyEmail" });
                 })
                 .catch(err => {
@@ -202,7 +200,6 @@ export default {
                     this.gender_err = error.errors.gender
                         ? error.errors.gender[0]
                         : "";
-                    //console.log(error.errors);
                 });
         }
     }

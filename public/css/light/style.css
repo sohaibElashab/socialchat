@@ -226,7 +226,7 @@ a:hover {
     border-radius: 100%;
     z-index: 1;
     border: 2px solid var(--iq-white);
-    background-color: var(--iq-body-text);
+    background-color: gray;
     height: 16px;
     width: 16px;
     right: 0;
@@ -2817,6 +2817,7 @@ Footer
     -ms-transition: all 0.3s ease-out 0s;
     -o-transition: all 0.3s ease-out 0s;
     transition: all 0.3s ease-out 0s;
+    position: inherit;
 }
 .iq-footer ul li a {
     color: var(--iq-body-text);
@@ -4041,7 +4042,7 @@ ul.profile-img-gallary {
     height: 50px;
 }
 ul.media-story li > img,
-ul.media-story li > i {
+.imgStory {
     height: 60px;
     width: 60px;
     line-height: 60px;

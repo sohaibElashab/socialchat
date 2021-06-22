@@ -20,9 +20,7 @@ export default {
     mounted() {
         axios.post("/GetPost" , { id: this.$route.query.postId })
             .then(res => {
-                console.log("this.post");
                 this.post = res.data;
-                console.log(res.data);
         });
     },
 };
