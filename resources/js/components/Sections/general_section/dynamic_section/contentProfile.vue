@@ -536,6 +536,7 @@ export default {
     },
     methods: {
         newPost(data) {
+            this.user.PostCount += 1;
             this.posts.unshift(data);
             window.scrollTo({ top: 0, behavior: "smooth" });
             this.imagesLoad();

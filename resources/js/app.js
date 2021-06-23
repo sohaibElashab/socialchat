@@ -44,7 +44,7 @@ const routes = [
         path: "/profile",
         name: "profile",
         component: Profile,
-        props: true 
+        props: true
     },
     {
         path: "/signIn",
@@ -120,6 +120,16 @@ const routes = [
 ];
 
 const router = new VueRouter({ routes });
+
+// import CxltToastr from '../dist/js/cxlt-vue2-toastr'
+import CxltToastr from "../../public/js/cxlt-vue2-toastr";
+// import '../dist/css/cxlt-vue2-toastr.css'
+import "../../public/css/cxlt-vue2-toastr.css";
+
+Vue.use(CxltToastr, {
+    position: "top right",
+    timeOut: "5000"
+});
 
 const app = new Vue({
     router

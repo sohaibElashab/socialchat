@@ -47,6 +47,7 @@ Route::post('/AcceptRequest', [App\Http\Controllers\FriendController::class, 'Ac
 Route::post('/RemoveFriend', [App\Http\Controllers\FriendController::class, 'RemoveFriend']);
 Route::post('/LoadFriends', [App\Http\Controllers\FriendController::class, 'LoadFriends']);
 Route::post('/FriendsInCommon', [App\Http\Controllers\FriendController::class, 'FriendsInCommon']);
+Route::get('/YouMayKnow', [App\Http\Controllers\FriendController::class, 'YouMayKnow']);
 
 //PostController
 Route::get('/GetPosts', [App\Http\Controllers\PostController::class, 'index']);
@@ -58,6 +59,7 @@ Route::post('/UserPosts', [App\Http\Controllers\PostController::class, 'UserPost
 Route::get('/posts-saved', [App\Http\Controllers\PostController::class, 'saved']); 
 Route::post('/save-post', [App\Http\Controllers\PostController::class, 'save']);
 Route::post('/like-post', [App\Http\Controllers\PostController::class, 'like']);
+Route::post('/SinglePost', [App\Http\Controllers\PostController::class, 'SinglePost']);
 
 //ChatController
 Route::get('/ChatList', [App\Http\Controllers\ChatController::class, 'ChatList']); 
@@ -74,3 +76,7 @@ Route::post('/get-comments', [App\Http\Controllers\CommentController::class, 'sh
 Route::post('/like-comment', [App\Http\Controllers\CommentController::class, 'like']); 
 Route::post('/delete-comment', [App\Http\Controllers\CommentController::class, 'destroy']); 
 Route::post('/SharePost', [App\Http\Controllers\CommentController::class, 'SharePost']); 
+
+//NotificationController
+Route::get('/LoadNotif', [App\Http\Controllers\NotificationController::class, 'LoadNotif']); 
+Route::post('/DeleteNotif', [App\Http\Controllers\NotificationController::class, 'DeleteNotif']); 

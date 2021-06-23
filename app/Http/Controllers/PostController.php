@@ -20,11 +20,25 @@ use Illuminate\Support\Arr;
 use PhpParser\Node\Expr\Cast\Array_;
 use App\Events\NewPostEvent;
 use App\Models\Friend;
+use App\Events\NotificationEvent;
 
 use function PHPUnit\Framework\isEmpty;
 
 class PostController extends Controller
 {
+    public function SinglePost(Request $request)
+    {
+        $post = Post::where('id',$request->post)->first();
+        
+        $post = $this->postget($post);
+        $comments = Comment::where('post_id' , $post->id)->get();
+        foreach ($comments as $comment) {
+            $comment = $this->commentget($comment);
+        }
+        $post->comments = $comments;
+        return response()->json($post);
+    }
+
     public function postget($post)
     {        
         $images = Image::get();
@@ -110,11 +124,47 @@ class PostController extends Controller
 
         return $post;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */ 
+    
+    public function commentget($comment)
+    {        
+        date_default_timezone_set('Africa/Casablanca');        
+        $user = User::where('id',$comment->user_id)->first();
+        $comment->userId = $user->id;
+        $comment->userImg = Image::where("user_id" , $user->id)->where("type" , "profile")->first('name');
+        $comment->userName = $user->name;
+        $comment->commentLike = false;
+        $comment->likes = Like::where('comment_id',$comment->id)->count();
+
+        $datetime1 = new DateTime($comment->time);
+        $datetime2 = new DateTime(date("Y-m-d H:i:s"));
+        $interval = $datetime1->diff($datetime2);
+        if((int)$interval->format('%y') > 0)
+            $comment->time = $interval->format('%y y');
+        elseif((int)$interval->format('%m') > 0)
+            $comment->time = $interval->format('%m m');
+        elseif((int)$interval->format('%d') > 0)
+            $comment->time = $interval->format('%d d');
+        elseif((int)$interval->format('%h') > 0)
+            $comment->time = $interval->format('%h H');
+        elseif((int)$interval->format('%i') > 0)
+            $comment->time = $interval->format('%i min');
+        else
+            $comment->time = 'just Now';
+
+        if($comment->userId == auth()->user()->id){
+            $comment->edit = true;
+        }else{
+            $comment->edit = false;
+        }
+
+        $like = Like::where('comment_id',$comment->id)->where('user_id',auth()->user()->id)->get();
+        if(count($like) > 0){
+            $comment->commentLike = true;
+        }
+
+        return $comment;
+    }
+
     public function index() 
     {
         $fr = $this->Friends(auth()->user()->id);
@@ -124,6 +174,11 @@ class PostController extends Controller
         foreach($posts as $post){
             //$this->postget($post);
            $post = $this->postget($post);
+           $comments = Comment::where('post_id' , $post->id)->get();
+           foreach ($comments as $comment) {
+               $comment = $this->commentget($comment);
+           }
+           $post->comments = $comments;
         };
 
         return response()->json($posts);
@@ -137,6 +192,11 @@ class PostController extends Controller
         foreach($posts as $post){
             //$this->postget($post);
            $post = $this->postget($post);
+           $comments = Comment::where('post_id' , $post->id)->get();
+           foreach ($comments as $comment) {
+               $comment = $this->commentget($comment);
+           }
+           $post->comments = $comments;
         };
 
         return response()->json($posts);
@@ -215,7 +275,10 @@ class PostController extends Controller
 
         broadcast(new NewPostEvent($post));
 
-        return response()->json($this->postget($post));   
+        $post = $this->postget($post);
+        $post->comments = array();
+
+        return response()->json($post);   
     }
 
     /**
@@ -237,10 +300,13 @@ class PostController extends Controller
      */
     public function show(Request $request)
     {
-        
         $post = Post::where('id',$request->id)->first();
-        $this->postget($post);
-
+        $post = $this->postget($post);
+        $comments = Comment::where('post_id' , $post->id)->get();
+        foreach ($comments as $comment) {
+            $comment = $this->commentget($comment);
+        }
+        $post->comments = $comments;
         return response()->json($post);
     }
 
@@ -279,8 +345,13 @@ class PostController extends Controller
                 'post_id' => $request->id,
                 'user_id' => auth()->user()->id,
             ]);
+            $id_to = Post::where('id',$request->id)->first('user_id');
+            if (auth()->user()->id != $id_to->user_id) {
+                broadcast(new NotificationEvent($id_to->user_id,$request->id,'like_post'));
+            }
         }
         broadcast(new likePostEvent($request->id , $request->etat));
+        
         return response()->json($this->get($request->id)); 
     }
 

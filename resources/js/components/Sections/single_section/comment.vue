@@ -115,6 +115,12 @@ export default {
     props: {
         id: {
             require: true
+        },
+        ALLcomments: {
+            require: true
+        },
+        singlePost: {
+            require: true
         }
     },
     data() {
@@ -137,7 +143,7 @@ export default {
                     .post("/add-comment", { id: this.id, text: this.myText })
                     .then(res => {
                         this.myText = "";
-                    })
+                    });
             }
         },
         CmtLike(i) {
@@ -149,26 +155,27 @@ export default {
                 })
                 .then(res => {
                     this.comments[i].likes = res.data;
-                })
+                });
             this.comments[i].commentLike = !this.comments[i].commentLike;
         },
         deleteComment(i) {
             axios
                 .post("/delete-comment", { id: this.comments[i].id })
-                .then(res => {
-                })
+                .then(res => {});
         }
     },
     mounted() {
+        if (this.singlePost == true) {
+            this.comments = this.ALLcomments;
+        } else {
+            this.comments = this.ALLcomments.slice(
+                Math.max(this.ALLcomments.length - 2, 0)
+            );
+        }
+
         axios.get("/profile").then(res => {
             this.user = res.data.id;
         });
-
-        axios
-            .post("/get-comments", { id: this.id })
-            .then(res => {
-                this.comments = res.data;
-            })
 
         Echo.private(`likeComment.${this.id}`).listen("LikeCommentEvent", e => {
             this.comments.forEach(element => {
@@ -182,10 +189,16 @@ export default {
                 if (e.comment.userId == this.user) {
                     e.comment.edit = true;
                 }
-                // if(this.id == e.comment.user_id){
-                //     this.comments.push(e.comment);
-                //     }
-                this.comments.push(e.comment);
+                if (this.singlePost == true) {
+                    this.comments.push(e.comment);
+                } else {
+                    this.ALLcomments.push(e.comment);
+                    this.comments = this.ALLcomments.slice(
+                        Math.max(this.ALLcomments.length - 2, 0)
+                    );
+                }
+                //this.comments.push(e.comment);
+
                 this.$emit("changeNumbers", true);
             } else {
                 this.comments.forEach((element, i) => {

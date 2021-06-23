@@ -80,7 +80,7 @@
                                 </h4>
                             </div>
                         </div>
-                        <div class="iq-card-body">
+                        <div class="iq-card-body" v-if="friendKnows.length > 0">
                             <ul class="request-list m-0 p-0">
                                 <li
                                     class="d-flex align-items-center"
@@ -89,32 +89,66 @@
                                 >
                                     <div class="user-img img-fluid">
                                         <img
-                                            :src="friendKnow.imgUser"
+                                            :src="
+                                                `images/user/${friendKnow.profileimg.name}`
+                                            "
                                             alt="story-img"
                                             class="rounded-circle avatar-40"
                                         />
                                     </div>
                                     <div class="media-support-info ml-3">
-                                        <h6>{{ friendKnow.UserName }}</h6>
+                                        <h6>{{ friendKnow.name }}</h6>
                                         <p class="mb-0">
-                                            {{ friendKnow.NbrFriend }} friends
+                                            {{ friendKnow.FriendCount }} friends
                                         </p>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <a
-                                            href="javascript:void();"
+                                            v-if="friendKnow.message == 'add'"
+                                            style="cursor:pointer"
+                                            @click="
+                                                sendRequestFK(
+                                                    friendKnow.id,
+                                                    friendKnow
+                                                )
+                                            "
                                             class="mr-3 btn btn-primary rounded"
                                             ><i class="ri-user-add-line"></i>Add
                                             Friend</a
                                         >
                                         <a
-                                            href="javascript:void();"
+                                            v-if="
+                                                friendKnow.message == 'cancel'
+                                            "
+                                            style="cursor:pointer"
+                                            @click="
+                                                DeleteRequestFK(
+                                                    friendKnow.id,
+                                                    friendKnow
+                                                )
+                                            "
+                                            class="mr-3 btn  btn-danger rounded"
+                                        >
+                                            Cancel request</a
+                                        >
+                                        <a
+                                            @click="removeFK(friendKnow)"
+                                            style="cursor:pointer"
                                             class="mr-3 btn btn-secondary rounded"
                                             >Remove</a
                                         >
                                     </div>
                                 </li>
                             </ul>
+                        </div>
+                        <div class="iq-card-body" v-else>
+                            <div class="request-list list-inline m-0 p-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <h6>Try again later</h6>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,32 +164,7 @@ export default {
             friendRqs: null,
             allReqs: null,
             show: true,
-            friendKnows: {
-                "1": {
-                    id: 1,
-                    imgUser: "images/user/15.jpg",
-                    UserName: "Jaques Amole",
-                    NbrFriend: "40"
-                },
-                "2": {
-                    id: 2,
-                    imgUser: "images/user/15.jpg",
-                    UserName: "Jaques Amole",
-                    NbrFriend: "40"
-                },
-                "3": {
-                    id: 3,
-                    imgUser: "images/user/15.jpg",
-                    UserName: "Jaques Amole",
-                    NbrFriend: "40"
-                },
-                "4": {
-                    id: 4,
-                    imgUser: "images/user/15.jpg",
-                    UserName: "Jaques Amole",
-                    NbrFriend: "40"
-                }
-            }
+            friendKnows: []
         };
     },
     mounted() {
@@ -199,8 +208,36 @@ export default {
             this.allReqs = res.data;
             this.friendRqs = this.allReqs.slice(0, 4);
         });
+        axios.get("/YouMayKnow").then(res => {
+            this.friendKnows = res.data;
+        });
     },
     methods: {
+        sendRequestFK(id, friendKnow) {
+            axios
+                .post("/SendRequest", {
+                    id: id
+                })
+                .then(res => {
+                    var index = this.friendKnows.indexOf(friendKnow);
+                    this.friendKnows[index].message = "cancel";
+                });
+        },
+        DeleteRequestFK(id, friendKnow) {
+            axios
+                .post("/DeleteRequest", {
+                    id: id
+                })
+                .then(res => {
+                    //console.log(res);
+                    var index = this.friendKnows.indexOf(friendKnow);
+                    this.friendKnows[index].message = "add";
+                });
+        },
+        removeFK(friendKnow) {
+            var index = this.friendKnows.indexOf(friendKnow);
+            this.friendKnows.splice(index, 1);
+        },
         DeleteRequest(id) {
             axios
                 .post("/DeleteReq", {

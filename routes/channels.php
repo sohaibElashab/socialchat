@@ -62,3 +62,7 @@ Broadcast::channel('sharePost.{id}', function () {
 	return Auth::check(); 
 }); 
 
+Broadcast::channel('Notification.{id}', function () {
+	return Auth::check(); 
+}); 
+

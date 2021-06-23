@@ -1,10 +1,16 @@
 <template>
     <div class="iq-card iq-card-block iq-card-stretch" v-if="post">
         <div class="iq-card-body">
-            <div class="iq-card-header d-flex justify-content-between mb-4" v-if="isPost">
+            <div
+                class="iq-card-header d-flex justify-content-between mb-4"
+                v-if="isPost"
+            >
                 <div class="iq-header-title" @click="comeBack">
                     <h6 class="card-title" style="cursor: pointer;">
-                        <i class="ri-arrow-left-fill" style=" font-size: 25px; "></i>
+                        <i
+                            class="ri-arrow-left-fill"
+                            style=" font-size: 25px; "
+                        ></i>
                         Back to previous page
                     </h6>
                 </div>
@@ -158,7 +164,14 @@
                             </span>
                         </div>
                         <div class="total-like-block ml-2 mr-3">
-                            <router-link tag="span" :to="{ name: 'post', query: { postId: post.id } }" :class="{ save: post.postComment }">
+                            <router-link
+                                tag="span"
+                                :to="{
+                                    name: 'post',
+                                    query: { postId: post.id }
+                                }"
+                                :class="{ save: post.postComment }"
+                            >
                                 <i
                                     :class="{
                                         'ri-discuss-line': !post.postComment,
@@ -196,7 +209,12 @@
                     </div>
                 </div>
                 <hr />
-                <Comment :id="post.id" @changeNumbers="NumbersComment"/>
+                <Comment
+                    :id="post.id"
+                    :ALLcomments="post.comments"
+                    :singlePost="singlePost"
+                    @changeNumbers="NumbersComment"
+                />
             </div>
         </div>
     </div>
@@ -205,7 +223,7 @@
 <script>
 import "@splidejs/splide/dist/css/themes/splide-skyblue.min.css";
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
-import Comment from "./Comment";
+import Comment from "./comment";
 import EventBus from "../../../event-bus";
 
 export default {
@@ -217,6 +235,9 @@ export default {
     props: {
         post: {
             type: Object,
+            require: true
+        },
+        singlePost: {
             require: true
         }
     },
@@ -237,20 +258,24 @@ export default {
         };
     },
     mounted() {
-        Echo.private(`sharePost.${this.post.id}`).listen(
-            "SharePostEvent",
-            e => {
-                this.share += 1;
-            }
-        );
-        Echo.private(`likePost.${this.post.id}`).listen(
-            'likePostEvent',
-            e => {
-                if(e.id == this.post.id){
-                    e.etat ? --this.post.numbers.likes : ++this.post.numbers.likes ; 
+        if (this.post) {
+            Echo.private(`sharePost.${this.post.id}`).listen(
+                "SharePostEvent",
+                e => {
+                    this.post.numbers.shares += 1;
                 }
-            }
-        )
+            );
+            Echo.private(`likePost.${this.post.id}`).listen(
+                "likePostEvent",
+                e => {
+                    if (e.id == this.post.id) {
+                        e.etat
+                            ? --this.post.numbers.likes
+                            : ++this.post.numbers.likes;
+                    }
+                }
+            );
+        }
     },
     methods: {
         sharePost() {
@@ -266,7 +291,7 @@ export default {
                 })
                 .then(res => {
                     this.$emit("unsavePost");
-                })
+                });
             if (this.$route.name != "Saved") {
                 this.post.postSave = !this.post.postSave;
             }
@@ -279,19 +304,19 @@ export default {
                 })
                 .then(res => {
                     this.post.numbers.likes = res.data.likes;
-                })
+                });
             this.post.postLike = !this.post.postLike;
         },
-        NumbersComment(etat){
-            etat ? ++this.post.numbers.comments : --this.post.numbers.comments ;
+        NumbersComment(etat) {
+            etat ? ++this.post.numbers.comments : --this.post.numbers.comments;
         },
         comeBack() {
             this.$router.back();
-        },
+        }
     },
     computed: {
         isPost() {
-            return this.$route.name === 'post';
+            return this.$route.name === "post";
         }
     }
 };

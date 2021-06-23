@@ -8829,8 +8829,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -8838,12 +8836,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      post: null
+      post: null,
+      singlePost: true
     };
   },
   mounted: function mounted() {
     var _this = this;
 
+    Echo["private"]("sharePost.".concat(this.$route.query.postId)).listen("SharePostEvent", function (e) {
+      _this.post.numbers.shares += 1;
+    });
+    Echo["private"]("likePost.".concat(this.$route.query.postId)).listen("likePostEvent", function (e) {
+      if (e.id == _this.post.id) {
+        e.etat ? --_this.post.numbers.likes : ++_this.post.numbers.likes;
+      }
+    });
     axios.post("/GetPost", {
       id: this.$route.query.postId
     }).then(function (res) {
@@ -9858,6 +9865,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -9870,6 +9879,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      singlePost: false,
       posts: null,
       friends: null,
       NewPosts: []
@@ -9899,8 +9909,14 @@ __webpack_require__.r(__webpack_exports__);
     LoadNew: function LoadNew() {
       var _this2 = this;
 
-      this.NewPosts.forEach(function (element) {
-        _this2.newPost(element);
+      this.NewPosts.forEach(function (post) {
+        axios.post("/SinglePost", {
+          post: post.id
+        }).then(function (res) {
+          post = res.data;
+
+          _this2.newPost(post);
+        });
       });
       window.scrollTo({
         top: 0,
@@ -10122,6 +10138,155 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -10129,54 +10294,83 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      friends: null,
       post: "post",
-      like: "like",
+      like_post: "like_post",
+      like_comment: "like_comment",
       comment: "comment",
       share: "share",
       request: "request",
-      notifications: {
-        "1": {
-          id: 1,
-          userImg: "images/user/14.jpg",
-          userName: "Petey Cruiser",
-          WhatDo: "Posted in his profile",
-          time: "30s",
-          type: "post"
-        },
-        "2": {
-          id: 2,
-          userImg: "images/user/13.jpg",
-          userName: "Petey Cruiser",
-          WhatDo: "Like Your Post / comment ",
-          time: "1min",
-          type: "like"
-        },
-        "3": {
-          id: 3,
-          userImg: "images/user/12.jpg",
-          userName: "Petey Cruiser",
-          WhatDo: "commented on your post ",
-          time: "5min",
-          type: "comment"
-        },
-        "4": {
-          id: 4,
-          userImg: "images/user/11.jpg",
-          userName: "Petey Cruiser",
-          WhatDo: "Sent a Friend Request",
-          time: "1H",
-          type: "request"
-        },
-        "5": {
-          id: 5,
-          userImg: "images/user/10.jpg",
-          userName: "Petey Cruiser",
-          WhatDo: "share Your Post",
-          time: "2H",
-          type: "share"
-        }
-      }
+      notifications: []
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.load();
+    axios.get("/profile").then(function (res) {
+      Echo["private"]("Notification.".concat(res.data.id)).listen("NotificationEvent", function (e) {
+        console.log("e.notif");
+        console.log(e.notif);
+
+        _this.notifications.unshift(e.notif);
+      });
+    })["catch"](function (err) {
+      console.log(err);
+    });
+    Echo["private"]("newPost").listen("NewPostEvent", function (e) {
+      if (_this.checkFriend(e.post.user_id) != null) {
+        var notif = {
+          WhatDo: "Posted in his profile",
+          type: "post",
+          time: "Just Now",
+          userImg: "images/user/" + e.post.userImg,
+          userName: e.post.userName,
+          userId: e.post.userId,
+          post_id: e.post.id
+        };
+
+        _this.notifications.unshift(notif);
+      }
+    });
+  },
+  methods: {
+    checkFriend: function checkFriend(id) {
+      var p = null;
+      this.friends.forEach(function (friend) {
+        console.log(friend);
+
+        if (friend.id == id) {
+          p = friend;
+          return true;
+        }
+      });
+      return p;
+    },
+    load: function load() {
+      var _this2 = this;
+
+      axios.get("/LoadNotif").then(function (res) {
+        //console.log(res.data);
+        _this2.notifications = res.data;
+      });
+      axios.post("/LoadFriends", {
+        id: null
+      }).then(function (res) {
+        _this2.friends = res.data;
+      });
+    },
+    deleteNotif: function deleteNotif(notif) {
+      var _this3 = this;
+
+      axios.post("/DeleteNotif", {
+        id: notif.id
+      }).then(function (res) {
+        var index = _this3.notifications.indexOf(notif);
+
+        _this3.notifications.splice(index, 1);
+      });
+    }
   }
 });
 
@@ -10737,6 +10931,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     newPost: function newPost(data) {
+      this.user.PostCount += 1;
       this.posts.unshift(data);
       window.scrollTo({
         top: 0,
@@ -12262,38 +12457,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       friendRqs: null,
       allReqs: null,
       show: true,
-      friendKnows: {
-        "1": {
-          id: 1,
-          imgUser: "images/user/15.jpg",
-          UserName: "Jaques Amole",
-          NbrFriend: "40"
-        },
-        "2": {
-          id: 2,
-          imgUser: "images/user/15.jpg",
-          UserName: "Jaques Amole",
-          NbrFriend: "40"
-        },
-        "3": {
-          id: 3,
-          imgUser: "images/user/15.jpg",
-          UserName: "Jaques Amole",
-          NbrFriend: "40"
-        },
-        "4": {
-          id: 4,
-          imgUser: "images/user/15.jpg",
-          UserName: "Jaques Amole",
-          NbrFriend: "40"
-        }
-      }
+      friendKnows: []
     };
   },
   mounted: function mounted() {
@@ -12335,31 +12539,61 @@ __webpack_require__.r(__webpack_exports__);
       _this.allReqs = res.data;
       _this.friendRqs = _this.allReqs.slice(0, 4);
     });
+    axios.get("/YouMayKnow").then(function (res) {
+      _this.friendKnows = res.data;
+    });
   },
   methods: {
-    DeleteRequest: function DeleteRequest(id) {
+    sendRequestFK: function sendRequestFK(id, friendKnow) {
       var _this2 = this;
+
+      axios.post("/SendRequest", {
+        id: id
+      }).then(function (res) {
+        var index = _this2.friendKnows.indexOf(friendKnow);
+
+        _this2.friendKnows[index].message = "cancel";
+      });
+    },
+    DeleteRequestFK: function DeleteRequestFK(id, friendKnow) {
+      var _this3 = this;
+
+      axios.post("/DeleteRequest", {
+        id: id
+      }).then(function (res) {
+        //console.log(res);
+        var index = _this3.friendKnows.indexOf(friendKnow);
+
+        _this3.friendKnows[index].message = "add";
+      });
+    },
+    removeFK: function removeFK(friendKnow) {
+      var index = this.friendKnows.indexOf(friendKnow);
+      this.friendKnows.splice(index, 1);
+    },
+    DeleteRequest: function DeleteRequest(id) {
+      var _this4 = this;
 
       axios.post("/DeleteReq", {
         id: id
       }).then(function (res) {
         axios.get("/LoadRequests").then(function (res) {
-          _this2.allReqs = res.data;
-          _this2.friendRqs = _this2.allReqs.slice(0, 4);
-          _this2.show = true;
+          _this4.allReqs = res.data;
+          _this4.friendRqs = _this4.allReqs.slice(0, 4);
+          _this4.show = true;
         });
       });
     },
     AcceptRequest: function AcceptRequest(id) {
-      var _this3 = this;
+      var _this5 = this;
 
       axios.post("/AcceptRequest", {
         id: id
       }).then(function (res) {
         axios.get("/LoadRequests").then(function (res) {
-          _this3.allReqs = res.data;
-          _this3.friendRqs = _this3.allReqs.slice(0, 4);
-          _this3.show = true;
+          _this5.allReqs = res.data;
+          _this5.friendRqs = _this5.allReqs.slice(0, 4);
+          _this5.show = true;
         });
       });
     },
@@ -12948,233 +13182,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   components: {
     EmojiPicker: (vue_emoji_picker__WEBPACK_IMPORTED_MODULE_1___default())
-  },
-  directives: {
-    focus: {
-      inserted: function inserted(el) {
-        el.focus();
-      }
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-emoji-picker */ "./node_modules/vue-emoji-picker/dist-module/main.js");
-/* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  components: {
-    EmojiPicker: (vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default())
-  },
-  props: {
-    id: {
-      require: true
-    }
-  },
-  data: function data() {
-    return {
-      comments: [],
-      file: null,
-      fileUrl: null,
-      search: "",
-      myText: "",
-      user: -1
-    };
-  },
-  methods: {
-    append: function append(emoji) {
-      this.myText += emoji;
-    },
-    addComment: function addComment() {
-      var _this = this;
-
-      if (this.myText != "") {
-        axios.post("/add-comment", {
-          id: this.id,
-          text: this.myText
-        }).then(function (res) {
-          _this.myText = "";
-        });
-      }
-    },
-    CmtLike: function CmtLike(i) {
-      var _this2 = this;
-
-      axios.post("/like-comment", {
-        id: this.comments[i].id,
-        etat: this.comments[i].commentLike,
-        postId: this.id
-      }).then(function (res) {
-        _this2.comments[i].likes = res.data;
-      });
-      this.comments[i].commentLike = !this.comments[i].commentLike;
-    },
-    deleteComment: function deleteComment(i) {
-      axios.post("/delete-comment", {
-        id: this.comments[i].id
-      }).then(function (res) {});
-    }
-  },
-  mounted: function mounted() {
-    var _this3 = this;
-
-    axios.get("/profile").then(function (res) {
-      _this3.user = res.data.id;
-    });
-    axios.post("/get-comments", {
-      id: this.id
-    }).then(function (res) {
-      _this3.comments = res.data;
-    });
-    Echo["private"]("likeComment.".concat(this.id)).listen("LikeCommentEvent", function (e) {
-      _this3.comments.forEach(function (element) {
-        if (e.id == element.id) {
-          e.etat ? --element.likes : ++element.likes;
-        }
-      });
-    });
-    Echo["private"]("Comment.".concat(this.id)).listen("CommentEvent", function (e) {
-      if (e.etat) {
-        if (e.comment.userId == _this3.user) {
-          e.comment.edit = true;
-        } // if(this.id == e.comment.user_id){
-        //     this.comments.push(e.comment);
-        //     }
-
-
-        _this3.comments.push(e.comment);
-
-        _this3.$emit("changeNumbers", true);
-      } else {
-        _this3.comments.forEach(function (element, i) {
-          if (e.comment.id == element.id) {
-            _this3.comments.splice(i, 1);
-
-            _this3.$emit("changeNumbers", false);
-          }
-        });
-      }
-    });
   },
   directives: {
     focus: {
@@ -14602,6 +14609,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -14612,6 +14681,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      friends: [],
       user: null,
       img: "",
       isMounted: false,
@@ -14622,35 +14692,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       ALLmsg: null,
       messages: null,
       msgCount: null,
-      Notifications: {
-        "1": {
-          id: 1,
-          img: "images/user/01.jpg",
-          H6: "Emma Watson Bni",
-          small: "Just Now",
-          p: "95 MB"
-        },
-        "2": {
-          id: 2,
-          img: "images/user/02.jpg",
-          H6: "New customer is join",
-          small: "5 days ago",
-          p: "Cyst Bni"
-        },
-        "3": {
-          id: 3,
-          img: "images/user/03.jpg",
-          H6: "Two customer is left",
-          small: "2 days ago",
-          p: "Cyst Bni"
-        },
-        "4": {
-          id: 4,
-          img: "images/user/04.jpg",
-          H6: "New Mail from Fenny",
-          small: "3 days ago",
-          p: "Cyst Bni"
-        }
+      Allnotifs: [],
+      Notifications: [],
+      toastr: {
+        title: "Toastr Notification",
+        message: "Gnome & Growl type non-blocking notifications",
+        closeButton: true,
+        progressBar: false,
+        icon: null,
+        position: "top right",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
+        showDuration: 1000,
+        hideDuration: 1000,
+        delay: 0,
+        timeOut: "4000"
       }
     };
   },
@@ -14724,11 +14780,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }
       });
+      Echo["private"]("Notification.".concat(_this.user.id)).listen("NotificationEvent", function (e) {
+        _this.Allnotifs.unshift(e.notif);
+
+        _this.Notifications = _this.Allnotifs.slice(0, 4);
+        document.getElementById("redNOT").style.display = "initial";
+
+        _this.showToast(e.notif.userName, e.notif.WhatDo);
+      });
+    });
+    axios.post("/LoadFriends", {
+      id: null
+    }).then(function (res) {
+      _this.friends = res.data;
+    });
+    Echo["private"]("newPost").listen("NewPostEvent", function (e) {
+      if (_this.checkFriend(e.post.user_id) != null) {
+        var notif = {
+          WhatDo: "Posted in his profile",
+          type: "post",
+          time: "Just Now",
+          userImg: "images/user/" + e.post.userImg,
+          userName: e.post.userName,
+          userId: e.post.userId,
+          post_id: e.post.id
+        };
+
+        _this.Allnotifs.unshift(notif);
+
+        _this.Notifications = _this.Allnotifs.slice(0, 4);
+        document.getElementById("redNOT").style.display = "initial";
+
+        _this.showToast(e.post.userName, "Posted in his profile");
+      }
     });
     axios.get("/LoadRequests").then(function (res) {
       _this.allReqs = res.data;
       _this.friendReqs = _this.allReqs.slice(0, 4);
       _this.loadedReqs = true;
+
+      if (_this.allReqs.length > 0) {
+        document.getElementById("redREQ").style.display = "initial";
+      }
     });
     axios.get("/UnreadMessages").then(function (res) {
       _this.msgCount = res.data[1];
@@ -14737,6 +14830,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       if (_this.msgCount > 0) {
         document.getElementById("redMSG").style.display = "initial";
+      }
+    });
+    axios.get("/LoadNotif").then(function (res) {
+      _this.Allnotifs = res.data;
+      _this.Notifications = _this.Allnotifs.slice(0, 4);
+
+      if (_this.Allnotifs.length > 0) {
+        document.getElementById("redNOT").style.display = "initial";
       }
     });
     _event_bus__WEBPACK_IMPORTED_MODULE_1__.default.$on("user-update", this.updateUser);
@@ -14761,6 +14862,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    showToast: function showToast(title, message) {
+      this.toastr = Object.assign(this.toastr, {
+        color: "#182039",
+        title: title,
+        message: message
+      });
+      this.$toast.success(this.toastr);
+    },
+    checkFriend: function checkFriend(id) {
+      var p = null;
+      this.friends.forEach(function (friend) {
+        if (friend.id == id) {
+          p = friend;
+          return true;
+        }
+      });
+      return p;
+    },
     ReloadMSG: function ReloadMSG(data) {
       var _this2 = this;
 
@@ -14888,6 +15007,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     removeDotMSG: function removeDotMSG() {
       document.getElementById("redMSG").style.display = "none";
+    },
+    removeDotNOT: function removeDotNOT() {
+      document.getElementById("redNOT").style.display = "none";
     }
   }
 });
@@ -15078,7 +15200,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _splidejs_splide_dist_css_themes_splide_skyblue_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @splidejs/splide/dist/css/themes/splide-skyblue.min.css */ "./node_modules/@splidejs/splide/dist/css/themes/splide-skyblue.min.css");
 /* harmony import */ var _splidejs_splide_dist_css_themes_splide_skyblue_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_splidejs_splide_dist_css_themes_splide_skyblue_min_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _splidejs_vue_splide__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @splidejs/vue-splide */ "./node_modules/@splidejs/vue-splide/src/js/index.js");
-/* harmony import */ var _Comment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Comment */ "./resources/js/components/Sections/single_section/Comment.vue");
+/* harmony import */ var _comment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./comment */ "./resources/js/components/Sections/single_section/comment.vue");
 /* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../event-bus */ "./resources/js/event-bus.js");
 
 
@@ -15086,6 +15208,24 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15298,11 +15438,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     Splide: _splidejs_vue_splide__WEBPACK_IMPORTED_MODULE_2__.Splide,
     SplideSlide: _splidejs_vue_splide__WEBPACK_IMPORTED_MODULE_2__.SplideSlide,
-    Comment: _Comment__WEBPACK_IMPORTED_MODULE_3__.default
+    Comment: _comment__WEBPACK_IMPORTED_MODULE_3__.default
   },
   props: {
     post: {
       type: Object,
+      require: true
+    },
+    singlePost: {
       require: true
     }
   },
@@ -15325,14 +15468,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     var _this = this;
 
-    Echo["private"]("sharePost.".concat(this.post.id)).listen("SharePostEvent", function (e) {
-      _this.share += 1;
-    });
-    Echo["private"]("likePost.".concat(this.post.id)).listen('likePostEvent', function (e) {
-      if (e.id == _this.post.id) {
-        e.etat ? --_this.post.numbers.likes : ++_this.post.numbers.likes;
-      }
-    });
+    if (this.post) {
+      Echo["private"]("sharePost.".concat(this.post.id)).listen("SharePostEvent", function (e) {
+        _this.post.numbers.shares += 1;
+      });
+      Echo["private"]("likePost.".concat(this.post.id)).listen("likePostEvent", function (e) {
+        if (e.id == _this.post.id) {
+          e.etat ? --_this.post.numbers.likes : ++_this.post.numbers.likes;
+        }
+      });
+    }
   },
   methods: {
     sharePost: function sharePost() {
@@ -15405,7 +15550,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     isPost: function isPost() {
-      return this.$route.name === 'post';
+      return this.$route.name === "post";
     }
   }
 });
@@ -17701,6 +17846,932 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-emoji-picker */ "./node_modules/vue-emoji-picker/dist-module/main.js");
+/* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    EmojiPicker: (vue_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default())
+  },
+  props: {
+    id: {
+      require: true
+    },
+    ALLcomments: {
+      require: true
+    },
+    singlePost: {
+      require: true
+    }
+  },
+  data: function data() {
+    return {
+      comments: [],
+      file: null,
+      fileUrl: null,
+      search: "",
+      myText: "",
+      user: -1
+    };
+  },
+  methods: {
+    append: function append(emoji) {
+      this.myText += emoji;
+    },
+    addComment: function addComment() {
+      var _this = this;
+
+      if (this.myText != "") {
+        axios.post("/add-comment", {
+          id: this.id,
+          text: this.myText
+        }).then(function (res) {
+          _this.myText = "";
+        });
+      }
+    },
+    CmtLike: function CmtLike(i) {
+      var _this2 = this;
+
+      axios.post("/like-comment", {
+        id: this.comments[i].id,
+        etat: this.comments[i].commentLike,
+        postId: this.id
+      }).then(function (res) {
+        _this2.comments[i].likes = res.data;
+      });
+      this.comments[i].commentLike = !this.comments[i].commentLike;
+    },
+    deleteComment: function deleteComment(i) {
+      axios.post("/delete-comment", {
+        id: this.comments[i].id
+      }).then(function (res) {});
+    }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    if (this.singlePost == true) {
+      this.comments = this.ALLcomments;
+    } else {
+      this.comments = this.ALLcomments.slice(Math.max(this.ALLcomments.length - 2, 0));
+    }
+
+    axios.get("/profile").then(function (res) {
+      _this3.user = res.data.id;
+    });
+    Echo["private"]("likeComment.".concat(this.id)).listen("LikeCommentEvent", function (e) {
+      _this3.comments.forEach(function (element) {
+        if (e.id == element.id) {
+          e.etat ? --element.likes : ++element.likes;
+        }
+      });
+    });
+    Echo["private"]("Comment.".concat(this.id)).listen("CommentEvent", function (e) {
+      if (e.etat) {
+        if (e.comment.userId == _this3.user) {
+          e.comment.edit = true;
+        }
+
+        if (_this3.singlePost == true) {
+          _this3.comments.push(e.comment);
+        } else {
+          _this3.ALLcomments.push(e.comment);
+
+          _this3.comments = _this3.ALLcomments.slice(Math.max(_this3.ALLcomments.length - 2, 0));
+        } //this.comments.push(e.comment);
+
+
+        _this3.$emit("changeNumbers", true);
+      } else {
+        _this3.comments.forEach(function (element, i) {
+          if (e.comment.id == element.id) {
+            _this3.comments.splice(i, 1);
+
+            _this3.$emit("changeNumbers", false);
+          }
+        });
+      }
+    });
+  },
+  directives: {
+    focus: {
+      inserted: function inserted(el) {
+        el.focus();
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./public/js/cxlt-vue2-toastr.js":
+/*!***************************************!*\
+  !*** ./public/js/cxlt-vue2-toastr.js ***!
+  \***************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+!function (t, e) {
+  "object" == ( false ? 0 : _typeof(exports)) && "object" == ( false ? 0 : _typeof(module)) ? module.exports = e() :  true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (e),
+		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : 0;
+}(this, function () {
+  return function (t) {
+    function e(r) {
+      if (n[r]) return n[r].exports;
+      var o = n[r] = {
+        i: r,
+        l: !1,
+        exports: {}
+      };
+      return t[r].call(o.exports, o, o.exports, e), o.l = !0, o.exports;
+    }
+
+    var n = {};
+    return e.m = t, e.c = n, e.i = function (t) {
+      return t;
+    }, e.d = function (t, n, r) {
+      e.o(t, n) || Object.defineProperty(t, n, {
+        configurable: !1,
+        enumerable: !0,
+        get: r
+      });
+    }, e.n = function (t) {
+      var n = t && t.__esModule ? function () {
+        return t["default"];
+      } : function () {
+        return t;
+      };
+      return e.d(n, "a", n), n;
+    }, e.o = function (t, e) {
+      return Object.prototype.hasOwnProperty.call(t, e);
+    }, e.p = "/", e(e.s = 14);
+  }([function (t, e, n) {
+    t.exports = !n(2)(function () {
+      return 7 != Object.defineProperty({}, "a", {
+        get: function get() {
+          return 7;
+        }
+      }).a;
+    });
+  }, function (t, e) {
+    var n = t.exports = {
+      version: "2.6.9"
+    };
+    "number" == typeof __e && (__e = n);
+  }, function (t, e) {
+    t.exports = function (t) {
+      try {
+        return !!t();
+      } catch (t) {
+        return !0;
+      }
+    };
+  }, function (t, e) {
+    var n = t.exports = "undefined" != typeof window && window.Math == Math ? window : "undefined" != typeof self && self.Math == Math ? self : Function("return this")();
+    "number" == typeof __g && (__g = n);
+  }, function (t, e) {
+    t.exports = function (t) {
+      return "object" == _typeof(t) ? null !== t : "function" == typeof t;
+    };
+  }, function (t, e) {
+    t.exports = function (t) {
+      if (void 0 == t) throw TypeError("Can't call method on  " + t);
+      return t;
+    };
+  }, function (t, e) {
+    var n = {}.hasOwnProperty;
+
+    t.exports = function (t, e) {
+      return n.call(t, e);
+    };
+  }, function (t, e, n) {
+    var r = n(20);
+    t.exports = Object("z").propertyIsEnumerable(0) ? Object : function (t) {
+      return "String" == r(t) ? t.split("") : Object(t);
+    };
+  }, function (t, e) {
+    var n = Math.ceil,
+        r = Math.floor;
+
+    t.exports = function (t) {
+      return isNaN(t = +t) ? 0 : (t > 0 ? r : n)(t);
+    };
+  }, function (t, e, n) {
+    var r = n(7),
+        o = n(5);
+
+    t.exports = function (t) {
+      return r(o(t));
+    };
+  }, function (t, e, n) {
+    t.exports = {
+      "default": n(16),
+      __esModule: !0
+    };
+  }, function (t, e) {}, function (t, e) {}, function (t, e, n) {
+    var r = n(47)(n(15), n(48), null, null);
+    r.options.__file = "D:\\dev\\projects\\_forks\\cxlt-vue2-toastr\\src\\Toastr.vue", r.esModule && Object.keys(r.esModule).some(function (t) {
+      return "default" !== t && "__esModule" !== t;
+    }) && console.error("named exports are not supported in *.vue files."), r.options.functional && console.error("[vue-loader] Toastr.vue: functional components are not supported with templates, they should use render functions."), t.exports = r.exports;
+  }, function (t, e, n) {
+    "use strict";
+
+    Object.defineProperty(e, "__esModule", {
+      value: !0
+    });
+    var r = n(10),
+        o = n.n(r),
+        i = n(13),
+        s = n.n(i),
+        u = n(12),
+        c = (n.n(u), n(11)),
+        a = (n.n(c), {
+      install: function install(t, e) {
+        function n(n, i) {
+          var u = t.extend(s.a),
+              c = o()(e, n, {
+            type: i
+          }),
+              a = new u({
+            el: document.createElement("div"),
+            propsData: c
+          });
+          return r.push(a), a;
+        }
+
+        e || (e = {});
+        var r = [];
+        t.prototype.$toast = {
+          success: function success(t) {
+            return n(t, "success");
+          },
+          info: function info(t) {
+            return n(t, "info");
+          },
+          warn: function warn(t) {
+            return n(t, "warning");
+          },
+          error: function error(t) {
+            return n(t, "error");
+          },
+          removeAll: function removeAll() {
+            r.forEach(function (t) {
+              t.hideToastr();
+            }), r = [];
+          }
+        };
+      }
+    });
+    e["default"] = a;
+  }, function (t, e, n) {
+    "use strict";
+
+    Object.defineProperty(e, "__esModule", {
+      value: !0
+    }), e["default"] = {
+      name: "CxltToastr",
+      data: function data() {
+        return {
+          progress: {
+            hideEta: 0,
+            percent: 0,
+            intervalId: null
+          },
+          show: !1,
+          defaultIcons: {
+            success: n(45),
+            info: n(44),
+            warning: n(46),
+            error: n(43)
+          }
+        };
+      },
+      props: {
+        type: {
+          type: String,
+          "default": "success"
+        },
+        position: {
+          type: String,
+          "default": "top center"
+        },
+        title: {
+          type: String
+        },
+        message: {
+          type: String
+        },
+        useHtml: {
+          type: Boolean,
+          "default": !1
+        },
+        closeButton: {
+          type: Boolean,
+          "default": !0
+        },
+        progressBar: {
+          type: Boolean,
+          "default": !1
+        },
+        icon: {
+          type: String
+        },
+        timeOut: {
+          "default": "1500"
+        },
+        showMethod: {
+          type: String,
+          "default": "fadeIn"
+        },
+        hideMethod: {
+          type: String,
+          "default": "fadeOut"
+        },
+        showDuration: {
+          "default": "1000"
+        },
+        hideDuration: {
+          "default": "1000"
+        },
+        delay: {
+          "default": "0"
+        },
+        successColor: {
+          type: String
+        },
+        infoColor: {
+          type: String
+        },
+        warningColor: {
+          type: String
+        },
+        errorColor: {
+          type: String
+        },
+        color: {
+          type: String
+        }
+      },
+      beforeMount: function beforeMount() {
+        var t = document.querySelector(".cxlt-toastr-container.toast-" + this.positionClass);
+        t || (t = document.createElement("div"), t.classList.add("cxlt-toastr-container"), t.classList.add("toast-" + this.positionClass), document.body.appendChild(t)), t.appendChild(this.$el);
+      },
+      mounted: function mounted() {
+        var t = this;
+        setTimeout(function () {
+          return t.showToastr();
+        }, this.delay);
+      },
+      computed: {
+        positionClass: function positionClass() {
+          return this.position.split(" ").join("-");
+        },
+        enterActiveClass: function enterActiveClass() {
+          return "animated " + this.showMethod;
+        },
+        leaveActiveClass: function leaveActiveClass() {
+          return "animated " + this.hideMethod;
+        },
+        toastBackgroundColor: function toastBackgroundColor() {
+          return this.color ? this.color : "success" === this.type && this.successColor ? this.successColor : "info" === this.type && this.infoColor ? this.infoColor : "warning" === this.type && this.warningColor ? this.warningColor : "error" === this.type && this.errorColor ? this.errorColor : null;
+        },
+        iconSrc: function iconSrc() {
+          return this.icon ? this.icon : this.defaultIcons[this.type];
+        }
+      },
+      methods: {
+        showToastr: function showToastr() {
+          var t = this;
+          this.show = !0, this.sto = setTimeout(function () {
+            return t.hideToastr();
+          }, this.timeOut), this.progressBar && (this.progress.hideEta = new Date().getTime() + parseFloat(this.timeOut), this.progress.intervalId = setInterval(function () {
+            return t.refreshProgress();
+          }, 10));
+        },
+        hideToastr: function hideToastr() {
+          clearTimeout(this.sto), clearTimeout(this.progress.intervalId), this.show = !1;
+        },
+        refreshProgress: function refreshProgress() {
+          this.progress.percent = (this.progress.hideEta - new Date().getTime()) / this.timeOut * 100;
+        },
+        beforeEnter: function beforeEnter(t) {
+          t.style.animationDuration = this.showDuration + "ms";
+        },
+        afterEnter: function afterEnter(t) {
+          this.$el.classList.add("animated"), this.$el.classList.add(this.showMethod);
+        },
+        beforeLeave: function beforeLeave(t) {
+          t.style.animationDuration = this.hideDuration + "ms";
+        }
+      }
+    };
+  }, function (t, e, n) {
+    n(42), t.exports = n(1).Object.assign;
+  }, function (t, e) {
+    t.exports = function (t) {
+      if ("function" != typeof t) throw TypeError(t + " is not a function!");
+      return t;
+    };
+  }, function (t, e, n) {
+    var r = n(4);
+
+    t.exports = function (t) {
+      if (!r(t)) throw TypeError(t + " is not an object!");
+      return t;
+    };
+  }, function (t, e, n) {
+    var r = n(9),
+        o = n(38),
+        i = n(37);
+
+    t.exports = function (t) {
+      return function (e, n, s) {
+        var u,
+            c = r(e),
+            a = o(c.length),
+            f = i(s, a);
+
+        if (t && n != n) {
+          for (; a > f;) {
+            if ((u = c[f++]) != u) return !0;
+          }
+        } else for (; a > f; f++) {
+          if ((t || f in c) && c[f] === n) return t || f || 0;
+        }
+
+        return !t && -1;
+      };
+    };
+  }, function (t, e) {
+    var n = {}.toString;
+
+    t.exports = function (t) {
+      return n.call(t).slice(8, -1);
+    };
+  }, function (t, e, n) {
+    var r = n(17);
+
+    t.exports = function (t, e, n) {
+      if (r(t), void 0 === e) return t;
+
+      switch (n) {
+        case 1:
+          return function (n) {
+            return t.call(e, n);
+          };
+
+        case 2:
+          return function (n, r) {
+            return t.call(e, n, r);
+          };
+
+        case 3:
+          return function (n, r, o) {
+            return t.call(e, n, r, o);
+          };
+      }
+
+      return function () {
+        return t.apply(e, arguments);
+      };
+    };
+  }, function (t, e, n) {
+    var r = n(4),
+        o = n(3).document,
+        i = r(o) && r(o.createElement);
+
+    t.exports = function (t) {
+      return i ? o.createElement(t) : {};
+    };
+  }, function (t, e) {
+    t.exports = "constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",");
+  }, function (t, e, n) {
+    var r = n(3),
+        o = n(1),
+        i = n(21),
+        s = n(25),
+        u = n(6),
+        c = function c(t, e, n) {
+      var a,
+          f,
+          l,
+          A = t & c.F,
+          p = t & c.G,
+          d = t & c.S,
+          h = t & c.P,
+          g = t & c.B,
+          v = t & c.W,
+          y = p ? o : o[e] || (o[e] = {}),
+          m = y.prototype,
+          B = p ? r : d ? r[e] : (r[e] || {}).prototype;
+      p && (n = e);
+
+      for (a in n) {
+        (f = !A && B && void 0 !== B[a]) && u(y, a) || (l = f ? B[a] : n[a], y[a] = p && "function" != typeof B[a] ? n[a] : g && f ? i(l, r) : v && B[a] == l ? function (t) {
+          var e = function e(_e, n, r) {
+            if (this instanceof t) {
+              switch (arguments.length) {
+                case 0:
+                  return new t();
+
+                case 1:
+                  return new t(_e);
+
+                case 2:
+                  return new t(_e, n);
+              }
+
+              return new t(_e, n, r);
+            }
+
+            return t.apply(this, arguments);
+          };
+
+          return e.prototype = t.prototype, e;
+        }(l) : h && "function" == typeof l ? i(Function.call, l) : l, h && ((y.virtual || (y.virtual = {}))[a] = l, t & c.R && m && !m[a] && s(m, a, l)));
+      }
+    };
+
+    c.F = 1, c.G = 2, c.S = 4, c.P = 8, c.B = 16, c.W = 32, c.U = 64, c.R = 128, t.exports = c;
+  }, function (t, e, n) {
+    var r = n(29),
+        o = n(34);
+    t.exports = n(0) ? function (t, e, n) {
+      return r.f(t, e, o(1, n));
+    } : function (t, e, n) {
+      return t[e] = n, t;
+    };
+  }, function (t, e, n) {
+    t.exports = !n(0) && !n(2)(function () {
+      return 7 != Object.defineProperty(n(22)("div"), "a", {
+        get: function get() {
+          return 7;
+        }
+      }).a;
+    });
+  }, function (t, e) {
+    t.exports = !0;
+  }, function (t, e, n) {
+    "use strict";
+
+    var r = n(0),
+        o = n(32),
+        i = n(30),
+        s = n(33),
+        u = n(39),
+        c = n(7),
+        a = Object.assign;
+    t.exports = !a || n(2)(function () {
+      var t = {},
+          e = {},
+          n = Symbol(),
+          r = "abcdefghijklmnopqrst";
+      return t[n] = 7, r.split("").forEach(function (t) {
+        e[t] = t;
+      }), 7 != a({}, t)[n] || Object.keys(a({}, e)).join("") != r;
+    }) ? function (t, e) {
+      for (var n = u(t), a = arguments.length, f = 1, l = i.f, A = s.f; a > f;) {
+        for (var p, d = c(arguments[f++]), h = l ? o(d).concat(l(d)) : o(d), g = h.length, v = 0; g > v;) {
+          p = h[v++], r && !A.call(d, p) || (n[p] = d[p]);
+        }
+      }
+
+      return n;
+    } : a;
+  }, function (t, e, n) {
+    var r = n(18),
+        o = n(26),
+        i = n(40),
+        s = Object.defineProperty;
+    e.f = n(0) ? Object.defineProperty : function (t, e, n) {
+      if (r(t), e = i(e, !0), r(n), o) try {
+        return s(t, e, n);
+      } catch (t) {}
+      if ("get" in n || "set" in n) throw TypeError("Accessors not supported!");
+      return "value" in n && (t[e] = n.value), t;
+    };
+  }, function (t, e) {
+    e.f = Object.getOwnPropertySymbols;
+  }, function (t, e, n) {
+    var r = n(6),
+        o = n(9),
+        i = n(19)(!1),
+        s = n(35)("IE_PROTO");
+
+    t.exports = function (t, e) {
+      var n,
+          u = o(t),
+          c = 0,
+          a = [];
+
+      for (n in u) {
+        n != s && r(u, n) && a.push(n);
+      }
+
+      for (; e.length > c;) {
+        r(u, n = e[c++]) && (~i(a, n) || a.push(n));
+      }
+
+      return a;
+    };
+  }, function (t, e, n) {
+    var r = n(31),
+        o = n(23);
+
+    t.exports = Object.keys || function (t) {
+      return r(t, o);
+    };
+  }, function (t, e) {
+    e.f = {}.propertyIsEnumerable;
+  }, function (t, e) {
+    t.exports = function (t, e) {
+      return {
+        enumerable: !(1 & t),
+        configurable: !(2 & t),
+        writable: !(4 & t),
+        value: e
+      };
+    };
+  }, function (t, e, n) {
+    var r = n(36)("keys"),
+        o = n(41);
+
+    t.exports = function (t) {
+      return r[t] || (r[t] = o(t));
+    };
+  }, function (t, e, n) {
+    var r = n(1),
+        o = n(3),
+        i = o["__core-js_shared__"] || (o["__core-js_shared__"] = {});
+    (t.exports = function (t, e) {
+      return i[t] || (i[t] = void 0 !== e ? e : {});
+    })("versions", []).push({
+      version: r.version,
+      mode: n(27) ? "pure" : "global",
+      copyright: "© 2019 Denis Pushkarev (zloirock.ru)"
+    });
+  }, function (t, e, n) {
+    var r = n(8),
+        o = Math.max,
+        i = Math.min;
+
+    t.exports = function (t, e) {
+      return t = r(t), t < 0 ? o(t + e, 0) : i(t, e);
+    };
+  }, function (t, e, n) {
+    var r = n(8),
+        o = Math.min;
+
+    t.exports = function (t) {
+      return t > 0 ? o(r(t), 9007199254740991) : 0;
+    };
+  }, function (t, e, n) {
+    var r = n(5);
+
+    t.exports = function (t) {
+      return Object(r(t));
+    };
+  }, function (t, e, n) {
+    var r = n(4);
+
+    t.exports = function (t, e) {
+      if (!r(t)) return t;
+      var n, o;
+      if (e && "function" == typeof (n = t.toString) && !r(o = n.call(t))) return o;
+      if ("function" == typeof (n = t.valueOf) && !r(o = n.call(t))) return o;
+      if (!e && "function" == typeof (n = t.toString) && !r(o = n.call(t))) return o;
+      throw TypeError("Can't convert object to primitive value");
+    };
+  }, function (t, e) {
+    var n = 0,
+        r = Math.random();
+
+    t.exports = function (t) {
+      return "Symbol(".concat(void 0 === t ? "" : t, ")_", (++n + r).toString(36));
+    };
+  }, function (t, e, n) {
+    var r = n(24);
+    r(r.S + r.F, "Object", {
+      assign: n(28)
+    });
+  }, function (t, e) {
+    t.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADJUlEQVRoQ+2a/VEVMRTFz60ArQCsQK1A6AArECrQDoQOoAKhAu0AqECoQKhAO4hzmMBk9+XjJNl9C29e/mKGZDe/3HM/cvcZNmTYhnBgC5KypHPuDYD3APYTc64B3JnZvynVMIlFnHMfAHwBcASAIMq4B/ALwKWZ3SoLcnO6QJxz3PwJgL3OjRDqxMwuW5/TBOKco2x+TAAw3jeBjs2M8qsaVSBe/98BfKt6S/3kMwCnNX4kg3iIKwD0h3UM+s2BCiOBeGf+OYOUSgdCqX1WgkERxFvi9wIQT5CE+ViyTBZkATmlLFSUWQmETve1ZP81/f/czJJBJgniQyyd+yUNOn80NOdA/lT4xQ0AWo/5RbXgOQBuiqf8STytezN7F5sbBXHOsdRgwlMGSwzOfxziWia9i2AN/2aVoIzB2qcFKRDVGgMIESa6EeecChO1ygqIzxkMt6VxY2apCjdlmShEcACUmiIzhuNBoRkDUU+GiYrVa3KMZJaF8LI8BMDEWxorESwG8lcsxbPhcCQzhD6R2mWPvAYgPgESRB3FU1YfJAaJ8HFvw2w/BqHma3NHN0wDBIEGOWUMwksSy/Ta0QzTCMH9scznfh/HVCB8VjVMB8SsIFUwnRBbEMVnNkJa1RCjPKPWdeGBZp19Y8Ivm2uvPyH6eoetzB3BKZYsUR7MbNAUjNVa6vX2xReN7FspZfy1mR1kCsDY5axUxrM8Sl4NgneVy3gvL7ZgdgV5XZjZ8XheIdmlLlaMXM83zcy7V2S1UqI0hsQBjJixx1ddFSJZPeSaD6pV+HDe7OhbvBgpp8o1vMDxYsbmgyInrolaI2kRL6+WnCKosWtKfTvIw6gRrGt34uK2Bp0HYYKkbPgpbclxR/nl+r9qE5sdCyWKzQH7wE8ZXU3sIIoxt9Ax1w1DiMNJPisEMOuWWVFOofmL0gon+y4L78lqf7dVauwL8+Oo/Am7CiSwDkMz88DUUqOUjmb/GJooRWihXiAC0ALPje1aUzZZJALEYMCMzsyuQnHzDCAscZb9wUDs1LwfESz3E47bGv0r1pnEIsqL5p6zBZn7hGuf/x/5tYxCBjNscgAAAABJRU5ErkJggg==";
+  }, function (t, e) {
+    t.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAER0lEQVRoQ+2ajVEUQRCFuyNQIxAiECIQIhAjkItAiECMQIlAiACMQC4CIQLvIhAiaOtt9Zx9s71787dbhWVXXVHA3u580697enqWqZGJyB4RvSWiA/3gd3ysrYgIn3v9LJkZv1cb19xBB/+BiE6dQafeGiBfieh7DVQRiIhg1j8qQOqAU667IqLPJUBZICLykoi+jACsiejWyMcbfJDeERG9HqAD0DkzP6bQ45pkEBGBfAABGGsYPKRxmzuTKs0TIjpzoACxYGZMzE5LAhGRb44XHgDAzJi9atOJunCA8IzzXQ8YBVEp3RARZBDsiYgumBleaG4iAu8A6IW5+R0RvR+T2iCIQvzQVBruCS+c5Eool1YlB0m9Md9Fyj4eghkDAYT1xDUzI05mMxGBbJHeg90x87E3ABfEiYkiCE3T7/TBWCcwq1nmwFwyM+S3ZT0QDToEd7BSCGQjxJc16DwpC9kvOTC9+2yBaFz8Min2gZmR97NNRJA+bcDiHo/M/Cr7ZkQkIvBmiBnce9/GSwxiNYnsdFAa2CIirpaZk1J+/F1NAIAJk7OllM1NVc8/zQ2wshan2AGPPDFzvKAmO0hTMxblYPBKV3RaEOuNYkmFJ4hIsxiJ4gUDD6XNxisdiLoNsREMpUH1iq1eBhAMJUx21nIkhiXAJqPOKwEEK+kn/dKameN9RLL757hQRKxXuhAIIPBGGHxVbMwEgnUkxMqKmffZkdUmgFoMSuVFLWRl4g+TbkOhA7GaayYrnSAsiGEdQnxgIWuytY3ktQAIUix2ezB3+S/xjIigYsUe3tpgrZT7jGi1vwSIfWCT+NAK4bc3OC5cEJ3sZRPUEiA20FEmA6zahlZ2LcWrnyEiqMxRocNWALGlxHMFof8gu7Q3s7T+LY/Y5f65xsh6kvQL2c0grV76tQti0bbWi5cZQOy2o1sQbYnSFWC7Ajnl/zOA2PWvK1H6BViDemhKEHfMqudefZ8y62PXTAxiy/iu0PU2Vk3kNTFIb/802VZ3KhCn7/Z3q6vyslngnpkPa+Q1IYj1xnbzQUGwAWrZDnL7WjXVb1I7yPEKunmHpTu6EY8UbaU1U2GiQ1/Mb9ApCC5CBgvdvGKJtW7QiQggwrYZXdC9wZapwsSNtStmXuTGS8sGnXM6MN7EDoON9vH4cykMZrCqQedApB0rGJi4eVAEk+tJe70DgRcM7OHT5vJdR2+AiY+/mrV0hiCdVhIuxbHfUfbRmwl+HMzYtg6yGQ5DL2tmewQCrSmU6LZrv9Szy8Fz96SzCidmus6FAl23ABIRnBUCIO47J/XakkBMNsPqH59CFb9LohLCGSOKwBgAKfY09aguGcRIDRsxe9JqHQIoxFX46TkLwYpBh5/eNfDy2SSvcETZBAOBDIaAStUGAMRfdn84yyPx6Ha8S5IKU/wui31AFYjjJcjFvngWv/2DQdsXz9DUzp59b4b+AJFTg4IAQeQDAAAAAElFTkSuQmCC";
+  }, function (t, e) {
+    t.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABiklEQVRoQ+3Y4VHDMAwF4PcmgBE6AiPABBwbMAKMwgSMwAjABh2hTABMYM53bi+kThzLlqP0nL+pXX+SHetEXMjDC3GgQ6xlsmekZ0QpAn1rKQVWPO2mMuKcuwZwD+BA8nOo3gzEOXcD4A3ALgBeSD4dMZuABMQ7AJ+R00PytH7zkCkEgC+Sx+zYLlFmEL8AbknuzW+tHITHmNxauQiTEAnCHESKMAUpQZiBlCJMQGogVofUQkQhoTDbDS8bcUk6M7Am4gzinHsE8Br+/wPAA8mf2pDaiBjke1SY+RLgriZGAxGD+OhfjTJQDaOFSG2toacYo4mYOuzDc1IFo42Y/PyODn0RpgVi9h6pgWmFSF6IJZiWiCTE/0CCaY1YBMnFrIFYDFmKWQuRBVmAeQ59p38tGwBnjYLaJU82JIGJra8JQgTJwDRDiCELME0RRZAZTHNEMSSCWQVRBRIwvlPu+7B7kgeNr1JqTpOdxtSiY+87RBI1zTE9I5rRlczdMyKJmuaYnhHN6Erm/gOnUwJCWY8N3gAAAABJRU5ErkJggg==";
+  }, function (t, e) {
+    t.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADbUlEQVRoQ+1Z0XXUMBDcqQBSAaQCkgpIKgAqIFQAVABUQFIBUAFJBSQVcFRAUgFJBcObe9Jh6yR7ZcsPXjj9OLmz7B3Nzmq0B7snA/cEh+2A/GtM7hj5rxgh+drMngfQ5wDOllqAxVKL5DczO0oCvwRwvASYRYCQfGNmHwsBvwLwuTWY5kBIPjSzn2amq8ZVuD4N11sz2wega7OxBJBTM5M2NO7M7HEAtTKzB+HzMwBirdloCoTkgZl970T3AcB7/U9S13ed7w4BCFyT0RpIV+A3AMTGZpC8NrNH4YOmwm8GhOSJmX3qxH0M4DIBoiomsHG8AHDegpImQILAlVKRgQsAcf/oxUlS4KLwxZBSbLbwWwFJ819V6ToAfBKQ/FDAJAVWVS2OjY7mMDMbSCmwIPyvHZa0+kqlVUb4a+B/G0hP4GZ2EFZeFSmyEWNcATgMTOn7ZsKfxQhJ6UCrviVekiys8F4Ams7dKg41DM0FolyPAr8CsPFWA0A2AafCB7BfE3z33slAxvLcCaS4gdYCmgQkCFzlNvqpLcvhAaJgSXYtjcqwynG18KcCkS7iPrH2U+leUAFEi6HAow/7AkCba9WoBkIy3Z2zttwLJLAy6grGUE0BUhR4YkdKVStbnRLhr8v0WPCTxZ45MBUdbIkRANnFyzD9FoD04xpuRjIHpsFcJikz+CyJoujBQorp5PgyzKk6gNUA6b4kK/AktSRizYlgLszsZMgghsWaJHwXkLm0u3Ij3FSTvtUaIak9Q5uXhlxs/LsmRve9JLs+zXUAG2XEc2ByR+i80Vvi3YzUCjyNM5jK2IjQ7u8+DSbFYlT4g4wk9kECl0V32YcMk8Lp7mkFG+TuvBSBDHVEPBlCUqsYbUeccgtgzzM/lOPsyTM3fwjIYEdkKJiQkr+yLyxsiKXneTsvpV129qGnwMgdgOiYXcQMHd4GxV7TERlhJdf/rbId8fmezssWI2MHJtcy/tnctN/ILYsF/awwqbPo6bz0gHgm1ABpee/YAqdAun7qJnZEWgY09VmZzkvPtKZAetbAzHotz6lBNJynNI0Njl6zIwWSs94N42j6qN6RIAUicYqFdCNrGkGDh8llHHWLR65qqU+lHbX3k0CDl7d6hNL/NLVKo+631duXfs4OyNIrXPv8HSO1K7b0/feGkd8QasVCy9vvvgAAAABJRU5ErkJggg==";
+  }, function (t, e) {
+    t.exports = function (t, e, n, r) {
+      var o,
+          i = t = t || {},
+          s = _typeof(t["default"]);
+
+      "object" !== s && "function" !== s || (o = t, i = t["default"]);
+      var u = "function" == typeof i ? i.options : i;
+
+      if (e && (u.render = e.render, u.staticRenderFns = e.staticRenderFns), n && (u._scopeId = n), r) {
+        var c = Object.create(u.computed || null);
+        Object.keys(r).forEach(function (t) {
+          var e = r[t];
+
+          c[t] = function () {
+            return e;
+          };
+        }), u.computed = c;
+      }
+
+      return {
+        esModule: o,
+        exports: i,
+        options: u
+      };
+    };
+  }, function (t, e, n) {
+    t.exports = {
+      render: function render() {
+        var t = this,
+            e = t.$createElement,
+            n = t._self._c || e;
+        return n("transition", {
+          attrs: {
+            "enter-active-class": t.enterActiveClass,
+            "leave-active-class": t.leaveActiveClass
+          },
+          on: {
+            "before-enter": t.beforeEnter,
+            "after-enter": t.afterEnter,
+            "before-leave": t.beforeLeave
+          }
+        }, [t.show ? n("div", {
+          staticClass: "toast",
+          "class": ["toast-" + t.type],
+          style: {
+            backgroundColor: t.toastBackgroundColor
+          }
+        }, [t.closeButton ? n("button", {
+          staticClass: "toast-close-button",
+          attrs: {
+            role: "button"
+          },
+          on: {
+            click: t.hideToastr
+          }
+        }, [t._v("×")]) : t._e(), t._v(" "), t.progressBar ? n("div", {
+          staticClass: "toast-progress",
+          style: "width: " + t.progress.percent + "%"
+        }) : t._e(), t._v(" "), n("div", {
+          staticClass: "toast-icon"
+        }, [n("img", {
+          attrs: {
+            src: t.iconSrc
+          }
+        })]), t._v(" "), n("div", {
+          staticClass: "toast-title"
+        }, [t._v(t._s(t.title))]), t._v(" "), t.useHtml ? n("div", {
+          staticClass: "toast-message",
+          domProps: {
+            innerHTML: t._s(t.message)
+          }
+        }) : n("div", {
+          staticClass: "toast-message",
+          domProps: {
+            textContent: t._s(t.message)
+          }
+        })]) : t._e()]);
+      },
+      staticRenderFns: []
+    }, t.exports.render._withStripped = !0;
+  }]);
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -17732,6 +18803,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Pages_verifyEmail_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Pages/verifyEmail.vue */ "./resources/js/components/Pages/verifyEmail.vue");
 /* harmony import */ var _components_Pages_post_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Pages/post.vue */ "./resources/js/components/Pages/post.vue");
 /* harmony import */ var _components_Pages_postEdit_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Pages/postEdit.vue */ "./resources/js/components/Pages/postEdit.vue");
+/* harmony import */ var _public_js_cxlt_vue2_toastr__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ../../public/js/cxlt-vue2-toastr */ "./public/js/cxlt-vue2-toastr.js");
+/* harmony import */ var _public_js_cxlt_vue2_toastr__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(_public_js_cxlt_vue2_toastr__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _public_css_cxlt_vue2_toastr_css__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ../../public/css/cxlt-vue2-toastr.css */ "./public/css/cxlt-vue2-toastr.css");
+/* harmony import */ var _public_css_cxlt_vue2_toastr_css__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(_public_css_cxlt_vue2_toastr_css__WEBPACK_IMPORTED_MODULE_24__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
@@ -17833,6 +18908,14 @@ var routes = [{
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__.default({
   routes: routes
+}); // import CxltToastr from '../dist/js/cxlt-vue2-toastr'
+
+ // import '../dist/css/cxlt-vue2-toastr.css'
+
+
+vue__WEBPACK_IMPORTED_MODULE_5__.default.use((_public_js_cxlt_vue2_toastr__WEBPACK_IMPORTED_MODULE_23___default()), {
+  position: "top right",
+  timeOut: "5000"
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_5__.default({
   router: router
@@ -22377,6 +23460,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, "@-webkit-keyframes splide-loading{0%{t
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./public/css/cxlt-vue2-toastr.css":
+/*!*************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./public/css/cxlt-vue2-toastr.css ***!
+  \*************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".toast-title {\n    font-weight: 700;\n}\n.toast-message {\n    -ms-word-wrap: break-word;\n    word-wrap: break-word;\n}\n.toast-message a,\n.toast-message label {\n    color: #fff;\n}\n.toast-message a:hover {\n    color: #ccc;\n    text-decoration: none;\n}\n.toast-close-button {\n    position: relative;\n    right: -0.3em;\n    top: -0.3em;\n    float: right;\n    font-size: 20px;\n    font-weight: 700;\n    color: #fff;\n    -webkit-text-shadow: 0 1px 0 #fff;\n    text-shadow: 0 1px 0 #fff;\n    opacity: 0.8;\n    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);\n    filter: alpha(opacity=80);\n}\n.toast-close-button:focus,\n.toast-close-button:hover {\n    color: #000;\n    text-decoration: none;\n    cursor: pointer;\n    opacity: 0.4;\n    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);\n    filter: alpha(opacity=40);\n}\nbutton.toast-close-button {\n    padding: 0;\n    cursor: pointer;\n    background: transparent;\n    border: 0;\n    -webkit-appearance: none;\n}\n.toast-icon {\n    position: absolute;\n    left: 10px;\n    top: 25px;\n    display: none;\n}\n.toast-icon,\n.toast-icon img {\n    width: 30px;\n    height: 30px;\n}\n.toast-top-center {\n    top: 0;\n    right: 0;\n    width: 100%;\n}\n.toast-bottom-center {\n    bottom: 0;\n    right: 0;\n    width: 100%;\n}\n.toast-top-full-width {\n    top: 0;\n    right: 0;\n    width: 100%;\n}\n.toast-bottom-full-width {\n    bottom: 0;\n    right: 0;\n    width: 100%;\n}\n.toast-top-left {\n    top: 12px;\n    left: 12px;\n}\n.toast-top-right {\n    top: 12px;\n    right: 12px;\n}\n.toast-bottom-right {\n    right: 12px;\n    bottom: 12px;\n}\n.toast-bottom-left {\n    bottom: 12px;\n    left: 12px;\n}\n.cxlt-toastr-container {\n    position: fixed;\n    z-index: 999999;\n    pointer-events: none;\n}\n.cxlt-toastr-container * {\n    box-sizing: border-box;\n}\n.cxlt-toastr-container > div {\n    position: relative;\n    pointer-events: auto;\n    overflow: hidden;\n    margin: 0 0 6px;\n    padding: 15px 15px 15px 50px;\n    width: 300px;\n    border-radius: 3px 3px 3px 3px;\n    background-position: 15px;\n    background-repeat: no-repeat;\n    box-shadow: 0 0 12px #999;\n    color: #fff;\n    opacity: 0.8;\n    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);\n    filter: alpha(opacity=80);\n}\n.cxlt-toastr-container > :hover {\n    box-shadow: 0 0 12px #000;\n    opacity: 1;\n    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);\n    filter: alpha(opacity=100);\n    cursor: pointer;\n}\n.cxlt-toastr-container.toast-bottom-center > div,\n.cxlt-toastr-container.toast-top-center > div {\n    width: 300px;\n    margin-left: auto;\n    margin-right: auto;\n}\n.cxlt-toastr-container.toast-bottom-full-width > div,\n.cxlt-toastr-container.toast-top-full-width > div {\n    width: 96%;\n    margin-left: auto;\n    margin-right: auto;\n}\n.toast {\n    background-color: #030303;\n}\n.toast-success {\n    background-color: #51a351;\n}\n.toast-error {\n    background-color: #bd362f;\n}\n.toast-info {\n    background-color: #2f96b4;\n}\n.toast-warning {\n    background-color: #f89406;\n}\n.toast-progress {\n    position: absolute;\n    left: 0;\n    bottom: 0;\n    height: 4px;\n    background-color: #000;\n    opacity: 0.4;\n    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);\n    filter: alpha(opacity=40);\n}\n@media (max-width: 240px) {\n    .cxlt-toastr-container > div {\n        padding: 8px 8px 8px 50px;\n        width: 11em;\n    }\n    .cxlt-toastr-container .toast-close-button {\n        right: -0.2em;\n        top: -0.2em;\n    }\n}\n@media (min-width: 241px) and (max-width: 480px) {\n    .cxlt-toastr-container > div {\n        padding: 8px 8px 8px 50px;\n        width: 18em;\n    }\n    .cxlt-toastr-container .toast-close-button {\n        right: -0.2em;\n        top: -0.2em;\n    }\n}\n@media (min-width: 481px) and (max-width: 768px) {\n    .cxlt-toastr-container > div {\n        padding: 15px 15px 15px 50px;\n        width: 25em;\n    }\n} /*!\n * animate.css -https://daneden.github.io/animate.css/\n * Version - 3.7.2\n * Licensed under the MIT license - http://opensource.org/licenses/MIT\n *\n * Copyright (c) 2019 Daniel Eden\n */\n@-webkit-keyframes bounce {\n    0%,\n    20%,\n    53%,\n    80%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n        transform: translateZ(0);\n    }\n    40%,\n    43% {\n        -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n                animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n        transform: translate3d(0, -30px, 0);\n    }\n    70% {\n        -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n                animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n        transform: translate3d(0, -15px, 0);\n    }\n    90% {\n        transform: translate3d(0, -4px, 0);\n    }\n}\n@keyframes bounce {\n    0%,\n    20%,\n    53%,\n    80%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n        transform: translateZ(0);\n    }\n    40%,\n    43% {\n        -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n                animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n        transform: translate3d(0, -30px, 0);\n    }\n    70% {\n        -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n                animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);\n        transform: translate3d(0, -15px, 0);\n    }\n    90% {\n        transform: translate3d(0, -4px, 0);\n    }\n}\n.bounce {\n    -webkit-animation-name: bounce;\n            animation-name: bounce;\n    transform-origin: center bottom;\n}\n@-webkit-keyframes flash {\n    0%,\n    50%,\n    to {\n        opacity: 1;\n    }\n    25%,\n    75% {\n        opacity: 0;\n    }\n}\n@keyframes flash {\n    0%,\n    50%,\n    to {\n        opacity: 1;\n    }\n    25%,\n    75% {\n        opacity: 0;\n    }\n}\n.flash {\n    -webkit-animation-name: flash;\n            animation-name: flash;\n}\n@-webkit-keyframes pulse {\n    0% {\n        transform: scaleX(1);\n    }\n    50% {\n        transform: scale3d(1.05, 1.05, 1.05);\n    }\n    to {\n        transform: scaleX(1);\n    }\n}\n@keyframes pulse {\n    0% {\n        transform: scaleX(1);\n    }\n    50% {\n        transform: scale3d(1.05, 1.05, 1.05);\n    }\n    to {\n        transform: scaleX(1);\n    }\n}\n.pulse {\n    -webkit-animation-name: pulse;\n            animation-name: pulse;\n}\n@-webkit-keyframes rubberBand {\n    0% {\n        transform: scaleX(1);\n    }\n    30% {\n        transform: scale3d(1.25, 0.75, 1);\n    }\n    40% {\n        transform: scale3d(0.75, 1.25, 1);\n    }\n    50% {\n        transform: scale3d(1.15, 0.85, 1);\n    }\n    65% {\n        transform: scale3d(0.95, 1.05, 1);\n    }\n    75% {\n        transform: scale3d(1.05, 0.95, 1);\n    }\n    to {\n        transform: scaleX(1);\n    }\n}\n@keyframes rubberBand {\n    0% {\n        transform: scaleX(1);\n    }\n    30% {\n        transform: scale3d(1.25, 0.75, 1);\n    }\n    40% {\n        transform: scale3d(0.75, 1.25, 1);\n    }\n    50% {\n        transform: scale3d(1.15, 0.85, 1);\n    }\n    65% {\n        transform: scale3d(0.95, 1.05, 1);\n    }\n    75% {\n        transform: scale3d(1.05, 0.95, 1);\n    }\n    to {\n        transform: scaleX(1);\n    }\n}\n.rubberBand {\n    -webkit-animation-name: rubberBand;\n            animation-name: rubberBand;\n}\n@-webkit-keyframes shake {\n    0%,\n    to {\n        transform: translateZ(0);\n    }\n    10%,\n    30%,\n    50%,\n    70%,\n    90% {\n        transform: translate3d(-10px, 0, 0);\n    }\n    20%,\n    40%,\n    60%,\n    80% {\n        transform: translate3d(10px, 0, 0);\n    }\n}\n@keyframes shake {\n    0%,\n    to {\n        transform: translateZ(0);\n    }\n    10%,\n    30%,\n    50%,\n    70%,\n    90% {\n        transform: translate3d(-10px, 0, 0);\n    }\n    20%,\n    40%,\n    60%,\n    80% {\n        transform: translate3d(10px, 0, 0);\n    }\n}\n.shake {\n    -webkit-animation-name: shake;\n            animation-name: shake;\n}\n@-webkit-keyframes headShake {\n    0% {\n        transform: translateX(0);\n    }\n    6.5% {\n        transform: translateX(-6px) rotateY(-9deg);\n    }\n    18.5% {\n        transform: translateX(5px) rotateY(7deg);\n    }\n    31.5% {\n        transform: translateX(-3px) rotateY(-5deg);\n    }\n    43.5% {\n        transform: translateX(2px) rotateY(3deg);\n    }\n    50% {\n        transform: translateX(0);\n    }\n}\n@keyframes headShake {\n    0% {\n        transform: translateX(0);\n    }\n    6.5% {\n        transform: translateX(-6px) rotateY(-9deg);\n    }\n    18.5% {\n        transform: translateX(5px) rotateY(7deg);\n    }\n    31.5% {\n        transform: translateX(-3px) rotateY(-5deg);\n    }\n    43.5% {\n        transform: translateX(2px) rotateY(3deg);\n    }\n    50% {\n        transform: translateX(0);\n    }\n}\n.headShake {\n    -webkit-animation-timing-function: ease-in-out;\n            animation-timing-function: ease-in-out;\n    -webkit-animation-name: headShake;\n            animation-name: headShake;\n}\n@-webkit-keyframes swing {\n    20% {\n        transform: rotate(15deg);\n    }\n    40% {\n        transform: rotate(-10deg);\n    }\n    60% {\n        transform: rotate(5deg);\n    }\n    80% {\n        transform: rotate(-5deg);\n    }\n    to {\n        transform: rotate(0deg);\n    }\n}\n@keyframes swing {\n    20% {\n        transform: rotate(15deg);\n    }\n    40% {\n        transform: rotate(-10deg);\n    }\n    60% {\n        transform: rotate(5deg);\n    }\n    80% {\n        transform: rotate(-5deg);\n    }\n    to {\n        transform: rotate(0deg);\n    }\n}\n.swing {\n    transform-origin: top center;\n    -webkit-animation-name: swing;\n            animation-name: swing;\n}\n@-webkit-keyframes tada {\n    0% {\n        transform: scaleX(1);\n    }\n    10%,\n    20% {\n        transform: scale3d(0.9, 0.9, 0.9) rotate(-3deg);\n    }\n    30%,\n    50%,\n    70%,\n    90% {\n        transform: scale3d(1.1, 1.1, 1.1) rotate(3deg);\n    }\n    40%,\n    60%,\n    80% {\n        transform: scale3d(1.1, 1.1, 1.1) rotate(-3deg);\n    }\n    to {\n        transform: scaleX(1);\n    }\n}\n@keyframes tada {\n    0% {\n        transform: scaleX(1);\n    }\n    10%,\n    20% {\n        transform: scale3d(0.9, 0.9, 0.9) rotate(-3deg);\n    }\n    30%,\n    50%,\n    70%,\n    90% {\n        transform: scale3d(1.1, 1.1, 1.1) rotate(3deg);\n    }\n    40%,\n    60%,\n    80% {\n        transform: scale3d(1.1, 1.1, 1.1) rotate(-3deg);\n    }\n    to {\n        transform: scaleX(1);\n    }\n}\n.tada {\n    -webkit-animation-name: tada;\n            animation-name: tada;\n}\n@-webkit-keyframes wobble {\n    0% {\n        transform: translateZ(0);\n    }\n    15% {\n        transform: translate3d(-25%, 0, 0) rotate(-5deg);\n    }\n    30% {\n        transform: translate3d(20%, 0, 0) rotate(3deg);\n    }\n    45% {\n        transform: translate3d(-15%, 0, 0) rotate(-3deg);\n    }\n    60% {\n        transform: translate3d(10%, 0, 0) rotate(2deg);\n    }\n    75% {\n        transform: translate3d(-5%, 0, 0) rotate(-1deg);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n@keyframes wobble {\n    0% {\n        transform: translateZ(0);\n    }\n    15% {\n        transform: translate3d(-25%, 0, 0) rotate(-5deg);\n    }\n    30% {\n        transform: translate3d(20%, 0, 0) rotate(3deg);\n    }\n    45% {\n        transform: translate3d(-15%, 0, 0) rotate(-3deg);\n    }\n    60% {\n        transform: translate3d(10%, 0, 0) rotate(2deg);\n    }\n    75% {\n        transform: translate3d(-5%, 0, 0) rotate(-1deg);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n.wobble {\n    -webkit-animation-name: wobble;\n            animation-name: wobble;\n}\n@-webkit-keyframes jello {\n    0%,\n    11.1%,\n    to {\n        transform: translateZ(0);\n    }\n    22.2% {\n        transform: skewX(-12.5deg) skewY(-12.5deg);\n    }\n    33.3% {\n        transform: skewX(6.25deg) skewY(6.25deg);\n    }\n    44.4% {\n        transform: skewX(-3.125deg) skewY(-3.125deg);\n    }\n    55.5% {\n        transform: skewX(1.5625deg) skewY(1.5625deg);\n    }\n    66.6% {\n        transform: skewX(-0.78125deg) skewY(-0.78125deg);\n    }\n    77.7% {\n        transform: skewX(0.390625deg) skewY(0.390625deg);\n    }\n    88.8% {\n        transform: skewX(-0.1953125deg) skewY(-0.1953125deg);\n    }\n}\n@keyframes jello {\n    0%,\n    11.1%,\n    to {\n        transform: translateZ(0);\n    }\n    22.2% {\n        transform: skewX(-12.5deg) skewY(-12.5deg);\n    }\n    33.3% {\n        transform: skewX(6.25deg) skewY(6.25deg);\n    }\n    44.4% {\n        transform: skewX(-3.125deg) skewY(-3.125deg);\n    }\n    55.5% {\n        transform: skewX(1.5625deg) skewY(1.5625deg);\n    }\n    66.6% {\n        transform: skewX(-0.78125deg) skewY(-0.78125deg);\n    }\n    77.7% {\n        transform: skewX(0.390625deg) skewY(0.390625deg);\n    }\n    88.8% {\n        transform: skewX(-0.1953125deg) skewY(-0.1953125deg);\n    }\n}\n.jello {\n    -webkit-animation-name: jello;\n            animation-name: jello;\n    transform-origin: center;\n}\n@-webkit-keyframes heartBeat {\n    0% {\n        transform: scale(1);\n    }\n    14% {\n        transform: scale(1.3);\n    }\n    28% {\n        transform: scale(1);\n    }\n    42% {\n        transform: scale(1.3);\n    }\n    70% {\n        transform: scale(1);\n    }\n}\n@keyframes heartBeat {\n    0% {\n        transform: scale(1);\n    }\n    14% {\n        transform: scale(1.3);\n    }\n    28% {\n        transform: scale(1);\n    }\n    42% {\n        transform: scale(1.3);\n    }\n    70% {\n        transform: scale(1);\n    }\n}\n.heartBeat {\n    -webkit-animation-name: heartBeat;\n            animation-name: heartBeat;\n    -webkit-animation-duration: 1.3s;\n            animation-duration: 1.3s;\n    -webkit-animation-timing-function: ease-in-out;\n            animation-timing-function: ease-in-out;\n}\n@-webkit-keyframes bounceIn {\n    0%,\n    20%,\n    40%,\n    60%,\n    80%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    }\n    0% {\n        opacity: 0;\n        transform: scale3d(0.3, 0.3, 0.3);\n    }\n    20% {\n        transform: scale3d(1.1, 1.1, 1.1);\n    }\n    40% {\n        transform: scale3d(0.9, 0.9, 0.9);\n    }\n    60% {\n        opacity: 1;\n        transform: scale3d(1.03, 1.03, 1.03);\n    }\n    80% {\n        transform: scale3d(0.97, 0.97, 0.97);\n    }\n    to {\n        opacity: 1;\n        transform: scaleX(1);\n    }\n}\n@keyframes bounceIn {\n    0%,\n    20%,\n    40%,\n    60%,\n    80%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    }\n    0% {\n        opacity: 0;\n        transform: scale3d(0.3, 0.3, 0.3);\n    }\n    20% {\n        transform: scale3d(1.1, 1.1, 1.1);\n    }\n    40% {\n        transform: scale3d(0.9, 0.9, 0.9);\n    }\n    60% {\n        opacity: 1;\n        transform: scale3d(1.03, 1.03, 1.03);\n    }\n    80% {\n        transform: scale3d(0.97, 0.97, 0.97);\n    }\n    to {\n        opacity: 1;\n        transform: scaleX(1);\n    }\n}\n.bounceIn {\n    -webkit-animation-duration: 0.75s;\n            animation-duration: 0.75s;\n    -webkit-animation-name: bounceIn;\n            animation-name: bounceIn;\n}\n@-webkit-keyframes bounceInDown {\n    0%,\n    60%,\n    75%,\n    90%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    }\n    0% {\n        opacity: 0;\n        transform: translate3d(0, -3000px, 0);\n    }\n    60% {\n        opacity: 1;\n        transform: translate3d(0, 25px, 0);\n    }\n    75% {\n        transform: translate3d(0, -10px, 0);\n    }\n    90% {\n        transform: translate3d(0, 5px, 0);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n@keyframes bounceInDown {\n    0%,\n    60%,\n    75%,\n    90%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    }\n    0% {\n        opacity: 0;\n        transform: translate3d(0, -3000px, 0);\n    }\n    60% {\n        opacity: 1;\n        transform: translate3d(0, 25px, 0);\n    }\n    75% {\n        transform: translate3d(0, -10px, 0);\n    }\n    90% {\n        transform: translate3d(0, 5px, 0);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n.bounceInDown {\n    -webkit-animation-name: bounceInDown;\n            animation-name: bounceInDown;\n}\n@-webkit-keyframes bounceInLeft {\n    0%,\n    60%,\n    75%,\n    90%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    }\n    0% {\n        opacity: 0;\n        transform: translate3d(-3000px, 0, 0);\n    }\n    60% {\n        opacity: 1;\n        transform: translate3d(25px, 0, 0);\n    }\n    75% {\n        transform: translate3d(-10px, 0, 0);\n    }\n    90% {\n        transform: translate3d(5px, 0, 0);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n@keyframes bounceInLeft {\n    0%,\n    60%,\n    75%,\n    90%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    }\n    0% {\n        opacity: 0;\n        transform: translate3d(-3000px, 0, 0);\n    }\n    60% {\n        opacity: 1;\n        transform: translate3d(25px, 0, 0);\n    }\n    75% {\n        transform: translate3d(-10px, 0, 0);\n    }\n    90% {\n        transform: translate3d(5px, 0, 0);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n.bounceInLeft {\n    -webkit-animation-name: bounceInLeft;\n            animation-name: bounceInLeft;\n}\n@-webkit-keyframes bounceInRight {\n    0%,\n    60%,\n    75%,\n    90%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    }\n    0% {\n        opacity: 0;\n        transform: translate3d(3000px, 0, 0);\n    }\n    60% {\n        opacity: 1;\n        transform: translate3d(-25px, 0, 0);\n    }\n    75% {\n        transform: translate3d(10px, 0, 0);\n    }\n    90% {\n        transform: translate3d(-5px, 0, 0);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n@keyframes bounceInRight {\n    0%,\n    60%,\n    75%,\n    90%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    }\n    0% {\n        opacity: 0;\n        transform: translate3d(3000px, 0, 0);\n    }\n    60% {\n        opacity: 1;\n        transform: translate3d(-25px, 0, 0);\n    }\n    75% {\n        transform: translate3d(10px, 0, 0);\n    }\n    90% {\n        transform: translate3d(-5px, 0, 0);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n.bounceInRight {\n    -webkit-animation-name: bounceInRight;\n            animation-name: bounceInRight;\n}\n@-webkit-keyframes bounceInUp {\n    0%,\n    60%,\n    75%,\n    90%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    }\n    0% {\n        opacity: 0;\n        transform: translate3d(0, 3000px, 0);\n    }\n    60% {\n        opacity: 1;\n        transform: translate3d(0, -20px, 0);\n    }\n    75% {\n        transform: translate3d(0, 10px, 0);\n    }\n    90% {\n        transform: translate3d(0, -5px, 0);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n@keyframes bounceInUp {\n    0%,\n    60%,\n    75%,\n    90%,\n    to {\n        -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n    }\n    0% {\n        opacity: 0;\n        transform: translate3d(0, 3000px, 0);\n    }\n    60% {\n        opacity: 1;\n        transform: translate3d(0, -20px, 0);\n    }\n    75% {\n        transform: translate3d(0, 10px, 0);\n    }\n    90% {\n        transform: translate3d(0, -5px, 0);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n.bounceInUp {\n    -webkit-animation-name: bounceInUp;\n            animation-name: bounceInUp;\n}\n@-webkit-keyframes bounceOut {\n    20% {\n        transform: scale3d(0.9, 0.9, 0.9);\n    }\n    50%,\n    55% {\n        opacity: 1;\n        transform: scale3d(1.1, 1.1, 1.1);\n    }\n    to {\n        opacity: 0;\n        transform: scale3d(0.3, 0.3, 0.3);\n    }\n}\n@keyframes bounceOut {\n    20% {\n        transform: scale3d(0.9, 0.9, 0.9);\n    }\n    50%,\n    55% {\n        opacity: 1;\n        transform: scale3d(1.1, 1.1, 1.1);\n    }\n    to {\n        opacity: 0;\n        transform: scale3d(0.3, 0.3, 0.3);\n    }\n}\n.bounceOut {\n    -webkit-animation-duration: 0.75s;\n            animation-duration: 0.75s;\n    -webkit-animation-name: bounceOut;\n            animation-name: bounceOut;\n}\n@-webkit-keyframes bounceOutDown {\n    20% {\n        transform: translate3d(0, 10px, 0);\n    }\n    40%,\n    45% {\n        opacity: 1;\n        transform: translate3d(0, -20px, 0);\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, 2000px, 0);\n    }\n}\n@keyframes bounceOutDown {\n    20% {\n        transform: translate3d(0, 10px, 0);\n    }\n    40%,\n    45% {\n        opacity: 1;\n        transform: translate3d(0, -20px, 0);\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, 2000px, 0);\n    }\n}\n.bounceOutDown {\n    -webkit-animation-name: bounceOutDown;\n            animation-name: bounceOutDown;\n}\n@-webkit-keyframes bounceOutLeft {\n    20% {\n        opacity: 1;\n        transform: translate3d(20px, 0, 0);\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(-2000px, 0, 0);\n    }\n}\n@keyframes bounceOutLeft {\n    20% {\n        opacity: 1;\n        transform: translate3d(20px, 0, 0);\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(-2000px, 0, 0);\n    }\n}\n.bounceOutLeft {\n    -webkit-animation-name: bounceOutLeft;\n            animation-name: bounceOutLeft;\n}\n@-webkit-keyframes bounceOutRight {\n    20% {\n        opacity: 1;\n        transform: translate3d(-20px, 0, 0);\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(2000px, 0, 0);\n    }\n}\n@keyframes bounceOutRight {\n    20% {\n        opacity: 1;\n        transform: translate3d(-20px, 0, 0);\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(2000px, 0, 0);\n    }\n}\n.bounceOutRight {\n    -webkit-animation-name: bounceOutRight;\n            animation-name: bounceOutRight;\n}\n@-webkit-keyframes bounceOutUp {\n    20% {\n        transform: translate3d(0, -10px, 0);\n    }\n    40%,\n    45% {\n        opacity: 1;\n        transform: translate3d(0, 20px, 0);\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, -2000px, 0);\n    }\n}\n@keyframes bounceOutUp {\n    20% {\n        transform: translate3d(0, -10px, 0);\n    }\n    40%,\n    45% {\n        opacity: 1;\n        transform: translate3d(0, 20px, 0);\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, -2000px, 0);\n    }\n}\n.bounceOutUp {\n    -webkit-animation-name: bounceOutUp;\n            animation-name: bounceOutUp;\n}\n@-webkit-keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n    to {\n        opacity: 1;\n    }\n}\n@keyframes fadeIn {\n    0% {\n        opacity: 0;\n    }\n    to {\n        opacity: 1;\n    }\n}\n.fadeIn {\n    -webkit-animation-name: fadeIn;\n            animation-name: fadeIn;\n}\n@-webkit-keyframes fadeInDown {\n    0% {\n        opacity: 0;\n        transform: translate3d(0, -100%, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n@keyframes fadeInDown {\n    0% {\n        opacity: 0;\n        transform: translate3d(0, -100%, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n.fadeInDown {\n    -webkit-animation-name: fadeInDown;\n            animation-name: fadeInDown;\n}\n@-webkit-keyframes fadeInDownBig {\n    0% {\n        opacity: 0;\n        transform: translate3d(0, -2000px, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n@keyframes fadeInDownBig {\n    0% {\n        opacity: 0;\n        transform: translate3d(0, -2000px, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n.fadeInDownBig {\n    -webkit-animation-name: fadeInDownBig;\n            animation-name: fadeInDownBig;\n}\n@-webkit-keyframes fadeInLeft {\n    0% {\n        opacity: 0;\n        transform: translate3d(-100%, 0, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n@keyframes fadeInLeft {\n    0% {\n        opacity: 0;\n        transform: translate3d(-100%, 0, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n.fadeInLeft {\n    -webkit-animation-name: fadeInLeft;\n            animation-name: fadeInLeft;\n}\n@-webkit-keyframes fadeInLeftBig {\n    0% {\n        opacity: 0;\n        transform: translate3d(-2000px, 0, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n@keyframes fadeInLeftBig {\n    0% {\n        opacity: 0;\n        transform: translate3d(-2000px, 0, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n.fadeInLeftBig {\n    -webkit-animation-name: fadeInLeftBig;\n            animation-name: fadeInLeftBig;\n}\n@-webkit-keyframes fadeInRight {\n    0% {\n        opacity: 0;\n        transform: translate3d(100%, 0, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n@keyframes fadeInRight {\n    0% {\n        opacity: 0;\n        transform: translate3d(100%, 0, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n.fadeInRight {\n    -webkit-animation-name: fadeInRight;\n            animation-name: fadeInRight;\n}\n@-webkit-keyframes fadeInRightBig {\n    0% {\n        opacity: 0;\n        transform: translate3d(2000px, 0, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n@keyframes fadeInRightBig {\n    0% {\n        opacity: 0;\n        transform: translate3d(2000px, 0, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n.fadeInRightBig {\n    -webkit-animation-name: fadeInRightBig;\n            animation-name: fadeInRightBig;\n}\n@-webkit-keyframes fadeInUp {\n    0% {\n        opacity: 0;\n        transform: translate3d(0, 100%, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n@keyframes fadeInUp {\n    0% {\n        opacity: 0;\n        transform: translate3d(0, 100%, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n.fadeInUp {\n    -webkit-animation-name: fadeInUp;\n            animation-name: fadeInUp;\n}\n@-webkit-keyframes fadeInUpBig {\n    0% {\n        opacity: 0;\n        transform: translate3d(0, 2000px, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n@keyframes fadeInUpBig {\n    0% {\n        opacity: 0;\n        transform: translate3d(0, 2000px, 0);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n.fadeInUpBig {\n    -webkit-animation-name: fadeInUpBig;\n            animation-name: fadeInUpBig;\n}\n@-webkit-keyframes fadeOut {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n    }\n}\n@keyframes fadeOut {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n    }\n}\n.fadeOut {\n    -webkit-animation-name: fadeOut;\n            animation-name: fadeOut;\n}\n@-webkit-keyframes fadeOutDown {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, 100%, 0);\n    }\n}\n@keyframes fadeOutDown {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, 100%, 0);\n    }\n}\n.fadeOutDown {\n    -webkit-animation-name: fadeOutDown;\n            animation-name: fadeOutDown;\n}\n@-webkit-keyframes fadeOutDownBig {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, 2000px, 0);\n    }\n}\n@keyframes fadeOutDownBig {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, 2000px, 0);\n    }\n}\n.fadeOutDownBig {\n    -webkit-animation-name: fadeOutDownBig;\n            animation-name: fadeOutDownBig;\n}\n@-webkit-keyframes fadeOutLeft {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(-100%, 0, 0);\n    }\n}\n@keyframes fadeOutLeft {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(-100%, 0, 0);\n    }\n}\n.fadeOutLeft {\n    -webkit-animation-name: fadeOutLeft;\n            animation-name: fadeOutLeft;\n}\n@-webkit-keyframes fadeOutLeftBig {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(-2000px, 0, 0);\n    }\n}\n@keyframes fadeOutLeftBig {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(-2000px, 0, 0);\n    }\n}\n.fadeOutLeftBig {\n    -webkit-animation-name: fadeOutLeftBig;\n            animation-name: fadeOutLeftBig;\n}\n@-webkit-keyframes fadeOutRight {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(100%, 0, 0);\n    }\n}\n@keyframes fadeOutRight {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(100%, 0, 0);\n    }\n}\n.fadeOutRight {\n    -webkit-animation-name: fadeOutRight;\n            animation-name: fadeOutRight;\n}\n@-webkit-keyframes fadeOutRightBig {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(2000px, 0, 0);\n    }\n}\n@keyframes fadeOutRightBig {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(2000px, 0, 0);\n    }\n}\n.fadeOutRightBig {\n    -webkit-animation-name: fadeOutRightBig;\n            animation-name: fadeOutRightBig;\n}\n@-webkit-keyframes fadeOutUp {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, -100%, 0);\n    }\n}\n@keyframes fadeOutUp {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, -100%, 0);\n    }\n}\n.fadeOutUp {\n    -webkit-animation-name: fadeOutUp;\n            animation-name: fadeOutUp;\n}\n@-webkit-keyframes fadeOutUpBig {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, -2000px, 0);\n    }\n}\n@keyframes fadeOutUpBig {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(0, -2000px, 0);\n    }\n}\n.fadeOutUpBig {\n    -webkit-animation-name: fadeOutUpBig;\n            animation-name: fadeOutUpBig;\n}\n@-webkit-keyframes flip {\n    0% {\n        transform: perspective(400px) scaleX(1) translateZ(0) rotateY(-1turn);\n        -webkit-animation-timing-function: ease-out;\n                animation-timing-function: ease-out;\n    }\n    40% {\n        transform: perspective(400px) scaleX(1) translateZ(150px)\n            rotateY(-190deg);\n        -webkit-animation-timing-function: ease-out;\n                animation-timing-function: ease-out;\n    }\n    50% {\n        transform: perspective(400px) scaleX(1) translateZ(150px)\n            rotateY(-170deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n    }\n    80% {\n        transform: perspective(400px) scale3d(0.95, 0.95, 0.95) translateZ(0)\n            rotateY(0deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n    }\n    to {\n        transform: perspective(400px) scaleX(1) translateZ(0) rotateY(0deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n    }\n}\n@keyframes flip {\n    0% {\n        transform: perspective(400px) scaleX(1) translateZ(0) rotateY(-1turn);\n        -webkit-animation-timing-function: ease-out;\n                animation-timing-function: ease-out;\n    }\n    40% {\n        transform: perspective(400px) scaleX(1) translateZ(150px)\n            rotateY(-190deg);\n        -webkit-animation-timing-function: ease-out;\n                animation-timing-function: ease-out;\n    }\n    50% {\n        transform: perspective(400px) scaleX(1) translateZ(150px)\n            rotateY(-170deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n    }\n    80% {\n        transform: perspective(400px) scale3d(0.95, 0.95, 0.95) translateZ(0)\n            rotateY(0deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n    }\n    to {\n        transform: perspective(400px) scaleX(1) translateZ(0) rotateY(0deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n    }\n}\n.animated.flip {\n    -webkit-backface-visibility: visible;\n    backface-visibility: visible;\n    -webkit-animation-name: flip;\n            animation-name: flip;\n}\n@-webkit-keyframes flipInX {\n    0% {\n        transform: perspective(400px) rotateX(90deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n        opacity: 0;\n    }\n    40% {\n        transform: perspective(400px) rotateX(-20deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n    }\n    60% {\n        transform: perspective(400px) rotateX(10deg);\n        opacity: 1;\n    }\n    80% {\n        transform: perspective(400px) rotateX(-5deg);\n    }\n    to {\n        transform: perspective(400px);\n    }\n}\n@keyframes flipInX {\n    0% {\n        transform: perspective(400px) rotateX(90deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n        opacity: 0;\n    }\n    40% {\n        transform: perspective(400px) rotateX(-20deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n    }\n    60% {\n        transform: perspective(400px) rotateX(10deg);\n        opacity: 1;\n    }\n    80% {\n        transform: perspective(400px) rotateX(-5deg);\n    }\n    to {\n        transform: perspective(400px);\n    }\n}\n.flipInX {\n    -webkit-backface-visibility: visible !important;\n    backface-visibility: visible !important;\n    -webkit-animation-name: flipInX;\n            animation-name: flipInX;\n}\n@-webkit-keyframes flipInY {\n    0% {\n        transform: perspective(400px) rotateY(90deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n        opacity: 0;\n    }\n    40% {\n        transform: perspective(400px) rotateY(-20deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n    }\n    60% {\n        transform: perspective(400px) rotateY(10deg);\n        opacity: 1;\n    }\n    80% {\n        transform: perspective(400px) rotateY(-5deg);\n    }\n    to {\n        transform: perspective(400px);\n    }\n}\n@keyframes flipInY {\n    0% {\n        transform: perspective(400px) rotateY(90deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n        opacity: 0;\n    }\n    40% {\n        transform: perspective(400px) rotateY(-20deg);\n        -webkit-animation-timing-function: ease-in;\n                animation-timing-function: ease-in;\n    }\n    60% {\n        transform: perspective(400px) rotateY(10deg);\n        opacity: 1;\n    }\n    80% {\n        transform: perspective(400px) rotateY(-5deg);\n    }\n    to {\n        transform: perspective(400px);\n    }\n}\n.flipInY {\n    -webkit-backface-visibility: visible !important;\n    backface-visibility: visible !important;\n    -webkit-animation-name: flipInY;\n            animation-name: flipInY;\n}\n@-webkit-keyframes flipOutX {\n    0% {\n        transform: perspective(400px);\n    }\n    30% {\n        transform: perspective(400px) rotateX(-20deg);\n        opacity: 1;\n    }\n    to {\n        transform: perspective(400px) rotateX(90deg);\n        opacity: 0;\n    }\n}\n@keyframes flipOutX {\n    0% {\n        transform: perspective(400px);\n    }\n    30% {\n        transform: perspective(400px) rotateX(-20deg);\n        opacity: 1;\n    }\n    to {\n        transform: perspective(400px) rotateX(90deg);\n        opacity: 0;\n    }\n}\n.flipOutX {\n    -webkit-animation-duration: 0.75s;\n            animation-duration: 0.75s;\n    -webkit-animation-name: flipOutX;\n            animation-name: flipOutX;\n    -webkit-backface-visibility: visible !important;\n    backface-visibility: visible !important;\n}\n@-webkit-keyframes flipOutY {\n    0% {\n        transform: perspective(400px);\n    }\n    30% {\n        transform: perspective(400px) rotateY(-15deg);\n        opacity: 1;\n    }\n    to {\n        transform: perspective(400px) rotateY(90deg);\n        opacity: 0;\n    }\n}\n@keyframes flipOutY {\n    0% {\n        transform: perspective(400px);\n    }\n    30% {\n        transform: perspective(400px) rotateY(-15deg);\n        opacity: 1;\n    }\n    to {\n        transform: perspective(400px) rotateY(90deg);\n        opacity: 0;\n    }\n}\n.flipOutY {\n    -webkit-animation-duration: 0.75s;\n            animation-duration: 0.75s;\n    -webkit-backface-visibility: visible !important;\n    backface-visibility: visible !important;\n    -webkit-animation-name: flipOutY;\n            animation-name: flipOutY;\n}\n@-webkit-keyframes lightSpeedIn {\n    0% {\n        transform: translate3d(100%, 0, 0) skewX(-30deg);\n        opacity: 0;\n    }\n    60% {\n        transform: skewX(20deg);\n        opacity: 1;\n    }\n    80% {\n        transform: skewX(-5deg);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n@keyframes lightSpeedIn {\n    0% {\n        transform: translate3d(100%, 0, 0) skewX(-30deg);\n        opacity: 0;\n    }\n    60% {\n        transform: skewX(20deg);\n        opacity: 1;\n    }\n    80% {\n        transform: skewX(-5deg);\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n.lightSpeedIn {\n    -webkit-animation-name: lightSpeedIn;\n            animation-name: lightSpeedIn;\n    -webkit-animation-timing-function: ease-out;\n            animation-timing-function: ease-out;\n}\n@-webkit-keyframes lightSpeedOut {\n    0% {\n        opacity: 1;\n    }\n    to {\n        transform: translate3d(100%, 0, 0) skewX(30deg);\n        opacity: 0;\n    }\n}\n@keyframes lightSpeedOut {\n    0% {\n        opacity: 1;\n    }\n    to {\n        transform: translate3d(100%, 0, 0) skewX(30deg);\n        opacity: 0;\n    }\n}\n.lightSpeedOut {\n    -webkit-animation-name: lightSpeedOut;\n            animation-name: lightSpeedOut;\n    -webkit-animation-timing-function: ease-in;\n            animation-timing-function: ease-in;\n}\n@-webkit-keyframes rotateIn {\n    0% {\n        transform-origin: center;\n        transform: rotate(-200deg);\n        opacity: 0;\n    }\n    to {\n        transform-origin: center;\n        transform: translateZ(0);\n        opacity: 1;\n    }\n}\n@keyframes rotateIn {\n    0% {\n        transform-origin: center;\n        transform: rotate(-200deg);\n        opacity: 0;\n    }\n    to {\n        transform-origin: center;\n        transform: translateZ(0);\n        opacity: 1;\n    }\n}\n.rotateIn {\n    -webkit-animation-name: rotateIn;\n            animation-name: rotateIn;\n}\n@-webkit-keyframes rotateInDownLeft {\n    0% {\n        transform-origin: left bottom;\n        transform: rotate(-45deg);\n        opacity: 0;\n    }\n    to {\n        transform-origin: left bottom;\n        transform: translateZ(0);\n        opacity: 1;\n    }\n}\n@keyframes rotateInDownLeft {\n    0% {\n        transform-origin: left bottom;\n        transform: rotate(-45deg);\n        opacity: 0;\n    }\n    to {\n        transform-origin: left bottom;\n        transform: translateZ(0);\n        opacity: 1;\n    }\n}\n.rotateInDownLeft {\n    -webkit-animation-name: rotateInDownLeft;\n            animation-name: rotateInDownLeft;\n}\n@-webkit-keyframes rotateInDownRight {\n    0% {\n        transform-origin: right bottom;\n        transform: rotate(45deg);\n        opacity: 0;\n    }\n    to {\n        transform-origin: right bottom;\n        transform: translateZ(0);\n        opacity: 1;\n    }\n}\n@keyframes rotateInDownRight {\n    0% {\n        transform-origin: right bottom;\n        transform: rotate(45deg);\n        opacity: 0;\n    }\n    to {\n        transform-origin: right bottom;\n        transform: translateZ(0);\n        opacity: 1;\n    }\n}\n.rotateInDownRight {\n    -webkit-animation-name: rotateInDownRight;\n            animation-name: rotateInDownRight;\n}\n@-webkit-keyframes rotateInUpLeft {\n    0% {\n        transform-origin: left bottom;\n        transform: rotate(45deg);\n        opacity: 0;\n    }\n    to {\n        transform-origin: left bottom;\n        transform: translateZ(0);\n        opacity: 1;\n    }\n}\n@keyframes rotateInUpLeft {\n    0% {\n        transform-origin: left bottom;\n        transform: rotate(45deg);\n        opacity: 0;\n    }\n    to {\n        transform-origin: left bottom;\n        transform: translateZ(0);\n        opacity: 1;\n    }\n}\n.rotateInUpLeft {\n    -webkit-animation-name: rotateInUpLeft;\n            animation-name: rotateInUpLeft;\n}\n@-webkit-keyframes rotateInUpRight {\n    0% {\n        transform-origin: right bottom;\n        transform: rotate(-90deg);\n        opacity: 0;\n    }\n    to {\n        transform-origin: right bottom;\n        transform: translateZ(0);\n        opacity: 1;\n    }\n}\n@keyframes rotateInUpRight {\n    0% {\n        transform-origin: right bottom;\n        transform: rotate(-90deg);\n        opacity: 0;\n    }\n    to {\n        transform-origin: right bottom;\n        transform: translateZ(0);\n        opacity: 1;\n    }\n}\n.rotateInUpRight {\n    -webkit-animation-name: rotateInUpRight;\n            animation-name: rotateInUpRight;\n}\n@-webkit-keyframes rotateOut {\n    0% {\n        transform-origin: center;\n        opacity: 1;\n    }\n    to {\n        transform-origin: center;\n        transform: rotate(200deg);\n        opacity: 0;\n    }\n}\n@keyframes rotateOut {\n    0% {\n        transform-origin: center;\n        opacity: 1;\n    }\n    to {\n        transform-origin: center;\n        transform: rotate(200deg);\n        opacity: 0;\n    }\n}\n.rotateOut {\n    -webkit-animation-name: rotateOut;\n            animation-name: rotateOut;\n}\n@-webkit-keyframes rotateOutDownLeft {\n    0% {\n        transform-origin: left bottom;\n        opacity: 1;\n    }\n    to {\n        transform-origin: left bottom;\n        transform: rotate(45deg);\n        opacity: 0;\n    }\n}\n@keyframes rotateOutDownLeft {\n    0% {\n        transform-origin: left bottom;\n        opacity: 1;\n    }\n    to {\n        transform-origin: left bottom;\n        transform: rotate(45deg);\n        opacity: 0;\n    }\n}\n.rotateOutDownLeft {\n    -webkit-animation-name: rotateOutDownLeft;\n            animation-name: rotateOutDownLeft;\n}\n@-webkit-keyframes rotateOutDownRight {\n    0% {\n        transform-origin: right bottom;\n        opacity: 1;\n    }\n    to {\n        transform-origin: right bottom;\n        transform: rotate(-45deg);\n        opacity: 0;\n    }\n}\n@keyframes rotateOutDownRight {\n    0% {\n        transform-origin: right bottom;\n        opacity: 1;\n    }\n    to {\n        transform-origin: right bottom;\n        transform: rotate(-45deg);\n        opacity: 0;\n    }\n}\n.rotateOutDownRight {\n    -webkit-animation-name: rotateOutDownRight;\n            animation-name: rotateOutDownRight;\n}\n@-webkit-keyframes rotateOutUpLeft {\n    0% {\n        transform-origin: left bottom;\n        opacity: 1;\n    }\n    to {\n        transform-origin: left bottom;\n        transform: rotate(-45deg);\n        opacity: 0;\n    }\n}\n@keyframes rotateOutUpLeft {\n    0% {\n        transform-origin: left bottom;\n        opacity: 1;\n    }\n    to {\n        transform-origin: left bottom;\n        transform: rotate(-45deg);\n        opacity: 0;\n    }\n}\n.rotateOutUpLeft {\n    -webkit-animation-name: rotateOutUpLeft;\n            animation-name: rotateOutUpLeft;\n}\n@-webkit-keyframes rotateOutUpRight {\n    0% {\n        transform-origin: right bottom;\n        opacity: 1;\n    }\n    to {\n        transform-origin: right bottom;\n        transform: rotate(90deg);\n        opacity: 0;\n    }\n}\n@keyframes rotateOutUpRight {\n    0% {\n        transform-origin: right bottom;\n        opacity: 1;\n    }\n    to {\n        transform-origin: right bottom;\n        transform: rotate(90deg);\n        opacity: 0;\n    }\n}\n.rotateOutUpRight {\n    -webkit-animation-name: rotateOutUpRight;\n            animation-name: rotateOutUpRight;\n}\n@-webkit-keyframes hinge {\n    0% {\n        transform-origin: top left;\n        -webkit-animation-timing-function: ease-in-out;\n                animation-timing-function: ease-in-out;\n    }\n    20%,\n    60% {\n        transform: rotate(80deg);\n        transform-origin: top left;\n        -webkit-animation-timing-function: ease-in-out;\n                animation-timing-function: ease-in-out;\n    }\n    40%,\n    80% {\n        transform: rotate(60deg);\n        transform-origin: top left;\n        -webkit-animation-timing-function: ease-in-out;\n                animation-timing-function: ease-in-out;\n        opacity: 1;\n    }\n    to {\n        transform: translate3d(0, 700px, 0);\n        opacity: 0;\n    }\n}\n@keyframes hinge {\n    0% {\n        transform-origin: top left;\n        -webkit-animation-timing-function: ease-in-out;\n                animation-timing-function: ease-in-out;\n    }\n    20%,\n    60% {\n        transform: rotate(80deg);\n        transform-origin: top left;\n        -webkit-animation-timing-function: ease-in-out;\n                animation-timing-function: ease-in-out;\n    }\n    40%,\n    80% {\n        transform: rotate(60deg);\n        transform-origin: top left;\n        -webkit-animation-timing-function: ease-in-out;\n                animation-timing-function: ease-in-out;\n        opacity: 1;\n    }\n    to {\n        transform: translate3d(0, 700px, 0);\n        opacity: 0;\n    }\n}\n.hinge {\n    -webkit-animation-duration: 2s;\n            animation-duration: 2s;\n    -webkit-animation-name: hinge;\n            animation-name: hinge;\n}\n@-webkit-keyframes jackInTheBox {\n    0% {\n        opacity: 0;\n        transform: scale(0.1) rotate(30deg);\n        transform-origin: center bottom;\n    }\n    50% {\n        transform: rotate(-10deg);\n    }\n    70% {\n        transform: rotate(3deg);\n    }\n    to {\n        opacity: 1;\n        transform: scale(1);\n    }\n}\n@keyframes jackInTheBox {\n    0% {\n        opacity: 0;\n        transform: scale(0.1) rotate(30deg);\n        transform-origin: center bottom;\n    }\n    50% {\n        transform: rotate(-10deg);\n    }\n    70% {\n        transform: rotate(3deg);\n    }\n    to {\n        opacity: 1;\n        transform: scale(1);\n    }\n}\n.jackInTheBox {\n    -webkit-animation-name: jackInTheBox;\n            animation-name: jackInTheBox;\n}\n@-webkit-keyframes rollIn {\n    0% {\n        opacity: 0;\n        transform: translate3d(-100%, 0, 0) rotate(-120deg);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n@keyframes rollIn {\n    0% {\n        opacity: 0;\n        transform: translate3d(-100%, 0, 0) rotate(-120deg);\n    }\n    to {\n        opacity: 1;\n        transform: translateZ(0);\n    }\n}\n.rollIn {\n    -webkit-animation-name: rollIn;\n            animation-name: rollIn;\n}\n@-webkit-keyframes rollOut {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(100%, 0, 0) rotate(120deg);\n    }\n}\n@keyframes rollOut {\n    0% {\n        opacity: 1;\n    }\n    to {\n        opacity: 0;\n        transform: translate3d(100%, 0, 0) rotate(120deg);\n    }\n}\n.rollOut {\n    -webkit-animation-name: rollOut;\n            animation-name: rollOut;\n}\n@-webkit-keyframes zoomIn {\n    0% {\n        opacity: 0;\n        transform: scale3d(0.3, 0.3, 0.3);\n    }\n    50% {\n        opacity: 1;\n    }\n}\n@keyframes zoomIn {\n    0% {\n        opacity: 0;\n        transform: scale3d(0.3, 0.3, 0.3);\n    }\n    50% {\n        opacity: 1;\n    }\n}\n.zoomIn {\n    -webkit-animation-name: zoomIn;\n            animation-name: zoomIn;\n}\n@-webkit-keyframes zoomInDown {\n    0% {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    60% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n@keyframes zoomInDown {\n    0% {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    60% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n.zoomInDown {\n    -webkit-animation-name: zoomInDown;\n            animation-name: zoomInDown;\n}\n@-webkit-keyframes zoomInLeft {\n    0% {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    60% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n@keyframes zoomInLeft {\n    0% {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    60% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n.zoomInLeft {\n    -webkit-animation-name: zoomInLeft;\n            animation-name: zoomInLeft;\n}\n@-webkit-keyframes zoomInRight {\n    0% {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    60% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n@keyframes zoomInRight {\n    0% {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    60% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n.zoomInRight {\n    -webkit-animation-name: zoomInRight;\n            animation-name: zoomInRight;\n}\n@-webkit-keyframes zoomInUp {\n    0% {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    60% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n@keyframes zoomInUp {\n    0% {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    60% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n.zoomInUp {\n    -webkit-animation-name: zoomInUp;\n            animation-name: zoomInUp;\n}\n@-webkit-keyframes zoomOut {\n    0% {\n        opacity: 1;\n    }\n    50% {\n        opacity: 0;\n        transform: scale3d(0.3, 0.3, 0.3);\n    }\n    to {\n        opacity: 0;\n    }\n}\n@keyframes zoomOut {\n    0% {\n        opacity: 1;\n    }\n    50% {\n        opacity: 0;\n        transform: scale3d(0.3, 0.3, 0.3);\n    }\n    to {\n        opacity: 0;\n    }\n}\n.zoomOut {\n    -webkit-animation-name: zoomOut;\n            animation-name: zoomOut;\n}\n@-webkit-keyframes zoomOutDown {\n    40% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    to {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);\n        transform-origin: center bottom;\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n@keyframes zoomOutDown {\n    40% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    to {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0);\n        transform-origin: center bottom;\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n.zoomOutDown {\n    -webkit-animation-name: zoomOutDown;\n            animation-name: zoomOutDown;\n}\n@-webkit-keyframes zoomOutLeft {\n    40% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);\n    }\n    to {\n        opacity: 0;\n        transform: scale(0.1) translate3d(-2000px, 0, 0);\n        transform-origin: left center;\n    }\n}\n@keyframes zoomOutLeft {\n    40% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(42px, 0, 0);\n    }\n    to {\n        opacity: 0;\n        transform: scale(0.1) translate3d(-2000px, 0, 0);\n        transform-origin: left center;\n    }\n}\n.zoomOutLeft {\n    -webkit-animation-name: zoomOutLeft;\n            animation-name: zoomOutLeft;\n}\n@-webkit-keyframes zoomOutRight {\n    40% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);\n    }\n    to {\n        opacity: 0;\n        transform: scale(0.1) translate3d(2000px, 0, 0);\n        transform-origin: right center;\n    }\n}\n@keyframes zoomOutRight {\n    40% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(-42px, 0, 0);\n    }\n    to {\n        opacity: 0;\n        transform: scale(0.1) translate3d(2000px, 0, 0);\n        transform-origin: right center;\n    }\n}\n.zoomOutRight {\n    -webkit-animation-name: zoomOutRight;\n            animation-name: zoomOutRight;\n}\n@-webkit-keyframes zoomOutUp {\n    40% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    to {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);\n        transform-origin: center bottom;\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n@keyframes zoomOutUp {\n    40% {\n        opacity: 1;\n        transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);\n        -webkit-animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);\n    }\n    to {\n        opacity: 0;\n        transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0);\n        transform-origin: center bottom;\n        -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n                animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);\n    }\n}\n.zoomOutUp {\n    -webkit-animation-name: zoomOutUp;\n            animation-name: zoomOutUp;\n}\n@-webkit-keyframes slideInDown {\n    0% {\n        transform: translate3d(0, -100%, 0);\n        visibility: visible;\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n@keyframes slideInDown {\n    0% {\n        transform: translate3d(0, -100%, 0);\n        visibility: visible;\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n.slideInDown {\n    -webkit-animation-name: slideInDown;\n            animation-name: slideInDown;\n}\n@-webkit-keyframes slideInLeft {\n    0% {\n        transform: translate3d(-100%, 0, 0);\n        visibility: visible;\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n@keyframes slideInLeft {\n    0% {\n        transform: translate3d(-100%, 0, 0);\n        visibility: visible;\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n.slideInLeft {\n    -webkit-animation-name: slideInLeft;\n            animation-name: slideInLeft;\n}\n@-webkit-keyframes slideInRight {\n    0% {\n        transform: translate3d(100%, 0, 0);\n        visibility: visible;\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n@keyframes slideInRight {\n    0% {\n        transform: translate3d(100%, 0, 0);\n        visibility: visible;\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n.slideInRight {\n    -webkit-animation-name: slideInRight;\n            animation-name: slideInRight;\n}\n@-webkit-keyframes slideInUp {\n    0% {\n        transform: translate3d(0, 100%, 0);\n        visibility: visible;\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n@keyframes slideInUp {\n    0% {\n        transform: translate3d(0, 100%, 0);\n        visibility: visible;\n    }\n    to {\n        transform: translateZ(0);\n    }\n}\n.slideInUp {\n    -webkit-animation-name: slideInUp;\n            animation-name: slideInUp;\n}\n@-webkit-keyframes slideOutDown {\n    0% {\n        transform: translateZ(0);\n    }\n    to {\n        visibility: hidden;\n        transform: translate3d(0, 100%, 0);\n    }\n}\n@keyframes slideOutDown {\n    0% {\n        transform: translateZ(0);\n    }\n    to {\n        visibility: hidden;\n        transform: translate3d(0, 100%, 0);\n    }\n}\n.slideOutDown {\n    -webkit-animation-name: slideOutDown;\n            animation-name: slideOutDown;\n}\n@-webkit-keyframes slideOutLeft {\n    0% {\n        transform: translateZ(0);\n    }\n    to {\n        visibility: hidden;\n        transform: translate3d(-100%, 0, 0);\n    }\n}\n@keyframes slideOutLeft {\n    0% {\n        transform: translateZ(0);\n    }\n    to {\n        visibility: hidden;\n        transform: translate3d(-100%, 0, 0);\n    }\n}\n.slideOutLeft {\n    -webkit-animation-name: slideOutLeft;\n            animation-name: slideOutLeft;\n}\n@-webkit-keyframes slideOutRight {\n    0% {\n        transform: translateZ(0);\n    }\n    to {\n        visibility: hidden;\n        transform: translate3d(100%, 0, 0);\n    }\n}\n@keyframes slideOutRight {\n    0% {\n        transform: translateZ(0);\n    }\n    to {\n        visibility: hidden;\n        transform: translate3d(100%, 0, 0);\n    }\n}\n.slideOutRight {\n    -webkit-animation-name: slideOutRight;\n            animation-name: slideOutRight;\n}\n@-webkit-keyframes slideOutUp {\n    0% {\n        transform: translateZ(0);\n    }\n    to {\n        visibility: hidden;\n        transform: translate3d(0, -100%, 0);\n    }\n}\n@keyframes slideOutUp {\n    0% {\n        transform: translateZ(0);\n    }\n    to {\n        visibility: hidden;\n        transform: translate3d(0, -100%, 0);\n    }\n}\n.slideOutUp {\n    -webkit-animation-name: slideOutUp;\n            animation-name: slideOutUp;\n}\n.animated {\n    -webkit-animation-duration: 1s;\n            animation-duration: 1s;\n    -webkit-animation-fill-mode: both;\n            animation-fill-mode: both;\n}\n.animated.infinite {\n    -webkit-animation-iteration-count: infinite;\n            animation-iteration-count: infinite;\n}\n.animated.delay-1s {\n    -webkit-animation-delay: 1s;\n            animation-delay: 1s;\n}\n.animated.delay-2s {\n    -webkit-animation-delay: 2s;\n            animation-delay: 2s;\n}\n.animated.delay-3s {\n    -webkit-animation-delay: 3s;\n            animation-delay: 3s;\n}\n.animated.delay-4s {\n    -webkit-animation-delay: 4s;\n            animation-delay: 4s;\n}\n.animated.delay-5s {\n    -webkit-animation-delay: 5s;\n            animation-delay: 5s;\n}\n.animated.fast {\n    -webkit-animation-duration: 0.8s;\n            animation-duration: 0.8s;\n}\n.animated.faster {\n    -webkit-animation-duration: 0.5s;\n            animation-duration: 0.5s;\n}\n.animated.slow {\n    -webkit-animation-duration: 2s;\n            animation-duration: 2s;\n}\n.animated.slower {\n    -webkit-animation-duration: 3s;\n            animation-duration: 3s;\n}\n@media (prefers-reduced-motion: reduce), (print) {\n    .animated {\n        -webkit-animation-duration: 1ms !important;\n                animation-duration: 1ms !important;\n        transition-duration: 1ms !important;\n        -webkit-animation-iteration-count: 1 !important;\n                animation-iteration-count: 1 !important;\n    }\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pages/home.vue?vue&type=style&index=0&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pages/home.vue?vue&type=style&index=0&lang=css& ***!
@@ -22515,30 +23622,6 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper-emoji[data-v-70f134e7] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-70f134e7] {  \r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-70f134e7] {\r\n    top: 0.3rem;\n}\r\n", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper-emoji[data-v-75f13304] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-75f13304] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-75f13304] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-75f13304] {\r\n    position: relative;\r\n    width: 70px;\n}\n.files[data-v-75f13304] {\r\n    position: relative;\r\n    width: 100%;\r\n    height: 150px;\r\n    border-top: 1px solid;\n}\n.files img[data-v-75f13304] {\r\n    position: relative;\r\n    width: 200px;\r\n    height: 140px;\r\n    padding: 10px 10px 0px 10px;\n}\n.desactive[data-v-75f13304] {\r\n    cursor: pointer;\n}\n.desactive[data-v-75f13304]:hover {\r\n    color: var(--iq-primary-hover);\n}\n.hover[data-v-75f13304] {\r\n    color: var(--iq-primary-hover);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22707,6 +23790,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da] {\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: none;\r\n    justify-content: center;\n}\n.stories[data-v-1c1601da] {\r\n    position: absolute;\r\n    height: 75vh;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 25%;\n}\n.addstorie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100px;\r\n    height: 10px;\r\n    background: aliceblue;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.wrapper-emoji[data-v-12878b24] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-12878b24] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-12878b24] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-12878b24] {\r\n    position: relative;\r\n    width: 70px;\n}\n.files[data-v-12878b24] {\r\n    position: relative;\r\n    width: 100%;\r\n    height: 150px;\r\n    border-top: 1px solid;\n}\n.files img[data-v-12878b24] {\r\n    position: relative;\r\n    width: 200px;\r\n    height: 140px;\r\n    padding: 10px 10px 0px 10px;\n}\n.desactive[data-v-12878b24] {\r\n    cursor: pointer;\n}\n.desactive[data-v-12878b24]:hover {\r\n    color: var(--iq-primary-hover);\n}\n.hover[data-v-12878b24] {\r\n    color: var(--iq-primary-hover);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -62360,47 +63467,6 @@ component.options.__file = "resources/js/components/Sections/single_section/Circ
 
 /***/ }),
 
-/***/ "./resources/js/components/Sections/single_section/Comment.vue":
-/*!*********************************************************************!*\
-  !*** ./resources/js/components/Sections/single_section/Comment.vue ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Comment_vue_vue_type_template_id_75f13304_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Comment.vue?vue&type=template&id=75f13304&scoped=true& */ "./resources/js/components/Sections/single_section/Comment.vue?vue&type=template&id=75f13304&scoped=true&");
-/* harmony import */ var _Comment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Comment.vue?vue&type=script&lang=js& */ "./resources/js/components/Sections/single_section/Comment.vue?vue&type=script&lang=js&");
-/* harmony import */ var _Comment_vue_vue_type_style_index_0_id_75f13304_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css& */ "./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-;
-
-
-/* normalize component */
-
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(
-  _Comment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _Comment_vue_vue_type_template_id_75f13304_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Comment_vue_vue_type_template_id_75f13304_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  "75f13304",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Sections/single_section/Comment.vue"
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
-
-/***/ }),
-
 /***/ "./resources/js/components/Sections/single_section/Conversation.vue":
 /*!**************************************************************************!*\
   !*** ./resources/js/components/Sections/single_section/Conversation.vue ***!
@@ -63078,6 +64144,47 @@ component.options.__file = "resources/js/components/Sections/single_section/Veri
 
 /***/ }),
 
+/***/ "./resources/js/components/Sections/single_section/comment.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Sections/single_section/comment.vue ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _comment_vue_vue_type_template_id_12878b24_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./comment.vue?vue&type=template&id=12878b24&scoped=true& */ "./resources/js/components/Sections/single_section/comment.vue?vue&type=template&id=12878b24&scoped=true&");
+/* harmony import */ var _comment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./comment.vue?vue&type=script&lang=js& */ "./resources/js/components/Sections/single_section/comment.vue?vue&type=script&lang=js&");
+/* harmony import */ var _comment_vue_vue_type_style_index_0_id_12878b24_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css& */ "./resources/js/components/Sections/single_section/comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(
+  _comment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _comment_vue_vue_type_template_id_12878b24_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _comment_vue_vue_type_template_id_12878b24_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "12878b24",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Sections/single_section/comment.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Pages/chat.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/Pages/chat.vue?vue&type=script&lang=js& ***!
@@ -63670,22 +64777,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Sections/single_section/Comment.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************!*\
-  !*** ./resources/js/components/Sections/single_section/Comment.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Comment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Comment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Comment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
-
-/***/ }),
-
 /***/ "./resources/js/components/Sections/single_section/Conversation.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************!*\
   !*** ./resources/js/components/Sections/single_section/Conversation.vue?vue&type=script&lang=js& ***!
@@ -63955,6 +65046,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VerifyEmailForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./VerifyEmailForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/VerifyEmailForm.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VerifyEmailForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Sections/single_section/comment.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/Sections/single_section/comment.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_comment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./comment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_comment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -64670,23 +65777,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Sections/single_section/Comment.vue?vue&type=template&id=75f13304&scoped=true&":
-/*!****************************************************************************************************************!*\
-  !*** ./resources/js/components/Sections/single_section/Comment.vue?vue&type=template&id=75f13304&scoped=true& ***!
-  \****************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comment_vue_vue_type_template_id_75f13304_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comment_vue_vue_type_template_id_75f13304_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comment_vue_vue_type_template_id_75f13304_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Comment.vue?vue&type=template&id=75f13304&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=template&id=75f13304&scoped=true&");
-
-
-/***/ }),
-
 /***/ "./resources/js/components/Sections/single_section/Conversation.vue?vue&type=template&id=be92a7a4&scoped=true&":
 /*!*********************************************************************************************************************!*\
   !*** ./resources/js/components/Sections/single_section/Conversation.vue?vue&type=template&id=be92a7a4&scoped=true& ***!
@@ -64976,6 +66066,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Sections/single_section/comment.vue?vue&type=template&id=12878b24&scoped=true&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/Sections/single_section/comment.vue?vue&type=template&id=12878b24&scoped=true& ***!
+  \****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_comment_vue_vue_type_template_id_12878b24_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_comment_vue_vue_type_template_id_12878b24_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_comment_vue_vue_type_template_id_12878b24_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./comment.vue?vue&type=template&id=12878b24&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=template&id=12878b24&scoped=true&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Pages/home.vue?vue&type=style&index=0&lang=css&":
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/Pages/home.vue?vue&type=style&index=0&lang=css& ***!
@@ -65073,23 +66180,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_style_index_0_id_70f134e7_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_style_index_0_id_70f134e7_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
 /* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_style_index_0_id_70f134e7_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatForm_vue_vue_type_style_index_0_id_70f134e7_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css&":
-/*!******************************************************************************************************************************!*\
-  !*** ./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css& ***!
-  \******************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Comment_vue_vue_type_style_index_0_id_75f13304_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-style-loader/index.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css& */ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Comment_vue_vue_type_style_index_0_id_75f13304_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Comment_vue_vue_type_style_index_0_id_75f13304_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Comment_vue_vue_type_style_index_0_id_75f13304_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Comment_vue_vue_type_style_index_0_id_75f13304_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
 
 
@@ -65209,6 +66299,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Story_vue_vue_type_style_index_0_id_1c1601da_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Story_vue_vue_type_style_index_0_id_1c1601da_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
 /* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Story_vue_vue_type_style_index_0_id_1c1601da_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Story_vue_vue_type_style_index_0_id_1c1601da_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Sections/single_section/comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css&":
+/*!******************************************************************************************************************************!*\
+  !*** ./resources/js/components/Sections/single_section/comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_comment_vue_vue_type_style_index_0_id_12878b24_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-style-loader/index.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css& */ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_comment_vue_vue_type_style_index_0_id_12878b24_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_comment_vue_vue_type_style_index_0_id_12878b24_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_comment_vue_vue_type_style_index_0_id_12878b24_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_comment_vue_vue_type_style_index_0_id_12878b24_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
 
 
@@ -66028,7 +67135,7 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container mt-5 pt-5" },
-    [_c("Post", { attrs: { post: _vm.post } })],
+    [_c("Post", { attrs: { post: _vm.post, singlePost: _vm.singlePost } })],
     1
   )
 }
@@ -67136,8 +68243,11 @@ var render = function() {
               ? _c(
                   "div",
                   { staticClass: "col-sm-12" },
-                  _vm._l(_vm.posts, function(post, index) {
-                    return _c("Post", { key: index, attrs: { post: post } })
+                  _vm._l(_vm.posts, function(post) {
+                    return _c("Post", {
+                      key: post.id,
+                      attrs: { post: post, singlePost: _vm.singlePost }
+                    })
                   }),
                   1
                 )
@@ -67376,145 +68486,282 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _vm._m(0),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-sm-12" },
-            _vm._l(_vm.notifications, function(notification) {
-              return _c(
+          _vm.notifications.length > 0
+            ? _c(
                 "div",
-                { key: notification.id, staticClass: "iq-card" },
-                [
-                  _c("div", { staticClass: "iq-card-body" }, [
-                    _c("ul", { staticClass: "notification-list m-0 p-0" }, [
-                      _c("li", { staticClass: "d-flex align-items-center" }, [
-                        _c("div", { staticClass: "user-img img-fluid" }, [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-40",
-                            attrs: {
-                              src: notification.userImg,
-                              alt: "story-img"
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "media-support-info ml-3" }, [
+                { staticClass: "col-sm-12" },
+                _vm._l(_vm.notifications, function(notification) {
+                  return _c(
+                    "div",
+                    { key: notification.id, staticClass: "iq-card" },
+                    [
+                      _c("div", { staticClass: "iq-card-body" }, [
+                        _c("ul", { staticClass: "notification-list m-0 p-0" }, [
                           _c(
-                            "h6",
+                            "li",
+                            { staticClass: "d-flex align-items-center" },
                             [
+                              _c("div", { staticClass: "user-img img-fluid" }, [
+                                _c("img", {
+                                  staticClass: "rounded-circle avatar-40",
+                                  attrs: {
+                                    src: notification.userImg,
+                                    alt: "story-img"
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
                               _c(
-                                "router-link",
-                                { attrs: { to: "/", tag: "a" } },
+                                "div",
+                                { staticClass: "media-support-info ml-3" },
                                 [
-                                  _vm._v(
-                                    " " + _vm._s(notification.userName) + " "
-                                  )
+                                  _c(
+                                    "h6",
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          attrs: {
+                                            to: {
+                                              name: "profile",
+                                              query: {
+                                                user: notification.userId
+                                              }
+                                            },
+                                            tag: "a"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                            " +
+                                              _vm._s(notification.userName) +
+                                              "\n                                        "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(notification.WhatDo) +
+                                          "\n                                    "
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  notification.time == "Just Now"
+                                    ? _c("p", { staticClass: "mb-0" }, [
+                                        _vm._v(
+                                          "\n                                        " +
+                                            _vm._s(notification.time) +
+                                            "\n                                    "
+                                        )
+                                      ])
+                                    : _c("p", { staticClass: "mb-0" }, [
+                                        _vm._v(
+                                          "\n                                        " +
+                                            _vm._s(notification.time) +
+                                            " ago\n                                    "
+                                        )
+                                      ])
                                 ]
                               ),
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(notification.WhatDo) +
-                                  "\n                                    "
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "d-flex align-items-center" },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "mr-3 iq-notify rounded",
+                                      class:
+                                        notification.type == _vm.post
+                                          ? "iq-bg-primary"
+                                          : notification.type == _vm.like_post
+                                          ? "iq-bg-danger"
+                                          : notification.type ==
+                                            _vm.like_comment
+                                          ? "iq-bg-danger"
+                                          : notification.type == _vm.comment
+                                          ? "iq-bg-success"
+                                          : notification.type == _vm.request
+                                          ? "iq-bg-warning"
+                                          : notification.type == _vm.share
+                                          ? "iq-bg-info"
+                                          : ""
+                                    },
+                                    [
+                                      _c("i", {
+                                        class:
+                                          notification.type == _vm.post
+                                            ? "ri-award-line"
+                                            : notification.type == _vm.like_post
+                                            ? "ri-heart-line"
+                                            : notification.type ==
+                                              _vm.like_comment
+                                            ? "ri-heart-line"
+                                            : notification.type == _vm.comment
+                                            ? "ri-chat-4-line"
+                                            : notification.type == _vm.request
+                                            ? "ri-reply-line"
+                                            : notification.type == _vm.share
+                                            ? "ri-share-line"
+                                            : ""
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  notification.type == _vm.request
+                                    ? _c(
+                                        "router-link",
+                                        {
+                                          staticClass: "mr-3 iq-notify rounded",
+                                          class:
+                                            notification.type == _vm.post
+                                              ? "iq-bg-primary"
+                                              : notification.type ==
+                                                _vm.like_post
+                                              ? "iq-bg-danger"
+                                              : notification.type ==
+                                                _vm.like_comment
+                                              ? "iq-bg-danger"
+                                              : notification.type == _vm.comment
+                                              ? "iq-bg-success"
+                                              : notification.type == _vm.request
+                                              ? "iq-bg-warning"
+                                              : notification.type == _vm.share
+                                              ? "iq-bg-info"
+                                              : "",
+                                          attrs: {
+                                            to: "/friendRequest",
+                                            tag: "a"
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "ri-eye-fill"
+                                          })
+                                        ]
+                                      )
+                                    : notification.type != _vm.request
+                                    ? _c(
+                                        "router-link",
+                                        {
+                                          staticClass: "mr-3 iq-notify rounded",
+                                          class:
+                                            notification.type == _vm.post
+                                              ? "iq-bg-primary"
+                                              : notification.type ==
+                                                _vm.like_post
+                                              ? "iq-bg-danger"
+                                              : notification.type ==
+                                                _vm.like_comment
+                                              ? "iq-bg-danger"
+                                              : notification.type == _vm.comment
+                                              ? "iq-bg-success"
+                                              : notification.type == _vm.request
+                                              ? "iq-bg-warning"
+                                              : notification.type == _vm.share
+                                              ? "iq-bg-info"
+                                              : "",
+                                          attrs: {
+                                            to: {
+                                              name: "post",
+                                              query: {
+                                                postId: notification.post_id
+                                              }
+                                            },
+                                            tag: "a"
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "ri-eye-fill"
+                                          })
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "mr-3 iq-notify rounded",
+                                      class:
+                                        notification.type == _vm.post
+                                          ? "iq-bg-primary"
+                                          : notification.type == _vm.like_post
+                                          ? "iq-bg-danger"
+                                          : notification.type ==
+                                            _vm.like_comment
+                                          ? "iq-bg-danger"
+                                          : notification.type == _vm.comment
+                                          ? "iq-bg-success"
+                                          : notification.type == _vm.request
+                                          ? "iq-bg-warning"
+                                          : notification.type == _vm.share
+                                          ? "iq-bg-info"
+                                          : "",
+                                      staticStyle: { cursor: "pointer" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteNotif(notification)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "ri-delete-bin-6-fill"
+                                      })
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
+            : _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "iq-card" }, [
+                  _c("div", { staticClass: "iq-card-body profile-page p-0" }, [
+                    _c("div", { staticClass: "profile-header-image" }, [
+                      _c("div", { staticClass: "profile-info p-4" }, [
+                        _c("div", { staticClass: "user-detail" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "d-flex flex-wrap justify-content-between align-items-start"
+                            },
+                            [
+                              _c("h6", [
+                                _vm._v(
+                                  "\n                                            You have no Notifications\n                                        "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "router-link",
+                                {
+                                  staticStyle: { cursor: "pointer" },
+                                  attrs: { to: "/", tag: "h6" }
+                                },
+                                [_vm._v("Back to home")]
                               )
                             ],
                             1
-                          ),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "mb-0" }, [
-                            _vm._v(_vm._s(notification.time) + " ago")
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "d-flex align-items-center" },
-                          [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "mr-3 iq-notify rounded",
-                                class:
-                                  notification.type == _vm.post
-                                    ? "iq-bg-primary"
-                                    : notification.type == _vm.like
-                                    ? "iq-bg-danger"
-                                    : notification.type == _vm.comment
-                                    ? "iq-bg-success"
-                                    : notification.type == _vm.request
-                                    ? "iq-bg-warning"
-                                    : notification.type == _vm.share
-                                    ? "iq-bg-info"
-                                    : "",
-                                attrs: { href: "javascript:void();" }
-                              },
-                              [
-                                _c("i", {
-                                  class:
-                                    notification.type == _vm.post
-                                      ? "ri-award-line"
-                                      : notification.type == _vm.like
-                                      ? "ri-heart-line"
-                                      : notification.type == _vm.comment
-                                      ? "ri-chat-4-line"
-                                      : notification.type == _vm.request
-                                      ? "ri-reply-line"
-                                      : notification.type == _vm.share
-                                      ? "ri-share-line"
-                                      : ""
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass: "mr-3 iq-notify rounded",
-                                class:
-                                  notification.type == _vm.post
-                                    ? "iq-bg-primary"
-                                    : notification.type == _vm.like
-                                    ? "iq-bg-danger"
-                                    : notification.type == _vm.comment
-                                    ? "iq-bg-success"
-                                    : notification.type == _vm.request
-                                    ? "iq-bg-warning"
-                                    : notification.type == _vm.share
-                                    ? "iq-bg-info"
-                                    : "",
-                                attrs: { href: "javascript:void();" }
-                              },
-                              [_c("i", { staticClass: "ri-eye-fill" })]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass: "mr-3 iq-notify rounded",
-                                class:
-                                  notification.type == _vm.post
-                                    ? "iq-bg-primary"
-                                    : notification.type == _vm.like
-                                    ? "iq-bg-danger"
-                                    : notification.type == _vm.comment
-                                    ? "iq-bg-success"
-                                    : notification.type == _vm.request
-                                    ? "iq-bg-warning"
-                                    : notification.type == _vm.share
-                                    ? "iq-bg-info"
-                                    : "",
-                                attrs: { href: "javascript:void();" }
-                              },
-                              [_c("i", { staticClass: "ri-delete-bin-6-fill" })]
-                            )
-                          ]
-                        )
+                          )
+                        ])
                       ])
                     ])
                   ])
-                ]
-              )
-            }),
-            0
-          )
+                ])
+              ])
         ])
       ])
     ]
@@ -67531,7 +68778,7 @@ var staticRenderFns = [
         { staticClass: "iq-card-header d-flex justify-content-between" },
         [
           _c("div", { staticClass: "iq-header-title" }, [
-            _c("h4", { staticClass: "card-title" }, [_vm._v("Notification")])
+            _c("h4", { staticClass: "card-title" }, [_vm._v("Notifications")])
           ])
         ]
       )
@@ -70382,44 +71629,124 @@ var render = function() {
             _c("div", { staticClass: "iq-card" }, [
               _vm._m(2),
               _vm._v(" "),
-              _c("div", { staticClass: "iq-card-body" }, [
-                _c(
-                  "ul",
-                  { staticClass: "request-list m-0 p-0" },
-                  _vm._l(_vm.friendKnows, function(friendKnow) {
-                    return _c(
-                      "li",
-                      {
-                        key: friendKnow.id,
-                        staticClass: "d-flex align-items-center"
-                      },
-                      [
-                        _c("div", { staticClass: "user-img img-fluid" }, [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-40",
-                            attrs: { src: friendKnow.imgUser, alt: "story-img" }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "media-support-info ml-3" }, [
-                          _c("h6", [_vm._v(_vm._s(friendKnow.UserName))]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "mb-0" }, [
-                            _vm._v(
-                              "\n                                        " +
-                                _vm._s(friendKnow.NbrFriend) +
-                                " friends\n                                    "
+              _vm.friendKnows.length > 0
+                ? _c("div", { staticClass: "iq-card-body" }, [
+                    _c(
+                      "ul",
+                      { staticClass: "request-list m-0 p-0" },
+                      _vm._l(_vm.friendKnows, function(friendKnow) {
+                        return _c(
+                          "li",
+                          {
+                            key: friendKnow.id,
+                            staticClass: "d-flex align-items-center"
+                          },
+                          [
+                            _c("div", { staticClass: "user-img img-fluid" }, [
+                              _c("img", {
+                                staticClass: "rounded-circle avatar-40",
+                                attrs: {
+                                  src:
+                                    "images/user/" + friendKnow.profileimg.name,
+                                  alt: "story-img"
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "media-support-info ml-3" },
+                              [
+                                _c("h6", [_vm._v(_vm._s(friendKnow.name))]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "mb-0" }, [
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(friendKnow.FriendCount) +
+                                      " friends\n                                    "
+                                  )
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "d-flex align-items-center" },
+                              [
+                                friendKnow.message == "add"
+                                  ? _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "mr-3 btn btn-primary rounded",
+                                        staticStyle: { cursor: "pointer" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.sendRequestFK(
+                                              friendKnow.id,
+                                              friendKnow
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "ri-user-add-line"
+                                        }),
+                                        _vm._v(
+                                          "Add\n                                        Friend"
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                friendKnow.message == "cancel"
+                                  ? _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "mr-3 btn  btn-danger rounded",
+                                        staticStyle: { cursor: "pointer" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.DeleteRequestFK(
+                                              friendKnow.id,
+                                              friendKnow
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                        Cancel request"
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "mr-3 btn btn-secondary rounded",
+                                    staticStyle: { cursor: "pointer" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.removeFK(friendKnow)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Remove")]
+                                )
+                              ]
                             )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _vm._m(3, true)
-                      ]
+                          ]
+                        )
+                      }),
+                      0
                     )
-                  }),
-                  0
-                )
-              ])
+                  ])
+                : _c("div", { staticClass: "iq-card-body" }, [_vm._m(3)])
             ])
           ])
         ])
@@ -70480,27 +71807,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex align-items-center" }, [
-      _c(
-        "a",
-        {
-          staticClass: "mr-3 btn btn-primary rounded",
-          attrs: { href: "javascript:void();" }
-        },
-        [
-          _c("i", { staticClass: "ri-user-add-line" }),
-          _vm._v("Add\n                                        Friend")
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "mr-3 btn btn-secondary rounded",
-          attrs: { href: "javascript:void();" }
-        },
-        [_vm._v("Remove")]
-      )
+    return _c("div", { staticClass: "request-list list-inline m-0 p-0" }, [
+      _c("div", { staticClass: "d-flex align-items-center" }, [
+        _c("div", { staticClass: "d-flex align-items-center" }, [
+          _c("h6", [_vm._v("Try again later")])
+        ])
+      ])
     ])
   }
 ]
@@ -71107,243 +72419,6 @@ var staticRenderFns = [
       _c("div", { attrs: { id: "circle-xlarge" } }),
       _vm._v(" "),
       _c("div", { attrs: { id: "circle-xxlarge" } })
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=template&id=75f13304&scoped=true&":
-/*!*******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=template&id=75f13304&scoped=true& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "ul",
-      { staticClass: "post-comments p-0 m-0" },
-      _vm._l(_vm.comments, function(comment, index) {
-        return _c("li", { key: comment.id, staticClass: "mb-2" }, [
-          _c("div", { staticClass: "d-flex flex-wrap" }, [
-            _c("div", { staticClass: "user-img" }, [
-              _c("img", {
-                staticClass: "avatar-35 rounded-circle img-fluid",
-                attrs: {
-                  src: "images/user/" + comment.userImg.name,
-                  alt: "userimg"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "comment-data-block ml-3" }, [
-              _c("h6", [_vm._v(_vm._s(comment.userName))]),
-              _vm._v(" "),
-              _c("p", { staticClass: "mb-0" }, [_vm._v(_vm._s(comment.text))]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "d-flex flex-wrap align-items-center comment-activity"
-                },
-                [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "d-flex",
-                      class: { hover: comment.commentLike },
-                      on: {
-                        click: function($event) {
-                          return _vm.CmtLike(index)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: " desactive mr-1",
-                        class: {
-                          "ri-heart-line": !comment.commentLike,
-                          "ri-heart-fill": comment.commentLike
-                        }
-                      }),
-                      _vm._v(" "),
-                      comment.likes > 0
-                        ? _c("span", [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(comment.likes) +
-                                "\n                            "
-                            )
-                          ])
-                        : _vm._e()
-                    ]
-                  ),
-                  _vm._v(" "),
-                  comment.edit
-                    ? _c("div", [
-                        _c("i", {
-                          staticClass:
-                            "ri-delete-bin-6-line desactive ml-2 mr-2 ",
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteComment(index)
-                            }
-                          }
-                        })
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "ml-2" }, [
-                    _vm._v(" " + _vm._s(comment.time) + " ")
-                  ])
-                ]
-              )
-            ])
-          ])
-        ])
-      }),
-      0
-    ),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        staticClass: "comment-text d-flex align-items-center mt-3",
-        attrs: { action: "javascript:void(0);" }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "wrapper-emoji" },
-          [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.myText,
-                  expression: "myText"
-                }
-              ],
-              staticClass: "regular-input",
-              attrs: { placeholder: "Write a comment..." },
-              domProps: { value: _vm.myText },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.myText = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("emoji-picker", {
-              staticClass: "iconemoji",
-              attrs: { search: _vm.search },
-              on: { emoji: _vm.append },
-              scopedSlots: _vm._u([
-                {
-                  key: "emoji-invoker",
-                  fn: function(ref) {
-                    var clickEvent = ref.events.click
-                    return _c(
-                      "div",
-                      {
-                        staticClass: "emoji-invoker",
-                        on: {
-                          click: function($event) {
-                            $event.stopPropagation()
-                            return clickEvent($event)
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "ri-user-smile-line" })]
-                    )
-                  }
-                },
-                {
-                  key: "emoji-picker",
-                  fn: function(ref) {
-                    var emojis = ref.emojis
-                    var insert = ref.insert
-                    return _c("div", {}, [
-                      _c("div", { staticClass: "emoji-picker" }, [
-                        _c(
-                          "div",
-                          _vm._l(emojis, function(emojiGroup, category) {
-                            return _c("div", { key: category }, [
-                              _c("h5", { staticStyle: { color: "white" } }, [
-                                _vm._v(_vm._s(category))
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "emojis" },
-                                _vm._l(emojiGroup, function(emoji, emojiName) {
-                                  return _c(
-                                    "span",
-                                    {
-                                      key: emojiName,
-                                      attrs: { title: emojiName },
-                                      on: {
-                                        click: function($event) {
-                                          return insert(emoji)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v(_vm._s(emoji))]
-                                  )
-                                }),
-                                0
-                              )
-                            ])
-                          }),
-                          0
-                        )
-                      ])
-                    ])
-                  }
-                }
-              ])
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "comment-attagement d-flex",
-                on: { click: _vm.addComment }
-              },
-              [_vm._m(0)]
-            )
-          ],
-          1
-        )
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticStyle: { cursor: "pointer" } }, [
-      _c("i", { staticClass: "ri-send-plane-2-line mr-3" })
     ])
   }
 ]
@@ -72759,79 +73834,222 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "nav-item" }, [
-          _vm._m(2),
+          _c(
+            "a",
+            {
+              staticClass: "search-toggle iq-waves-effect",
+              attrs: { href: "#" },
+              on: { click: _vm.removeDotNOT }
+            },
+            [
+              _c("i", { staticClass: "las la-bell" }),
+              _vm._v(" "),
+              _c("span", {
+                staticClass: "bg-danger dots",
+                staticStyle: { display: "none" },
+                attrs: { id: "redNOT" }
+              })
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "iq-sub-dropdown" }, [
             _c("div", { staticClass: "iq-card shadow-none m-0" }, [
-              _c(
-                "div",
-                { staticClass: "iq-card-body p-0 " },
-                [
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _vm._l(_vm.Notifications, function(notification) {
-                    return _c(
-                      "a",
-                      {
-                        key: notification.id,
-                        staticClass: "iq-sub-card",
-                        attrs: { href: "#" }
-                      },
-                      [
-                        _c("div", { staticClass: "media align-items-center" }, [
-                          _c("div", {}, [
-                            _c("img", {
-                              staticClass: "avatar-40 rounded",
-                              attrs: { src: notification.img, alt: "" }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "media-body ml-3" }, [
-                            _c("h6", { staticClass: "mb-0 " }, [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(notification.H6) +
-                                  "\n                                    "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "small",
-                              { staticClass: "float-right font-size-12" },
-                              [_vm._v(_vm._s(notification.small))]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "mb-0" }, [
-                              _vm._v(_vm._s(notification.p))
-                            ])
-                          ])
-                        ])
-                      ]
-                    )
-                  }),
-                  _vm._v(" "),
-                  _c(
+              _vm.Allnotifs.length > 0
+                ? _c(
                     "div",
-                    { staticClass: "text-center" },
+                    { staticClass: "iq-card-body p-0 " },
                     [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "mr-3 btn text-primary",
-                          attrs: { to: "/notification", tag: "a", exact: "" }
-                        },
-                        [
+                      _c("div", { staticClass: "bg-primary p-3" }, [
+                        _c("h5", { staticClass: "mb-0 text-white" }, [
                           _vm._v(
-                            "\n                                View More Notification\n                            "
+                            "\n                                All Notifications"
+                          ),
+                          _c(
+                            "small",
+                            {
+                              staticClass: "badge  badge-light float-right pt-1"
+                            },
+                            [_vm._v(_vm._s(_vm.Allnotifs.length))]
                           )
-                        ]
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.Notifications, function(notification) {
+                        return _c(
+                          "a",
+                          { key: notification.id, staticClass: "iq-sub-card" },
+                          [
+                            notification.type == "request"
+                              ? _c(
+                                  "router-link",
+                                  { attrs: { to: "/friendRequest", tag: "a" } },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "media align-items-center"
+                                      },
+                                      [
+                                        _c("div", {}, [
+                                          _c("img", {
+                                            staticClass: "avatar-40 rounded",
+                                            attrs: {
+                                              src: notification.userImg,
+                                              alt: ""
+                                            }
+                                          })
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "media-body ml-3" },
+                                          [
+                                            _c("h6", { staticClass: "mb-0 " }, [
+                                              _vm._v(
+                                                "\n                                            " +
+                                                  _vm._s(notification.WhatDo) +
+                                                  "\n                                        "
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "small",
+                                              {
+                                                staticClass:
+                                                  "float-right font-size-12"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(notification.time)
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("p", { staticClass: "mb-0" }, [
+                                              _vm._v(
+                                                "\n                                            " +
+                                                  _vm._s(
+                                                    notification.userName
+                                                  ) +
+                                                  "\n                                        "
+                                              )
+                                            ])
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            notification.type != "request"
+                              ? _c(
+                                  "router-link",
+                                  {
+                                    attrs: {
+                                      to: {
+                                        name: "post",
+                                        query: {
+                                          postId: notification.post_id
+                                        }
+                                      },
+                                      tag: "a"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "media align-items-center"
+                                      },
+                                      [
+                                        _c("div", {}, [
+                                          _c("img", {
+                                            staticClass: "avatar-40 rounded",
+                                            attrs: {
+                                              src: notification.userImg,
+                                              alt: ""
+                                            }
+                                          })
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "media-body ml-3" },
+                                          [
+                                            _c("h6", { staticClass: "mb-0 " }, [
+                                              _vm._v(
+                                                "\n                                            " +
+                                                  _vm._s(notification.WhatDo) +
+                                                  "\n                                        "
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "small",
+                                              {
+                                                staticClass:
+                                                  "float-right font-size-12"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(notification.time)
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("p", { staticClass: "mb-0" }, [
+                                              _vm._v(
+                                                "\n                                            " +
+                                                  _vm._s(
+                                                    notification.userName
+                                                  ) +
+                                                  "\n                                        "
+                                              )
+                                            ])
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "text-center" },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "mr-3 btn text-primary",
+                              attrs: {
+                                to: "/notification",
+                                tag: "a",
+                                exact: ""
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                View More Notification\n                            "
+                              )
+                            ]
+                          )
+                        ],
+                        1
                       )
                     ],
-                    1
+                    2
                   )
-                ],
-                2
-              )
+                : _c("div", { staticClass: "iq-card-body p-0 " }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _vm._m(3)
+                  ])
             ])
           ])
         ]),
@@ -73036,26 +74254,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "search-toggle iq-waves-effect", attrs: { href: "#" } },
-      [
-        _c("i", { staticClass: "las la-bell" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "bg-danger dots" })
-      ]
-    )
+    return _c("div", { staticClass: "bg-primary p-3" }, [
+      _c("h5", { staticClass: "mb-0 text-white" }, [
+        _vm._v(
+          "\n                                All Notifications\n                            "
+        )
+      ])
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "bg-primary p-3" }, [
-      _c("h5", { staticClass: "mb-0 text-white" }, [
-        _vm._v("\n                                All Notifications"),
-        _c("small", { staticClass: "badge  badge-light float-right pt-1" }, [
-          _vm._v("4")
-        ])
+    return _c("div", { staticClass: "iq-sub-card" }, [
+      _c("div", { staticClass: "media align-items-center" }, [
+        _c("h6", [_vm._v("You have no Notifications")])
       ])
     ])
   },
@@ -73659,7 +74872,11 @@ var render = function() {
               _c("hr"),
               _vm._v(" "),
               _c("Comment", {
-                attrs: { id: _vm.post.id },
+                attrs: {
+                  id: _vm.post.id,
+                  ALLcomments: _vm.post.comments,
+                  singlePost: _vm.singlePost
+                },
                 on: { changeNumbers: _vm.NumbersComment }
               })
             ],
@@ -76632,6 +77849,243 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=template&id=12878b24&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=template&id=12878b24&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "ul",
+      { staticClass: "post-comments p-0 m-0" },
+      _vm._l(_vm.comments, function(comment, index) {
+        return _c("li", { key: comment.id, staticClass: "mb-2" }, [
+          _c("div", { staticClass: "d-flex flex-wrap" }, [
+            _c("div", { staticClass: "user-img" }, [
+              _c("img", {
+                staticClass: "avatar-35 rounded-circle img-fluid",
+                attrs: {
+                  src: "images/user/" + comment.userImg.name,
+                  alt: "userimg"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "comment-data-block ml-3" }, [
+              _c("h6", [_vm._v(_vm._s(comment.userName))]),
+              _vm._v(" "),
+              _c("p", { staticClass: "mb-0" }, [_vm._v(_vm._s(comment.text))]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex flex-wrap align-items-center comment-activity"
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "d-flex",
+                      class: { hover: comment.commentLike },
+                      on: {
+                        click: function($event) {
+                          return _vm.CmtLike(index)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: " desactive mr-1",
+                        class: {
+                          "ri-heart-line": !comment.commentLike,
+                          "ri-heart-fill": comment.commentLike
+                        }
+                      }),
+                      _vm._v(" "),
+                      comment.likes > 0
+                        ? _c("span", [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(comment.likes) +
+                                "\n                            "
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  ),
+                  _vm._v(" "),
+                  comment.edit
+                    ? _c("div", [
+                        _c("i", {
+                          staticClass:
+                            "ri-delete-bin-6-line desactive ml-2 mr-2 ",
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteComment(index)
+                            }
+                          }
+                        })
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "ml-2" }, [
+                    _vm._v(" " + _vm._s(comment.time) + " ")
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "comment-text d-flex align-items-center mt-3",
+        attrs: { action: "javascript:void(0);" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "wrapper-emoji" },
+          [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.myText,
+                  expression: "myText"
+                }
+              ],
+              staticClass: "regular-input",
+              attrs: { placeholder: "Write a comment..." },
+              domProps: { value: _vm.myText },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.myText = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("emoji-picker", {
+              staticClass: "iconemoji",
+              attrs: { search: _vm.search },
+              on: { emoji: _vm.append },
+              scopedSlots: _vm._u([
+                {
+                  key: "emoji-invoker",
+                  fn: function(ref) {
+                    var clickEvent = ref.events.click
+                    return _c(
+                      "div",
+                      {
+                        staticClass: "emoji-invoker",
+                        on: {
+                          click: function($event) {
+                            $event.stopPropagation()
+                            return clickEvent($event)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "ri-user-smile-line" })]
+                    )
+                  }
+                },
+                {
+                  key: "emoji-picker",
+                  fn: function(ref) {
+                    var emojis = ref.emojis
+                    var insert = ref.insert
+                    return _c("div", {}, [
+                      _c("div", { staticClass: "emoji-picker" }, [
+                        _c(
+                          "div",
+                          _vm._l(emojis, function(emojiGroup, category) {
+                            return _c("div", { key: category }, [
+                              _c("h5", { staticStyle: { color: "white" } }, [
+                                _vm._v(_vm._s(category))
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "emojis" },
+                                _vm._l(emojiGroup, function(emoji, emojiName) {
+                                  return _c(
+                                    "span",
+                                    {
+                                      key: emojiName,
+                                      attrs: { title: emojiName },
+                                      on: {
+                                        click: function($event) {
+                                          return insert(emoji)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(emoji))]
+                                  )
+                                }),
+                                0
+                              )
+                            ])
+                          }),
+                          0
+                        )
+                      ])
+                    ])
+                  }
+                }
+              ])
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "comment-attagement d-flex",
+                on: { click: _vm.addComment }
+              },
+              [_vm._m(0)]
+            )
+          ],
+          1
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticStyle: { cursor: "pointer" } }, [
+      _c("i", { staticClass: "ri-send-plane-2-line mr-3" })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -79925,6 +81379,27 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./public/css/cxlt-vue2-toastr.css":
+/*!*****************************************!*\
+  !*** ./public/css/cxlt-vue2-toastr.css ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./cxlt-vue2-toastr.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./public/css/cxlt-vue2-toastr.css");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.id, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(/*! !../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
+var update = add("5b63a5c8", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pages/home.vue?vue&type=style&index=0&lang=css&":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pages/home.vue?vue&type=style&index=0&lang=css& ***!
@@ -80046,27 +81521,6 @@ if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(/*! !../../../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
 var update = add("657a79a7", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css&":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/Comment.vue?vue&type=style&index=0&id=75f13304&scoped=true&lang=css&");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.id, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(/*! !../../../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
-var update = add("d44371d2", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -80214,6 +81668,27 @@ if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
 var add = __webpack_require__(/*! !../../../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
 var update = add("3009acbf", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-style-loader/index.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sections/single_section/comment.vue?vue&type=style&index=0&id=12878b24&scoped=true&lang=css&");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.id, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(/*! !../../../../../node_modules/vue-style-loader/lib/addStylesClient.js */ "./node_modules/vue-style-loader/lib/addStylesClient.js").default
+var update = add("4b00c616", content, false, {});
 // Hot Module Replacement
 if(false) {}
 

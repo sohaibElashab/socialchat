@@ -104,14 +104,13 @@ export default {
             var d = new Date();
             var time = d.getHours() + ":" + d.getMinutes();
 
-            await axios
-                .post("/NewMessage", {
-                    id: id,
-                    text: "http://127.0.0.1:8000/#/post?postId=" + this.post_id,
-                    image: "null",
-                    video: "null",
-                    time: time
-                })
+            await axios.post("/NewMessage", {
+                id: id,
+                text: "http://127.0.0.1:8000/#/post?postId=" + this.post_id,
+                image: "null",
+                video: "null",
+                time: time
+            });
 
             await axios
                 .post("/SharePost", {
@@ -121,7 +120,7 @@ export default {
                     e.target.disabled = true;
                     e.target.innerHTML =
                         '<i class="ri-check-line mr-1 text-white font-size-16" ></i>';
-                })
+                });
         },
         postID(data) {
             this.post_id = data;

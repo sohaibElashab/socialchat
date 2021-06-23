@@ -14,11 +14,13 @@
                     </div>
                     <div class="col-sm-12" v-if="posts">
                         <Post
-                            v-for="(post, index) in posts"
-                            :key="index"
+                            v-for="post in posts"
+                            :key="post.id"
                             :post="post"
+                            :singlePost="singlePost"
                         />
                     </div>
+                    <!--  -->
                     <div class="col-sm-12 text-center">
                         <img
                             src="images/page-img/page-load-loader.gif"
@@ -48,6 +50,7 @@ export default {
     },
     data() {
         return {
+            singlePost: false,
             posts: null,
             friends: null,
             NewPosts: []
@@ -72,12 +75,16 @@ export default {
                 document.getElementById("newP").style.display = "initial";
             }
         });
+
         EventBus.$on("image", this.addImage);
     },
     methods: {
         LoadNew() {
-            this.NewPosts.forEach(element => {
-                this.newPost(element);
+            this.NewPosts.forEach(post => {
+                axios.post("/SinglePost", { post: post.id }).then(res => {
+                    post = res.data;
+                    this.newPost(post);
+                });
             });
             window.scrollTo({ top: 0, behavior: "smooth" });
             document.getElementById("newP").style.display = "none";

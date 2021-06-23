@@ -13,6 +13,8 @@ use App\Events\CommentEvent;
 use Auth;
 use App\Events\SharePostEvent;
 use App\Models\PostShare;
+use App\Events\NotificationEvent;
+use App\Models\Post;
 
 class CommentController extends Controller
 {
@@ -21,10 +23,15 @@ class CommentController extends Controller
     {
         $share = PostShare::create([
             'post_id' => $request->post_id,
-            'user_id' => auth()->user()->id,
+            'user_id' => auth()->user()->id, 
         ]);
 
         broadcast(new SharePostEvent($request->post_id));
+        
+        $id_to = Post::where('id',$request->post_id)->first('user_id');
+        if (auth()->user()->id != $id_to->user_id) {
+            broadcast(new NotificationEvent($id_to->user_id,$request->post_id,'share'));
+        }
 
         return response()->json($share);
     }
@@ -107,6 +114,11 @@ class CommentController extends Controller
         ]);
         
         broadcast(new CommentEvent($comment , true));
+
+        $id_to = Post::where('id',$request->id)->first('user_id');
+        if (auth()->user()->id != $id_to->user_id) {
+            broadcast(new NotificationEvent($id_to->user_id,$request->id,'comment'));
+        }
         return response()->json($this->commentget($comment)); 
     }
 
@@ -119,6 +131,11 @@ class CommentController extends Controller
                 'comment_id' => $request->id,
                 'user_id' => auth()->user()->id,
             ]);
+
+            $comment = Comment::where('id',$request->id)->first(['post_id','user_id']);
+            if (auth()->user()->id != $comment->user_id) {
+                broadcast(new NotificationEvent($comment->user_id,$comment->post_id,'like_comment'));
+            }
         }
         
         $likes = Like::where('comment_id',$request->id)->count();

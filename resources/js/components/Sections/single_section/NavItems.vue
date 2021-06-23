@@ -142,46 +142,96 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a href="#" class="search-toggle iq-waves-effect">
+                <a
+                    href="#"
+                    class="search-toggle iq-waves-effect"
+                    @click="removeDotNOT"
+                >
                     <i class="las la-bell"></i>
-                    <span class="bg-danger dots"></span>
+                    <span
+                        class="bg-danger dots"
+                        id="redNOT"
+                        style="display:none;"
+                    ></span>
                 </a>
                 <div class="iq-sub-dropdown">
                     <div class="iq-card shadow-none m-0">
-                        <div class="iq-card-body p-0 ">
+                        <div
+                            class="iq-card-body p-0 "
+                            v-if="Allnotifs.length > 0"
+                        >
                             <div class="bg-primary p-3">
                                 <h5 class="mb-0 text-white">
                                     All Notifications<small
                                         class="badge  badge-light float-right pt-1"
-                                        >4</small
+                                        >{{ Allnotifs.length }}</small
                                     >
                                 </h5>
                             </div>
                             <a
-                                href="#"
                                 class="iq-sub-card"
                                 v-for="notification in Notifications"
                                 :key="notification.id"
                             >
-                                <div class="media align-items-center">
-                                    <div class="">
-                                        <img
-                                            class="avatar-40 rounded"
-                                            :src="notification.img"
-                                            alt=""
-                                        />
+                                <router-link
+                                    v-if="notification.type == 'request'"
+                                    to="/friendRequest"
+                                    tag="a"
+                                >
+                                    <div class="media align-items-center">
+                                        <div class="">
+                                            <img
+                                                class="avatar-40 rounded"
+                                                :src="notification.userImg"
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div class="media-body ml-3">
+                                            <h6 class="mb-0 ">
+                                                {{ notification.WhatDo }}
+                                            </h6>
+                                            <small
+                                                class="float-right font-size-12"
+                                                >{{ notification.time }}</small
+                                            >
+                                            <p class="mb-0">
+                                                {{ notification.userName }}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="media-body ml-3">
-                                        <h6 class="mb-0 ">
-                                            {{ notification.H6 }}
-                                        </h6>
-                                        <small
-                                            class="float-right font-size-12"
-                                            >{{ notification.small }}</small
-                                        >
-                                        <p class="mb-0">{{ notification.p }}</p>
+                                </router-link>
+                                <router-link
+                                    v-if="notification.type != 'request'"
+                                    :to="{
+                                        name: 'post',
+                                        query: {
+                                            postId: notification.post_id
+                                        }
+                                    }"
+                                    tag="a"
+                                >
+                                    <div class="media align-items-center">
+                                        <div class="">
+                                            <img
+                                                class="avatar-40 rounded"
+                                                :src="notification.userImg"
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div class="media-body ml-3">
+                                            <h6 class="mb-0 ">
+                                                {{ notification.WhatDo }}
+                                            </h6>
+                                            <small
+                                                class="float-right font-size-12"
+                                                >{{ notification.time }}</small
+                                            >
+                                            <p class="mb-0">
+                                                {{ notification.userName }}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </router-link>
                             </a>
                             <div class="text-center">
                                 <router-link
@@ -192,6 +242,18 @@
                                 >
                                     View More Notification
                                 </router-link>
+                            </div>
+                        </div>
+                        <div class="iq-card-body p-0 " v-else>
+                            <div class="bg-primary p-3">
+                                <h5 class="mb-0 text-white">
+                                    All Notifications
+                                </h5>
+                            </div>
+                            <div class="iq-sub-card">
+                                <div class="media align-items-center">
+                                    <h6>You have no Notifications</h6>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -311,6 +373,7 @@ export default {
     },
     data() {
         return {
+            friends: [],
             user: null,
             img: "",
             isMounted: false,
@@ -321,35 +384,21 @@ export default {
             ALLmsg: null,
             messages: null,
             msgCount: null,
-            Notifications: {
-                "1": {
-                    id: 1,
-                    img: "images/user/01.jpg",
-                    H6: "Emma Watson Bni",
-                    small: "Just Now",
-                    p: "95 MB"
-                },
-                "2": {
-                    id: 2,
-                    img: "images/user/02.jpg",
-                    H6: "New customer is join",
-                    small: "5 days ago",
-                    p: "Cyst Bni"
-                },
-                "3": {
-                    id: 3,
-                    img: "images/user/03.jpg",
-                    H6: "Two customer is left",
-                    small: "2 days ago",
-                    p: "Cyst Bni"
-                },
-                "4": {
-                    id: 4,
-                    img: "images/user/04.jpg",
-                    H6: "New Mail from Fenny",
-                    small: "3 days ago",
-                    p: "Cyst Bni"
-                }
+            Allnotifs: [],
+            Notifications: [],
+            toastr: {
+                title: "Toastr Notification",
+                message: "Gnome & Growl type non-blocking notifications",
+                closeButton: true,
+                progressBar: false,
+                icon: null,
+                position: "top right",
+                showMethod: "fadeIn",
+                hideMethod: "fadeOut",
+                showDuration: 1000,
+                hideDuration: 1000,
+                delay: 0,
+                timeOut: "4000"
             }
         };
     },
@@ -430,12 +479,51 @@ export default {
                     }
                 }
             );
+
+            Echo.private(`Notification.${this.user.id}`).listen(
+                "NotificationEvent",
+                e => {
+                    this.Allnotifs.unshift(e.notif);
+                    this.Notifications = this.Allnotifs.slice(0, 4);
+                    document.getElementById("redNOT").style.display = "initial";
+                    this.showToast(e.notif.userName, e.notif.WhatDo);
+                }
+            );
+        });
+
+        axios
+            .post("/LoadFriends", {
+                id: null
+            })
+            .then(res => {
+                this.friends = res.data;
+            });
+
+        Echo.private(`newPost`).listen("NewPostEvent", e => {
+            if (this.checkFriend(e.post.user_id) != null) {
+                var notif = {
+                    WhatDo: "Posted in his profile",
+                    type: "post",
+                    time: "Just Now",
+                    userImg: "images/user/" + e.post.userImg,
+                    userName: e.post.userName,
+                    userId: e.post.userId,
+                    post_id: e.post.id
+                };
+                this.Allnotifs.unshift(notif);
+                this.Notifications = this.Allnotifs.slice(0, 4);
+                document.getElementById("redNOT").style.display = "initial";
+                this.showToast(e.post.userName, "Posted in his profile");
+            }
         });
 
         axios.get("/LoadRequests").then(res => {
             this.allReqs = res.data;
             this.friendReqs = this.allReqs.slice(0, 4);
             this.loadedReqs = true;
+            if (this.allReqs.length > 0) {
+                document.getElementById("redREQ").style.display = "initial";
+            }
         });
 
         axios.get("/UnreadMessages").then(res => {
@@ -446,6 +534,15 @@ export default {
                 document.getElementById("redMSG").style.display = "initial";
             }
         });
+
+        axios.get("/LoadNotif").then(res => {
+            this.Allnotifs = res.data;
+            this.Notifications = this.Allnotifs.slice(0, 4);
+            if (this.Allnotifs.length > 0) {
+                document.getElementById("redNOT").style.display = "initial";
+            }
+        });
+
         EventBus.$on("user-update", this.updateUser);
         EventBus.$on("reload-uread", this.ReloadMSG);
 
@@ -467,6 +564,25 @@ export default {
         }
     },
     methods: {
+        showToast(title, message) {
+            this.toastr = Object.assign(this.toastr, {
+                color: "#182039",
+                title: title,
+                message: message
+            });
+            this.$toast.success(this.toastr);
+        },
+        checkFriend(id) {
+            var p = null;
+
+            this.friends.forEach(friend => {
+                if (friend.id == id) {
+                    p = friend;
+                    return true;
+                }
+            });
+            return p;
+        },
         ReloadMSG(data) {
             axios.get("/UnreadMessages").then(res => {
                 this.msgCount = res.data[1];
@@ -600,6 +716,9 @@ export default {
         },
         removeDotMSG() {
             document.getElementById("redMSG").style.display = "none";
+        },
+        removeDotNOT() {
+            document.getElementById("redNOT").style.display = "none";
         }
     }
 };

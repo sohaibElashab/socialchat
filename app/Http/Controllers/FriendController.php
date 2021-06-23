@@ -12,6 +12,7 @@ use App\Events\SendRequestEvent;
 use App\Events\CancelRequestEvent;
 use App\Events\AcceptRequestEvent;
 use App\Events\AcceptRequestEvent2;
+use App\Events\NotificationEvent;
 
 class FriendController extends Controller
 {
@@ -63,6 +64,7 @@ class FriendController extends Controller
             ]); 
 
             broadcast(new SendRequestEvent($Frequest));
+            broadcast(new NotificationEvent($Frequest->user_to,null,'request'));
 
             return response()->json($Frequest);
         }
@@ -237,6 +239,36 @@ class FriendController extends Controller
         }
 
         return $friends;
+    }
+
+    public function YouMayKnow()
+    {
+        $id = auth()->user()->id;
+        $friends = Friend::where('user_id',$id)->orWhere('friend_id',$id)->get();
+        $new = collect();
+        foreach ($friends as $key => $friend) {
+            if($friend->user_id != $id){
+                $new->add($friend->user_id);
+            } elseif ($friend->friend_id != $id) {
+                $new->add($friend->friend_id);
+            }
+        }
+        $new = $new->unique();
+        $new->add(auth()->user()->id);
+        $friends = User::whereNotIn('id',$new)->get();
+
+        foreach ($friends as  $user) {
+            $user->profileimg = Image::where('user_id',$user->id)->where('type','profile')->first('name');
+            $user->FriendCount = $this->FriendCount($user->id);
+            $Frequest = FriendRequest::where('user_from',auth()->user()->id)->where('user_to',$user->id)->where('status','sent')->first();
+            if($Frequest){
+                $user->message = "cancel";
+            }else{
+                $user->message = "add";
+            }
+        }
+        
+        return response()->json($friends);
     }
 
     public function FriendsInCommon(Request $request)
