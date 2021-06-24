@@ -8,14 +8,14 @@
         <div class="iq-card-body" style=" height: 450px; overflow: auto; ">
             <ul class="media-story m-0 p-0">
                 <li class="d-flex flex-column">
-                    <div class="d-flex mb-4 align-items-center jus">
+                    <div class="d-flex mb-4 align-items-center jus" @click="addShow" style="cursor: pointer;">
                         <i class=" imgStory ri-add-line font-size-18"></i>
                         <div class="stories-data ml-3">
                             <h5>Creat Your Story</h5>
                             <p class="mb-0">time to story</p>
                         </div>
                     </div>
-                    <div class="div-add-story d-flex mb-4 align-items-center flex-column justify-content-center" >
+                    <div class="div-add-story d-flex mb-3 align-items-center flex-column justify-content-center" :class="{ 'div-hide' : showAdd }" >
                         <div class="align-items-center d-flex justify-content-center " style="cursor: pointer;" @click="text">
                             <i class=" img-add-story ri-add-line font-size-18"></i>
                             <div class="stories-data ml-3">
@@ -89,7 +89,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="div-add-story d-flex mb-4 align-items-center flex-column justify-content-center" >
+                    <div class="div-add-story d-flex mb-3 align-items-center flex-column justify-content-center" :class="{ 'div-hide' : showAdd }" >
                         <div class="align-items-center d-flex justify-content-center " style="cursor: pointer;" @click="media">
                             <i class=" img-add-story ri-add-line font-size-18"></i>
                             <div class="stories-data ml-3">
@@ -186,6 +186,7 @@ export default {
             indexFont: 0,
             search: "",
             StoryText: "",
+            showAdd: true,
             showText: true,
             showMedia: true,
             file: null,
@@ -204,6 +205,12 @@ export default {
             this.file= null
             this.fileUrl = null
             this.StoryText= ""
+        },
+        addShow(){
+            this.showAdd = !this.showAdd;
+            this.showMedia = true
+            this.showText = true
+            this.reinitialiser()
         },
         text(){
             this.showText = !this.showText;
@@ -307,7 +314,7 @@ export default {
     width: 70px;
 }
 .div-hide{
-    display: none;
+    display: none !important;
 }
 .storie-style{
     position: relative;

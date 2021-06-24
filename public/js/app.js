@@ -17842,6 +17842,7 @@ __webpack_require__.r(__webpack_exports__);
       indexFont: 0,
       search: "",
       StoryText: "",
+      showAdd: true,
       showText: true,
       showMedia: true,
       file: null,
@@ -17860,6 +17861,12 @@ __webpack_require__.r(__webpack_exports__);
       this.file = null;
       this.fileUrl = null;
       this.StoryText = "";
+    },
+    addShow: function addShow() {
+      this.showAdd = !this.showAdd;
+      this.showMedia = true;
+      this.showText = true;
+      this.reinitialiser();
     },
     text: function text() {
       this.showText = !this.showText;
@@ -23943,7 +23950,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da] {\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: none;\r\n    justify-content: center;\n}\n.stories[data-v-1c1601da] {\r\n    position: absolute;\r\n    height: 75vh;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 25%;\n}\n.addstorie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100px;\r\n    height: 10px;\r\n    background: aliceblue;\n}\n.edit-storie[data-v-1c1601da]{\r\n    position: relative;\r\n    width: 80%;\r\n    margin: auto;\r\n    margin-bottom: 20px;\r\n    height: 20rem;\r\n    color: var(--iq-light);\r\n    text-align: center;\r\n    border: double;\r\n    word-break: break-all;\r\n    padding: 10px;\n}\n.img-add-story[data-v-1c1601da]{\r\n    height: 40px;\r\n    width: 40px;\r\n    line-height: 60px;\r\n    text-align: center;\r\n    border: 2px solid var(--iq-border-dark);\r\n    padding: 2px;\r\n    border-radius: 50%;\n}\n.img-add-story[data-v-1c1601da]:before {\r\n    top: -14px !important;\n}\n.div-add-story[data-v-1c1601da] {\r\n    padding: 12px;\r\n    border: 1px dotted;\r\n    border-radius: 10px;\n}\n.wrapper-emoji[data-v-1c1601da] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-1c1601da] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-1c1601da] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 70px;\n}\n.div-hide[data-v-1c1601da]{\r\n    display: none;\n}\n.storie-style[data-v-1c1601da]{\r\n    position: relative;\r\n    width: 100%;\r\n    height: 60px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da] {\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: none;\r\n    justify-content: center;\n}\n.stories[data-v-1c1601da] {\r\n    position: absolute;\r\n    height: 75vh;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 25%;\n}\n.addstorie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100px;\r\n    height: 10px;\r\n    background: aliceblue;\n}\n.edit-storie[data-v-1c1601da]{\r\n    position: relative;\r\n    width: 80%;\r\n    margin: auto;\r\n    margin-bottom: 20px;\r\n    height: 20rem;\r\n    color: var(--iq-light);\r\n    text-align: center;\r\n    border: double;\r\n    word-break: break-all;\r\n    padding: 10px;\n}\n.img-add-story[data-v-1c1601da]{\r\n    height: 40px;\r\n    width: 40px;\r\n    line-height: 60px;\r\n    text-align: center;\r\n    border: 2px solid var(--iq-border-dark);\r\n    padding: 2px;\r\n    border-radius: 50%;\n}\n.img-add-story[data-v-1c1601da]:before {\r\n    top: -14px !important;\n}\n.div-add-story[data-v-1c1601da] {\r\n    padding: 12px;\r\n    border: 1px dotted;\r\n    border-radius: 10px;\n}\n.wrapper-emoji[data-v-1c1601da] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-1c1601da] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-1c1601da] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 70px;\n}\n.div-hide[data-v-1c1601da]{\r\n    display: none !important;\n}\n.storie-style[data-v-1c1601da]{\r\n    position: relative;\r\n    width: 100%;\r\n    height: 60px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -77810,13 +77817,28 @@ var render = function() {
           { staticClass: "media-story m-0 p-0" },
           [
             _c("li", { staticClass: "d-flex flex-column" }, [
-              _vm._m(1),
+              _c(
+                "div",
+                {
+                  staticClass: "d-flex mb-4 align-items-center jus",
+                  staticStyle: { cursor: "pointer" },
+                  on: { click: _vm.addShow }
+                },
+                [
+                  _c("i", {
+                    staticClass: " imgStory ri-add-line font-size-18"
+                  }),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
                 {
                   staticClass:
-                    "div-add-story d-flex mb-4 align-items-center flex-column justify-content-center"
+                    "div-add-story d-flex mb-3 align-items-center flex-column justify-content-center",
+                  class: { "div-hide": _vm.showAdd }
                 },
                 [
                   _c(
@@ -78057,7 +78079,8 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "div-add-story d-flex mb-4 align-items-center flex-column justify-content-center"
+                    "div-add-story d-flex mb-3 align-items-center flex-column justify-content-center",
+                  class: { "div-hide": _vm.showAdd }
                 },
                 [
                   _c(
@@ -78194,14 +78217,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex mb-4 align-items-center jus" }, [
-      _c("i", { staticClass: " imgStory ri-add-line font-size-18" }),
+    return _c("div", { staticClass: "stories-data ml-3" }, [
+      _c("h5", [_vm._v("Creat Your Story")]),
       _vm._v(" "),
-      _c("div", { staticClass: "stories-data ml-3" }, [
-        _c("h5", [_vm._v("Creat Your Story")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "mb-0" }, [_vm._v("time to story")])
-      ])
+      _c("p", { staticClass: "mb-0" }, [_vm._v("time to story")])
     ])
   },
   function() {
