@@ -132,7 +132,7 @@
                         <div
                             class="align-items-center d-flex edit-storie justify-content-center"
                             :style="
-                                `background : ${getBackground} ; font-family : ${getFont}`
+                                `${getBackground} ; font-family : ${getFont}`
                             "
                             v-if="StoryText"
                         >
@@ -210,7 +210,7 @@
                         <div
                             class="edit-storie"
                             v-if="fileUrl"
-                            :style="`background : ${getBackground}`"
+                            :style="`${getBackground}`"
                         >
                             <img
                                 :src="fileUrl"
@@ -244,7 +244,7 @@
         <div class="showStories" id="showStories" style="display:none">
             <div class="fake" @click="close"></div>
             <i
-                class="ri-arrow-left-circle-line"
+                class="ri-arrow-left-s-line"
                 id="prevBTN"
                 v-if="current_story > 0"
                 @click="previousOne"
@@ -292,7 +292,7 @@
                 </section>
             </div>
             <i
-                class="ri-arrow-right-circle-line"
+                class="ri-arrow-right-s-line"
                 id="nextBTN"
                 v-if="current_story < storys.length - 1"
                 @click="nextOne"
@@ -327,14 +327,15 @@ export default {
                 "Montserrat"
             ],
             color: [
-                "#e76f51",
-                "#e9c46a",
-                "#2a9d8f",
-                "#264653",
-                "#99d98c",
-                "var(--iq-dark-box)"
+                "background: linear-gradient(40deg, #155263 9%, #155263 43%, #FF6F3C calc(43% + 1px), #FF6F3C 52%, #FF9A3C calc(52% + 1px), #FF9A3C 80%, #FFC93C calc(80% + 1px), #FFC93C 100%);",
+                "background: linear-gradient(55deg, #212121 0%, #212121 40%, #323232 calc(40% + 1px), #323232 60%, #008F95 calc(60% + 1px), #008F95 70%, #14FFEC calc(70% + 1px), #14FFEC 100%);",
+                "background: linear-gradient(65deg, rgb(7, 26, 82) 3%, rgb(7, 26, 82) 40%, rgb(8, 105, 114) calc(40% + 1px), rgb(8, 105, 114) 60%, rgb(23, 185, 120) calc(60% + 1px), rgb(23, 185, 120) 68%, rgb(167, 255, 131) calc(68% + 1px), rgb(167, 255, 131) 100%)",
+                "background: linear-gradient(90deg, #00F0FF 0%, #00F0FF 40%, #0017E3 40%, #0017E3 60%, #000F8F 60%, #000F8F 70%, #00073F 70%, #00073F 100%);",
+                "background: linear-gradient(110deg, #FFD9E8 4%, #FFD9E8 40%, #DE95BA calc(40% + 1px), #DE95BA 50%, #7F4A88 calc(50% + 1px), #7F4A88 70%, #4A266A calc(70% + 1px), #4A266A 100%);",
+                "background: linear-gradient(60deg, #2B2E4A 0%, #2B2E4A 30%, #E84545 calc(30% + 1px), #E84545 60%, #903749 calc(60% + 1px), #903749 70%, #53354A calc(70% + 1px), #53354A 100%);",
+                "background:var(--iq-dark-box)",
             ],
-            getBackground: "var(--iq-dark-box)",
+            getBackground: "background:var(--iq-dark-box)",
             getFont: "Montserrat",
             indexColor: 0,
             indexFont: 0,
@@ -513,7 +514,7 @@ export default {
         },
         changeColor() {
             this.getBackground = this.color[this.indexColor];
-            this.indexColor < 5 ? this.indexColor++ : (this.indexColor = 0);
+            this.indexColor < 7 ? this.indexColor++ : (this.indexColor = 0);
         },
         changeFont() {
             this.getFont = this.font[this.indexFont];
@@ -699,8 +700,9 @@ export default {
 #prevBTN,
 #nextBTN {
     position: relative;
-    font-size: 70px;
+    font-size: 50px;
     cursor: pointer;
+    color: var(--iq-primary);
     z-index: 11;
     top: 5%;
 }
