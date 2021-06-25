@@ -66,3 +66,7 @@ Broadcast::channel('Notification.{id}', function () {
 	return Auth::check(); 
 }); 
 
+Broadcast::channel('newStory', function () {
+	return Auth::check(); 
+}); 
+

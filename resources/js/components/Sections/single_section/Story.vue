@@ -8,21 +8,34 @@
         <div class="iq-card-body" style=" height: 450px; overflow: auto; ">
             <ul class="media-story m-0 p-0">
                 <li class="d-flex flex-column">
-                    <div class="d-flex mb-4 align-items-center jus" @click="addShow" style="cursor: pointer;">
+                    <div
+                        class="d-flex mb-4 align-items-center jus"
+                        @click="addShow"
+                        style="cursor: pointer;"
+                    >
                         <i class=" imgStory ri-add-line font-size-18"></i>
                         <div class="stories-data ml-3">
                             <h5>Creat Your Story</h5>
                             <p class="mb-0">time to story</p>
                         </div>
                     </div>
-                    <div class="div-add-story d-flex mb-3 align-items-center flex-column justify-content-center" :class="{ 'div-hide' : showAdd }" >
-                        <div class="align-items-center d-flex justify-content-center " style="cursor: pointer;" @click="text">
-                            <i class=" img-add-story ri-add-line font-size-18"></i>
+                    <div
+                        class="div-add-story d-flex mb-3 align-items-center flex-column justify-content-center"
+                        :class="{ 'div-hide': showAdd }"
+                    >
+                        <div
+                            class="align-items-center d-flex justify-content-center "
+                            style="cursor: pointer;"
+                            @click="text"
+                        >
+                            <i
+                                class=" img-add-story ri-add-line font-size-18"
+                            ></i>
                             <div class="stories-data ml-3">
                                 <h5>Creat Your Text Story</h5>
                             </div>
                         </div>
-                        <div class="w-100" :class="{ 'div-hide' : showText }">
+                        <div class="w-100" :class="{ 'div-hide': showText }">
                             <form
                                 class="comment-text d-flex align-items-center mt-3"
                                 action="javascript:void(0);"
@@ -43,27 +56,43 @@
                                         <div
                                             class="emoji-invoker"
                                             slot="emoji-invoker"
-                                            slot-scope="{ events: { click: clickEvent } }"
+                                            slot-scope="{
+                                                events: { click: clickEvent }
+                                            }"
                                             @click.stop="clickEvent"
                                         >
                                             <i class="ri-user-smile-line"></i>
                                         </div>
-                                        <div slot="emoji-picker" slot-scope="{ emojis, insert }">
+                                        <div
+                                            slot="emoji-picker"
+                                            slot-scope="{ emojis, insert }"
+                                        >
                                             <div class="emoji-picker">
                                                 <div>
                                                     <div
-                                                        v-for="(emojiGroup, category) in emojis"
+                                                        v-for="(emojiGroup,
+                                                        category) in emojis"
                                                         :key="category"
                                                     >
-                                                        <h5 style="color:white">{{ category }}</h5>
+                                                        <h5 style="color:white">
+                                                            {{ category }}
+                                                        </h5>
                                                         <div class="emojis">
                                                             <span
                                                                 v-for="(emoji,
                                                                 emojiName) in emojiGroup"
                                                                 :key="emojiName"
-                                                                @click="insert(emoji)"
-                                                                :title="emojiName"
-                                                                >{{ emoji }}</span
+                                                                @click="
+                                                                    insert(
+                                                                        emoji
+                                                                    )
+                                                                "
+                                                                :title="
+                                                                    emojiName
+                                                                "
+                                                                >{{
+                                                                    emoji
+                                                                }}</span
                                                             >
                                                         </div>
                                                     </div>
@@ -71,60 +100,124 @@
                                             </div>
                                         </div>
                                     </emoji-picker>
-                                    <div class="comment-attagement d-flex" v-if="StoryText" @click="addStories()">
+                                    <div
+                                        class="comment-attagement d-flex"
+                                        v-if="StoryText"
+                                        @click="addStories()"
+                                    >
                                         <label style=" cursor: pointer; "
-                                            ><i class="ri-send-plane-2-line mr-3"></i
+                                            ><i
+                                                class="ri-send-plane-2-line mr-3"
+                                            ></i
                                         ></label>
                                     </div>
                                 </div>
                             </form>
-                            <div class="storie-style alert d-flex justify-content-around storie-style" v-if="StoryText">
-                                <i class="img-add-story ri-font-color font-size-18" style="line-height: inherit;cursor: pointer;" @click="changeFont"></i>     
-                                <i class="img-add-story ri-brush-line font-size-18" style="line-height: inherit;cursor: pointer;" @click="changeColor"></i>     
+                            <div
+                                class="storie-style alert d-flex justify-content-around storie-style"
+                                v-if="StoryText"
+                            >
+                                <i
+                                    class="img-add-story ri-font-color font-size-18"
+                                    style="line-height: inherit;cursor: pointer;"
+                                    @click="changeFont"
+                                ></i>
+                                <i
+                                    class="img-add-story ri-brush-line font-size-18"
+                                    style="line-height: inherit;cursor: pointer;"
+                                    @click="changeColor"
+                                ></i>
                             </div>
                         </div>
-                        <div class="align-items-center d-flex edit-storie justify-content-center" :style="`background : ${getBackground} ; font-family : ${getFont}`" v-if="StoryText">
+                        <div
+                            class="align-items-center d-flex edit-storie justify-content-center"
+                            :style="
+                                `background : ${getBackground} ; font-family : ${getFont}`
+                            "
+                            v-if="StoryText"
+                        >
                             <span>
-                                {{StoryText}}
+                                {{ StoryText }}
                             </span>
                         </div>
                     </div>
-                    <div class="div-add-story d-flex mb-3 align-items-center flex-column justify-content-center" :class="{ 'div-hide' : showAdd }" >
-                        <div class="align-items-center d-flex justify-content-center " style="cursor: pointer;" @click="media">
-                            <i class=" img-add-story ri-add-line font-size-18"></i>
+                    <div
+                        class="div-add-story d-flex mb-3 align-items-center flex-column justify-content-center"
+                        :class="{ 'div-hide': showAdd }"
+                    >
+                        <div
+                            class="align-items-center d-flex justify-content-center "
+                            style="cursor: pointer;"
+                            @click="media"
+                        >
+                            <i
+                                class=" img-add-story ri-add-line font-size-18"
+                            ></i>
                             <div class="stories-data ml-3">
-                                <h5 >Creat Your Media Story</h5>
+                                <h5>Creat Your Media Story</h5>
                             </div>
                         </div>
-                        <div class="mb-3 w-100" :class="{ 'div-hide' : showMedia }">
+                        <div
+                            class="mb-3 w-100"
+                            :class="{ 'div-hide': showMedia }"
+                        >
                             <div class="align-items-baseline d-flex">
-                                <input
-                                    type="file"
-                                    @change="addFile"
-                                    id="addImg"
-                                    accept="image/*"
-                                    class="div-hide"
-                                />
-                                <label for="addImg" style="position: relative;width: 100%;">
+                                <label
+                                    style="position: relative;width: 100%;"
+                                    @click="testClick"
+                                >
                                     <div
                                         id="div-img"
                                         class="mt-3 p-2 text-center"
                                     >
-                                        <img src="https://img.icons8.com/material-outlined/24/4a90e2/add-image.png"/>
+                                        <img
+                                            src="https://img.icons8.com/material-outlined/24/4a90e2/add-image.png"
+                                        />
                                     </div>
                                 </label>
-                                <div class="comment-attagement d-flex" style="position: relative;" v-if="fileUrl"  @click="addStories()">
+                                <input
+                                    type="file"
+                                    @change="addFile"
+                                    accept="image/*"
+                                    id="addImg"
+                                    ref="imagePicker"
+                                    class="div-hide"
+                                /><!--   -->
+                                <div
+                                    class="comment-attagement d-flex"
+                                    style="position: relative;"
+                                    v-if="fileUrl"
+                                    @click="addStories()"
+                                >
                                     <label style=" cursor: pointer; "
-                                        ><i class="ri-send-plane-2-line mr-3"></i
+                                        ><i
+                                            class="ri-send-plane-2-line mr-3"
+                                        ></i
                                     ></label>
                                 </div>
                             </div>
-                            <div class="storie-style alert d-flex justify-content-around storie-style" v-if="fileUrl">
-                                <i class="img-add-story ri-brush-line font-size-18" style="line-height: inherit;cursor: pointer;" @click="changeColor"></i>     
+                            <div
+                                class="storie-style alert d-flex justify-content-around storie-style"
+                                v-if="fileUrl"
+                            >
+                                <i
+                                    class="img-add-story ri-brush-line font-size-18"
+                                    style="line-height: inherit;cursor: pointer;"
+                                    @click="changeColor"
+                                ></i>
                             </div>
                         </div>
-                        <div class="edit-storie" v-if="fileUrl" :style="`background : ${getBackground}`">
-                            <img :src="fileUrl" alt="" srcset="" style=" width: 100%; height: 100%; object-fit: contain;">
+                        <div
+                            class="edit-storie"
+                            v-if="fileUrl"
+                            :style="`background : ${getBackground}`"
+                        >
+                            <img
+                                :src="fileUrl"
+                                alt=""
+                                srcset=""
+                                style=" width: 100%; height: 100%; object-fit: contain;"
+                            />
                         </div>
                     </div>
                 </li>
@@ -133,26 +226,85 @@
                     :class="{ active: story.isActive }"
                     v-for="story in storys"
                     :key="story.id"
+                    style="cursor:pointer"
+                    @click="ShowStory(story)"
                 >
                     <img
-                        :src="story.img"
+                        :src="`images/user/${story.img.name}`"
                         alt="story-img"
                         class="rounded-circle img-fluid"
                     />
                     <div class="stories-data ml-3">
-                        <h5>{{ story.h5 }}</h5>
-                        <p class="mb-0">{{ story.p }}</p>
+                        <h5>{{ story.name }}</h5>
+                        <p class="mb-0">{{ story.time }}</p>
                     </div>
                 </li>
             </ul>
         </div>
-        <div class="showStories">
-            <div class="stories"></div>
+        <div class="showStories" id="showStories" style="display:none">
+            <div class="fake" @click="close"></div>
+            <i
+                class="ri-arrow-left-circle-line"
+                id="prevBTN"
+                v-if="current_story > 0"
+                @click="previousOne"
+            ></i>
+            <div class="stories" id="stories">
+                <nav
+                    class="nav"
+                    :style="
+                        `grid-template-columns: repeat(${colors.length}, 1fr)`
+                    "
+                >
+                    <div
+                        class="parent"
+                        v-for="(color, index) in colors"
+                        :key="index"
+                    >
+                        <div :id="`id${index}`"></div>
+                    </div>
+                </nav>
+                <!--  -->
+                <section v-for="(color, index) in colors" :key="index">
+                    <div
+                        v-if="current == index && color.text != null"
+                        id="Storycontent"
+                        :style="{
+                            background: color.Background,
+                            fontFamily: color.Font
+                        }"
+                    >
+                        <p>{{ color.text }}</p>
+                    </div>
+                    <div
+                        v-if="current == index && color.image != null"
+                        id="Storycontent"
+                        :style="{
+                            background: color.Background
+                        }"
+                    >
+                        <img
+                            style="height: 100%; width: 100%; object-fit: contain"
+                            :src="color.image"
+                            alt=" story_image"
+                        />
+                    </div>
+                </section>
+            </div>
+            <i
+                class="ri-arrow-right-circle-line"
+                id="nextBTN"
+                v-if="current_story < storys.length - 1"
+                @click="nextOne"
+            ></i>
+            <!--  -->
         </div>
     </div>
 </template>
 
 <script>
+import anime from "animejs/lib/anime.es.js";
+import Hammer from "hammerjs";
 import EmojiPicker from "vue-emoji-picker";
 export default {
     components: {
@@ -160,33 +312,30 @@ export default {
     },
     data() {
         return {
-            storys: {
-                "1": {
-                    id: 1,
-                    isActive: true,
-                    img: "images/page-img/s2.jpg",
-                    h5: "Anna Mull",
-                    p: "1 hour ago"
-                },
-                "2": {
-                    id: 2,
-                    isActive: false,
-                    img: "images/page-img/s3.jpg",
-                    h5: "Ira Membrit",
-                    p: "4 hour ago"
-                },
-                "3": {
-                    id: 3,
-                    isActive: false,
-                    img: "images/page-img/s1.jpg",
-                    h5: "Bob Frapples",
-                    p: "9 hour ago"
-                }
-            },
-            font:['remixicon' , 'cursive' , 'fantasy' , 'inherit' , 'monospace' , 'Montserrat'],
-            color:['#e76f51' , '#e9c46a' , '#2a9d8f' , '#264653' , '#99d98c', 'var(--iq-dark-box)'],
-            getBackground: 'var(--iq-dark-box)',
-            getFont: 'Montserrat',
+            current_story: -1,
+            hammertime: {},
+            timeline: {},
+            colors: [],
+            current: 0,
+            storys: [],
+            font: [
+                "remixicon",
+                "cursive",
+                "fantasy",
+                "inherit",
+                "monospace",
+                "Montserrat"
+            ],
+            color: [
+                "#e76f51",
+                "#e9c46a",
+                "#2a9d8f",
+                "#264653",
+                "#99d98c",
+                "var(--iq-dark-box)"
+            ],
+            getBackground: "var(--iq-dark-box)",
+            getFont: "Montserrat",
             indexColor: 0,
             indexFont: 0,
             search: "",
@@ -196,61 +345,216 @@ export default {
             showMedia: true,
             file: null,
             fileUrl: null,
+            friends: []
         };
     },
+    mounted() {
+        this.hammertime = new Hammer(document.getElementById("stories"));
+        axios.get("/GetStories").then(res => {
+            this.storys = res.data;
+        });
+
+        axios
+            .post("/LoadFriends", {
+                id: null
+            })
+            .then(res => {
+                this.friends = res.data;
+            });
+
+        Echo.private(`newStory`).listen("NewStoryEvent", e => {
+            if (this.checkFriend(e.story.id) != null) {
+                var p = false;
+                this.storys.forEach(element => {
+                    if (e.story.id == element.id) {
+                        var allstories = e.story.stories;
+                        var last_story = allstories.slice(
+                            Math.max(allstories.length - 1, 0)
+                        );
+
+                        element.stories.push(last_story[0]);
+                        element.time = e.story.time;
+                        p = true;
+                    }
+                });
+                if (p == false) {
+                    this.storys.unshift(e.story);
+                }
+            }
+        });
+    },
     methods: {
+        checkFriend(id) {
+            var p = null;
+            this.friends.forEach(friend => {
+                if (friend.id == id) {
+                    p = friend;
+                    return true;
+                }
+            });
+            return p;
+        },
+        nextOne() {
+            this.current = 0;
+            this.colors = [];
+            this.timeline.pause();
+            this.timeline.seek(0);
+
+            this.ShowStory(this.storys[this.current_story + 1]);
+        },
+        previousOne() {
+            this.current = 0;
+            this.colors = [];
+            this.timeline.pause();
+            this.timeline.seek(0);
+
+            this.ShowStory(this.storys[this.current_story - 1]);
+        },
+        close() {
+            document.getElementById("showStories").style.display = "none";
+            this.current = 0;
+            this.colors = [];
+            this.timeline.pause();
+        },
+        ShowStory(story) {
+            this.current = 0;
+            this.colors = [];
+            story.stories.forEach((color, index) => {
+                this.colors.push(color);
+            });
+
+            this.current_story = this.storys.indexOf(story);
+
+            document.getElementById("showStories").style.display = "flex";
+
+            this.timeline = anime.timeline({
+                autoplay: true,
+                duration: 4000,
+                easing: "linear",
+                loop: true
+            });
+
+            this.timeline.pause();
+            this.timeline.seek(0);
+            this.timeline.play();
+
+            this.colors.forEach((color, index) => {
+                setTimeout(() => {
+                    this.timeline.add({
+                        targets: document.getElementById(`id${index}`),
+                        width: "100%",
+                        changeBegin: a => {
+                            this.current = index;
+                        }
+                    });
+                }, 0);
+            });
+
+            this.hammertime.off("press");
+            this.hammertime.off("pressup");
+            this.hammertime.off("tap");
+
+            this.hammertime.on("press", e => {
+                this.timeline.pause();
+            });
+
+            this.hammertime.on("pressup", e => {
+                this.timeline.play();
+            });
+
+            this.hammertime.on("tap", e => {
+                if (e.center.x > window.innerWidth / 2) {
+                    if (this.current < this.colors.length - 1) {
+                        this.current += 1;
+
+                        this.timeline.pause();
+                        this.timeline.seek(this.current * 4000);
+                        this.timeline.play();
+                    }
+                } else {
+                    if (this.current > 0) {
+                        this.current -= 1;
+
+                        this.timeline.pause();
+                        this.timeline.seek(this.current * 4000);
+                        this.timeline.play();
+                    }
+                }
+            });
+        },
         append(emoji) {
-            if(this.StoryText.length <= 320){
+            if (this.StoryText.length <= 320) {
                 this.StoryText += emoji;
             }
         },
-        reinitialiser(){
-            this.getBackground = 'var(--iq-dark-box)'
-            this.getFont = 'Montserrat'
-            this.file= null
-            this.fileUrl = null
-            document.getElementById('addImg').value = '';
-            this.StoryText= ""
+        reinitialiser() {
+            this.getBackground = "var(--iq-dark-box)";
+            this.getFont = "Montserrat";
+            this.file = null;
+            this.fileUrl = null;
+            document.getElementById("addImg").value = "";
+            this.StoryText = "";
         },
-        addShow(){
+        addShow() {
             this.showAdd = !this.showAdd;
-            this.showMedia = true
-            this.showText = true
-            this.reinitialiser()
+            this.showMedia = true;
+            this.showText = true;
+            this.reinitialiser();
         },
-        text(){
+        text() {
             this.showText = !this.showText;
-            this.showMedia = true
-            this.reinitialiser()
+            this.showMedia = true;
+            this.reinitialiser();
         },
-        media(){
+        media() {
             this.showMedia = !this.showMedia;
-            this.showText = true
-            this.reinitialiser()
+            this.showText = true;
+            this.reinitialiser();
         },
-        changeColor(){
+        changeColor() {
             this.getBackground = this.color[this.indexColor];
-            this.indexColor < 5 ? this.indexColor++ : this.indexColor = 0;
+            this.indexColor < 5 ? this.indexColor++ : (this.indexColor = 0);
         },
-        changeFont(){
+        changeFont() {
             this.getFont = this.font[this.indexFont];
-            this.indexFont < 5 ? this.indexFont++ : this.indexFont = 0;
+            this.indexFont < 5 ? this.indexFont++ : (this.indexFont = 0);
+        },
+        testClick() {
+            var p = this.$refs.imagePicker;
+            p.click();
         },
         addFile(e) {
             this.file = e.target.files[0];
             this.fileUrl = URL.createObjectURL(this.file);
-            document.getElementById('addImg').value = '';
+            document.getElementById("addImg").value = "";
         },
-        addStories(){
-            var data = new FormData
-            data.append('text' , this.StoryText);
-            data.append('file' , this.file);
-            data.append('Background' , this.getBackground);
-            data.append('Font' , this.getFont) ;
-            axios.post('/add-storie' , data)
+        addStories() {
+            var data = new FormData();
+            data.append("text", this.StoryText);
+            data.append("file", this.file);
+            data.append("Background", this.getBackground);
+            data.append("Font", this.getFont);
+            axios
+                .post("/add-storie", data)
                 .then(response => {
-                    this.reinitialiser()
-                    this.showAdd = true
+                    this.reinitialiser();
+                    this.showAdd = true;
+
+                    var p = false;
+                    this.storys.forEach(element => {
+                        if (response.data.id == element.id) {
+                            var allstories = response.data.stories;
+                            var last_story = allstories.slice(
+                                Math.max(allstories.length - 1, 0)
+                            );
+                            element.stories.push(last_story);
+                            element.time = response.data.time;
+                            p = true;
+                        }
+                    });
+                    if (p == false) {
+                        this.storys.unshift(response.data);
+                    }
                 })
                 .catch(e => {
                     console.log(e);
@@ -275,15 +579,16 @@ export default {
     left: 0px;
     height: 100%;
     background: #00000078;
-    display: none;
+    display: flex;
     justify-content: center;
+    align-items: center;
 }
 .stories {
     position: absolute;
     height: 75vh;
     top: 15%;
     background: aliceblue;
-    width: 25%;
+    width: 377px;
 }
 .addstorie {
     position: relative;
@@ -291,7 +596,7 @@ export default {
     height: 10px;
     background: aliceblue;
 }
-.edit-storie{
+.edit-storie {
     position: relative;
     width: 80%;
     margin: auto;
@@ -303,7 +608,7 @@ export default {
     word-break: break-all;
     padding: 10px;
 }
-.img-add-story{
+.img-add-story {
     height: 40px;
     width: 40px;
     line-height: 60px;
@@ -335,16 +640,76 @@ export default {
     position: relative;
     width: 70px;
 }
-.div-hide{
+.div-hide {
     display: none !important;
 }
-.storie-style{
+.storie-style {
     position: relative;
     width: 100%;
     height: 60px;
 }
-#div-img{
-    border: 1px solid var(--iq-border-dark); 
+#div-img {
+    border: 1px solid var(--iq-border-dark);
     border-radius: 10px;
+}
+
+.nav {
+    box-sizing: border-box;
+    display: grid;
+    grid-column-gap: 0.5em;
+    /* grid-template-columns: repeat(3, 1fr); */
+    height: 0.3em;
+    padding: 0 1em;
+    position: fixed;
+    width: 377px;
+    margin-top: 10px;
+}
+
+.nav > div {
+    background: rgba(0, 0, 0, 0.25);
+    height: 100%;
+}
+
+.nav > div > div {
+    background: black;
+    height: 100%;
+    width: 0%;
+}
+
+#Storycontent {
+    width: 377px;
+    height: 520.83px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+}
+
+.fake {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    z-index: -1;
+}
+
+#prevBTN,
+#nextBTN {
+    position: relative;
+    font-size: 70px;
+    cursor: pointer;
+    z-index: 11;
+    top: 5%;
+}
+
+#nextBTN {
+    left: 230px;
+}
+
+#prevBTN {
+    right: 230px;
 }
 </style>
