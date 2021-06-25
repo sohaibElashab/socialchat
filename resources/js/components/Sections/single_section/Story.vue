@@ -71,7 +71,7 @@
                                             </div>
                                         </div>
                                     </emoji-picker>
-                                    <div class="comment-attagement d-flex">
+                                    <div class="comment-attagement d-flex" v-if="StoryText" @click="addStories()">
                                         <label style=" cursor: pointer; "
                                             ><i class="ri-send-plane-2-line mr-3"></i
                                         ></label>
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="mb-3 w-100" :class="{ 'div-hide' : showMedia }">
-                            <div>
+                            <div class="align-items-baseline d-flex">
                                 <input
                                     type="file"
                                     @change="addFile"
@@ -105,14 +105,19 @@
                                     accept="image/*"
                                     class="div-hide"
                                 />
-                                <label class="cursor" for="addImg" style="position: relative;width: 100%;">
+                                <label for="addImg" style="position: relative;width: 100%;">
                                     <div
                                         id="div-img"
-                                        class="iq-bg-primary mt-3 p-2 text-center"
+                                        class="mt-3 p-2 text-center"
                                     >
-                                    <img src="https://img.icons8.com/ultraviolet/40/000000/add-image.png" style="width: 30px;"/>
+                                        <img src="https://img.icons8.com/material-outlined/24/4a90e2/add-image.png"/>
                                     </div>
                                 </label>
+                                <div class="comment-attagement d-flex" style="position: relative;" v-if="fileUrl"  @click="addStories()">
+                                    <label style=" cursor: pointer; "
+                                        ><i class="ri-send-plane-2-line mr-3"></i
+                                    ></label>
+                                </div>
                             </div>
                             <div class="storie-style alert d-flex justify-content-around storie-style" v-if="fileUrl">
                                 <i class="img-add-story ri-brush-line font-size-18" style="line-height: inherit;cursor: pointer;" @click="changeColor"></i>     
@@ -204,6 +209,7 @@ export default {
             this.getFont = 'Montserrat'
             this.file= null
             this.fileUrl = null
+            document.getElementById('addImg').value = '';
             this.StoryText= ""
         },
         addShow(){
@@ -233,7 +239,23 @@ export default {
         addFile(e) {
             this.file = e.target.files[0];
             this.fileUrl = URL.createObjectURL(this.file);
+            document.getElementById('addImg').value = '';
         },
+        addStories(){
+            var data = new FormData
+            data.append('text' , this.StoryText);
+            data.append('file' , this.file);
+            data.append('Background' , this.getBackground);
+            data.append('Font' , this.getFont) ;
+            axios.post('/add-storie' , data)
+                .then(response => {
+                    this.reinitialiser()
+                    this.showAdd = true
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
     },
     directives: {
         focus: {
@@ -320,5 +342,9 @@ export default {
     position: relative;
     width: 100%;
     height: 60px;
+}
+#div-img{
+    border: 1px solid var(--iq-border-dark); 
+    border-radius: 10px;
 }
 </style>

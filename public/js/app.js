@@ -17804,6 +17804,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -17860,6 +17865,7 @@ __webpack_require__.r(__webpack_exports__);
       this.getFont = 'Montserrat';
       this.file = null;
       this.fileUrl = null;
+      document.getElementById('addImg').value = '';
       this.StoryText = "";
     },
     addShow: function addShow() {
@@ -17889,6 +17895,23 @@ __webpack_require__.r(__webpack_exports__);
     addFile: function addFile(e) {
       this.file = e.target.files[0];
       this.fileUrl = URL.createObjectURL(this.file);
+      document.getElementById('addImg').value = '';
+    },
+    addStories: function addStories() {
+      var _this = this;
+
+      var data = new FormData();
+      data.append('text', this.StoryText);
+      data.append('file', this.file);
+      data.append('Background', this.getBackground);
+      data.append('Font', this.getFont);
+      axios.post('/add-storie', data).then(function (response) {
+        _this.reinitialiser();
+
+        _this.showAdd = true;
+      })["catch"](function (e) {
+        console.log(e);
+      });
     }
   },
   directives: {
@@ -23950,7 +23973,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da] {\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: none;\r\n    justify-content: center;\n}\n.stories[data-v-1c1601da] {\r\n    position: absolute;\r\n    height: 75vh;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 25%;\n}\n.addstorie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100px;\r\n    height: 10px;\r\n    background: aliceblue;\n}\n.edit-storie[data-v-1c1601da]{\r\n    position: relative;\r\n    width: 80%;\r\n    margin: auto;\r\n    margin-bottom: 20px;\r\n    height: 20rem;\r\n    color: var(--iq-light);\r\n    text-align: center;\r\n    border: double;\r\n    word-break: break-all;\r\n    padding: 10px;\n}\n.img-add-story[data-v-1c1601da]{\r\n    height: 40px;\r\n    width: 40px;\r\n    line-height: 60px;\r\n    text-align: center;\r\n    border: 2px solid var(--iq-border-dark);\r\n    padding: 2px;\r\n    border-radius: 50%;\n}\n.img-add-story[data-v-1c1601da]:before {\r\n    top: -14px !important;\n}\n.div-add-story[data-v-1c1601da] {\r\n    padding: 12px;\r\n    border: 1px dotted;\r\n    border-radius: 10px;\n}\n.wrapper-emoji[data-v-1c1601da] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-1c1601da] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-1c1601da] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 70px;\n}\n.div-hide[data-v-1c1601da]{\r\n    display: none !important;\n}\n.storie-style[data-v-1c1601da]{\r\n    position: relative;\r\n    width: 100%;\r\n    height: 60px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da] {\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: none;\r\n    justify-content: center;\n}\n.stories[data-v-1c1601da] {\r\n    position: absolute;\r\n    height: 75vh;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 25%;\n}\n.addstorie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100px;\r\n    height: 10px;\r\n    background: aliceblue;\n}\n.edit-storie[data-v-1c1601da]{\r\n    position: relative;\r\n    width: 80%;\r\n    margin: auto;\r\n    margin-bottom: 20px;\r\n    height: 20rem;\r\n    color: var(--iq-light);\r\n    text-align: center;\r\n    border: double;\r\n    word-break: break-all;\r\n    padding: 10px;\n}\n.img-add-story[data-v-1c1601da]{\r\n    height: 40px;\r\n    width: 40px;\r\n    line-height: 60px;\r\n    text-align: center;\r\n    border: 2px solid var(--iq-border-dark);\r\n    padding: 2px;\r\n    border-radius: 50%;\n}\n.img-add-story[data-v-1c1601da]:before {\r\n    top: -14px !important;\n}\n.div-add-story[data-v-1c1601da] {\r\n    padding: 12px;\r\n    border: 1px dotted;\r\n    border-radius: 10px;\n}\n.wrapper-emoji[data-v-1c1601da] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-1c1601da] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-1c1601da] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 70px;\n}\n.div-hide[data-v-1c1601da]{\r\n    display: none !important;\n}\n.storie-style[data-v-1c1601da]{\r\n    position: relative;\r\n    width: 100%;\r\n    height: 60px;\n}\n#div-img[data-v-1c1601da]{\r\n    border: 1px solid var(--iq-border-dark); \r\n    border-radius: 10px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -78009,7 +78032,20 @@ var render = function() {
                                 ])
                               }),
                               _vm._v(" "),
-                              _vm._m(3)
+                              _vm.StoryText
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "comment-attagement d-flex",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.addStories()
+                                        }
+                                      }
+                                    },
+                                    [_vm._m(3)]
+                                  )
+                                : _vm._e()
                             ],
                             1
                           )
@@ -78107,19 +78143,39 @@ var render = function() {
                       class: { "div-hide": _vm.showMedia }
                     },
                     [
-                      _c("div", [
-                        _c("input", {
-                          staticClass: "div-hide",
-                          attrs: {
-                            type: "file",
-                            id: "addImg",
-                            accept: "image/*"
-                          },
-                          on: { change: _vm.addFile }
-                        }),
-                        _vm._v(" "),
-                        _vm._m(5)
-                      ]),
+                      _c(
+                        "div",
+                        { staticClass: "align-items-baseline d-flex" },
+                        [
+                          _c("input", {
+                            staticClass: "div-hide",
+                            attrs: {
+                              type: "file",
+                              id: "addImg",
+                              accept: "image/*"
+                            },
+                            on: { change: _vm.addFile }
+                          }),
+                          _vm._v(" "),
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _vm.fileUrl
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass: "comment-attagement d-flex",
+                                  staticStyle: { position: "relative" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.addStories()
+                                    }
+                                  }
+                                },
+                                [_vm._m(6)]
+                              )
+                            : _vm._e()
+                        ]
+                      ),
                       _vm._v(" "),
                       _vm.fileUrl
                         ? _c(
@@ -78195,7 +78251,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(6)
+    _vm._m(7)
   ])
 }
 var staticRenderFns = [
@@ -78235,10 +78291,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-attagement d-flex" }, [
-      _c("label", { staticStyle: { cursor: "pointer" } }, [
-        _c("i", { staticClass: "ri-send-plane-2-line mr-3" })
-      ])
+    return _c("label", { staticStyle: { cursor: "pointer" } }, [
+      _c("i", { staticClass: "ri-send-plane-2-line mr-3" })
     ])
   },
   function() {
@@ -78256,29 +78310,32 @@ var staticRenderFns = [
     return _c(
       "label",
       {
-        staticClass: "cursor",
         staticStyle: { position: "relative", width: "100%" },
         attrs: { for: "addImg" }
       },
       [
         _c(
           "div",
-          {
-            staticClass: "iq-bg-primary mt-3 p-2 text-center",
-            attrs: { id: "div-img" }
-          },
+          { staticClass: "mt-3 p-2 text-center", attrs: { id: "div-img" } },
           [
             _c("img", {
-              staticStyle: { width: "30px" },
               attrs: {
                 src:
-                  "https://img.icons8.com/ultraviolet/40/000000/add-image.png"
+                  "https://img.icons8.com/material-outlined/24/4a90e2/add-image.png"
               }
             })
           ]
         )
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticStyle: { cursor: "pointer" } }, [
+      _c("i", { staticClass: "ri-send-plane-2-line mr-3" })
+    ])
   },
   function() {
     var _vm = this

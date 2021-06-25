@@ -80,3 +80,6 @@ Route::post('/SharePost', [App\Http\Controllers\CommentController::class, 'Share
 //NotificationController
 Route::get('/LoadNotif', [App\Http\Controllers\NotificationController::class, 'LoadNotif']); 
 Route::post('/DeleteNotif', [App\Http\Controllers\NotificationController::class, 'DeleteNotif']); 
+
+//StoryController
+Route::post('/add-storie', [App\Http\Controllers\StoryController::class, 'create']);  
