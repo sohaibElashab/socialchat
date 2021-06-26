@@ -187,9 +187,6 @@
                                             />
                                         </div>
                                         <div class="media-body ml-3">
-                                            <h6 class="mb-0 ">
-                                                {{ notification.userName }}
-                                            </h6>
                                             <small
                                                 class="float-right font-size-12"
                                                 >{{ notification.time }}</small
@@ -197,6 +194,9 @@
                                             <p class="mb-0">
                                                 {{ notification.WhatDo }}
                                             </p>
+                                            <h6 class="mb-0 ">
+                                                {{ notification.userName }}
+                                            </h6>
                                         </div>
                                     </div>
                                 </router-link>
@@ -219,9 +219,6 @@
                                             />
                                         </div>
                                         <div class="media-body ml-3">
-                                            <h6 class="mb-0 ">
-                                                {{ notification.userName }}
-                                            </h6>
                                             <small
                                                 class="float-right font-size-12"
                                                 >{{ notification.time }}</small
@@ -229,6 +226,9 @@
                                             <p class="mb-0">
                                                 {{ notification.WhatDo }}
                                             </p>
+                                            <h6 class="mb-0 ">
+                                                {{ notification.userName }}
+                                            </h6>
                                         </div>
                                     </div>
                                 </router-link>
