@@ -221,6 +221,7 @@
 
 <script>
 import ProfileFriend from "../../single_section/ProfileFriend";
+import EventBus from "../../../../event-bus";
 export default {
     components: {
         ProfileFriend
@@ -245,8 +246,6 @@ export default {
                 Echo.private(`Notification.${res.data.id}`).listen(
                     "NotificationEvent",
                     e => {
-                        console.log("e.notif");
-                        console.log(e.notif);
                         this.notifications.unshift(e.notif);
                     }
                 );
@@ -304,6 +303,7 @@ export default {
                 .then(res => {
                     var index = this.notifications.indexOf(notif);
                     this.notifications.splice(index, 1);
+                    EventBus.$emit("reload-notif", { data: "z" });
                 });
         }
     }

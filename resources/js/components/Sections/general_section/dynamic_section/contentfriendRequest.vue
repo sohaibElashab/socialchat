@@ -177,6 +177,7 @@ export default {
                 e => {
                     this.allReqs.unshift(e.user);
                     this.friendRqs = this.allReqs.slice(0, 4);
+                    this.reloadKnow();
                 }
             );
             Echo.private(`cancelRequest.${this.user.id}`).listen(
@@ -189,6 +190,7 @@ export default {
                             this.friendRqs = this.allReqs.slice(0, 4);
                         }
                     });
+                    this.reloadKnow();
                 }
             );
             Echo.private(`acceptRequest.${this.user.id}`).listen(
@@ -213,6 +215,11 @@ export default {
         });
     },
     methods: {
+        reloadKnow() {
+            axios.get("/YouMayKnow").then(res => {
+                this.friendKnows = res.data;
+            });
+        },
         sendRequestFK(id, friendKnow) {
             axios
                 .post("/SendRequest", {

@@ -13,6 +13,7 @@ use App\Events\CancelRequestEvent;
 use App\Events\AcceptRequestEvent;
 use App\Events\AcceptRequestEvent2;
 use App\Events\NotificationEvent;
+use App\Models\Notification;
 
 class FriendController extends Controller
 {
@@ -64,7 +65,10 @@ class FriendController extends Controller
             ]); 
 
             broadcast(new SendRequestEvent($Frequest));
-            broadcast(new NotificationEvent($Frequest->user_to,null,'request'));
+            $notif = Notification::where('user_id',$Frequest->user_to)->where('user_from',$from)->where('type','request')->count();
+            if($notif == 0){
+                broadcast(new NotificationEvent($Frequest->user_to,null,'request'));
+            }
 
             return response()->json($Frequest);
         }
@@ -244,8 +248,20 @@ class FriendController extends Controller
     public function YouMayKnow()
     {
         $id = auth()->user()->id;
+        $reqs = DB::table('users')
+                ->join('friend_requests','users.id','=','friend_requests.user_from')
+                ->where('friend_requests.user_to',$id)
+                ->where('friend_requests.status','sent')
+                ->select('users.id')
+                ->orderBy('friend_requests.updated_at', 'DESC')
+                ->get();
+
         $friends = Friend::where('user_id',$id)->orWhere('friend_id',$id)->get();
         $new = collect();
+
+        foreach ($reqs as  $value) {
+            $new->add($value->id);
+        }
         foreach ($friends as $key => $friend) {
             if($friend->user_id != $id){
                 $new->add($friend->user_id);

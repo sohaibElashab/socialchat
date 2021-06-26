@@ -15,7 +15,7 @@
             <!-- Right Sidebar Panel End-->
 
             <!-- Page Content  -->
-            <containerPostSave/>
+            <containerPostSave />
             <!-- Page Content End -->
         </div>
         <!-- Wrapper END -->
@@ -29,7 +29,7 @@ import containerPostSave from "../Sections/general_section/dynamic_section/conta
 export default {
     components: {
         containerPostSave
-    } /* ,
+    },
     beforeRouteEnter(to, from, next) {
         // called before the route that renders this component is confirmed.
         // does NOT have access to `this` component instance,
@@ -45,6 +45,6 @@ export default {
                     name: "signIn"
                 });
             });
-    } */
+    }
 };
 </script>

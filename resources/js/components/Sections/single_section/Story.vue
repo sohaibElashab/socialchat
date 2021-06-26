@@ -269,19 +269,16 @@
                     <div
                         v-if="current == index && color.text != null"
                         id="Storycontent"
-                        :style="{
-                            background: color.Background,
-                            fontFamily: color.Font
-                        }"
+                        :style="
+                            `${color.Background} ; font-family : ${color.Font}`
+                        "
                     >
                         <p>{{ color.text }}</p>
                     </div>
                     <div
                         v-if="current == index && color.image != null"
                         id="Storycontent"
-                        :style="{
-                            background: color.Background
-                        }"
+                        :style="`${color.Background}`"
                     >
                         <img
                             style="height: 100%; width: 100%; object-fit: contain"
@@ -333,7 +330,7 @@ export default {
                 "background: linear-gradient(90deg, #00F0FF 0%, #00F0FF 40%, #0017E3 40%, #0017E3 60%, #000F8F 60%, #000F8F 70%, #00073F 70%, #00073F 100%);",
                 "background: linear-gradient(110deg, #FFD9E8 4%, #FFD9E8 40%, #DE95BA calc(40% + 1px), #DE95BA 50%, #7F4A88 calc(50% + 1px), #7F4A88 70%, #4A266A calc(70% + 1px), #4A266A 100%);",
                 "background: linear-gradient(60deg, #2B2E4A 0%, #2B2E4A 30%, #E84545 calc(30% + 1px), #E84545 60%, #903749 calc(60% + 1px), #903749 70%, #53354A calc(70% + 1px), #53354A 100%);",
-                "background:var(--iq-dark-box)",
+                "background:var(--iq-dark-box)"
             ],
             getBackground: "background:var(--iq-dark-box)",
             getFont: "Montserrat",
@@ -513,6 +510,7 @@ export default {
             this.reinitialiser();
         },
         changeColor() {
+            //pp
             this.getBackground = this.color[this.indexColor];
             this.indexColor < 7 ? this.indexColor++ : (this.indexColor = 0);
         },

@@ -28,9 +28,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Page Content  -->
-            <contentVideos/>
+            <contentVideos />
             <!-- Page Content End -->
         </div>
         <!-- Wrapper END -->
@@ -44,7 +44,7 @@ import contentVideos from "../Sections/general_section/dynamic_section/contentVi
 export default {
     components: {
         contentVideos
-    } /* ,
+    },
     beforeRouteEnter(to, from, next) {
         // called before the route that renders this component is confirmed.
         // does NOT have access to `this` component instance,
@@ -60,6 +60,6 @@ export default {
                     name: "signIn"
                 });
             });
-    } */
+    }
 };
 </script>

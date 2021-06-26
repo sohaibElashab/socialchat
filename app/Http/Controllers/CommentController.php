@@ -15,6 +15,7 @@ use App\Events\SharePostEvent;
 use App\Models\PostShare;
 use App\Events\NotificationEvent;
 use App\Models\Post;
+use App\Models\Notification;
 
 class CommentController extends Controller
 {
@@ -29,7 +30,8 @@ class CommentController extends Controller
         broadcast(new SharePostEvent($request->post_id));
         
         $id_to = Post::where('id',$request->post_id)->first('user_id');
-        if (auth()->user()->id != $id_to->user_id) {
+        $notif = Notification::where('user_id',$id_to->user_id)->where('user_from',auth()->user()->id)->where('type','share')->where('post_id',$request->post_id)->count();
+        if (auth()->user()->id != $id_to->user_id && $notif == 0) {
             broadcast(new NotificationEvent($id_to->user_id,$request->post_id,'share'));
         }
 
@@ -133,7 +135,8 @@ class CommentController extends Controller
             ]);
 
             $comment = Comment::where('id',$request->id)->first(['post_id','user_id']);
-            if (auth()->user()->id != $comment->user_id) {
+            $notif = Notification::where('user_id',$comment->user_id)->where('user_from',auth()->user()->id)->where('type','like_comment')->where('post_id',$comment->post_id)->count();
+            if (auth()->user()->id != $comment->user_id && $notif == 0) {
                 broadcast(new NotificationEvent($comment->user_id,$comment->post_id,'like_comment'));
             }
         }

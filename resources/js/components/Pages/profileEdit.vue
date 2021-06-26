@@ -29,7 +29,7 @@ import contentProfileEdit from "./../Sections/general_section/dynamic_section/co
 export default {
     components: {
         contentProfileEdit
-    } /* ,
+    },
     beforeRouteEnter(to, from, next) {
         // called before the route that renders this component is confirmed.
         // does NOT have access to `this` component instance,
@@ -45,6 +45,6 @@ export default {
                     name: "signIn"
                 });
             });
-    } */
+    }
 };
 </script>

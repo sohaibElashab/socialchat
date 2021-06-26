@@ -15,7 +15,7 @@
             <!-- Right Sidebar Panel End-->
 
             <!-- Page Content  -->
-            <containerPost/>
+            <containerPost />
             <!-- Page Content End -->
         </div>
         <!-- Wrapper END -->
@@ -29,7 +29,7 @@ import containerPost from "../Sections/general_section/dynamic_section/container
 export default {
     components: {
         containerPost
-    } /* ,
+    },
     beforeRouteEnter(to, from, next) {
         // called before the route that renders this component is confirmed.
         // does NOT have access to `this` component instance,
@@ -45,6 +45,6 @@ export default {
                     name: "signIn"
                 });
             });
-    } */
+    }
 };
 </script>

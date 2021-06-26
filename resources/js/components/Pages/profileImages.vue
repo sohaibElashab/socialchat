@@ -29,7 +29,7 @@
                 </div>
             </div>
             <!-- Page Content  -->
-            <contentImages/>
+            <contentImages />
             <!-- Page Content End -->
         </div>
         <!-- Wrapper END -->
@@ -43,7 +43,7 @@ import contentImages from "../Sections/general_section/dynamic_section/contentIm
 export default {
     components: {
         contentImages
-    } /* ,
+    },
     beforeRouteEnter(to, from, next) {
         // called before the route that renders this component is confirmed.
         // does NOT have access to `this` component instance,
@@ -59,6 +59,6 @@ export default {
                     name: "signIn"
                 });
             });
-    } */
+    }
 };
 </script>

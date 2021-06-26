@@ -21,6 +21,7 @@ use PhpParser\Node\Expr\Cast\Array_;
 use App\Events\NewPostEvent;
 use App\Models\Friend;
 use App\Events\NotificationEvent;
+use App\Models\Notification;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -346,7 +347,9 @@ class PostController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
             $id_to = Post::where('id',$request->id)->first('user_id');
-            if (auth()->user()->id != $id_to->user_id) {
+            $notif = Notification::where('user_id',$id_to->user_id)->where('user_from',auth()->user()->id)->where('type','like_post')->where('post_id',$request->id)->count();
+
+            if (auth()->user()->id != $id_to->user_id && $notif == 0) {
                 broadcast(new NotificationEvent($id_to->user_id,$request->id,'like_post'));
             }
         }

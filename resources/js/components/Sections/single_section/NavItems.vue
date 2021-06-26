@@ -188,14 +188,14 @@
                                         </div>
                                         <div class="media-body ml-3">
                                             <h6 class="mb-0 ">
-                                                {{ notification.WhatDo }}
+                                                {{ notification.userName }}
                                             </h6>
                                             <small
                                                 class="float-right font-size-12"
                                                 >{{ notification.time }}</small
                                             >
                                             <p class="mb-0">
-                                                {{ notification.userName }}
+                                                {{ notification.WhatDo }}
                                             </p>
                                         </div>
                                     </div>
@@ -220,14 +220,14 @@
                                         </div>
                                         <div class="media-body ml-3">
                                             <h6 class="mb-0 ">
-                                                {{ notification.WhatDo }}
+                                                {{ notification.userName }}
                                             </h6>
                                             <small
                                                 class="float-right font-size-12"
                                                 >{{ notification.time }}</small
                                             >
                                             <p class="mb-0">
-                                                {{ notification.userName }}
+                                                {{ notification.WhatDo }}
                                             </p>
                                         </div>
                                     </div>
@@ -486,6 +486,8 @@ export default {
                     this.Allnotifs.unshift(e.notif);
                     this.Notifications = this.Allnotifs.slice(0, 4);
                     document.getElementById("redNOT").style.display = "initial";
+                    console.log("e");
+                    console.log(e);
                     this.showToast(e.notif.userName, e.notif.WhatDo);
                 }
             );
@@ -545,6 +547,7 @@ export default {
 
         EventBus.$on("user-update", this.updateUser);
         EventBus.$on("reload-uread", this.ReloadMSG);
+        EventBus.$on("reload-notif", this.ReloadNOTIF);
 
         window.onload = function() {
             if (sessionStorage.getItem("themeMode") !== null) {
@@ -564,6 +567,15 @@ export default {
         }
     },
     methods: {
+        ReloadNOTIF(data) {
+            axios.get("/LoadNotif").then(res => {
+                this.Allnotifs = res.data;
+                this.Notifications = this.Allnotifs.slice(0, 4);
+                if (this.Allnotifs.length > 0) {
+                    document.getElementById("redNOT").style.display = "initial";
+                }
+            });
+        },
         showToast(title, message) {
             this.toastr = Object.assign(this.toastr, {
                 color: "#182039",
