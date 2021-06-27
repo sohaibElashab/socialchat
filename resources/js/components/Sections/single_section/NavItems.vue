@@ -413,6 +413,7 @@ export default {
                     this.allReqs.unshift(e.user);
                     this.friendReqs = this.allReqs.slice(0, 4);
                     this.loadedReqs = true;
+                    sessionStorage.setItem("click_req", false);
                     document.getElementById("redREQ").style.display = "initial";
                 }
             );
@@ -447,6 +448,7 @@ export default {
                 "SendTextEvent",
                 e => {
                     if (e.message.user_id != this.$route.query.user) {
+                        sessionStorage.setItem("click_msg", false);
                         document.getElementById("redMSG").style.display =
                             "initial";
                         this.msgCount += 1;
@@ -485,9 +487,9 @@ export default {
                 e => {
                     this.Allnotifs.unshift(e.notif);
                     this.Notifications = this.Allnotifs.slice(0, 4);
+                    sessionStorage.setItem("click_not", false);
                     document.getElementById("redNOT").style.display = "initial";
-                    console.log("e");
-                    console.log(e);
+
                     this.showToast(e.notif.userName, e.notif.WhatDo);
                 }
             );
@@ -514,6 +516,7 @@ export default {
                 };
                 this.Allnotifs.unshift(notif);
                 this.Notifications = this.Allnotifs.slice(0, 4);
+                sessionStorage.setItem("click_not", false);
                 document.getElementById("redNOT").style.display = "initial";
                 this.showToast(e.post.userName, "Posted in his profile");
             }
@@ -523,7 +526,10 @@ export default {
             this.allReqs = res.data;
             this.friendReqs = this.allReqs.slice(0, 4);
             this.loadedReqs = true;
-            if (this.allReqs.length > 0) {
+            if (
+                this.allReqs.length > 0 &&
+                sessionStorage.getItem("click_req") === "false"
+            ) {
                 document.getElementById("redREQ").style.display = "initial";
             }
         });
@@ -532,7 +538,10 @@ export default {
             this.msgCount = res.data[1];
             this.ALLmsg = res.data[0];
             this.messages = this.ALLmsg.slice(0, 4);
-            if (this.msgCount > 0) {
+            if (
+                this.msgCount > 0 &&
+                sessionStorage.getItem("click_msg") === "false"
+            ) {
                 document.getElementById("redMSG").style.display = "initial";
             }
         });
@@ -540,7 +549,10 @@ export default {
         axios.get("/LoadNotif").then(res => {
             this.Allnotifs = res.data;
             this.Notifications = this.Allnotifs.slice(0, 4);
-            if (this.Allnotifs.length > 0) {
+            if (
+                this.Allnotifs.length > 0 &&
+                sessionStorage.getItem("click_not") === "false"
+            ) {
                 document.getElementById("redNOT").style.display = "initial";
             }
         });
@@ -725,12 +737,15 @@ export default {
         },
         removeDot() {
             document.getElementById("redREQ").style.display = "none";
+            sessionStorage.setItem("click_req", true);
         },
         removeDotMSG() {
             document.getElementById("redMSG").style.display = "none";
+            sessionStorage.setItem("click_msg", true);
         },
         removeDotNOT() {
             document.getElementById("redNOT").style.display = "none";
+            sessionStorage.setItem("click_not", true);
         }
     }
 };

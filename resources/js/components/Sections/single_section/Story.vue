@@ -372,6 +372,7 @@ export default {
 
                         element.stories.push(last_story[0]);
                         element.time = e.story.time;
+                        element.isActive = true;
                         p = true;
                     }
                 });
@@ -447,6 +448,15 @@ export default {
                     });
                 }, 0);
             });
+
+            axios
+                .post("/StorySee", {
+                    user_id: story.id
+                })
+                .then(res => {
+                    var index = this.storys.indexOf(story);
+                    this.storys[index].isActive = false;
+                });
 
             this.hammertime.off("press");
             this.hammertime.off("pressup");
@@ -548,6 +558,7 @@ export default {
                             );
                             element.stories.push(last_story);
                             element.time = response.data.time;
+                            element.isActive = true;
                             p = true;
                         }
                     });

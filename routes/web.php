@@ -84,3 +84,4 @@ Route::post('/DeleteNotif', [App\Http\Controllers\NotificationController::class,
 //StoryController
 Route::post('/add-storie', [App\Http\Controllers\StoryController::class, 'create']);  
 Route::get('/GetStories', [App\Http\Controllers\StoryController::class, 'index']);  
+Route::post('/StorySee', [App\Http\Controllers\StoryController::class, 'StorySee']);  

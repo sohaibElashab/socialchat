@@ -7,6 +7,7 @@ use App\Models\Image;
 use App\Models\story;
 use App\Models\User;
 use App\Models\Friend;
+use App\Models\StorySeen;
 use DateTime;
 use Illuminate\Http\Request;
 use App\Events\NewStoryEvent;
@@ -54,7 +55,7 @@ class StoryController extends Controller
         date_default_timezone_set('Africa/Casablanca');
         $user = User::findOrFail($id);
         $user->img = Image::where('user_id',$user->id)->where('type','profile')->first('name');
-        $user->isActive = true;
+       
         $stories = story::where('user_id',$id)->get();
         if(count($stories) > 0 ){
             foreach ($stories as $value) {
@@ -86,7 +87,17 @@ class StoryController extends Controller
             $user->time = $last_stories->time;
     
             $user->stories = $stories;
-    
+
+            $storiesIDs = story::where('user_id',$id)->get('id');
+
+            $countSeen = StorySeen::whereIn('story_id',$storiesIDs)->where('user_id',auth()->user()->id)->where('status',false)->count();
+
+            if($countSeen > 0){
+                $user->isActive = true;
+            }else{
+                $user->isActive = false;
+            }
+
             return $user;
         }else{
             return null;
@@ -108,7 +119,18 @@ class StoryController extends Controller
             'Font' => $request->Font,
             'time' => date("Y-m-d H:i:s"), 
         ]);
-        
+
+        $fr = $this->Friends(auth()->user()->id);
+        $fr->add(auth()->user()->id);
+
+        foreach ($fr as $id) {
+            StorySeen::create([
+                'story_id' => $story->id,
+                'user_id' => $id,
+                'status' => false,
+            ]);
+        }
+       
         if ($request->file != "null") {
             $image = $request->file;
             $new_name = 'StoryImg-'.rand() . '.' . $image->getClientOriginalExtension();
@@ -123,6 +145,18 @@ class StoryController extends Controller
 
         broadcast(new NewStoryEvent());
         return response()->json($this->GetStories(auth()->user()->id));
+    }
+
+    public function StorySee(Request $request)
+    {
+        $user_id = $request->user_id;
+        $current_user = auth()->user()->id;
+        $stories = story::where('user_id',$user_id)->get();
+        foreach ($stories as $value) {
+            $s = StorySeen::where('story_id',$value->id)->where('user_id',$current_user)->update(['status' => true]);
+        }
+
+        return response()->json();
     }
 
     public function DeleteStories()

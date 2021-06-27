@@ -114,6 +114,9 @@ export default {
                     password: this.password
                 })
                 .then(res => {
+                    sessionStorage.setItem("click_req", false);
+                    sessionStorage.setItem("click_msg", false);
+                    sessionStorage.setItem("click_not", false);
                     this.$router.push({ name: "home" });
                 })
                 .catch(err => {

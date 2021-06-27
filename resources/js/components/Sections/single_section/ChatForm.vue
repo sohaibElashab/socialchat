@@ -1,6 +1,6 @@
 <template>
     <div class="chat-footer p-3 bg-white">
-        <form 
+        <form
             class="d-flex align-items-center"
             id="fooorm"
             enctype="multipart/form-data"
@@ -155,11 +155,14 @@ export default {
     width: 100%;
     justify-content: flex-start;
 }
-.regular-input {  
+.regular-input {
     height: 50px;
     padding: 0rem 1rem;
 }
 .emoji-invoker {
     top: 0.3rem;
+}
+.emoji-picker {
+    top: -20rem;
 }
 </style>

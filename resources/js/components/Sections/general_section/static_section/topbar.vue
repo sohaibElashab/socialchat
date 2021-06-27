@@ -34,15 +34,15 @@ export default {
         NavSearch,
         NavItems
     },
-    data(){
-        return{
-            show:false
-        }
+    data() {
+        return {
+            show: false
+        };
     },
-    methods:{
+    methods: {
         showCollapse() {
             this.show = !this.show;
         }
-    } 
+    }
 };
 </script>
