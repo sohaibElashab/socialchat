@@ -1,6 +1,6 @@
 <template>
     <div class="iq-navbar-logo d-flex justify-content-between">
-        <router-link to="/SignIn" tag="a">
+        <router-link to="/" tag="a">
             <img src="images/logo.png" class="img-fluid" alt="">
             <span>SocialChat</span>
         </router-link>

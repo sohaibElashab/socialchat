@@ -402,8 +402,8 @@ export default {
             }
         };
     },
-    mounted() {
-        axios.get("/profile").then(res => {
+    async mounted() {
+        await axios.get("/profile").then(res => {
             this.user = res.data;
             this.img = this.user.profileimg.name;
             this.isMounted = true;
@@ -484,16 +484,17 @@ export default {
 
             Echo.private(`Notification.${this.user.id}`).listen(
                 "NotificationEvent",
-                e => {
-                    this.Allnotifs.unshift(e.notif);
+                async e => {
+                    await this.Allnotifs.unshift(e.notif);
                     this.Notifications = this.Allnotifs.slice(0, 4);
-                    sessionStorage.setItem("click_not", false);
+                    await sessionStorage.setItem("click_not", false);
                     document.getElementById("redNOT").style.display = "initial";
 
-                    this.showToast(e.notif.userName, e.notif.WhatDo);
+                    // await this.showToast(e.notif.userName, e.notif.WhatDo)
                 }
             );
         });
+
 
         axios
             .post("/LoadFriends", {
@@ -518,7 +519,7 @@ export default {
                 this.Notifications = this.Allnotifs.slice(0, 4);
                 sessionStorage.setItem("click_not", false);
                 document.getElementById("redNOT").style.display = "initial";
-                this.showToast(e.post.userName, "Posted in his profile");
+                // this.showToast(e.post.userName, "Posted in his profile");oui
             }
         });
 
@@ -588,14 +589,14 @@ export default {
                 }
             });
         },
-        showToast(title, message) {
-            this.toastr = Object.assign(this.toastr, {
-                color: "#182039",
-                title: title,
-                message: message
-            });
-            this.$toast.success(this.toastr);
-        },
+        // showToast(title, message) {
+        //     this.toastr = Object.assign(this.toastr, {
+        //         color: "#50b5ff",
+        //         title: title,
+        //         message: message
+        //     });
+        //     this.$toast.success(this.toastr);
+        // },
         checkFriend(id) {
             var p = null;
 

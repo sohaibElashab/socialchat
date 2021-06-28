@@ -10,7 +10,7 @@
                 @keydown.space="space"
             />
             <!-- <a class="search-link" href="#"><i class="ri-search-line"></i></a> -->
-            <div id="ser" v-if="results.length != 0">
+            <div id="ser" v-if="results.length != 0" style="max-height: 400px;overflow: auto;">
                 <!--  <p v-for="result in results" :key="result.id" class="ml-3">
                 
             </p> -->
@@ -25,8 +25,7 @@
                             tag="a"
                             id="pp"
                             v-if="user.id != result.id"
-                            ><!-- 
-                                params: { id: result.id }, -->
+                            >
                             <div class="">
                                 <img
                                     class="avatar-40 rounded"
@@ -38,25 +37,6 @@
                             </div>
                             <span>{{ result.name }}</span>
                         </router-link>
-                        <!--   <router-link
-                            :to="{
-                                path: '/profile'
-                            }"
-                            tag="a"
-                            id="pp"
-                            v-if="user.id == result.id"
-                        >
-                            <div class="">
-                                <img
-                                    class="avatar-40 rounded"
-                                    :src="
-                                        `images/user/${result.profileimg.name}`
-                                    "
-                                    alt="pp"
-                                />
-                            </div>
-                            <span>{{ result.name }}</span>
-                        </router-link> -->
                     </li>
                 </ul>
             </div>

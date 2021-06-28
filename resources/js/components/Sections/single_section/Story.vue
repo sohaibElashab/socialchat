@@ -5,7 +5,7 @@
                 <h4 class="card-title">Stories</h4>
             </div>
         </div>
-        <div class="iq-card-body" style=" height: 450px; overflow: auto; ">
+        <div class="iq-card-body" style=" max-height: 450px; overflow: auto; ">
             <ul class="media-story m-0 p-0">
                 <li class="d-flex flex-column">
                     <div

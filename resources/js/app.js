@@ -128,7 +128,6 @@ import "../../public/css/cxlt-vue2-toastr.css";
 
 Vue.use(CxltToastr, {
     position: "top right",
-    timeOut: "5000"
 });
 
 const app = new Vue({
