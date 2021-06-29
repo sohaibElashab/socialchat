@@ -265,7 +265,7 @@
                     </div>
                 </nav>
                 <!--  -->
-                <section v-for="(color, index) in colors" :key="index">
+                <section v-for="(color, index) in colors" :key="index" >
                     <div
                         v-if="current == index && color.text != null"
                         id="Storycontent"
@@ -556,7 +556,7 @@ export default {
                             var last_story = allstories.slice(
                                 Math.max(allstories.length - 1, 0)
                             );
-                            element.stories.push(last_story);
+                            element.stories.push(last_story[0]);
                             element.time = response.data.time;
                             element.isActive = true;
                             p = true;
@@ -595,7 +595,6 @@ export default {
 }
 .stories {
     position: absolute;
-    height: 75vh;
     top: 15%;
     background: aliceblue;
     width: 377px;

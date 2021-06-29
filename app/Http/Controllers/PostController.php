@@ -67,8 +67,12 @@ class PostController extends Controller
                 $userName = $user->name;
                 $userId = $user->id;
             }
-            if($user->id == $image->user_id && $image->type == "cover"){
-                $userCover = $image->name;
+            if($post->type == 'cover_default'){
+                if($user->id == $image->user_id && $image->type == "cover"){
+                    $userCover = $image->name;
+                }
+            }else{
+                $userCover = null;
             }
         }
         foreach($videos as $video){
@@ -103,7 +107,7 @@ class PostController extends Controller
             $post->edit = false;
         }
 
-        if ($post->type == "create" || $post->type == "cover" || $post->type == "profile") {
+        if ($post->type == "create" || $post->type == "cover" || $post->type == "profile" || $post->type == "profile_default" || $post->type == "cover_default") {
             $post->edit = false;
         }
 

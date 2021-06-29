@@ -368,7 +368,8 @@
                                                 </div>
                                             </div>
                                             <div class="iq-card-body">
-                                                <ul
+                                               
+                                                 <ul
                                                     class="profile-img-gallary d-flex flex-wrap p-0 m-0"
                                                 >
                                                     <li
@@ -385,7 +386,6 @@
                                                                         image.post_id
                                                                 }
                                                             }"
-                                                            href="javascript:void();"
                                                         >
                                                             <img
                                                                 :src="
@@ -488,7 +488,7 @@
                             v-if="loaded"
                         />
                         <!-- photo galery -->
-                        <ProfileImages :images="images" :id="user.id" />
+                        <ProfileImages :images="images" :id="OnlineUser.id" />
                     </div>
                 </div>
             </div>

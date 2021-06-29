@@ -35,10 +35,6 @@
                     >
                         <i class="ri-user-fill"></i>
                     </router-link>
-
-                    <a href="javascript:void();" class="iq-bg-primary">
-                        <i class="ri-vidicon-2-fill"></i>
-                    </a>
                     <a @click="deleteChat" class="iq-bg-primary">
                         <i class="ri-delete-bin-5-line"></i>
                     </a>
@@ -259,6 +255,7 @@ export default {
             Echo.private(`sendText.${this.CurrentUser.id}`).listen(
                 "SendTextEvent",
                 e => {
+                    console.log(e);
                     if (e.message.user_id == this.$route.query.user) {
                         var message = {
                             id: e.message.id,
@@ -271,7 +268,10 @@ export default {
                             MsgFor: "chat-left"
                         };
 
-                        if (message.txtChat.substring(0, 4) == "http") {
+                        if (
+                            message.txtChat != null &&
+                            message.txtChat.substring(0, 4) == "http"
+                        ) {
                             axios
                                 .post("/userInfoReq", {
                                     id: message.txtChat.split("postId=")[1]
@@ -326,7 +326,7 @@ export default {
                 });
 
             for (const element of this.ChatContents) {
-                if (element.txtChat.substring(0, 4) == "http") {
+                if (element.txtChat != null && element.txtChat.substring(0, 4) == "http") {
                     await axios
                         .post("/userInfoReq", {
                             id: element.txtChat.split("postId=")[1]

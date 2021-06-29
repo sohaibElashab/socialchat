@@ -61,7 +61,7 @@
                                                 </div>
                                             </div>
                                             <router-link
-                                                v-if="image.type == 'post' && image.user_id == id"
+                                                v-if="image.type == 'post' && image.user_id == id" 
                                                 tag="a"
                                                 :to="{ name: 'postEdit', query: { postId: image.post_id } }"
                                                 class="image-edit-btn"

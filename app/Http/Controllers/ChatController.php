@@ -190,9 +190,9 @@ class ChatController extends Controller
         $id = auth()->user()->id;
         $friendID = $request->id;
         $chatsID = ChatUser::where('user_id',$id)->get('chat_id');
-        if(count($chatsID) > 0){
-            $chatsSolo = Chat::whereIn('id',$chatsID)->where('type','solo')->get('id');
-            $chat = ChatUser::whereIn('chat_id',$chatsSolo)->where('user_id',$friendID)->first('chat_id');
+        $chatsSolo = Chat::whereIn('id',$chatsID)->where('type','solo')->get('id');
+        $chat = ChatUser::whereIn('chat_id',$chatsSolo)->where('user_id',$friendID)->first('chat_id');
+        if($chat != null){
     
             if($this->MessageCount($chat->chat_id) > 0){
                 //$messages = Message::where("chat_id",$chat->chat_id)->get();

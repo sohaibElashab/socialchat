@@ -23,6 +23,7 @@
                     class="regular-input"
                     placeholder="Message..."
                     v-model="input"
+                    @keypress.enter="send"
                 ></textarea>
 
                 <emoji-picker @emoji="append" :search="search">

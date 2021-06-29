@@ -67,6 +67,24 @@
             <div class="mt-3" v-if="post.text">
                 <p>{{ post.text }}</p>
             </div>
+            <!--             <div class="user-post" v-if="post.type == 'profile_default'">
+                <div class="user-post text-center mt-3">
+                    <img
+                        :src="`images/user/${post.userImg}`"
+                        alt="post-image"
+                        class="postImg"
+                    />
+                </div>
+            </div>
+            <div class="user-post" v-else-if="post.type == 'cover_default'">
+                <div class="user-post text-center mt-3">
+                    <img
+                        :src="`images/user/${post.userCover}`"
+                        alt="post-image"
+                        class="postImg"
+                    />
+                </div>
+            </div> -->
             <div
                 class="user-post"
                 v-if="Object.keys(post.postImgs).length > 0"
@@ -86,14 +104,25 @@
                     </splide>
                 </div>
                 <div v-else class="user-post text-center">
-                    <a href="javascript:void();"
-                        ><img
+                    <a href="javascript:void();">
+                        <img
+                            v-if="
+                                post.type == 'profile_default' ||
+                                    post.type == 'cover_default'
+                            "
+                            :src="`images/user/${post.postImgs[0]}`"
+                            alt="post-image"
+                            class="postImg"
+                        />
+                        <img
+                            v-else
                             :src="
                                 `images/posts/${post.user_id}/${post.postImgs[0]}`
                             "
                             alt="post-image"
                             class="postImg"
-                    /></a>
+                        />
+                    </a>
                 </div>
             </div>
             <div class="user-post" v-if="post.postVds">
@@ -124,24 +153,7 @@
                     </video>
                 </div>
             </div>
-            <div class="user-post" v-if="post.type == 'profile'">
-                <div class="user-post text-center mt-3">
-                    <img
-                        :src="`images/user/${post.userImg}`"
-                        alt="post-image"
-                        class="postImg"
-                    />
-                </div>
-            </div>
-            <div class="user-post" v-if="post.type == 'cover'">
-                <div class="user-post text-center mt-3">
-                    <img
-                        :src="`images/user/${post.userCover}`"
-                        alt="post-image"
-                        class="postImg"
-                    />
-                </div>
-            </div>
+
             <div class="comment-area mt-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <div

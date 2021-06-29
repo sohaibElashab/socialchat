@@ -7,39 +7,38 @@
                     v-if="friends != null && friends.length > 0"
                 >
                     <div class="media-height p-3">
-                        <div
+                        <router-link
+                            tag="a"
+                            :to="{
+                                name: 'chat',
+                                query: { user: friend.id }
+                            }"
                             class="media align-items-center mb-4"
                             v-for="friend in friends"
                             :key="friend.id"
                         >
-                            <div
-                                class="iq-profile-avatar"
-                                :class="friend.statu"
-                            >
-                                <img
-                                    class="rounded-circle avatar-50"
-                                    :src="
-                                        `images/user/${friend.profileimg.name}`
-                                    "
-                                    alt=""
-                                />
-                            </div>
-                            <div class="media-body ml-3">
-                                <h6 class="mb-0">
-                                    <!-- <a href="#">{{friend.name}}</a>:to="friend.href" -->
-                                    <router-link
-                                        :to="{
-                                            name: 'chat',
-                                            query: { user: friend.id }
-                                        }"
-                                        tag="a"
-                                    >
-                                        {{ friend.name }}
-                                    </router-link>
-                                </h6>
-                                <p class="mb-0">{{ friend.time }}</p>
-                            </div>
-                        </div>
+                                <div
+                                    class="iq-profile-avatar"
+                                    :class="friend.statu"
+                                >
+                                    <img
+                                        class="rounded-circle avatar-50"
+                                        :src="
+                                            `images/user/${friend.profileimg.name}`
+                                        "
+                                        alt=""
+                                    />
+                                </div>
+                                <div class="media-body ml-3">
+                                    <h6 class="mb-0">
+                                        <!-- <a href="#">{{friend.name}}</a>:to="friend.href" -->
+                                        <a>
+                                            {{ friend.name }}
+                                        </a>
+                                    </h6>
+                                    <p class="mb-0">{{ friend.time }}</p>
+                                </div>
+                        </router-link>
                     </div>
                     <div class="right-sidebar-toggle bg-primary mt-3">
                         <i class="ri-arrow-left-line side-left-icon"></i>

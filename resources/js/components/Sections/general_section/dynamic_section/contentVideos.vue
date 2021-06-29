@@ -11,37 +11,9 @@
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe
                                 class="embed-responsive-item"
-                                :src="`videos/${video.name}`"
+                                :src="`videos/posts/${video.user_id}/${video.name}`"
                                 allowfullscreen
                             ></iframe>
-                        </div>
-                        <div class="image-hover-data">
-                            <div class="product-elements-icon">
-                                <ul
-                                    class="d-flex align-items-center m-0 p-0 list-inline"
-                                >
-                                    <li>
-                                        <a href="#" class="pr-3 text-white">
-                                            {{ video.NbrJaime }}
-                                            <i class="ri-thumb-up-line"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="pr-3 text-white">
-                                            {{ video.NbrComment }}
-                                            <i class="ri-chat-3-line"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="pr-3 text-white">
-                                            {{ video.NbrPartage }}
-                                            <i
-                                                class="ri-share-forward-line"
-                                            ></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                         <a
                             href="#"
@@ -52,6 +24,12 @@
                             data-original-title="Edit or Remove"
                             ><i class="ri-edit-2-fill"></i
                         ></a>
+                        <router-link
+                            tag="a"
+                            :to="{ name: 'postEdit', query: { postId: video.post_id } }"
+                            class="image-edit-btn"
+                            ><i class="ri-edit-2-fill"></i
+                        ></router-link> 
                     </div>
                 </div>
             </div>
@@ -92,6 +70,7 @@ export default {
     mounted() {
         axios.get("/videosProfile").then(res => {
             this.videos = res.data;
+            console.log(res.data);
         });
     }
 };

@@ -77,6 +77,8 @@
                         id="exampleInputPassword1"
                         placeholder="Password"
                         v-model="birthdate"
+                        min="1980-01-01" 
+                        max="2015-01-01"
                     />
                     <div class="form-text text-danger">
                         {{ birthdate_err }}

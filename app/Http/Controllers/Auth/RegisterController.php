@@ -93,14 +93,14 @@ class RegisterController extends Controller
             ]);
         $postC = Post::create([
                 'user_id' => $user->id,
-                'type' => 'cover',
+                'type' => 'cover_default',
                 'statu' => "Changed cover picture",
                 'text' => "",
                 'time' => $date2,
             ]);
         $postP = Post::create([
                 'user_id' => $user->id,
-                'type' => 'profile',
+                'type' => 'profile_default',
                 'statu' => "Changed profile picture",
                 'text' => "",
                 'time' => $date3,
@@ -114,6 +114,12 @@ class RegisterController extends Controller
             'name' => 'BG/'.$BGpics[$Bpic],
             'type' => 'cover', 
         ]); 
+        Image::create([
+            'post_id' => $postC->id,
+            'user_id' => $user->id,
+            'name' => 'BG/'.$BGpics[$Bpic],
+            'type' => 'post', 
+        ]); 
 
        if ($data['gender'] == 'female') {
            $femalePics = array("female1.jpg","female2.jpg","female3.jpg","female4.jpg","female5.jpg","female6.jpg","female7.jpg","female8.jpg");
@@ -124,6 +130,12 @@ class RegisterController extends Controller
                'name' => 'FemalePic/'.$femalePics[$Fpic],
                'type' => 'profile',
            ]);
+           Image::create([
+               'post_id' => $postP->id,
+               'user_id' => $user->id,
+               'name' => 'FemalePic/'.$femalePics[$Fpic],
+               'type' => 'post',
+           ]);
        }
        if ($data['gender'] == 'male') {
             $malePics = array("male1.jpg","male2.jpg","male3.jpg","male4.jpg","male5.jpg","male6.jpg","male7.jpg","male8.jpg");
@@ -133,6 +145,12 @@ class RegisterController extends Controller
                'user_id' => $user->id,
                'name' => 'MalePic/'.$malePics[$Mpic],
                'type' => 'profile',
+           ]);
+           Image::create([
+               'post_id' => $postP->id,
+               'user_id' => $user->id,
+               'name' => 'MalePic/'.$malePics[$Mpic],
+               'type' => 'post',
            ]);
        }
        

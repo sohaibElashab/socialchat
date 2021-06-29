@@ -20,6 +20,7 @@ use App\Events\NewPostEvent;
 use App\Models\Comment;
 use App\Models\like;
 use App\Models\PostShare;
+use Illuminate\Support\Facades\File;
 
 class ProfilController extends Controller
 { 
@@ -109,6 +110,7 @@ class ProfilController extends Controller
 
     public function update(Request $request)
     {
+        date_default_timezone_set('Africa/Casablanca');
         $request->validate([
             'name'  => 'required',
             'email' => 'required|email',
@@ -147,6 +149,8 @@ class ProfilController extends Controller
             $image = $request->file('profile');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/user/'.$user->id.'/profile'),$new_name);
+            File::copy(public_path('images/user/'.$user->id.'/profile/').$new_name,public_path('images/posts/'.$user->id.'/').$new_name);
+            //$image->move(public_path('images/posts/'.$user->id),$new_name);
             $profile->update(['name' => $user->id.'/profile/'. $new_name]);
             $user->profile = $profile->name;
             $post = Post::create([
@@ -159,8 +163,8 @@ class ProfilController extends Controller
             Image::create([
                 'post_id' => $post->id,
                 'user_id' => $user->id,
-                'name' => $profile->name,
-                'type' => 'profile', 
+                'name' => $new_name,
+                'type' => 'post', 
             ]); 
             broadcast(new NewPostEvent($post)); 
         }
@@ -169,6 +173,7 @@ class ProfilController extends Controller
             $image = $request->file('cover');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images/user/'.$user->id.'/cover'),$new_name);
+            File::copy(public_path('images/user/'.$user->id.'/cover/').$new_name,public_path('images/posts/'.$user->id.'/').$new_name);
             $cover->update(['name' => $user->id.'/cover/'. $new_name]);
             $post = Post::create([
                 'user_id' => $user->id,
@@ -180,8 +185,8 @@ class ProfilController extends Controller
             Image::create([
                 'post_id' => $post->id,
                 'user_id' => $user->id,
-                'name' => $cover->name,
-                'type' => 'cover', 
+                'name' => $new_name,
+                'type' => 'post', 
             ]); 
             broadcast(new NewPostEvent($post));
         }
@@ -300,7 +305,9 @@ class ProfilController extends Controller
     public function GetImages()
     {
         $userId = auth()->user()->id;
-        $Paths = Image::where('user_id',$userId)->get();
+        $types = array('post','profile','cover');
+        $posts = Post::where('user_id',$userId)->where('type','post')->get('id');
+        $Paths = Image::where('user_id',$userId)->whereIn('post_id',$posts)->get();
         $this->thisFiles($Paths);
         return response()->json($Paths); 
     }
@@ -309,13 +316,15 @@ class ProfilController extends Controller
         $userId = auth()->user()->id;
         $Paths = Video::where('user_id',$userId)->get();
         $this->thisFiles($Paths);
+        $Paths->userId =$userId ;
         return response()->json($Paths); 
     }
 
     public function GetImagesProfile(Request $request) 
     {
         $userId = $request->id;
-        $Paths = Image::where('user_id',$userId)->get();
+        $posts = Post::where('user_id',$userId)->where('type','post')->get('id');
+        $Paths = Image::where('user_id',$userId)->whereIn('post_id',$posts)->get();
         $this->thisFiles($Paths);
         return response()->json($Paths); 
     }

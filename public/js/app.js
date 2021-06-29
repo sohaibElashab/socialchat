@@ -9617,6 +9617,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -13413,28 +13427,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -13446,6 +13438,7 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get("/videosProfile").then(function (res) {
       _this.videos = res.data;
+      console.log(res.data);
     });
   }
 });
@@ -13463,9 +13456,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
 //
 //
 //
@@ -14012,7 +14002,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -14333,6 +14322,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../event-bus */ "./resources/js/event-bus.js");
 /* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-emoji-picker */ "./node_modules/vue-emoji-picker/dist-module/main.js");
 /* harmony import */ var vue_emoji_picker__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_emoji_picker__WEBPACK_IMPORTED_MODULE_1__);
+//
 //
 //
 //
@@ -14734,10 +14724,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -14770,6 +14756,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.loadOtherUser();
       this.LoadMessages();
       Echo["private"]("sendText.".concat(this.CurrentUser.id)).listen("SendTextEvent", function (e) {
+        console.log(e);
+
         if (e.message.user_id == _this.$route.query.user) {
           var message = {
             id: e.message.id,
@@ -14781,7 +14769,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             MsgFor: "chat-left"
           };
 
-          if (message.txtChat.substring(0, 4) == "http") {
+          if (message.txtChat != null && message.txtChat.substring(0, 4) == "http") {
             axios.post("/userInfoReq", {
               id: message.txtChat.split("postId=")[1]
             }).then(function (res) {
@@ -14858,7 +14846,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                         case 0:
                           element = _step.value;
 
-                          if (!(element.txtChat.substring(0, 4) == "http")) {
+                          if (!(element.txtChat != null && element.txtChat.substring(0, 4) == "http")) {
                             _context.next = 4;
                             break;
                           }
@@ -16750,6 +16738,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -17692,9 +17692,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      FriendLists: null,
+      FriendLists: [],
       InCommon: null,
-      Others: null
+      Others: []
     };
   },
   mounted: function mounted() {
@@ -17764,8 +17764,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/LoadFriends", {
         id: this.Id
       }).then(function (res) {
-        //
-        _this6.FriendLists = res.data;
+        res.data.forEach(function (element, i) {
+          if (element.id != _this6.IdOnline) {
+            _this6.FriendLists.push(element);
+          }
+        });
       });
 
       if (this.status != "current") {
@@ -17773,8 +17776,13 @@ __webpack_require__.r(__webpack_exports__);
           id: this.Id
         }).then(function (res) {
           //
-          _this6.InCommon = res.data[0];
-          _this6.Others = res.data[1];
+          _this6.InCommon = res.data[0]; // this.Others = res.data[1];
+
+          res.data[1].forEach(function (element, i) {
+            if (element.id != _this6.IdOnline) {
+              _this6.Others.push(element);
+            }
+          });
         });
       } //document.getElementById("New").style.display = "none";
 
@@ -18452,6 +18460,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -19513,7 +19523,7 @@ __webpack_require__.r(__webpack_exports__);
           if (response.data.id == element.id) {
             var allstories = response.data.stories;
             var last_story = allstories.slice(Math.max(allstories.length - 1, 0));
-            element.stories.push(last_story);
+            element.stories.push(last_story[0]);
             element.time = response.data.time;
             element.isActive = true;
             p = true;
@@ -25590,7 +25600,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da] {\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\n}\n.stories[data-v-1c1601da] {\r\n    position: absolute;\r\n    height: 75vh;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 377px;\n}\n.addstorie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100px;\r\n    height: 10px;\r\n    background: aliceblue;\n}\n.edit-storie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 80%;\r\n    margin: auto;\r\n    margin-bottom: 20px;\r\n    height: 20rem;\r\n    color: var(--iq-light);\r\n    text-align: center;\r\n    border: double;\r\n    word-break: break-all;\r\n    padding: 10px;\n}\n.img-add-story[data-v-1c1601da] {\r\n    height: 40px;\r\n    width: 40px;\r\n    line-height: 60px;\r\n    text-align: center;\r\n    border: 2px solid var(--iq-border-dark);\r\n    padding: 2px;\r\n    border-radius: 50%;\n}\n.img-add-story[data-v-1c1601da]:before {\r\n    top: -14px !important;\n}\n.div-add-story[data-v-1c1601da] {\r\n    padding: 12px;\r\n    border: 1px dotted;\r\n    border-radius: 10px;\n}\n.wrapper-emoji[data-v-1c1601da] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-1c1601da] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-1c1601da] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 70px;\n}\n.div-hide[data-v-1c1601da] {\r\n    display: none !important;\n}\n.storie-style[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100%;\r\n    height: 60px;\n}\n#div-img[data-v-1c1601da] {\r\n    border: 1px solid var(--iq-border-dark);\r\n    border-radius: 10px;\n}\n.nav[data-v-1c1601da] {\r\n    box-sizing: border-box;\r\n    display: grid;\r\n    grid-column-gap: 0.5em;\r\n    /* grid-template-columns: repeat(3, 1fr); */\r\n    height: 0.3em;\r\n    padding: 0 1em;\r\n    position: fixed;\r\n    width: 377px;\r\n    margin-top: 10px;\n}\n.nav > div[data-v-1c1601da] {\r\n    background: rgba(0, 0, 0, 0.25);\r\n    height: 100%;\n}\n.nav > div > div[data-v-1c1601da] {\r\n    background: black;\r\n    height: 100%;\r\n    width: 0%;\n}\n#Storycontent[data-v-1c1601da] {\r\n    width: 377px;\r\n    height: 520.83px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    color: white;\r\n    font-size: 30px;\n}\n.fake[data-v-1c1601da] {\r\n    position: absolute;\r\n    top: 0%;\r\n    left: 0%;\r\n    height: 100%;\r\n    width: 100%;\r\n    background: transparent;\r\n    z-index: -1;\n}\n#prevBTN[data-v-1c1601da],\r\n#nextBTN[data-v-1c1601da] {\r\n    position: relative;\r\n    font-size: 50px;\r\n    cursor: pointer;\r\n    color: var(--iq-primary);\r\n    z-index: 11;\r\n    top: 5%;\n}\n#nextBTN[data-v-1c1601da] {\r\n    left: 230px;\n}\n#prevBTN[data-v-1c1601da] {\r\n    right: 230px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da] {\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\n}\n.stories[data-v-1c1601da] {\r\n    position: absolute;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 377px;\n}\n.addstorie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100px;\r\n    height: 10px;\r\n    background: aliceblue;\n}\n.edit-storie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 80%;\r\n    margin: auto;\r\n    margin-bottom: 20px;\r\n    height: 20rem;\r\n    color: var(--iq-light);\r\n    text-align: center;\r\n    border: double;\r\n    word-break: break-all;\r\n    padding: 10px;\n}\n.img-add-story[data-v-1c1601da] {\r\n    height: 40px;\r\n    width: 40px;\r\n    line-height: 60px;\r\n    text-align: center;\r\n    border: 2px solid var(--iq-border-dark);\r\n    padding: 2px;\r\n    border-radius: 50%;\n}\n.img-add-story[data-v-1c1601da]:before {\r\n    top: -14px !important;\n}\n.div-add-story[data-v-1c1601da] {\r\n    padding: 12px;\r\n    border: 1px dotted;\r\n    border-radius: 10px;\n}\n.wrapper-emoji[data-v-1c1601da] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-1c1601da] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-1c1601da] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 70px;\n}\n.div-hide[data-v-1c1601da] {\r\n    display: none !important;\n}\n.storie-style[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100%;\r\n    height: 60px;\n}\n#div-img[data-v-1c1601da] {\r\n    border: 1px solid var(--iq-border-dark);\r\n    border-radius: 10px;\n}\n.nav[data-v-1c1601da] {\r\n    box-sizing: border-box;\r\n    display: grid;\r\n    grid-column-gap: 0.5em;\r\n    /* grid-template-columns: repeat(3, 1fr); */\r\n    height: 0.3em;\r\n    padding: 0 1em;\r\n    position: fixed;\r\n    width: 377px;\r\n    margin-top: 10px;\n}\n.nav > div[data-v-1c1601da] {\r\n    background: rgba(0, 0, 0, 0.25);\r\n    height: 100%;\n}\n.nav > div > div[data-v-1c1601da] {\r\n    background: black;\r\n    height: 100%;\r\n    width: 0%;\n}\n#Storycontent[data-v-1c1601da] {\r\n    width: 377px;\r\n    height: 520.83px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    color: white;\r\n    font-size: 30px;\n}\n.fake[data-v-1c1601da] {\r\n    position: absolute;\r\n    top: 0%;\r\n    left: 0%;\r\n    height: 100%;\r\n    width: 100%;\r\n    background: transparent;\r\n    z-index: -1;\n}\n#prevBTN[data-v-1c1601da],\r\n#nextBTN[data-v-1c1601da] {\r\n    position: relative;\r\n    font-size: 50px;\r\n    cursor: pointer;\r\n    color: var(--iq-primary);\r\n    z-index: 11;\r\n    top: 5%;\n}\n#nextBTN[data-v-1c1601da] {\r\n    left: 230px;\n}\n#prevBTN[data-v-1c1601da] {\r\n    right: 230px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -71192,6 +71202,8 @@ var render = function() {
           _vm._v(" "),
           _c("rightbar"),
           _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
           _c("containerPostSave")
         ],
         1
@@ -71202,7 +71214,27 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header-for-bg" }, [
+      _c("div", { staticClass: "background-header position-relative" }, [
+        _c("img", {
+          staticClass: "img-fluid rounded w-100 rounded rounded",
+          attrs: { src: "images/page-img/profile-bg9.jpg", alt: "profile-bg" }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "title-on-header" }, [
+          _c("div", { staticClass: "data-block" }, [
+            _c("h2", [_vm._v("Your Saved Posts")])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -73806,8 +73838,7 @@ var render = function() {
                                                   query: {
                                                     postId: image.post_id
                                                   }
-                                                },
-                                                href: "javascript:void();"
+                                                }
                                               }
                                             },
                                             [
@@ -73955,7 +73986,7 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _c("ProfileImages", {
-                      attrs: { images: _vm.images, id: _vm.user.id }
+                      attrs: { images: _vm.images, id: _vm.OnlineUser.id }
                     })
                   ],
                   1
@@ -75607,86 +75638,35 @@ var render = function() {
                             _c("iframe", {
                               staticClass: "embed-responsive-item",
                               attrs: {
-                                src: "videos/" + video.name,
+                                src:
+                                  "videos/posts/" +
+                                  video.user_id +
+                                  "/" +
+                                  video.name,
                                 allowfullscreen: ""
                               }
                             })
                           ]
                         ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "image-hover-data" }, [
-                          _c("div", { staticClass: "product-elements-icon" }, [
-                            _c(
-                              "ul",
-                              {
-                                staticClass:
-                                  "d-flex align-items-center m-0 p-0 list-inline"
-                              },
-                              [
-                                _c("li", [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "pr-3 text-white",
-                                      attrs: { href: "#" }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        " +
-                                          _vm._s(video.NbrJaime) +
-                                          "\n                                        "
-                                      ),
-                                      _c("i", {
-                                        staticClass: "ri-thumb-up-line"
-                                      })
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("li", [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "pr-3 text-white",
-                                      attrs: { href: "#" }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        " +
-                                          _vm._s(video.NbrComment) +
-                                          "\n                                        "
-                                      ),
-                                      _c("i", { staticClass: "ri-chat-3-line" })
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("li", [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "pr-3 text-white",
-                                      attrs: { href: "#" }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        " +
-                                          _vm._s(video.NbrPartage) +
-                                          "\n                                        "
-                                      ),
-                                      _c("i", {
-                                        staticClass: "ri-share-forward-line"
-                                      })
-                                    ]
-                                  )
-                                ])
-                              ]
-                            )
-                          ])
-                        ]),
+                        _vm._m(0, true),
                         _vm._v(" "),
-                        _vm._m(0, true)
-                      ]
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "image-edit-btn",
+                            attrs: {
+                              tag: "a",
+                              to: {
+                                name: "postEdit",
+                                query: { postId: video.post_id }
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "ri-edit-2-fill" })]
+                        )
+                      ],
+                      1
                     )
                   ]
                 )
@@ -75846,14 +75826,6 @@ var render = function() {
                                             _vm._v(
                                               "\n                                                    " +
                                                 _vm._s(friend.interested) +
-                                                "\n                                                "
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("p", [
-                                            _vm._v(
-                                              "\n                                                    " +
-                                                _vm._s(friend.about) +
                                                 "\n                                                "
                                             )
                                           ])
@@ -76373,10 +76345,17 @@ var render = function() {
                   { staticClass: "media-height p-3" },
                   _vm._l(_vm.friends, function(friend) {
                     return _c(
-                      "div",
+                      "router-link",
                       {
                         key: friend.id,
-                        staticClass: "media align-items-center mb-4"
+                        staticClass: "media align-items-center mb-4",
+                        attrs: {
+                          tag: "a",
+                          to: {
+                            name: "chat",
+                            query: { user: friend.id }
+                          }
+                        }
                       },
                       [
                         _c(
@@ -76397,32 +76376,15 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "media-body ml-3" }, [
-                          _c(
-                            "h6",
-                            { staticClass: "mb-0" },
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    to: {
-                                      name: "chat",
-                                      query: { user: friend.id }
-                                    },
-                                    tag: "a"
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                    " +
-                                      _vm._s(friend.name) +
-                                      "\n                                "
-                                  )
-                                ]
+                          _c("h6", { staticClass: "mb-0" }, [
+                            _c("a", [
+                              _vm._v(
+                                "\n                                        " +
+                                  _vm._s(friend.name) +
+                                  "\n                                    "
                               )
-                            ],
-                            1
-                          ),
+                            ])
+                          ]),
                           _vm._v(" "),
                           _c("p", { staticClass: "mb-0" }, [
                             _vm._v(_vm._s(friend.time))
@@ -76431,7 +76393,7 @@ var render = function() {
                       ]
                     )
                   }),
-                  0
+                  1
                 ),
                 _vm._v(" "),
                 _vm._m(0)
@@ -76715,6 +76677,15 @@ var render = function() {
               attrs: { placeholder: "Message..." },
               domProps: { value: _vm.input },
               on: {
+                keypress: function($event) {
+                  if (
+                    !$event.type.indexOf("key") &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  return _vm.send($event)
+                },
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -76952,8 +76923,6 @@ var render = function() {
                       [_c("i", { staticClass: "ri-user-fill" })]
                     )
                   : _vm._e(),
-                _vm._v(" "),
-                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "a",
@@ -77274,16 +77243,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "sidebar-toggle" }, [
       _c("i", { staticClass: "ri-menu-3-line" })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "iq-bg-primary", attrs: { href: "javascript:void();" } },
-      [_c("i", { staticClass: "ri-vidicon-2-fill" })]
-    )
   }
 ]
 render._withStripped = true
@@ -79097,17 +79056,26 @@ var render = function() {
                       )
                     : _c("div", { staticClass: "user-post text-center" }, [
                         _c("a", { attrs: { href: "javascript:void();" } }, [
-                          _c("img", {
-                            staticClass: "postImg",
-                            attrs: {
-                              src:
-                                "images/posts/" +
-                                _vm.post.user_id +
-                                "/" +
-                                _vm.post.postImgs[0],
-                              alt: "post-image"
-                            }
-                          })
+                          _vm.post.type == "profile_default" ||
+                          _vm.post.type == "cover_default"
+                            ? _c("img", {
+                                staticClass: "postImg",
+                                attrs: {
+                                  src: "images/user/" + _vm.post.postImgs[0],
+                                  alt: "post-image"
+                                }
+                              })
+                            : _c("img", {
+                                staticClass: "postImg",
+                                attrs: {
+                                  src:
+                                    "images/posts/" +
+                                    _vm.post.user_id +
+                                    "/" +
+                                    _vm.post.postImgs[0],
+                                  alt: "post-image"
+                                }
+                              })
                         ])
                       ])
                 ]
@@ -79165,34 +79133,6 @@ var render = function() {
                     ])
                   ]
                 )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.post.type == "profile"
-            ? _c("div", { staticClass: "user-post" }, [
-                _c("div", { staticClass: "user-post text-center mt-3" }, [
-                  _c("img", {
-                    staticClass: "postImg",
-                    attrs: {
-                      src: "images/user/" + _vm.post.userImg,
-                      alt: "post-image"
-                    }
-                  })
-                ])
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.post.type == "cover"
-            ? _c("div", { staticClass: "user-post" }, [
-                _c("div", { staticClass: "user-post text-center mt-3" }, [
-                  _c("img", {
-                    staticClass: "postImg",
-                    attrs: {
-                      src: "images/user/" + _vm.post.userCover,
-                      alt: "post-image"
-                    }
-                  })
-                ])
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -81759,7 +81699,9 @@ var render = function() {
             attrs: {
               type: "date",
               id: "exampleInputPassword1",
-              placeholder: "Password"
+              placeholder: "Password",
+              min: "1980-01-01",
+              max: "2015-01-01"
             },
             domProps: { value: _vm.birthdate },
             on: {

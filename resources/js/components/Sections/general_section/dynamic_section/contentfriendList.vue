@@ -41,9 +41,6 @@
                                                     <h6>
                                                         {{ friend.interested }}
                                                     </h6>
-                                                    <p>
-                                                        {{ friend.about }}
-                                                    </p>
                                                 </div>
                                             </div>
                                             <router-link

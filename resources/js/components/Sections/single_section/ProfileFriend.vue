@@ -544,9 +544,9 @@ export default {
     },
     data() {
         return {
-            FriendLists: null,
+            FriendLists: [],
             InCommon: null,
-            Others: null
+            Others: []
         };
     },
     mounted() {
@@ -633,10 +633,12 @@ export default {
                     id: this.Id
                 })
                 .then(res => {
-                    //
-                    this.FriendLists = res.data;
+                    res.data.forEach((element, i) => {
+                        if (element.id != this.IdOnline) {
+                            this.FriendLists.push(element);
+                        }
+                    });
                 });
-
             if (this.status != "current") {
                 axios
                     .post("/FriendsInCommon", {
@@ -645,7 +647,13 @@ export default {
                     .then(res => {
                         //
                         this.InCommon = res.data[0];
-                        this.Others = res.data[1];
+
+                        // this.Others = res.data[1];
+                        res.data[1].forEach((element, i) => {
+                            if (element.id != this.IdOnline) {
+                                this.Others.push(element);
+                            }
+                        });
                     });
             }
 

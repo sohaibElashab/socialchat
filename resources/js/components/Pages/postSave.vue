@@ -15,6 +15,20 @@
             <!-- Right Sidebar Panel End-->
 
             <!-- Page Content  -->
+            <div class="header-for-bg">
+                <div class="background-header position-relative">
+                    <img
+                        src="images/page-img/profile-bg9.jpg"
+                        class="img-fluid rounded w-100 rounded rounded"
+                        alt="profile-bg"
+                    />
+                    <div class="title-on-header">
+                        <div class="data-block">
+                            <h2>Your Saved Posts</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <containerPostSave />
             <!-- Page Content End -->
         </div>
