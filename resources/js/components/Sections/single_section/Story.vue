@@ -605,13 +605,12 @@ export default {
     height: 10px;
     background: aliceblue;
 }
-.edit-storie {
+.edit-storie { 
     position: relative;
     width: 80%;
     margin: auto;
     margin-bottom: 20px;
     height: 20rem;
-    color: var(--iq-light);
     text-align: center;
     border: double;
     word-break: break-all;
@@ -691,7 +690,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
     font-size: 30px;
 }
 

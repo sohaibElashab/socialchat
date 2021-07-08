@@ -368,8 +368,7 @@
                                                 </div>
                                             </div>
                                             <div class="iq-card-body">
-                                               
-                                                 <ul
+                                                <ul
                                                     class="profile-img-gallary d-flex flex-wrap p-0 m-0"
                                                 >
                                                     <li
@@ -485,10 +484,15 @@
                             :IdOnline="OnlineUser.id"
                             :status="user.status"
                             ref="friends"
+                            @changeCount="changeCount"
                             v-if="loaded"
                         />
                         <!-- photo galery -->
-                        <ProfileImages :images="images" :id="OnlineUser.id" />
+                        <ProfileImages
+                            :images="images"
+                            :id="OnlineUser.id"
+                            v-if="loaded"
+                        />
                     </div>
                 </div>
             </div>
@@ -521,7 +525,7 @@ export default {
             loaded: false,
             images: [],
             introImages: [],
-            posts: []
+            posts: [],
         };
     },
     mounted() {
@@ -529,12 +533,22 @@ export default {
             sessionStorage.clear();
             sessionStorage.setItem("id", this.UserId);
         } */
+        Echo.private(`newPost`).listen("NewPostEvent", e => {
+            if (e.post.user_id == this.$route.query.user) {
+                this.posts.unshift(e.post);
+            }
+        });
+        this.introImages = [];
         this.load();
         this.imagesLoad();
         this.friendLoad();
         this.LoadPosts();
     },
     methods: {
+        changeCount() {
+            --this.user.FriendCount;
+            this.friendLoad();
+        },
         newPost(data) {
             this.user.PostCount += 1;
             this.posts.unshift(data);
@@ -557,6 +571,7 @@ export default {
                 })
                 .then(res => {
                     this.user = res.data;
+
                     if (this.user.message != undefined) {
                         this.message = this.user.message;
                     } else {
@@ -576,6 +591,19 @@ export default {
                             if (this.user.status == "friend") {
                                 this.message = "friend";
                             }
+                            ++this.user.FriendCount;
+                            this.friendLoad();
+                        }
+                    );
+                    Echo.private(`unfriend.${this.user.id}`).listen(
+                        "UnfriendEvent",
+                        e => {
+                            if (this.user.status == "friend") {
+                                this.message = "";
+                            }
+                            console.log(e);
+                            --this.user.FriendCount;
+                            this.friendLoad();
                         }
                     );
                 });
@@ -603,6 +631,18 @@ export default {
                     "AcceptRequestEvent",
                     e => {
                         this.message = "friend";
+                    }
+                );
+
+                Echo.private(`unfriend.${this.OnlineUser.id}`).listen(
+                    "UnfriendEvent",
+                    e => {
+                        if (this.user.status == "friend") {
+                            this.message = "";
+                        }
+                        console.log(e);
+                        --this.user.FriendCount;
+                        this.friendLoad();
                     }
                 );
             });
@@ -650,6 +690,9 @@ export default {
                 .post("/ProfileImages", { id: this.$route.query.user })
                 .then(res => {
                     this.images = res.data;
+                    console.log("this.images");
+                    console.log(this.images);
+                    this.introImages = [];
                     this.images.forEach(element => {
                         if (element.type == "post") {
                             this.introImages.push(element);
@@ -670,6 +713,7 @@ export default {
     },
     watch: {
         "$route.query.user": function() {
+            this.introImages = [];
             this.load();
             this.friendLoad();
             this.imagesLoad();

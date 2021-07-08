@@ -26,6 +26,10 @@ Broadcast::channel('acceptRequest.{id}', function ($user, $id) {
     return Auth::check();
 });
 
+Broadcast::channel('unfriend.{id}', function ($user, $id) {
+    return Auth::check();
+});
+
 Broadcast::channel('acceptRequest2.{id}', function ($user, $id) {
     return Auth::check();
 });

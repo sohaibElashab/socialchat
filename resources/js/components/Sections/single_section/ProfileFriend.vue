@@ -192,6 +192,10 @@
                                                 </div>
                                                 <div
                                                     class="iq-card-header-toolbar d-flex align-items-center"
+                                                    v-if="
+                                                        FriendList.id !=
+                                                            IdOnline
+                                                    "
                                                 >
                                                     <div
                                                         v-if="
@@ -337,6 +341,10 @@
                                                 </div>
                                                 <div
                                                     class="iq-card-header-toolbar d-flex align-items-center"
+                                                    v-if="
+                                                        FriendList.id !=
+                                                            IdOnline
+                                                    "
                                                 >
                                                     <div>
                                                         <button
@@ -417,6 +425,10 @@
                                                 </div>
                                                 <div
                                                     class="iq-card-header-toolbar d-flex align-items-center"
+                                                    v-if="
+                                                        FriendList.id !=
+                                                            IdOnline
+                                                    "
                                                 >
                                                     <div
                                                         v-if="
@@ -492,27 +504,39 @@
                             <div class="iq-card-body p-0">
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 mb-3">
-                                        <div class="iq-friendlist-block">
+                                        <div class="iq-friendlist-block  p-4">
                                             <div
                                                 class="d-flex align-items-center justify-content-between"
                                             >
                                                 <div
                                                     class="iq-card-header-toolbar d-flex align-items-center"
                                                 >
-                                                    <div
+                                                    <router-link
+                                                        :to="{
+                                                            name: 'friendReque'
+                                                        }"
+                                                        tag="div"
                                                         v-if="
                                                             status == 'current'
                                                         "
+                                                        style="cursor: pointer;"
                                                     >
                                                         Start making some
                                                         friends so they show up
                                                         in here
-                                                    </div>
-                                                    <div v-else>
+                                                    </router-link>
+                                                    <router-link
+                                                        :to="{
+                                                            name: 'friendReque'
+                                                        }"
+                                                        tag="div"
+                                                        v-else
+                                                        style="cursor: pointer;"
+                                                    >
                                                         Send them friend a
                                                         request and be their
                                                         first friend
-                                                    </div>
+                                                    </router-link>
                                                 </div>
                                             </div>
                                         </div>
@@ -550,7 +574,16 @@ export default {
         };
     },
     mounted() {
+        this.FriendLists = [];
+        this.InCommon = null;
+        this.Others = [];
         this.LoadFriends();
+        Echo.private(`unfriend.${this.Id}`).listen("UnfriendEvent", e => {
+            this.LoadFriends();
+        });
+        Echo.private(`unfriend.${this.IdOnline}`).listen("UnfriendEvent", e => {
+            this.LoadFriends();
+        });
         Echo.private(`acceptRequest.${this.Id}`).listen(
             "AcceptRequestEvent",
             e => {
@@ -624,19 +657,22 @@ export default {
                     id: id
                 })
                 .then(res => {
+                    this.$emit("changeCount", true);
                     this.LoadFriends();
                 });
         },
         LoadFriends() {
+            this.InCommon = null;
+            this.Others = [];
             axios
                 .post("/LoadFriends", {
                     id: this.Id
                 })
                 .then(res => {
+                    this.FriendLists = [];
+
                     res.data.forEach((element, i) => {
-                        if (element.id != this.IdOnline) {
-                            this.FriendLists.push(element);
-                        }
+                        this.FriendLists.push(element);
                     });
                 });
             if (this.status != "current") {
@@ -662,6 +698,9 @@ export default {
     },
     watch: {
         Id: function() {
+            this.FriendLists = [];
+            this.InCommon = null;
+            this.Others = [];
             this.LoadFriends();
         }
     }

@@ -12179,6 +12179,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -12209,16 +12213,28 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     /*   if (this.UserId != null) {
         sessionStorage.clear();
         sessionStorage.setItem("id", this.UserId);
     } */
+    Echo["private"]("newPost").listen("NewPostEvent", function (e) {
+      if (e.post.user_id == _this.$route.query.user) {
+        _this.posts.unshift(e.post);
+      }
+    });
+    this.introImages = [];
     this.load();
     this.imagesLoad();
     this.friendLoad();
     this.LoadPosts();
   },
   methods: {
+    changeCount: function changeCount() {
+      --this.user.FriendCount;
+      this.friendLoad();
+    },
     newPost: function newPost(data) {
       this.user.PostCount += 1;
       this.posts.unshift(data);
@@ -12229,122 +12245,150 @@ __webpack_require__.r(__webpack_exports__);
       this.imagesLoad();
     },
     LoadPosts: function LoadPosts() {
-      var _this = this;
+      var _this2 = this;
 
       axios.post("/UserPosts", {
         id: this.$route.query.user
       }).then(function (res) {
-        _this.posts = res.data;
+        _this2.posts = res.data;
       });
     },
     load: function load() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post("/UserProfile", {
         id: this.$route.query.user
       }).then(function (res) {
-        _this2.user = res.data;
+        _this3.user = res.data;
 
-        if (_this2.user.message != undefined) {
-          _this2.message = _this2.user.message;
+        if (_this3.user.message != undefined) {
+          _this3.message = _this3.user.message;
         } else {
-          _this2.message = "";
+          _this3.message = "";
         }
 
-        Echo["private"]("cancelRequest.".concat(_this2.user.id)).listen("CancelRequestEvent", function (e) {
-          if (_this2.user.status == "friend") {
-            _this2.message = "";
+        Echo["private"]("cancelRequest.".concat(_this3.user.id)).listen("CancelRequestEvent", function (e) {
+          if (_this3.user.status == "friend") {
+            _this3.message = "";
           }
         });
-        Echo["private"]("acceptRequest.".concat(_this2.user.id)).listen("AcceptRequestEvent", function (e) {
-          if (_this2.user.status == "friend") {
-            _this2.message = "friend";
+        Echo["private"]("acceptRequest.".concat(_this3.user.id)).listen("AcceptRequestEvent", function (e) {
+          if (_this3.user.status == "friend") {
+            _this3.message = "friend";
           }
+
+          ++_this3.user.FriendCount;
+
+          _this3.friendLoad();
+        });
+        Echo["private"]("unfriend.".concat(_this3.user.id)).listen("UnfriendEvent", function (e) {
+          if (_this3.user.status == "friend") {
+            _this3.message = "";
+          }
+
+          console.log(e);
+          --_this3.user.FriendCount;
+
+          _this3.friendLoad();
         });
       });
       axios.get("/profile").then(function (res) {
-        _this2.OnlineUser = res.data;
-        _this2.loaded = true;
-        Echo["private"]("cancelRequest.".concat(_this2.OnlineUser.id)).listen("CancelRequestEvent", function (e) {
-          _this2.message = "";
+        _this3.OnlineUser = res.data;
+        _this3.loaded = true;
+        Echo["private"]("cancelRequest.".concat(_this3.OnlineUser.id)).listen("CancelRequestEvent", function (e) {
+          _this3.message = "";
         });
-        Echo["private"]("sendRequest.".concat(_this2.OnlineUser.id)).listen("SendRequestEvent", function (e) {
-          if (_this2.$route.query.user == e.user.id) {
-            _this2.message = "accept";
+        Echo["private"]("sendRequest.".concat(_this3.OnlineUser.id)).listen("SendRequestEvent", function (e) {
+          if (_this3.$route.query.user == e.user.id) {
+            _this3.message = "accept";
           }
         });
-        Echo["private"]("acceptRequest.".concat(_this2.OnlineUser.id)).listen("AcceptRequestEvent", function (e) {
-          _this2.message = "friend";
+        Echo["private"]("acceptRequest.".concat(_this3.OnlineUser.id)).listen("AcceptRequestEvent", function (e) {
+          _this3.message = "friend";
+        });
+        Echo["private"]("unfriend.".concat(_this3.OnlineUser.id)).listen("UnfriendEvent", function (e) {
+          if (_this3.user.status == "friend") {
+            _this3.message = "";
+          }
+
+          console.log(e);
+          --_this3.user.FriendCount;
+
+          _this3.friendLoad();
         });
       });
     },
     sendRequest: function sendRequest() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post("/SendRequest", {
         id: this.user.id
       }).then(function (res) {
-        _this3.message = "cancel";
+        _this4.message = "cancel";
       });
     },
     DeleteRequest: function DeleteRequest() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.post("/DeleteRequest", {
         id: this.user.id
       }).then(function (res) {
-        _this4.message = "";
+        _this5.message = "";
       });
     },
     AcceptRequest: function AcceptRequest() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.post("/AcceptRequest", {
         id: this.user.id
       }).then(function (res) {
-        _this5.message = "friend";
+        _this6.message = "friend";
       });
     },
     RemoveFriend: function RemoveFriend() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.post("/RemoveFriend", {
         id: this.user.id
       }).then(function (res) {
-        _this6.message = "";
-        var child = _this6.$refs.friends;
+        _this7.message = "";
+        var child = _this7.$refs.friends;
         child.LoadFriends();
       });
     },
     imagesLoad: function imagesLoad() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.post("/ProfileImages", {
         id: this.$route.query.user
       }).then(function (res) {
-        _this7.images = res.data;
+        _this8.images = res.data;
+        console.log("this.images");
+        console.log(_this8.images);
+        _this8.introImages = [];
 
-        _this7.images.forEach(function (element) {
+        _this8.images.forEach(function (element) {
           if (element.type == "post") {
-            _this7.introImages.push(element);
+            _this8.introImages.push(element);
           }
         });
 
-        _this7.introImages = _this7.introImages.slice(0, 9);
+        _this8.introImages = _this8.introImages.slice(0, 9);
       });
     },
     friendLoad: function friendLoad() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.post("/LoadFriends", {
         id: this.$route.query.user
       }).then(function (res) {
-        _this8.FriendLists = res.data;
+        _this9.FriendLists = res.data;
       });
     }
   },
   watch: {
     "$route.query.user": function $routeQueryUser() {
+      this.introImages = [];
       this.load();
       this.friendLoad();
       this.imagesLoad();
@@ -17676,6 +17720,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     Id: {
@@ -17700,7 +17768,16 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    this.FriendLists = [];
+    this.InCommon = null;
+    this.Others = [];
     this.LoadFriends();
+    Echo["private"]("unfriend.".concat(this.Id)).listen("UnfriendEvent", function (e) {
+      _this.LoadFriends();
+    });
+    Echo["private"]("unfriend.".concat(this.IdOnline)).listen("UnfriendEvent", function (e) {
+      _this.LoadFriends();
+    });
     Echo["private"]("acceptRequest.".concat(this.Id)).listen("AcceptRequestEvent", function (e) {
       _this.LoadFriends();
     });
@@ -17755,19 +17832,22 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/RemoveFriend", {
         id: id
       }).then(function (res) {
+        _this5.$emit("changeCount", true);
+
         _this5.LoadFriends();
       });
     },
     LoadFriends: function LoadFriends() {
       var _this6 = this;
 
+      this.InCommon = null;
+      this.Others = [];
       axios.post("/LoadFriends", {
         id: this.Id
       }).then(function (res) {
+        _this6.FriendLists = [];
         res.data.forEach(function (element, i) {
-          if (element.id != _this6.IdOnline) {
-            _this6.FriendLists.push(element);
-          }
+          _this6.FriendLists.push(element);
         });
       });
 
@@ -17790,6 +17870,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     Id: function Id() {
+      this.FriendLists = [];
+      this.InCommon = null;
+      this.Others = [];
       this.LoadFriends();
     }
   }
@@ -25600,7 +25683,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da] {\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\n}\n.stories[data-v-1c1601da] {\r\n    position: absolute;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 377px;\n}\n.addstorie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100px;\r\n    height: 10px;\r\n    background: aliceblue;\n}\n.edit-storie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 80%;\r\n    margin: auto;\r\n    margin-bottom: 20px;\r\n    height: 20rem;\r\n    color: var(--iq-light);\r\n    text-align: center;\r\n    border: double;\r\n    word-break: break-all;\r\n    padding: 10px;\n}\n.img-add-story[data-v-1c1601da] {\r\n    height: 40px;\r\n    width: 40px;\r\n    line-height: 60px;\r\n    text-align: center;\r\n    border: 2px solid var(--iq-border-dark);\r\n    padding: 2px;\r\n    border-radius: 50%;\n}\n.img-add-story[data-v-1c1601da]:before {\r\n    top: -14px !important;\n}\n.div-add-story[data-v-1c1601da] {\r\n    padding: 12px;\r\n    border: 1px dotted;\r\n    border-radius: 10px;\n}\n.wrapper-emoji[data-v-1c1601da] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-1c1601da] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-1c1601da] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 70px;\n}\n.div-hide[data-v-1c1601da] {\r\n    display: none !important;\n}\n.storie-style[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100%;\r\n    height: 60px;\n}\n#div-img[data-v-1c1601da] {\r\n    border: 1px solid var(--iq-border-dark);\r\n    border-radius: 10px;\n}\n.nav[data-v-1c1601da] {\r\n    box-sizing: border-box;\r\n    display: grid;\r\n    grid-column-gap: 0.5em;\r\n    /* grid-template-columns: repeat(3, 1fr); */\r\n    height: 0.3em;\r\n    padding: 0 1em;\r\n    position: fixed;\r\n    width: 377px;\r\n    margin-top: 10px;\n}\n.nav > div[data-v-1c1601da] {\r\n    background: rgba(0, 0, 0, 0.25);\r\n    height: 100%;\n}\n.nav > div > div[data-v-1c1601da] {\r\n    background: black;\r\n    height: 100%;\r\n    width: 0%;\n}\n#Storycontent[data-v-1c1601da] {\r\n    width: 377px;\r\n    height: 520.83px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    color: white;\r\n    font-size: 30px;\n}\n.fake[data-v-1c1601da] {\r\n    position: absolute;\r\n    top: 0%;\r\n    left: 0%;\r\n    height: 100%;\r\n    width: 100%;\r\n    background: transparent;\r\n    z-index: -1;\n}\n#prevBTN[data-v-1c1601da],\r\n#nextBTN[data-v-1c1601da] {\r\n    position: relative;\r\n    font-size: 50px;\r\n    cursor: pointer;\r\n    color: var(--iq-primary);\r\n    z-index: 11;\r\n    top: 5%;\n}\n#nextBTN[data-v-1c1601da] {\r\n    left: 230px;\n}\n#prevBTN[data-v-1c1601da] {\r\n    right: 230px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.showStories[data-v-1c1601da] {\r\n    position: fixed;\r\n    width: 100%;\r\n    top: 0px;\r\n    left: 0px;\r\n    height: 100%;\r\n    background: #00000078;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\n}\n.stories[data-v-1c1601da] {\r\n    position: absolute;\r\n    top: 15%;\r\n    background: aliceblue;\r\n    width: 377px;\n}\n.addstorie[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100px;\r\n    height: 10px;\r\n    background: aliceblue;\n}\n.edit-storie[data-v-1c1601da] { \r\n    position: relative;\r\n    width: 80%;\r\n    margin: auto;\r\n    margin-bottom: 20px;\r\n    height: 20rem;\r\n    text-align: center;\r\n    border: double;\r\n    word-break: break-all;\r\n    padding: 10px;\n}\n.img-add-story[data-v-1c1601da] {\r\n    height: 40px;\r\n    width: 40px;\r\n    line-height: 60px;\r\n    text-align: center;\r\n    border: 2px solid var(--iq-border-dark);\r\n    padding: 2px;\r\n    border-radius: 50%;\n}\n.img-add-story[data-v-1c1601da]:before {\r\n    top: -14px !important;\n}\n.div-add-story[data-v-1c1601da] {\r\n    padding: 12px;\r\n    border: 1px dotted;\r\n    border-radius: 10px;\n}\n.wrapper-emoji[data-v-1c1601da] {\r\n    width: 100%;\r\n    justify-content: flex-start;\n}\n.regular-input[data-v-1c1601da] {\r\n    height: 50px;\r\n    padding: 0rem 1rem;\n}\n.emoji-invoker[data-v-1c1601da] {\r\n    top: 0.3rem;\n}\n.iconemoji[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 70px;\n}\n.div-hide[data-v-1c1601da] {\r\n    display: none !important;\n}\n.storie-style[data-v-1c1601da] {\r\n    position: relative;\r\n    width: 100%;\r\n    height: 60px;\n}\n#div-img[data-v-1c1601da] {\r\n    border: 1px solid var(--iq-border-dark);\r\n    border-radius: 10px;\n}\n.nav[data-v-1c1601da] {\r\n    box-sizing: border-box;\r\n    display: grid;\r\n    grid-column-gap: 0.5em;\r\n    /* grid-template-columns: repeat(3, 1fr); */\r\n    height: 0.3em;\r\n    padding: 0 1em;\r\n    position: fixed;\r\n    width: 377px;\r\n    margin-top: 10px;\n}\n.nav > div[data-v-1c1601da] {\r\n    background: rgba(0, 0, 0, 0.25);\r\n    height: 100%;\n}\n.nav > div > div[data-v-1c1601da] {\r\n    background: black;\r\n    height: 100%;\r\n    width: 0%;\n}\n#Storycontent[data-v-1c1601da] {\r\n    width: 377px;\r\n    height: 520.83px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    font-size: 30px;\n}\n.fake[data-v-1c1601da] {\r\n    position: absolute;\r\n    top: 0%;\r\n    left: 0%;\r\n    height: 100%;\r\n    width: 100%;\r\n    background: transparent;\r\n    z-index: -1;\n}\n#prevBTN[data-v-1c1601da],\r\n#nextBTN[data-v-1c1601da] {\r\n    position: relative;\r\n    font-size: 50px;\r\n    cursor: pointer;\r\n    color: var(--iq-primary);\r\n    z-index: 11;\r\n    top: 5%;\n}\n#nextBTN[data-v-1c1601da] {\r\n    left: 230px;\n}\n#prevBTN[data-v-1c1601da] {\r\n    right: 230px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -73981,13 +74064,16 @@ var render = function() {
                             Id: _vm.user.id,
                             IdOnline: _vm.OnlineUser.id,
                             status: _vm.user.status
-                          }
+                          },
+                          on: { changeCount: _vm.changeCount }
                         })
                       : _vm._e(),
                     _vm._v(" "),
-                    _c("ProfileImages", {
-                      attrs: { images: _vm.images, id: _vm.OnlineUser.id }
-                    })
+                    _vm.loaded
+                      ? _c("ProfileImages", {
+                          attrs: { images: _vm.images, id: _vm.OnlineUser.id }
+                        })
+                      : _vm._e()
                   ],
                   1
                 )
@@ -80022,128 +80108,132 @@ var render = function() {
                                           1
                                         ),
                                         _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "iq-card-header-toolbar d-flex align-items-center"
-                                          },
-                                          [
-                                            FriendList.button == "remove"
-                                              ? _c("div", [
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "mr-2 btn btn-danger",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.RemoveFriend(
-                                                            FriendList.id
+                                        FriendList.id != _vm.IdOnline
+                                          ? _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "iq-card-header-toolbar d-flex align-items-center"
+                                              },
+                                              [
+                                                FriendList.button == "remove"
+                                                  ? _c("div", [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "mr-2 btn btn-danger",
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.RemoveFriend(
+                                                                FriendList.id
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "ri-check-line mr-1 text-white font-size-16"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                        Unfriend\n                                                    "
                                                           )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "ri-check-line mr-1 text-white font-size-16"
-                                                      }),
-                                                      _vm._v(
-                                                        "\n                                                        Unfriend\n                                                    "
+                                                        ]
                                                       )
-                                                    ]
-                                                  )
-                                                ])
-                                              : FriendList.button == "add"
-                                              ? _c("div", [
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "mr-2 btn btn-primary",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.sendRequest(
-                                                            FriendList.id
+                                                    ])
+                                                  : FriendList.button == "add"
+                                                  ? _c("div", [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "mr-2 btn btn-primary",
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.sendRequest(
+                                                                FriendList.id
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "ri-user-add-line"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                        Add friend\n                                                    "
                                                           )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "ri-user-add-line"
-                                                      }),
-                                                      _vm._v(
-                                                        "\n                                                        Add friend\n                                                    "
+                                                        ]
                                                       )
-                                                    ]
-                                                  )
-                                                ])
-                                              : FriendList.button == "accept"
-                                              ? _c("div", [
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "mr-3 btn btn-primary rounded",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.AcceptRequest(
-                                                            FriendList.id
+                                                    ])
+                                                  : FriendList.button ==
+                                                    "accept"
+                                                  ? _c("div", [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "mr-3 btn btn-primary rounded",
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.AcceptRequest(
+                                                                FriendList.id
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "ri-user-follow-line mr-1 text-white font-size-16"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                        Accept request\n                                                    "
                                                           )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "ri-user-follow-line mr-1 text-white font-size-16"
-                                                      }),
-                                                      _vm._v(
-                                                        "\n                                                        Accept request\n                                                    "
+                                                        ]
                                                       )
-                                                    ]
-                                                  )
-                                                ])
-                                              : FriendList.button == "cancel"
-                                              ? _c("div", [
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "mr-3 btn btn-danger rounded",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.DeleteRequest(
-                                                            FriendList.id
+                                                    ])
+                                                  : FriendList.button ==
+                                                    "cancel"
+                                                  ? _c("div", [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "mr-3 btn btn-danger rounded",
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.DeleteRequest(
+                                                                FriendList.id
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "ri-user-shared-line mr-1 text-white font-size-16"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                        Cancel request\n                                                    "
                                                           )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "ri-user-shared-line mr-1 text-white font-size-16"
-                                                      }),
-                                                      _vm._v(
-                                                        "\n                                                        Cancel request\n                                                    "
+                                                        ]
                                                       )
-                                                    ]
-                                                  )
-                                                ])
-                                              : _vm._e()
-                                          ]
-                                        )
+                                                    ])
+                                                  : _vm._e()
+                                              ]
+                                            )
+                                          : _vm._e()
                                       ]
                                     )
                                   ]
@@ -80259,40 +80349,44 @@ var render = function() {
                                           1
                                         ),
                                         _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "iq-card-header-toolbar d-flex align-items-center"
-                                          },
-                                          [
-                                            _c("div", [
-                                              _c(
-                                                "button",
-                                                {
-                                                  staticClass:
-                                                    "mr-2 btn btn-danger",
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.RemoveFriend(
-                                                        FriendList.id
+                                        FriendList.id != _vm.IdOnline
+                                          ? _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "iq-card-header-toolbar d-flex align-items-center"
+                                              },
+                                              [
+                                                _c("div", [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mr-2 btn btn-danger",
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.RemoveFriend(
+                                                            FriendList.id
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "ri-check-line mr-1 text-white font-size-16"
+                                                      }),
+                                                      _vm._v(
+                                                        "\n                                                        Unfriend\n                                                    "
                                                       )
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass:
-                                                      "ri-check-line mr-1 text-white font-size-16"
-                                                  }),
-                                                  _vm._v(
-                                                    "\n                                                        Unfriend\n                                                    "
+                                                    ]
                                                   )
-                                                ]
-                                              )
-                                            ])
-                                          ]
-                                        )
+                                                ])
+                                              ]
+                                            )
+                                          : _vm._e()
                                       ]
                                     )
                                   ]
@@ -80408,98 +80502,101 @@ var render = function() {
                                           1
                                         ),
                                         _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "iq-card-header-toolbar d-flex align-items-center"
-                                          },
-                                          [
-                                            FriendList.button == "accept"
-                                              ? _c("div", [
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "mr-3 btn btn-primary rounded",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.AcceptRequest(
-                                                            FriendList.id
+                                        FriendList.id != _vm.IdOnline
+                                          ? _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "iq-card-header-toolbar d-flex align-items-center"
+                                              },
+                                              [
+                                                FriendList.button == "accept"
+                                                  ? _c("div", [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "mr-3 btn btn-primary rounded",
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.AcceptRequest(
+                                                                FriendList.id
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "ri-user-follow-line mr-1 text-white font-size-16"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                        Accept request\n                                                    "
                                                           )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "ri-user-follow-line mr-1 text-white font-size-16"
-                                                      }),
-                                                      _vm._v(
-                                                        "\n                                                        Accept request\n                                                    "
+                                                        ]
                                                       )
-                                                    ]
-                                                  )
-                                                ])
-                                              : FriendList.button == "cancel"
-                                              ? _c("div", [
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "mr-3 btn btn-danger rounded",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.DeleteRequest(
-                                                            FriendList.id
+                                                    ])
+                                                  : FriendList.button ==
+                                                    "cancel"
+                                                  ? _c("div", [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "mr-3 btn btn-danger rounded",
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.DeleteRequest(
+                                                                FriendList.id
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "ri-user-shared-line mr-1 text-white font-size-16"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                        Cancel request\n                                                    "
                                                           )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "ri-user-shared-line mr-1 text-white font-size-16"
-                                                      }),
-                                                      _vm._v(
-                                                        "\n                                                        Cancel request\n                                                    "
+                                                        ]
                                                       )
-                                                    ]
-                                                  )
-                                                ])
-                                              : _c("div", [
-                                                  _c(
-                                                    "button",
-                                                    {
-                                                      staticClass:
-                                                        "mr-2 btn btn-primary",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.sendRequest(
-                                                            FriendList.id
+                                                    ])
+                                                  : _c("div", [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "mr-2 btn btn-primary",
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.sendRequest(
+                                                                FriendList.id
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "ri-user-add-line"
+                                                          }),
+                                                          _vm._v(
+                                                            "\n                                                        Add friend\n                                                    "
                                                           )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "ri-user-add-line"
-                                                      }),
-                                                      _vm._v(
-                                                        "\n                                                        Add friend\n                                                    "
+                                                        ]
                                                       )
-                                                    ]
-                                                  )
-                                                ])
-                                          ]
-                                        )
+                                                    ])
+                                              ]
+                                            )
+                                          : _vm._e()
                                       ]
                                     )
                                   ]
@@ -80526,37 +80623,70 @@ var render = function() {
                       _c("div", { staticClass: "iq-card-body p-0" }, [
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-6 col-lg-6 mb-3" }, [
-                            _c("div", { staticClass: "iq-friendlist-block" }, [
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "d-flex align-items-center justify-content-between"
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "iq-card-header-toolbar d-flex align-items-center"
-                                    },
-                                    [
-                                      _vm.status == "current"
-                                        ? _c("div", [
-                                            _vm._v(
-                                              "\n                                                    Start making some\n                                                    friends so they show up\n                                                    in here\n                                                "
+                            _c(
+                              "div",
+                              { staticClass: "iq-friendlist-block  p-4" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "d-flex align-items-center justify-content-between"
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "iq-card-header-toolbar d-flex align-items-center"
+                                      },
+                                      [
+                                        _vm.status == "current"
+                                          ? _c(
+                                              "router-link",
+                                              {
+                                                staticStyle: {
+                                                  cursor: "pointer"
+                                                },
+                                                attrs: {
+                                                  to: {
+                                                    name: "friendReque"
+                                                  },
+                                                  tag: "div"
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                    Start making some\n                                                    friends so they show up\n                                                    in here\n                                                "
+                                                )
+                                              ]
                                             )
-                                          ])
-                                        : _c("div", [
-                                            _vm._v(
-                                              "\n                                                    Send them friend a\n                                                    request and be their\n                                                    first friend\n                                                "
+                                          : _c(
+                                              "router-link",
+                                              {
+                                                staticStyle: {
+                                                  cursor: "pointer"
+                                                },
+                                                attrs: {
+                                                  to: {
+                                                    name: "friendReque"
+                                                  },
+                                                  tag: "div"
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                    Send them friend a\n                                                    request and be their\n                                                    first friend\n                                                "
+                                                )
+                                              ]
                                             )
-                                          ])
-                                    ]
-                                  )
-                                ]
-                              )
-                            ])
+                                      ],
+                                      1
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
                           ])
                         ])
                       ])
@@ -80703,7 +80833,7 @@ var render = function() {
                                         attrs: {
                                           src:
                                             "images/posts/" +
-                                            _vm.id +
+                                            _vm.$route.query.user +
                                             "/" +
                                             image.name,
                                           alt: "Responsive image"

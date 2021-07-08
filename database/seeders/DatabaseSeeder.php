@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {   
         // add users 
+        //date_default_timezone_set('Africa/Casablanca');
         // $postId1 = 2;
         // $postId2 = 3;
         // $list = [
@@ -40,34 +41,36 @@ class DatabaseSeeder extends Seeder
         //     'adress' => "306 Bobwhite Terrace",
         //     'about' => "Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\n\nMorbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.\n\nFusce consequat. Nulla nisl. Nunc nisl.",
         //     'quote' => "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros."
-        //     ], [
-        //     'name' => "Donnamarie",
-        //     'email' => "dwasylkiewicz1@bing.com",
-        //     'gender' => "male",
-        //     'mobile' => "4388664328",
-        //     'birth_date' => "1992/03/12",
-        //     'adress' => "6 Comanche Lane",
-        //     'about' => "In congue. Etiam justo. Etiam pretium iaculis justo.",
-        //     'quote' => "Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.\n\nIn sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus."
-        //     ], [
-        //     'name' => "Minny",
-        //     'email' => "mlansbury2@hao123.com",
-        //     'gender' => "male",
-        //     'mobile' => "7779603802",
-        //     'birth_date' => "1999/12/28",
-        //     'adress' => "2 Armistice Crossing",
-        //     'about' => "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.\n\nVestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.\n\nDuis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.",
-        //     'quote' => "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem."
-        //   ], [
-        //     'name' => "Jenilee",
-        //     'email' => "jeisig3@dagondesign.com",
-        //     'gender' => "male",
-        //     'mobile' => "6439547489",
-        //     'birth_date' => "1994/07/15",
-        //     'adress' => "284 Hanover Drive",
-        //     'about' => "Sed ante. Vivamus tortor. Duis mattis egestas metus.\n\nAenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.",
-        //     'quote' => "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus."
-        //   ], [
+        //     ],
+        //   // [
+        //   //   'name' => "Donnamarie",
+        //   //   'email' => "dwasylkiewicz1@bing.com",
+        //   //   'gender' => "male",
+        //   //   'mobile' => "4388664328",
+        //   //   'birth_date' => "1992/03/12",
+        //   //   'adress' => "6 Comanche Lane",
+        //   //   'about' => "In congue. Etiam justo. Etiam pretium iaculis justo.",
+        //   //   'quote' => "Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.\n\nIn sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus."
+        //   //   ], [
+        //   //   'name' => "Minny",
+        //   //   'email' => "mlansbury2@hao123.com",
+        //   //   'gender' => "male",
+        //   //   'mobile' => "7779603802",
+        //   //   'birth_date' => "1999/12/28",
+        //   //   'adress' => "2 Armistice Crossing",
+        //   //   'about' => "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.\n\nVestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.\n\nDuis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.",
+        //   //   'quote' => "Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem."
+        //   // ], [
+        //   //   'name' => "Jenilee",
+        //   //   'email' => "jeisig3@dagondesign.com",
+        //   //   'gender' => "male",
+        //   //   'mobile' => "6439547489",
+        //   //   'birth_date' => "1994/07/15",
+        //   //   'adress' => "284 Hanover Drive",
+        //   //   'about' => "Sed ante. Vivamus tortor. Duis mattis egestas metus.\n\nAenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.",
+        //   //   'quote' => "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.\n\nSed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus."
+        //   // ], 
+        //   [
         //     'name' => "Barbi",
         //     'email' => "bhumphery4@nytimes.com",
         //     'gender' => "female",
@@ -77,34 +80,35 @@ class DatabaseSeeder extends Seeder
         //     'about' => "Phasellus in felis. Donec semper sapien a libero. Nam dui.\n\nProin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius.\n\nInteger ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.",
         //     'quote' => "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros."
         //   ], 
-        //   // [
-        //   //   'name' => "Stanislas",
-        //   //   'email' => "sbamforth5@csmonitor.com",
-        //   //   'gender' => "female",
-        //   //   'mobile' => "3115187303",
-        //   //   'birth_date' => "1994/05/29",
-        //   //   'adress' => "8 Twin Pines Terrace",
-        //   //   'about' => "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
-        //   //   'quote' => "Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh."
-        //   // ], [
-        //   //   'name' => "Matti",
-        //   //   'email' => "mryding6@joomla.org",
-        //   //   'gender' => "male",
-        //   //   'mobile' => "7346004216",
-        //   //   'birth_date' => "1995/09/22",
-        //   //   'adress' => "6076 Mallory Place",
-        //   //   'about' => "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.\n\nCurabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
-        //   //   'quote' => "Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat."
-        //   // ], [
-        //   //   'name' => "Sianna",
-        //   //   'email' => "ssloegrave7@weibo.com",
-        //   //   'gender' => "male",
-        //   //   'mobile' => "8903877132",
-        //   //   'birth_date' => "1993/07/09",
-        //   //   'adress' => "46679 Memorial Plaza",
-        //   //   'about' => "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
-        //   //   'quote' => "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus."
-        //   // ], [
+        //   [
+        //     'name' => "Stanislas",
+        //     'email' => "sbamforth5@csmonitor.com",
+        //     'gender' => "female",
+        //     'mobile' => "3115187303",
+        //     'birth_date' => "1994/05/29",
+        //     'adress' => "8 Twin Pines Terrace",
+        //     'about' => "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.\n\nCras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\nProin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
+        //     'quote' => "Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh."
+        //   ], [
+        //     'name' => "Matti",
+        //     'email' => "mryding6@joomla.org",
+        //     'gender' => "male",
+        //     'mobile' => "7346004216",
+        //     'birth_date' => "1995/09/22",
+        //     'adress' => "6076 Mallory Place",
+        //     'about' => "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.\n\nCurabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.",
+        //     'quote' => "Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.\n\nVestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat."
+        //   ], [
+        //     'name' => "Sianna",
+        //     'email' => "ssloegrave7@weibo.com",
+        //     'gender' => "male",
+        //     'mobile' => "8903877132",
+        //     'birth_date' => "1993/07/09",
+        //     'adress' => "46679 Memorial Plaza",
+        //     'about' => "Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.",
+        //     'quote' => "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus."
+        //   ],
+        //    //[
         //   //   'name' => "Kizzie",
         //   //   'email' => "kcholdcroft8@unblog.fr",
         //   //   'gender' => "male",
@@ -322,7 +326,7 @@ class DatabaseSeeder extends Seeder
 
         // // add relations 
       
-        // for ($i=1; $i < 5; $i++) { 
+        // for ($i=1; $i < 2; $i++) { 
         //     for ($j=1; $j < 5; $j++) { 
         //         if($i != $j){
         //             Friend::create([
@@ -338,7 +342,7 @@ class DatabaseSeeder extends Seeder
         //     }
         // }
 
-      // //create deroctory
+      //create deroctory
 
       // for ($i=1; $i < 10; $i++) { 
       //   File::makeDirectory(public_path('images/posts/'.$i));

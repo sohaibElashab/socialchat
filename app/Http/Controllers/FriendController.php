@@ -13,6 +13,7 @@ use App\Events\CancelRequestEvent;
 use App\Events\AcceptRequestEvent;
 use App\Events\AcceptRequestEvent2;
 use App\Events\NotificationEvent;
+use App\Events\UnfriendEvent;
 use App\Models\Notification;
 
 class FriendController extends Controller
@@ -135,6 +136,8 @@ class FriendController extends Controller
             $q->where('user_to',auth()->id());
             $q->where('user_from',$id);
         })->delete(); 
+
+        broadcast(new UnfriendEvent($id));
         
         return response()->json();
     }

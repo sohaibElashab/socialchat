@@ -88,8 +88,6 @@ dl dd:last-child {
 }
 
 /* Table */
-th {
-}
 a:hover {
     text-decoration: none;
 }
@@ -316,7 +314,7 @@ a:hover {
     text-align: center;
     line-height: normal;
     background: var(--iq-white);
-    float: left;
+    
     color: var(--iq-body-text);
     border-radius: 15px;
 }
@@ -422,7 +420,7 @@ a:hover {
 }
 .iq-list-style-1 li {
     display: inline-block;
-    float: left;
+    
     list-style-type: none;
     margin-right: 15px;
 }
@@ -522,7 +520,7 @@ a:hover {
 }
 .iq-social-media li {
     list-style: none;
-    float: left;
+    
     margin-right: 10px;
 }
 .iq-social-media li:last-child {
@@ -794,7 +792,7 @@ a:hover {
     vertical-align: middle;
     width: 20px;
     display: inline-block;
-    float: left;
+    
 }
 .iq-sidebar-menu .iq-menu li li a i {
     font-size: 16px;
@@ -803,7 +801,7 @@ a:hover {
     white-space: nowrap;
     padding: 0;
     display: inline-block;
-    float: left;
+    
     -webkit-transition: all 0.3s ease-out 0s;
     -moz-transition: all 0.3s ease-out 0s;
     -ms-transition: all 0.3s ease-out 0s;
@@ -1007,7 +1005,7 @@ body.sidebar-main
     float: right;
 }
 .navbar-list li {
-    float: left;
+    
     list-style-type: none;
     position: relative;
 }
@@ -1209,7 +1207,7 @@ div#lottie-fullscreen svg path {
     padding-top: 15px;
     padding-left: 20px;
     width: 260px;
-    float: left;
+    
     position: relative;
     background: var(--iq-white);
     -webkit-transition: all 0.3s ease-out 0s;
@@ -1475,7 +1473,7 @@ body.sidebar-main .iq-menu-bt-sidebar .iq-menu-bt {
 }
 .iq-card-header-list li {
     list-style-type: none;
-    float: left;
+    
     display: inline-block;
     font-size: 20px;
     margin: 0 0 0 8px;
@@ -1925,7 +1923,7 @@ div#post-modal-data .modal .modal-dialog {
     text-align: center;
     vertical-align: middle;
     font-size: 22px;
-    float: left;
+    
     width: 40px;
     height: 50px;
     line-height: 50px;
@@ -2127,7 +2125,7 @@ div#post-modal-data .modal .modal-dialog {
     font-size: 20px;
     color: var(--iq-body-text);
     margin: 0 5px 0 0;
-    float: left;
+    
 }
 .iq-email-to-list ul li:first-child a {
     background: none;
@@ -2195,7 +2193,7 @@ div#post-modal-data .modal .modal-dialog {
     position: relative;
     padding: 15px 20px;
     border-top: 1px solid var(--iq-border-light);
-    float: left;
+    
     display: inline-block;
     width: 100%;
     transition: all 0.3s ease-in-out;
@@ -2224,7 +2222,7 @@ div#post-modal-data .modal .modal-dialog {
 .iq-email-sender-info .iq-checkbox-mail,
 .iq-email-sender-info .iq-star-toggle {
     display: block;
-    float: left;
+    
 }
 .iq-email-sender-info .iq-checkbox-mail {
     cursor: pointer;
@@ -2605,7 +2603,7 @@ div#post-modal-data .modal .modal-dialog {
     background: var(--iq-light-primary);
     margin-right: 10px;
     margin-top: 6px;
-    float: left;
+    
 }
 
 /*-----------------------------------------------------------------
@@ -3444,7 +3442,7 @@ Calender
     list-style-type: none;
     font-size: 18px;
     width: 25%;
-    float: left;
+    
     text-align: left;
     position: relative;
     font-weight: 400;
@@ -3512,7 +3510,7 @@ Calender
 .wizard-step {
     font-size: 18px;
     width: 25%;
-    float: left;
+    
     position: relative;
     font-weight: 400;
     text-align: center;
@@ -3627,7 +3625,7 @@ fieldset[disabled] .btn {
     list-style-type: none;
     font-size: 18px;
     width: 100%;
-    float: left;
+    
     position: relative;
     font-weight: 400;
 }
@@ -3818,7 +3816,7 @@ span.avatar-status {
 }
 .chat-content .chat-left .chat-message {
     text-align: left;
-    float: left;
+    
     margin: 0 0.3rem 1.8rem 1.3rem;
     color: var(--iq-body-text);
     background-color: var(--iq-white);
@@ -3855,9 +3853,6 @@ span.iq-start-icon {
     color: var(--iq-body-text);
     font-size: 0.8rem;
     white-space: nowrap;
-}
-.chat-left .chat-user {
-    float: left;
 }
 .chat-content .chat-body .chat-message p {
     margin-bottom: 0;
@@ -4254,8 +4249,6 @@ ul.todo-task-lists li.active-task {
 /*---------------------------------------------------------------------
 Privacy Policy Page
 -----------------------------------------------------------------------*/
-.privacy-status {
-}
 .input-group .input-group-text {
     background: var(--iq-light);
     border: 0px solid var(--iq-border-light);
@@ -4636,4 +4629,11 @@ button.qty-btn {
 
 .new {
     background: var(--iq-light-dark);
+}
+
+.edit-storie {
+    color:var(--iq-dark-bg);
+}
+#Storycontent{
+    color: var(--iq-primary);
 }

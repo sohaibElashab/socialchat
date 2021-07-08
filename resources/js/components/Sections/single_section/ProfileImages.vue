@@ -11,7 +11,7 @@
                             role="tabpanel"
                         >
                             <div class="iq-card-body p-0">
-                                <div class="row">
+                                <div class="row"> 
                                     <div
                                         class="col-md-6 col-lg-3 mb-3"
                                         v-for="(image , index) in images"
@@ -28,7 +28,7 @@
                                             </a>
                                             <a href="#" v-else>
                                                 <img
-                                                    :src="`images/posts/${id}/${image.name}`"
+                                                    :src="`images/posts/${$route.query.user}/${image.name}`"
                                                     class="rounded"
                                                     alt="Responsive image"
                                                     style="width: 224px ; height: 200px;"
